@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://www.atlassian.com/team-playbook/plays/customer-journey-mapping -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" async="" src="./user_journey_video_files/munchkin.js"></script><script type="text/javascript" async="" src="./user_journey_video_files/stw9er5atsvc.js"></script><script id="pdst-capture" async="" src="./user_journey_video_files/ping.min.js"></script><script src="./user_journey_video_files/221213238088884" async=""></script><script async="" src="./user_journey_video_files/fbevents.js"></script><script type="text/javascript" async="" src="./user_journey_video_files/ei.js"></script><script async="" id="demandbase_js_lib" src="./user_journey_video_files/BwkB5d1U.min.js"></script><script type="text/javascript" async="" src="./user_journey_video_files/bat.js"></script><script type="text/javascript" async="" src="./user_journey_video_files/insight.min.js"></script><script type="text/javascript" async="" src="./user_journey_video_files/linkid.js"></script><script type="text/javascript" async="" src="./user_journey_video_files/gtm.js"></script><script type="text/javascript" async="" src="./user_journey_video_files/analytics.js"></script><script type="text/javascript" id="analytics-js" async="" src="./user_journey_video_files/analytics.min.js"></script><script type="text/javascript" src="./user_journey_video_files/4558326637"></script><script src="./user_journey_video_files/nr-spa-1130.min.js"></script><script type="text/javascript" async="" src="./user_journey_video_files/ip.json"></script>  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"> <meta name="viewport" content="width=device-width, initial-scale=1"> <meta property="fb:pages" content="115407078489594"> <meta name="description" content="Create a customer journey map to understand how people use your product (and their pain points). Then use it to design a better user experience."> <meta name="author" content="Atlassian"> <style type="text/css" data-tippy-stylesheet="">.tippy-iOS{cursor:pointer!important;-webkit-tap-highlight-color:transparent}.tippy-popper{transition-timing-function:cubic-bezier(.165,.84,.44,1);max-width:calc(100% - 8px);pointer-events:none;outline:0}.tippy-popper[x-placement^=top] .tippy-backdrop{border-radius:40% 40% 0 0}.tippy-popper[x-placement^=top] .tippy-roundarrow{bottom:-7px;bottom:-6.5px;-webkit-transform-origin:50% 0;transform-origin:50% 0;margin:0 3px}.tippy-popper[x-placement^=top] .tippy-roundarrow svg{position:absolute;left:0;-webkit-transform:rotate(180deg);transform:rotate(180deg)}.tippy-popper[x-placement^=top] .tippy-arrow{border-top:8px solid #333;border-right:8px solid transparent;border-left:8px solid transparent;bottom:-7px;margin:0 3px;-webkit-transform-origin:50% 0;transform-origin:50% 0}.tippy-popper[x-placement^=top] .tippy-backdrop{-webkit-transform-origin:0 25%;transform-origin:0 25%}.tippy-popper[x-placement^=top] .tippy-backdrop[data-state=visible]{-webkit-transform:scale(1) translate(-50%,-55%);transform:scale(1) translate(-50%,-55%)}.tippy-popper[x-placement^=top] .tippy-backdrop[data-state=hidden]{-webkit-transform:scale(.2) translate(-50%,-45%);transform:scale(.2) translate(-50%,-45%);opacity:0}.tippy-popper[x-placement^=top] [data-animation=shift-toward][data-state=visible]{-webkit-transform:translateY(-10px);transform:translateY(-10px)}.tippy-popper[x-placement^=top] [data-animation=shift-toward][data-state=hidden]{opacity:0;-webkit-transform:translateY(-20px);transform:translateY(-20px)}.tippy-popper[x-placement^=top] [data-animation=perspective]{-webkit-transform-origin:bottom;transform-origin:bottom}.tippy-popper[x-placement^=top] [data-animation=perspective][data-state=visible]{-webkit-transform:perspective(700px) translateY(-10px);transform:perspective(700px) translateY(-10px)}.tippy-popper[x-placement^=top] [data-animation=perspective][data-state=hidden]{opacity:0;-webkit-transform:perspective(700px) rotateX(60deg);transform:perspective(700px) rotateX(60deg)}.tippy-popper[x-placement^=top] [data-animation=fade][data-state=visible]{-webkit-transform:translateY(-10px);transform:translateY(-10px)}.tippy-popper[x-placement^=top] [data-animation=fade][data-state=hidden]{opacity:0;-webkit-transform:translateY(-10px);transform:translateY(-10px)}.tippy-popper[x-placement^=top] [data-animation=shift-away][data-state=visible]{-webkit-transform:translateY(-10px);transform:translateY(-10px)}.tippy-popper[x-placement^=top] [data-animation=shift-away][data-state=hidden]{opacity:0}.tippy-popper[x-placement^=top] [data-animation=scale]{-webkit-transform-origin:bottom;transform-origin:bottom}.tippy-popper[x-placement^=top] [data-animation=scale][data-state=visible]{-webkit-transform:translateY(-10px);transform:translateY(-10px)}.tippy-popper[x-placement^=top] [data-animation=scale][data-state=hidden]{opacity:0;-webkit-transform:translateY(-10px) scale(.5);transform:translateY(-10px) scale(.5)}.tippy-popper[x-placement^=bottom] .tippy-backdrop{border-radius:0 0 30% 30%}.tippy-popper[x-placement^=bottom] .tippy-roundarrow{top:-7px;-webkit-transform-origin:50% 100%;transform-origin:50% 100%;margin:0 3px}.tippy-popper[x-placement^=bottom] .tippy-roundarrow svg{position:absolute;left:0}.tippy-popper[x-placement^=bottom] .tippy-arrow{border-bottom:8px solid #333;border-right:8px solid transparent;border-left:8px solid transparent;top:-7px;margin:0 3px;-webkit-transform-origin:50% 100%;transform-origin:50% 100%}.tippy-popper[x-placement^=bottom] .tippy-backdrop{-webkit-transform-origin:0 -50%;transform-origin:0 -50%}.tippy-popper[x-placement^=bottom] .tippy-backdrop[data-state=visible]{-webkit-transform:scale(1) translate(-50%,-45%);transform:scale(1) translate(-50%,-45%)}.tippy-popper[x-placement^=bottom] .tippy-backdrop[data-state=hidden]{-webkit-transform:scale(.2) translate(-50%);transform:scale(.2) translate(-50%);opacity:0}.tippy-popper[x-placement^=bottom] [data-animation=shift-toward][data-state=visible]{-webkit-transform:translateY(10px);transform:translateY(10px)}.tippy-popper[x-placement^=bottom] [data-animation=shift-toward][data-state=hidden]{opacity:0;-webkit-transform:translateY(20px);transform:translateY(20px)}.tippy-popper[x-placement^=bottom] [data-animation=perspective]{-webkit-transform-origin:top;transform-origin:top}.tippy-popper[x-placement^=bottom] [data-animation=perspective][data-state=visible]{-webkit-transform:perspective(700px) translateY(10px);transform:perspective(700px) translateY(10px)}.tippy-popper[x-placement^=bottom] [data-animation=perspective][data-state=hidden]{opacity:0;-webkit-transform:perspective(700px) rotateX(-60deg);transform:perspective(700px) rotateX(-60deg)}.tippy-popper[x-placement^=bottom] [data-animation=fade][data-state=visible]{-webkit-transform:translateY(10px);transform:translateY(10px)}.tippy-popper[x-placement^=bottom] [data-animation=fade][data-state=hidden]{opacity:0;-webkit-transform:translateY(10px);transform:translateY(10px)}.tippy-popper[x-placement^=bottom] [data-animation=shift-away][data-state=visible]{-webkit-transform:translateY(10px);transform:translateY(10px)}.tippy-popper[x-placement^=bottom] [data-animation=shift-away][data-state=hidden]{opacity:0}.tippy-popper[x-placement^=bottom] [data-animation=scale]{-webkit-transform-origin:top;transform-origin:top}.tippy-popper[x-placement^=bottom] [data-animation=scale][data-state=visible]{-webkit-transform:translateY(10px);transform:translateY(10px)}.tippy-popper[x-placement^=bottom] [data-animation=scale][data-state=hidden]{opacity:0;-webkit-transform:translateY(10px) scale(.5);transform:translateY(10px) scale(.5)}.tippy-popper[x-placement^=left] .tippy-backdrop{border-radius:50% 0 0 50%}.tippy-popper[x-placement^=left] .tippy-roundarrow{right:-12px;-webkit-transform-origin:33.33333333% 50%;transform-origin:33.33333333% 50%;margin:3px 0}.tippy-popper[x-placement^=left] .tippy-roundarrow svg{position:absolute;left:0;-webkit-transform:rotate(90deg);transform:rotate(90deg)}.tippy-popper[x-placement^=left] .tippy-arrow{border-left:8px solid #333;border-top:8px solid transparent;border-bottom:8px solid transparent;right:-7px;margin:3px 0;-webkit-transform-origin:0 50%;transform-origin:0 50%}.tippy-popper[x-placement^=left] .tippy-backdrop{-webkit-transform-origin:50% 0;transform-origin:50% 0}.tippy-popper[x-placement^=left] .tippy-backdrop[data-state=visible]{-webkit-transform:scale(1) translate(-50%,-50%);transform:scale(1) translate(-50%,-50%)}.tippy-popper[x-placement^=left] .tippy-backdrop[data-state=hidden]{-webkit-transform:scale(.2) translate(-75%,-50%);transform:scale(.2) translate(-75%,-50%);opacity:0}.tippy-popper[x-placement^=left] [data-animation=shift-toward][data-state=visible]{-webkit-transform:translateX(-10px);transform:translateX(-10px)}.tippy-popper[x-placement^=left] [data-animation=shift-toward][data-state=hidden]{opacity:0;-webkit-transform:translateX(-20px);transform:translateX(-20px)}.tippy-popper[x-placement^=left] [data-animation=perspective]{-webkit-transform-origin:right;transform-origin:right}.tippy-popper[x-placement^=left] [data-animation=perspective][data-state=visible]{-webkit-transform:perspective(700px) translateX(-10px);transform:perspective(700px) translateX(-10px)}.tippy-popper[x-placement^=left] [data-animation=perspective][data-state=hidden]{opacity:0;-webkit-transform:perspective(700px) rotateY(-60deg);transform:perspective(700px) rotateY(-60deg)}.tippy-popper[x-placement^=left] [data-animation=fade][data-state=visible]{-webkit-transform:translateX(-10px);transform:translateX(-10px)}.tippy-popper[x-placement^=left] [data-animation=fade][data-state=hidden]{opacity:0;-webkit-transform:translateX(-10px);transform:translateX(-10px)}.tippy-popper[x-placement^=left] [data-animation=shift-away][data-state=visible]{-webkit-transform:translateX(-10px);transform:translateX(-10px)}.tippy-popper[x-placement^=left] [data-animation=shift-away][data-state=hidden]{opacity:0}.tippy-popper[x-placement^=left] [data-animation=scale]{-webkit-transform-origin:right;transform-origin:right}.tippy-popper[x-placement^=left] [data-animation=scale][data-state=visible]{-webkit-transform:translateX(-10px);transform:translateX(-10px)}.tippy-popper[x-placement^=left] [data-animation=scale][data-state=hidden]{opacity:0;-webkit-transform:translateX(-10px) scale(.5);transform:translateX(-10px) scale(.5)}.tippy-popper[x-placement^=right] .tippy-backdrop{border-radius:0 50% 50% 0}.tippy-popper[x-placement^=right] .tippy-roundarrow{left:-12px;-webkit-transform-origin:66.66666666% 50%;transform-origin:66.66666666% 50%;margin:3px 0}.tippy-popper[x-placement^=right] .tippy-roundarrow svg{position:absolute;left:0;-webkit-transform:rotate(-90deg);transform:rotate(-90deg)}.tippy-popper[x-placement^=right] .tippy-arrow{border-right:8px solid #333;border-top:8px solid transparent;border-bottom:8px solid transparent;left:-7px;margin:3px 0;-webkit-transform-origin:100% 50%;transform-origin:100% 50%}.tippy-popper[x-placement^=right] .tippy-backdrop{-webkit-transform-origin:-50% 0;transform-origin:-50% 0}.tippy-popper[x-placement^=right] .tippy-backdrop[data-state=visible]{-webkit-transform:scale(1) translate(-50%,-50%);transform:scale(1) translate(-50%,-50%)}.tippy-popper[x-placement^=right] .tippy-backdrop[data-state=hidden]{-webkit-transform:scale(.2) translate(-25%,-50%);transform:scale(.2) translate(-25%,-50%);opacity:0}.tippy-popper[x-placement^=right] [data-animation=shift-toward][data-state=visible]{-webkit-transform:translateX(10px);transform:translateX(10px)}.tippy-popper[x-placement^=right] [data-animation=shift-toward][data-state=hidden]{opacity:0;-webkit-transform:translateX(20px);transform:translateX(20px)}.tippy-popper[x-placement^=right] [data-animation=perspective]{-webkit-transform-origin:left;transform-origin:left}.tippy-popper[x-placement^=right] [data-animation=perspective][data-state=visible]{-webkit-transform:perspective(700px) translateX(10px);transform:perspective(700px) translateX(10px)}.tippy-popper[x-placement^=right] [data-animation=perspective][data-state=hidden]{opacity:0;-webkit-transform:perspective(700px) rotateY(60deg);transform:perspective(700px) rotateY(60deg)}.tippy-popper[x-placement^=right] [data-animation=fade][data-state=visible]{-webkit-transform:translateX(10px);transform:translateX(10px)}.tippy-popper[x-placement^=right] [data-animation=fade][data-state=hidden]{opacity:0;-webkit-transform:translateX(10px);transform:translateX(10px)}.tippy-popper[x-placement^=right] [data-animation=shift-away][data-state=visible]{-webkit-transform:translateX(10px);transform:translateX(10px)}.tippy-popper[x-placement^=right] [data-animation=shift-away][data-state=hidden]{opacity:0}.tippy-popper[x-placement^=right] [data-animation=scale]{-webkit-transform-origin:left;transform-origin:left}.tippy-popper[x-placement^=right] [data-animation=scale][data-state=visible]{-webkit-transform:translateX(10px);transform:translateX(10px)}.tippy-popper[x-placement^=right] [data-animation=scale][data-state=hidden]{opacity:0;-webkit-transform:translateX(10px) scale(.5);transform:translateX(10px) scale(.5)}.tippy-tooltip{position:relative;color:#fff;border-radius:.25rem;font-size:.875rem;padding:.3125rem .5625rem;line-height:1.4;text-align:center;background-color:#333}.tippy-tooltip[data-size=small]{padding:.1875rem .375rem;font-size:.75rem}.tippy-tooltip[data-size=large]{padding:.375rem .75rem;font-size:1rem}.tippy-tooltip[data-animatefill]{overflow:hidden;background-color:initial}.tippy-tooltip[data-interactive],.tippy-tooltip[data-interactive] .tippy-roundarrow path{pointer-events:auto}.tippy-tooltip[data-inertia][data-state=visible]{transition-timing-function:cubic-bezier(.54,1.5,.38,1.11)}.tippy-tooltip[data-inertia][data-state=hidden]{transition-timing-function:ease}.tippy-arrow,.tippy-roundarrow{position:absolute;width:0;height:0}.tippy-roundarrow{width:18px;height:7px;fill:#333;pointer-events:none}.tippy-backdrop{position:absolute;background-color:#333;border-radius:50%;width:calc(110% + 2rem);left:50%;top:50%;z-index:-1;transition:all cubic-bezier(.46,.1,.52,.98);-webkit-backface-visibility:hidden;backface-visibility:hidden}.tippy-backdrop:after{content:"";float:left;padding-top:100%}.tippy-backdrop+.tippy-content{transition-property:opacity;will-change:opacity}.tippy-backdrop+.tippy-content[data-state=hidden]{opacity:0}</style><link rel="canonical" href="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping"> <title>Customer Journey Mapping | A Step by Step Guide | Atlassian Team Playbook</title> <link rel="stylesheet" href="./user_journey_video_files/main.min.css" id="main-css"> <link rel="stylesheet" href="./user_journey_video_files/team-patterns.min.css" class="additional-css"> <link rel="alternate" href="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping" hreflang="x-default"> <link rel="alternate" href="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping" hreflang="en"> <link rel="apple-touch-icon-precomposed" sizes="57x57" href="https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/apple-touch-icon-57x57.png"> <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/apple-touch-icon-114x114.png"> <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/apple-touch-icon-72x72.png"> <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/apple-touch-icon-144x144.png"> <link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/apple-touch-icon-120x120.png"> <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/apple-touch-icon-152x152.png"> <link rel="icon" type="image/png" href="https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/favicon.png" sizes="32x32"> <link rel="mask-icon" href="https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/safari-pinned-tab.svg" color="#59afe1"> <meta name="msapplication-TileColor" content="#ffffff"> <meta name="msapplication-TileImage" content="https://wac-cdn.atlassian.com/assets/img/favicons/atlassian/mstile-144x144.png"> <meta name="theme-color" content="#205081"> <meta property="og:title" content="Customer Journey Mapping | A Step by Step Guide | Atlassian Team Playbook"> <meta property="og:description" content="Create a customer journey map to understand how people use your product (and their pain points). Then use it to design a better user experience."> <meta property="og:type" content="website"> <meta property="og:url" content="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping"> <meta property="og:image" content="https://wac-cdn.atlassian.com/dam/jcr:d88c7ba7-793a-42e9-9fe7-1b96dbe9acb8/Team-Playbook-Facebook-1200x630.png"> <meta property="og:image:width" content="1200"> <meta property="og:image:height" content="630"> <meta property="og:site_name" content="Atlassian"> <meta name="twitter:card" content="summary"> <meta name="twitter:image" content="https://wac-cdn.atlassian.com/dam/jcr:1f89e02a-7fd4-4ac7-9f35-3eec312dd336/Team-Playbook-Twitter-440x220%20.png"> <meta name="twitter:site" content="@Atlassian"> <style> /*we are adding this so to prevent content re-flow of the lazy loaded images*/ img:not([src]) { opacity: 0; } </style> <script src="./user_journey_video_files/jquery.min.js"></script> <script type="text/javascript"> /** * function to load external js through javascript. * * @param url - javascript url * @param location - location of the dom (e.g. document.head) */ var loadExternalJS = function(url, location, callback){ var scriptTag = document.createElement('script'); scriptTag.src = url; scriptTag.type = 'text/javascript'; /* Then bind the event to the callback function. There are several events for cross browser compatibility. */ scriptTag.onreadystatechange = callback; scriptTag.onload = callback; window.atlGlobalLoadStart = new Date(); /* Fire the loading */ location.appendChild(scriptTag); }; </script> <script type="text/javascript" src="./user_journey_video_files/1096093.js"></script> <script type="text/javascript"> var LOCALIZED_PRICING_CONTENTFUL_SPACE = "3s3v3nq72la0"; var LOCALIZED_PRICING_CONTENTFUL_ENVIRONMENT = "master"; var LOCALIZED_PRICING_CONTENTFUL_ACCESS_TOKEN = "b9c3ea8d9c664146e9c7dd136a1d40ff8415715c3ef8ee222536f36fb2056613"; var LOCALIZED_PRICING_USE_GEO_CURRENCY = true; </script> <script type="text/javascript"> window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(t,e,n){function r(t){try{s.console&&console.log(t)}catch(e){}}var o,i=t("ee"),a=t(23),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,e,n){r(n.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,e){return t}).join(", ")))},{}],2:[function(t,e,n){function r(t,e,n,r,s){try{l?l-=1:o(s||new UncaughtException(t,e,n),!0)}catch(f){try{i("ierr",[f,c.now(),!0])}catch(d){}}return"function"==typeof u&&u.apply(this,a(arguments))}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function o(t,e){var n=e?null:c.now();i("err",[t,n])}var i=t("handle"),a=t(24),s=t("ee"),c=t("loader"),f=t("gos"),u=window.onerror,d=!1,p="nr@seenError",l=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(13),t(12),"addEventListener"in window&&t(6),c.xhrWrappable&&t(14),d=!0)}s.on("fn-start",function(t,e,n){d&&(l+=1)}),s.on("fn-err",function(t,e,n){d&&!n[p]&&(f(n,p,function(){return!0}),this.thrown=!0,o(n))}),s.on("fn-end",function(){d&&!this.thrown&&l>0&&(l-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,e,n){t("loader").features.ins=!0},{}],4:[function(t,e,n){function r(){j++,L=y.hash,this[u]=x.now()}function o(){j--,y.hash!==L&&i(0,!0);var t=x.now();this[h]=~~this[h]+t-this[u],this[d]=t}function i(t,e){E.emit("newURL",[""+y,e])}function a(t,e){t.on(e,function(){this[e]=x.now()})}var s="-start",c="-end",f="-body",u="fn"+s,d="fn"+c,p="cb"+s,l="cb"+c,h="jsTime",m="fetch",v="addEventListener",w=window,y=w.location,x=t("loader");if(w[v]&&x.xhrWrappable){var g=t(10),b=t(11),E=t(8),R=t(6),O=t(13),C=t(7),P=t(14),T=t(9),N=t("ee"),S=N.get("tracer");t(16),x.features.spa=!0;var L,j=0;N.on(u,r),N.on(p,r),N.on(d,o),N.on(l,o),N.buffer([u,d,"xhr-done","xhr-resolved"]),R.buffer([u]),O.buffer(["setTimeout"+c,"clearTimeout"+s,u]),P.buffer([u,"new-xhr","send-xhr"+s]),C.buffer([m+s,m+"-done",m+f+s,m+f+c]),E.buffer(["newURL"]),g.buffer([u]),b.buffer(["propagate",p,l,"executor-err","resolve"+s]),S.buffer([u,"no-"+u]),T.buffer(["new-jsonp","cb-start","jsonp-error","jsonp-end"]),a(P,"send-xhr"+s),a(N,"xhr-resolved"),a(N,"xhr-done"),a(C,m+s),a(C,m+"-done"),a(T,"new-jsonp"),a(T,"jsonp-end"),a(T,"cb-start"),E.on("pushState-end",i),E.on("replaceState-end",i),w[v]("hashchange",i,!0),w[v]("load",i,!0),w[v]("popstate",function(){i(0,j>1)},!0)}},{}],5:[function(t,e,n){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(13),s=t(12),c="learResourceTimings",f="addEventListener",u="resourcetimingbufferfull",d="bstResource",p="resource",l="-start",h="-end",m="fn"+l,v="fn"+h,w="bstTimer",y="pushState",x=t("loader");x.features.stn=!0,t(8);var g=NREUM.o.EV;o.on(m,function(t,e){var n=t[0];n instanceof g&&(this.bstStart=x.now())}),o.on(v,function(t,e){var n=t[0];n instanceof g&&i("bst",[n,e,this.bstStart,x.now()])}),a.on(m,function(t,e,n){this.bstStart=x.now(),this.bstType=n}),a.on(v,function(t,e){i(w,[e,this.bstStart,x.now(),this.bstType])}),s.on(m,function(){this.bstStart=x.now()}),s.on(v,function(t,e){i(w,[e,this.bstStart,x.now(),"requestAnimationFrame"])}),o.on(y+l,function(t){this.time=x.now(),this.startPath=location.pathname+location.hash}),o.on(y+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),f in window.performance&&(window.performance["c"+c]?window.performance[f](u,function(t){i(d,[window.performance.getEntriesByType(p)]),window.performance["c"+c]()},!1):window.performance[f]("webkit"+u,function(t){i(d,[window.performance.getEntriesByType(p)]),window.performance["webkitC"+c]()},!1)),document[f]("scroll",r,{passive:!0}),document[f]("keypress",r,!1),document[f]("click",r,!1)}},{}],6:[function(t,e,n){function r(t){for(var e=t;e&&!e.hasOwnProperty(u);)e=Object.getPrototypeOf(e);e&&o(e)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,e){return t[1]}var a=t("ee").get("events"),s=t(26)(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";e.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,e){var n=t[1],r=c(n,"nr@wrapped",function(){function t(){if("function"==typeof n.handleEvent)return n.handleEvent.apply(n,arguments)}var e={object:t,"function":n}[typeof n];return e?s(e,"fn-",null,e.name||"anonymous"):n});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],7:[function(t,e,n){function r(t,e,n){var r=t[e];"function"==typeof r&&(t[e]=function(){var t=r.apply(this,arguments);return o.emit(n+"start",arguments,t),t.then(function(e){return o.emit(n+"end",[null,e],t),e},function(e){throw o.emit(n+"end",[e],t),e})})}var o=t("ee").get("fetch"),i=t(23);e.exports=o;var a=window,s="fetch-",c=s+"body-",f=["arrayBuffer","blob","json","text","formData"],u=a.Request,d=a.Response,p=a.fetch,l="prototype";u&&d&&p&&(i(f,function(t,e){r(u[l],e,c),r(d[l],e,c)}),r(a,"fetch",s),o.on(s+"end",function(t,e){var n=this;if(e){var r=e.headers.get("content-length");null!==r&&(n.rxSize=r),o.emit(s+"done",[null,e],n)}else o.emit(s+"done",[t],n)}))},{}],8:[function(t,e,n){var r=t("ee").get("history"),o=t(26)(r);e.exports=r;var i=window.history&&window.history.constructor&&window.history.constructor.prototype,a=window.history;i&&i.pushState&&i.replaceState&&(a=i),o.inPlace(a,["pushState","replaceState"],"-")},{}],9:[function(t,e,n){function r(t){function e(){c.emit("jsonp-end",[],p),t.removeEventListener("load",e,!1),t.removeEventListener("error",n,!1)}function n(){c.emit("jsonp-error",[],p),c.emit("jsonp-end",[],p),t.removeEventListener("load",e,!1),t.removeEventListener("error",n,!1)}var r=t&&"string"==typeof t.nodeName&&"script"===t.nodeName.toLowerCase();if(r){var o="function"==typeof t.addEventListener;if(o){var a=i(t.src);if(a){var u=s(a),d="function"==typeof u.parent[u.key];if(d){var p={};f.inPlace(u.parent,[u.key],"cb-",p),t.addEventListener("load",e,!1),t.addEventListener("error",n,!1),c.emit("new-jsonp",[t.src],p)}}}}}function o(){return"addEventListener"in window}function i(t){var e=t.match(u);return e?e[1]:null}function a(t,e){var n=t.match(p),r=n[1],o=n[3];return o?a(o,e[r]):e[r]}function s(t){var e=t.match(d);return e&&e.length>=3?{key:e[2],parent:a(e[1],window)}:{key:t,parent:window}}var c=t("ee").get("jsonp"),f=t(26)(c);if(e.exports=c,o()){var u=/[?&](?:callback|cb)=([^&#]+)/,d=/(.*)\.([^.]+)/,p=/^(\w+)(\.|$)(.*)$/,l=["appendChild","insertBefore","replaceChild"];Node&&Node.prototype&&Node.prototype.appendChild?f.inPlace(Node.prototype,l,"dom-"):(f.inPlace(HTMLElement.prototype,l,"dom-"),f.inPlace(HTMLHeadElement.prototype,l,"dom-"),f.inPlace(HTMLBodyElement.prototype,l,"dom-")),c.on("dom-start",function(t){r(t[0])})}},{}],10:[function(t,e,n){var r=t("ee").get("mutation"),o=t(26)(r),i=NREUM.o.MO;e.exports=r,i&&(window.MutationObserver=function(t){return this instanceof i?new i(o(t,"fn-")):i.apply(this,arguments)},MutationObserver.prototype=i.prototype)},{}],11:[function(t,e,n){function r(t){var e=a.context(),n=s(t,"executor-",e),r=new f(n);return a.context(r).getCtx=function(){return e},a.emit("new-promise",[r,e],e),r}function o(t,e){return e}var i=t(26),a=t("ee").get("promise"),s=i(a),c=t(23),f=NREUM.o.PR;e.exports=a,f&&(window.Promise=r,["all","race"].forEach(function(t){var e=f[t];f[t]=function(n){function r(t){return function(){a.emit("propagate",[null,!o],i),o=o||!t}}var o=!1;c(n,function(e,n){Promise.resolve(n).then(r("all"===t),r(!1))});var i=e.apply(f,arguments),s=f.resolve(i);return s}}),["resolve","reject"].forEach(function(t){var e=f[t];f[t]=function(t){var n=e.apply(f,arguments);return t!==n&&a.emit("propagate",[t,!0],n),n}}),f.prototype["catch"]=function(t){return this.then(null,t)},f.prototype=Object.create(f.prototype,{constructor:{value:r}}),c(Object.getOwnPropertyNames(f),function(t,e){try{r[e]=f[e]}catch(n){}}),a.on("executor-start",function(t){t[0]=s(t[0],"resolve-",this),t[1]=s(t[1],"resolve-",this)}),a.on("executor-err",function(t,e,n){t[1](n)}),s.inPlace(f.prototype,["then"],"then-",o),a.on("then-start",function(t,e){this.promise=e,t[0]=s(t[0],"cb-",this),t[1]=s(t[1],"cb-",this)}),a.on("then-end",function(t,e,n){this.nextPromise=n;var r=this.promise;a.emit("propagate",[r,!0],n)}),a.on("cb-end",function(t,e,n){a.emit("propagate",[n,!0],this.nextPromise)}),a.on("propagate",function(t,e,n){this.getCtx&&!e||(this.getCtx=function(){if(t instanceof Promise)var e=a.context(t);return e&&e.getCtx?e.getCtx():this})}),r.toString=function(){return""+f})},{}],12:[function(t,e,n){var r=t("ee").get("raf"),o=t(26)(r),i="equestAnimationFrame";e.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],13:[function(t,e,n){function r(t,e,n){t[0]=a(t[0],"fn-",null,n)}function o(t,e,n){this.method=n,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,n)}var i=t("ee").get("timer"),a=t(26)(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";e.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],14:[function(t,e,n){function r(t,e){d.inPlace(e,["onreadystatechange"],"fn-",s)}function o(){var t=this,e=u.context(t);t.readyState>3&&!e.resolved&&(e.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,y,"fn-",s)}function i(t){x.push(t),h&&(b?b.then(a):v?v(a):(E=-E,R.data=E))}function a(){for(var t=0;t<x.length;t++)r([],x[t]);x.length&&(x=[])}function s(t,e){return e}function c(t,e){for(var n in t)e[n]=t[n];return e}t(6);var f=t("ee"),u=f.get("xhr"),d=t(26)(u),p=NREUM.o,l=p.XHR,h=p.MO,m=p.PR,v=p.SI,w="readystatechange",y=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],x=[];e.exports=u;var g=window.XMLHttpRequest=function(t){var e=new l(t);try{u.emit("new-xhr",[e],e),e.addEventListener(w,o,!1)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}return e};if(c(l,g),g.prototype=l.prototype,d.inPlace(g.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,e){r(t,e),i(e)}),u.on("open-xhr-start",r),h){var b=m&&m.resolve();if(!v&&!m){var E=1,R=document.createTextNode(E);new h(a).observe(R,{characterData:!0})}}else f.on("fn-end",function(t){t[0]&&t[0].type===w||a()})},{}],15:[function(t,e,n){function r(){var t=window.NREUM,e=t.info.accountID||null,n=t.info.agentID||null,r=t.info.trustKey||null,i="btoa"in window&&"function"==typeof window.btoa;if(!e||!n||!i)return null;var a={v:[0,1],d:{ty:"Browser",ac:e,ap:n,id:o.generateCatId(),tr:o.generateCatId(),ti:Date.now()}};return r&&e!==r&&(a.d.tk=r),btoa(JSON.stringify(a))}var o=t(21);e.exports={generateTraceHeader:r}},{}],16:[function(t,e,n){function r(t){var e=this.params,n=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<l;r++)t.removeEventListener(p[r],this.listener,!1);e.aborted||(n.duration=s.now()-this.startTime,this.loadCaptureCalled||4!==t.readyState?null==e.status&&(e.status=0):a(this,t),n.cbTime=this.cbTime,d.emit("xhr-done",[t],t),c("xhr",[e,n,this.startTime]))}}function o(t,e){var n=t.responseType;if("json"===n&&null!==e)return e;var r="arraybuffer"===n||"blob"===n||"json"===n?t.response:t.responseText;return v(r)}function i(t,e){var n=f(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}function a(t,e){t.params.status=e.status;var n=o(e,t.lastSize);if(n&&(t.metrics.rxSize=n),t.sameOrigin){var r=e.getResponseHeader("X-NewRelic-App-Data");r&&(t.params.cat=r.split(", ").pop())}t.loadCaptureCalled=!0}var s=t("loader");if(s.xhrWrappable){var c=t("handle"),f=t(17),u=t(15).generateTraceHeader,d=t("ee"),p=["load","error","abort","timeout"],l=p.length,h=t("id"),m=t(20),v=t(19),w=window.XMLHttpRequest;s.features.xhr=!0,t(14),d.on("new-xhr",function(t){var e=this;e.totalCbs=0,e.called=0,e.cbTime=0,e.end=r,e.ended=!1,e.xhrGuids={},e.lastSize=null,e.loadCaptureCalled=!1,t.addEventListener("load",function(n){a(e,t)},!1),m&&(m>34||m<10)||window.opera||t.addEventListener("progress",function(t){e.lastSize=t.loaded},!1)}),d.on("open-xhr-start",function(t){this.params={method:t[0]},i(this,t[1]),this.metrics={}}),d.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid);var n=!1;if("init"in NREUM&&"distributed_tracing"in NREUM.init&&(n=!!NREUM.init.distributed_tracing.enabled),n&&this.sameOrigin){var r=u();r&&e.setRequestHeader("newrelic",r)}}),d.on("send-xhr-start",function(t,e){var n=this.metrics,r=t[0],o=this;if(n&&r){var i=v(r);i&&(n.txSize=i)}this.startTime=s.now(),this.listener=function(t){try{"abort"!==t.type||o.loadCaptureCalled||(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof e.onload))&&o.end(e)}catch(n){try{d.emit("internal-error",[n])}catch(r){}}};for(var a=0;a<l;a++)e.addEventListener(p[a],this.listener,!1)}),d.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),d.on("xhr-load-added",function(t,e){var n=""+h(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),d.on("xhr-load-removed",function(t,e){var n=""+h(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),d.on("addEventListener-end",function(t,e){e instanceof w&&"load"===t[0]&&d.emit("xhr-load-added",[t[1],t[2]],e)}),d.on("removeEventListener-end",function(t,e){e instanceof w&&"load"===t[0]&&d.emit("xhr-load-removed",[t[1],t[2]],e)}),d.on("fn-start",function(t,e,n){e instanceof w&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=s.now()))}),d.on("fn-end",function(t,e){this.xhrCbStart&&d.emit("xhr-cb-time",[s.now()-this.xhrCbStart,this.onload,e],e)})}},{}],17:[function(t,e,n){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!e.protocol||":"===e.protocol||e.protocol===n.protocol,a=e.hostname===document.domain&&e.port===n.port;return r.sameOrigin=i&&(!e.hostname||a),r}},{}],18:[function(t,e,n){function r(){}function o(t,e,n){return function(){return i(t,[f.now()].concat(s(arguments)),e?null:this,n),e?void 0:this}}var i=t("handle"),a=t(23),s=t(24),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){u[e]=o(p+e,!0,"api")}),u.addPageAction=o(p+"addPageAction",!0),u.setCurrentRouteName=o(p+"routeName",!0),e.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,e){var n={},r=this,o="function"==typeof e;return i(l+"tracer",[f.now(),t,n],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],n),o)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[f.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){h[e]=o(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now(),!1,e])}},{}],19:[function(t,e,n){e.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(e){return}}}},{}],20:[function(t,e,n){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),e.exports=r},{}],21:[function(t,e,n){function r(){function t(){return e?15&e[n++]:16*Math.random()|0}var e=null,n=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&(e=r.getRandomValues(new Uint8Array(31)));for(var o,i="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",a="",s=0;s<i.length;s++)o=i[s],"x"===o?a+=t().toString(16):"y"===o?(o=3&t()|8,a+=o.toString(16)):a+=o;return a}function o(){function t(){return e?15&e[n++]:16*Math.random()|0}var e=null,n=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&Uint8Array&&(e=r.getRandomValues(new Uint8Array(31)));for(var o=[],i=0;i<16;i++)o.push(t().toString(16));return o.join("")}e.exports={generateUuid:r,generateCatId:o}},{}],22:[function(t,e,n){function r(t,e){if(!o)return!1;if(t!==o)return!1;if(!e)return!0;if(!i)return!1;for(var n=i.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var s=navigator.userAgent,c=s.match(a);c&&s.indexOf("Chrome")===-1&&s.indexOf("Chromium")===-1&&(o="Safari",i=c[1])}e.exports={agent:o,version:i,match:r}},{}],23:[function(t,e,n){function r(t,e){var n=[],r="",i=0;for(r in t)o.call(t,r)&&(n[i]=e(r,t[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],24:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(o<0?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=r},{}],25:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],26:[function(t,e,n){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(24),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;e.exports=function(t,e){function n(t,e,n,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof n?n(r,a):n||{}}catch(f){p([f,"",[r,a,o],s])}u(e+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(e+"err",[r,a,d],s),d}finally{u(e+"end",[r,a,c],s)}}return r(t)?t:(e||(e=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,e,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<e.length;c++)s=e[c],a=t[s],r(a)||(t[s]=n(a,f?s+o:o,i,s))}function u(n,r,o){if(!c||e){var i=c;c=!0;try{t.emit(n,r,o,e)}catch(a){p([a,n,r,o])}c=i}}function d(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){p([r])}for(var o in t)s.call(t,o)&&(e[o]=t[o]);return e}function p(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=o),n.inPlace=f,n.flag=a,n}},{}],ee:[function(t,e,n){function r(){}function o(t){function e(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function n(n,r,o,i){if(!p.aborted||i){t&&t(n,r,o);for(var a=e(o),s=m(n),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[x[n]];return d&&d.push([g,n,r,a]),a}}function l(t,e){y[t]=m(t).concat(e)}function h(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function m(t){return y[t]||[]}function v(t){return d[t]=d[t]||o(n)}function w(t,e){f(t,function(t,n){e=e||"feature",x[n]=e,e in u||(u[e]=[])})}var y={},x={},g={on:l,addEventListener:l,removeEventListener:h,emit:n,get:v,listeners:m,context:e,buffer:w,abort:a,aborted:!1};return g}function i(){return new r}function a(){(u.api||u.feature)&&(p.aborted=!0,u=p.backlog={})}var s="nr@context",c=t("gos"),f=t(23),u={},d={},p=e.exports=o();p.backlog=u},{}],gos:[function(t,e,n){function r(t,e,n){if(o.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[e]=r,r}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){o.buffer([t],r),o.emit(t,e,n)}var o=t("ee").get("handle");e.exports=r,r.ee=o},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!E++){var t=b.info=NREUM.info,e=l.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();f(x,function(e,n){t[e]||(t[e]=n)}),c("mark",["onload",a()+b.offset],null,"api");var n=l.createElement("script");n.src="https://"+t.agent,e.parentNode.insertBefore(n,e)}}function o(){"complete"===l.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}function a(){return R.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-b.offset}var s=(new Date).getTime(),c=t("handle"),f=t(23),u=t("ee"),d=t(22),p=window,l=p.document,h="addEventListener",m="attachEvent",v=p.XMLHttpRequest,w=v&&v.prototype;NREUM.o={ST:setTimeout,SI:p.setImmediate,CT:clearTimeout,XHR:v,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var y=""+location,x={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-spa-1130.min.js"},g=v&&w&&w[h]&&!/CriOS/.test(navigator.userAgent),b=e.exports={offset:s,now:a,origin:y,features:{},xhrWrappable:g,userAgent:d};t(18),l[h]?(l[h]("DOMContentLoaded",i,!1),p[h]("load",r,!1)):(l[m]("onreadystatechange",o),p[m]("onload",r)),c("mark",["firstbyte",s],null,"api");var E=0,R=t(25)},{}]},{},["loader",2,16,5,3,4]); ;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"4558326637",applicationID:"388202469",sa:1} </script> <script type="text/javascript"> var variantValue = ""; if (window.cmsPageVariant) { variantValue = window.cmsPageVariant; } else { variantValue = "no variant"; } newrelic.setCustomAttribute('variant', variantValue); </script> <style data-styled-components=""></style><style data-styled-components=""></style><style data-emotion=""></style><style data-styled="" data-styled-version="4.4.1"></style><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="ld/ldclient.min" src="./user_journey_video_files/ldclient.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="ld/ldclient-common.min" src="./user_journey_video_files/ldclient-common.min.js"></script><style type="text/css">.atlwdg-blanket {background: black;height: 100%;left: 0;opacity: .5;position: fixed;top: 0;width: 100%;z-index: 1000000;}.atlwdg-popup {background: white;border: 1px solid #ccc;position: fixed;top: 0;right: 0;bottom: 0;left: 0;margin: auto;z-index: 10000011;border-radius: 5px;background-clip: padding-box;overflow: hidden;width: 810px;height: 0;max-height: calc(100% - 100px);}#atlwdg-frame {height: 100%;width: 100%;}.atlwdg-hidden {visibility: hidden;}.atlwdg-trigger {position: fixed;background: #205081;padding: 5px;border: 2px solid white;border-top: none;font-weight: bold;color: white !important;display: block;white-space: nowrap;text-decoration: none !important;font-family: Arial, Helvetica, sans-serif;font-size: 12px;-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);border-radius: 0 0 5px 5px;}.atlwdg-trigger.atlwdg-TOP {left: 45%;top: 0;}.atlwdg-trigger.atlwdg-RIGHT {left: 100%;top: 40%;-webkit-transform: rotate(90deg);-webkit-transform-origin: top left;-moz-transform: rotate(90deg);-moz-transform-origin: top left;-ms-transform: rotate(90deg);-ms-transform-origin: top left;transform: rotate(90deg);transform-origin: top left;}.atlwdg-trigger.atlwdg-SUBTLE {right: 0;bottom: 0;border: 1px solid #ccc;border-bottom: none;border-right: none;background-color: #f5f5f5;color: #444 !important;font-size: 11px;padding: 6px;-webkit-box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.5);box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.5);border-radius: 2px 0 0 0;}.atlwdg-loading {position: fixed;top: 0;right: 0;bottom: 0;left: 0;margin: auto;height: 40px;width: 40px;z-index: 1000001;border-radius: 5px;background-color: #fff;background-image: url('data:image/gif;base64,R0lGODlhEAAQAMQAAP///+7u7t3d3bu7u6qqqpmZmYiIiHd3d2ZmZlVVVURERDMzMyIiIhEREQARAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFBwAQACwAAAAAEAAQAAAFdyAkQgGJJOWoQgIjBM8jkKsoPEzgyMGsCjPDw7ADpkQBxRDmSCRetpRA6Rj4kFBkgLC4IlUGhbNQIwXOYYWCXDufzYPDMaoKGBoKb886OjAKdgZAAgQkfCwzAgsDBAUCgl8jAQkHEAVkAoA1AgczlyIDczUDA2UhACH5BAUHABAALAAAAAAPABAAAAVjICSO0IGIATkqIiMKDaGKC8Q49jPMYsE0hQdrlABCGgvT45FKiRKQhWA0mPKGPAgBcTjsspBCAoH4gl+FmXNEUEBVAYHToJAVZK/XWoQQDAgBZioHaX8igigFKYYQVlkCjiMhACH5BAUHABAALAAAAAAQAA8AAAVgICSOUGGQqIiIChMESyo6CdQGdRqUENESI8FAdFgAFwqDISYwPB4CVSMnEhSej+FogNhtHyfRQFmIol5owmEta/fcKITB6y4choMBmk7yGgSAEAJ8JAVDgQFmKUCCZnwhACH5BAUHABAALAAAAAAQABAAAAViICSOYkGe4hFAiSImAwotB+si6Co2QxvjAYHIgBAqDoWCK2Bq6A40iA4yYMggNZKwGFgVCAQZotFwwJIF4QnxaC9IsZNgLtAJDKbraJCGzPVSIgEDXVNXA0JdgH6ChoCKKCEAIfkEBQcAEAAsAAAAABAADgAABUkgJI7QcZComIjPw6bs2kINLB5uW9Bo0gyQx8LkKgVHiccKVdyRlqjFSAApOKOtR810StVeU9RAmLqOxi0qRG3LptikAVQEh4UAACH5BAUHABAALAAAAAAQABAAAAVxICSO0DCQKBQQonGIh5AGB2sYkMHIqYAIN0EDRxoQZIaC6bAoMRSiwMAwCIwCggRkwRMJWKSAomBVCc5lUiGRUBjO6FSBwWggwijBooDCdiFfIlBRAlYBZQ0PWRANaSkED1oQYHgjDA8nM3kPfCmejiEAIfkEBQcAEAAsAAAAABAAEAAABWAgJI6QIJCoOIhFwabsSbiFAotGMEMKgZoB3cBUQIgURpFgmEI0EqjACYXwiYJBGAGBgGIDWsVicbiNEgSsGbKCIMCwA4IBCRgXt8bDACkvYQF6U1OADg8mDlaACQtwJCEAIfkEBQcAEAAsAAABABAADwAABV4gJEKCOAwiMa4Q2qIDwq4wiriBmItCCREHUsIwCgh2q8MiyEKODK7ZbHCoqqSjWGKI1d2kRp+RAWGyHg+DQUEmKliGx4HBKECIMwG61AgssAQPKA19EAxRKz4QCVIhACH5BAUHABAALAAAAAAQABAAAAVjICSOUBCQqHhCgiAOKyqcLVvEZOC2geGiK5NpQBAZCilgAYFMogo/J0lgqEpHgoO2+GIMUL6p4vFojhQNg8rxWLgYBQJCASkwEKLC17hYFJtRIwwBfRAJDk4ObwsidEkrWkkhACH5BAUHABAALAAAAQAQAA8AAAVcICSOUGAGAqmKpjis6vmuqSrUxQyPhDEEtpUOgmgYETCCcrB4OBWwQsGHEhQatVFhB/mNAojFVsQgBhgKpSHRTRxEhGwhoRg0CCXYAkKHHPZCZRAKUERZMAYGMCEAIfkEBQcAEAAsAAABABAADwAABV0gJI4kFJToGAilwKLCST6PUcrB8A70844CXenwILRkIoYyBRk4BQlHo3FIOQmvAEGBMpYSop/IgPBCFpCqIuEsIESHgkgoJxwQAjSzwb1DClwwgQhgAVVMIgVyKCEAIfkECQcAEAAsAAAAABAAEAAABWQgJI5kSQ6NYK7Dw6xr8hCw+ELC85hCIAq3Am0U6JUKjkHJNzIsFAqDqShQHRhY6bKqgvgGCZOSFDhAUiWCYQwJSxGHKqGAE/5EqIHBjOgyRQELCBB7EAQHfySDhGYQdDWGQyUhADs=');background-repeat: no-repeat;background-position: center center;}@media print {.atlwdg-trigger { display: none; }}</style><script src="./user_journey_video_files/atl-global-2.20.0.min.js"></script><script type="text/javascript" async="" src="./user_journey_video_files/munchkin(1).js"></script><script src="./user_journey_video_files/f.txt"></script><script type="text/javascript" src="./user_journey_video_files/ei_track_all_packed.js"></script><script type="text/javascript" async="" src="./user_journey_video_files/b91cd2dbe12b2.js"></script></head> <body id="customer-journey-mapping" class="wac team-playbook plays customer-journey-mapping"> <main class="team-patterns-play-main-area"> <nav id="global" class="imkt-navbar imkt-navbar__default"> <section class="imkt-navbar__main-section"> <div class="grid grid-1"> <div class="column colspan-all"> <div class="imkt-navbar__title-wrapper"> <a href="https://www.atlassian.com/" class="imkt-navbar__title-link"> <img data-src="https://wac-cdn.atlassian.com/dam/jcr:616e6748-ad8c-48d9-ae93-e49019ed5259/Atlassian-horizontal-blue-rgb.svg?cdnVersion=733" height="25px" alt="logo" class="lozad imkt-navbar__title-logo" src="./user_journey_video_files/Atlassian-horizontal-blue-rgb.svg" data-loaded="true"> </a> <button id="jsToggleNavbarMenu" class="aui-icon aui-icon-small aui-iconfont-arrow-down">Open and close the navigation menu</button> </div> </div> </div> </section> <section class="imkt-navbar__collapsed-section"> <div class="grid grid-1"> <div class="column colspan-all"> </div> </div> </section> <script type="text/x-component"> { "type":"imkt.ui.Navbar", "params": { "hasCharlie":"false" } } </script></nav> <div class="imkt-sticky-wrapper" style="height: 60px;"><nav class="imkt-navbar imkt-navbar__default imkt-sticky" style="width: 100%;"> <section class="imkt-navbar__main-section"> <div class="grid grid-1"> <div class="column colspan-all"> <div class="imkt-navbar__title-wrapper" style="width: 161px;"> <a href="https://www.atlassian.com/" class="imkt-navbar__charlie-logo-link" title="Visit the Atlassian homepage"> <img class="lozad" data-src="/assets/img/icons/imkt/imkt-navbar__charlie-logo.svg?cdnVersion=733" alt="Atlassian logo" src="./user_journey_video_files/imkt-navbar__charlie-logo.svg" data-loaded="true"> </a> <a href="https://www.atlassian.com/team-playbook" class="imkt-navbar__title-link"> <span class="imkt-navbar__title-text">Team&nbsp;Playbook</span> </a> <button id="jsToggleNavbarMenu" class="aui-icon aui-icon-small aui-iconfont-arrow-down" style="">Open and close the navigation menu</button> </div> <ul class="imkt-navbar__link-list"> <li> <a href="https://www.atlassian.com/team-playbook/health-monitor" class="imkt-navbar__link-list-link">Health Monitors</a> </li> <li> <a href="https://www.atlassian.com/team-playbook/plays" class="imkt-navbar__link-list-link imkt-navbar__link-list-link--current">Plays</a> </li> <li> <a href="https://www.atlassian.com/team-playbook/examples" class="imkt-navbar__link-list-link">Game Plans</a> </li> <li> <a href="https://www.atlassian.com/team-playbook/about" class="imkt-navbar__link-list-link">About</a> </li> </ul> </div> </div> </section> <section class="imkt-navbar__collapsed-section"> <div class="grid grid-1"> <div class="column colspan-all"> <ul class="imkt-navbar__collapsed-link-list"> <li> <a href="https://www.atlassian.com/team-playbook/health-monitor" class="imkt-navbar__collapsed-link-list-link">Health Monitors</a> </li> <li> <a href="https://www.atlassian.com/team-playbook/plays" class="imkt-navbar__collapsed-link-list-link imkt-navbar__collapsed-link-list-link--current">Plays</a> </li> <li> <a href="https://www.atlassian.com/team-playbook/examples" class="imkt-navbar__collapsed-link-list-link">Game Plans</a> </li> <li> <a href="https://www.atlassian.com/team-playbook/about" class="imkt-navbar__collapsed-link-list-link">About</a> </li> </ul> </div> </div> </section> <script type="text/x-component"> { "type":"imkt.ui.Navbar", "params": { "hasCharlie":"true" } } </script></nav></div> <section class="play-summary play-summary--closed wpl  modal-open modal-video"> <div class="grid grid-7 tablet-grid-1 play-summary__grid"> <div class="column colspan-4 play-summary__content"> <h1>Customer Journey Mapping</h1> <hr> <div class="p--oversized"><p>Journey mapping helps you visualize how customers experience your product or service, and how they feel along the way. Scroll to step 6 for a real-life example from one of our product teams!</p> </div> <div class="play-summary__usage"> <div class="modal-link-wrapper wpl"> <p class="h5">USE THIS PLAY TO...</p> <ul> <li>Understand the customer journey&nbsp;from a specific persona's perspective&nbsp;so you can design a better experience.</li> <li>If you're struggling with <a class="shared attribute-modal-link" href="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping#">shared understanding</a>, <a class="poc attribute-modal-link" href="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping#">proof of concept</a>, or <a class="customer attribute-modal-link" href="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping#">customer centricity</a> on your <a data-track-event="playbook.clicked.health-monitor" href="https://www.atlassian.com/team-playbook/health-monitor.html">Health Monitor</a>, running this play might help.</li> </ul> <div class="modal-content-container">  <script type="text/x-component"> { "type":"imkt.teamPatterns.AttributesModal", "params": { "trigger":"customer" } } </script> </div> <div class="modal-content-container">  <script type="text/x-component"> { "type":"imkt.teamPatterns.AttributesModal", "params": { "trigger":"poc" } } </script> </div> <div class="modal-content-container">  <script type="text/x-component"> { "type":"imkt.teamPatterns.AttributesModal", "params": { "trigger":"shared" } } </script> </div> </div> </div> <div id="long-description" class="play-summary__long-description"> <p class="h5">AND I NEED THIS... WHY?</p> <p>Few things hurt software makers more than seeing something like this:</p> <p><img alt="" src="./user_journey_video_files/TwitterFeedback.png" style="width: 350px; height: 188px;"></p> <p>#ouch</p> <p>Feedback like that is a good (if painful) reminder that although we do indeed use our own products – every. single. day. – we don't necessarily use them the same ways our customers do, or for the same tasks. Whether we're building a product or running a service, it's all too easy to forget how much institutional knowledge we have, and assume our customers have it, too.&nbsp;Or get so wrapped up in optimizing the most exciting use cases that we neglect the less glamourous ones.</p> <p>No matter how mature your product or service is, it's always the right time to&nbsp;step into your customer's shoes so you can deliver what they need.</p> <link> <p class="h5">WHO SHOULD BE INVOLVED?</p> <p>Get a diverse cross-section of skills and experience involved. Likely some combination of the following:</p> <ul> <li>Experts in what customers go through in this context, such as a customer support agent, developer, or user researcher</li> <li>Service owner or the project's full-time owner</li> <li>Individuals on the front lines of providing the service</li> <li>Individuals on the front lines of making the product</li> </ul> <p>Teams that provide an internal-facing service benefit from pulling an internal customer into the session.&nbsp;<span style="line-height: 1.6em;">Be sure to designate a facilitator and scribe for the session, too.</span></p> </div> <div id="long-description-toggle" class="long-description-toggle"> <span class="read-more">Read more</span> <span class="show-less">Show less</span> </div> </div> <div class="column colspan-3 play-summary__image middle"> <a href="https://vimeo.com/228414844" target="_blank" class="video-link video-image-link" data-track-event="playbook.clicked.video"> <img class="lozad" data-src="https://wac-cdn.atlassian.com/dam/jcr:697d6c08-2cf0-41b7-a834-d24c50740d88/customer-journey-map.jpg?cdnVersion=733" alt="Customer journey mapping. Here&#39;s how to do it. " src="./user_journey_video_files/customer-journey-map.jpg" data-loaded="true"> <div class="video-link__button video-link__button--play--medium"></div> <script type="text/x-component"> { "type":"imkt.ui.VideoLink", "params": { "behavior":"overlaySection", "videoId":"228414844", "source":"vimeo" } } </script> </a> </div> </div> <script type="text/x-component"> { "type":"imkt.teamPatterns.PlaySummary", "params": { "hasExpandedImage":"false" } } </script><div class="overlay in" data-foo="bar" id="228414844">
+          <div class="modal video" tabindex="-1" role="dialog" aria-labelledby="modal-header" style="top: 62px;">
+            <a href="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping#" class="close aui-icon aui-icon-large aui-iconfont-remove-label above" data-dismiss="modal" title="Close overlay (escape key)"></a>
+            <div class="modal-header" id="modal-header"></div>
+            <div class="modal-content"><iframe frameborder="0" allowfullscreen="" src="./user_journey_video_files/228414844.html" class="vimeo video" style="width: 910px; height: 512px;"></iframe></div>
+          </div>
+        </div></section> <section class="play-vital-stats"> <div class="play-vital-stats__container"> <div class="play-vital-stats__container--grid"> <div class="play-vital-stats__stat"> <div class="image-wrap"> <div> <img class="lozad" data-src="https://wac-cdn.atlassian.com/dam/jcr:90c9025b-6ca7-4ffa-805b-a59235840b84/people.svg?cdnVersion=733" src="./user_journey_video_files/people.svg" data-loaded="true"> </div> </div> <div class="h5 heading"> People </div> <div class="text-wrapper"> <p>4-8</p> </div> </div> <div class="play-vital-stats__stat"> <div class="image-wrap"> <div> <img class="lozad" data-src="https://wac-cdn.atlassian.com/dam/jcr:ebddb5df-eb41-4ff4-82b3-453b16b89510/prep-time.svg?cdnVersion=733" src="./user_journey_video_files/prep-time.svg" data-loaded="true"> </div> </div> <div class="h5 heading"> Prep time </div> <div class="text-wrapper"> <p>15 min</p> </div> </div> <div class="play-vital-stats__stat"> <div class="image-wrap"> <div> <img class="lozad" data-src="https://wac-cdn.atlassian.com/dam/jcr:76c03f86-b46d-4165-a94a-618298cd8c68/time.svg?cdnVersion=733" src="./user_journey_video_files/time.svg" data-loaded="true"> </div> </div> <div class="h5 heading"> Time </div> <div class="text-wrapper"> <p>90 min</p> </div> </div> <div class="play-vital-stats__stat"> <div class="image-wrap"> <div> <img class="lozad" data-src="https://wac-cdn.atlassian.com/dam/jcr:b02cf4a6-4967-4d59-bbb2-f9e334dd093d/difficulty-hard.svg?cdnVersion=733" src="./user_journey_video_files/difficulty-hard.svg" data-loaded="true"> </div> </div> <div class="h5 heading"> Difficulty </div> <div class="text-wrapper"> <p>Hard</p> </div> </div> </div> </div> </section> <section class="wpl play-objective"> <div class="grid grid-7 tablet-grid-1 mobile-grid-1 vertical-gutters-standard"> <div class="column colspan-5 p--oversized play-objective__overview"> <h2>Running the play</h2> <p>Depending on how many touchpoints along the customer journey you're mapping, you might break the journey into stages and tackle each stage in pairs.</p> <link> </div> <div class="column colspan-2 play-objective__materials"> <h5 class="h5">MATERIALS</h5> <ul> <li>Whiteboard</li> <li>Markers</li> <li>Sticky notes</li> <li>Timer</li> <li><a href="https://www.atlassian.com/team-playbook/about.html">Rubber chicken</a></li> </ul> </div> </div> </section> <section class="wpl play-step"> <div class="grid grid-7 tablet-grid-1 mobile-grid-1 vertical-gutters-standard imkt-equalheights-parent"> <div class="column colspan-all play-step__heading"> <h5 class="h5 "> PREP </h5> </div> <div class="column colspan-5 play-step__main"> <h3>Define the map's scope (15 min)</h3> <p>Ideally, customer&nbsp;journey mapping focuses on the experience of a&nbsp;single <a data-track-event="playbook.clicked.personas" href="https://atlassian.design/guidelines/voiceAndTone/personas">persona</a>&nbsp;in a single scenario with a single goal.&nbsp;Else, the journey map will be too generic, and you'll miss out on opportunities for new insights and questions.</p> <p>Once scope is agreed on, double-check your invite list to make sure you've got people who know the details of what customers experience when using your product or service.</p> </div> <div class="column colspan-2 play-step__aside imkt-equalheights-child"> </div> </div> </section> <section class="wpl play-step"> <div class="grid grid-7 tablet-grid-1 mobile-grid-1 vertical-gutters-standard imkt-equalheights-parent"> <div class="column colspan-all play-step__heading"> <h5 class="h5 "> STEP 1 </h5> </div> <div class="column colspan-5 play-step__main"> <h3>Set the stage (5 min)</h3> <p>It's really important that your group understands the user <a data-track-event="playbook.clicked.personas" href="https://atlassian.design/guidelines/voiceAndTone/personas">persona</a>&nbsp;and the&nbsp;goal driving their journey. Decide on or recap with your group the target persona and the scope of the journey being explored in your session.</p> <p>E.g. "We're going to focus on the&nbsp;Alana&nbsp;persona. Alana's role is&nbsp;project manager, and her goal is to find a scalable way for her team to share their knowledge so they spend less time explaining things over email. We're going to map out what it's like for Alana to&nbsp;evaluate Confluence for this purpose, from the point where she clicks that TRY button, to the point where she decides to buy it – or not."</p> </div> <div class="column colspan-2 play-step__aside imkt-equalheights-child"> </div> </div> </section> <section class="wpl play-step"> <div class="grid grid-7 tablet-grid-1 mobile-grid-1 vertical-gutters-standard imkt-equalheights-parent"> <div class="column colspan-all play-step__heading"> <h5 class="h5 "> STEP 2 </h5> </div> <div class="column colspan-5 play-step__main"> <div class=" block block--heading-text-block"> <h3>Build a customer back-story (10 min)</h3> <p>Have the group use sticky notes to post up reasons why your target persona&nbsp;would be on this journey in the first place. Odds are, you'll get a range of responses: everything from high-level goals, to pain points, to requested features or services. Group similar ideas and groom the stickies so you can design a story from them.</p> <p>Take a look at the example provided in the call out of this section. This back story starts with the pain points – the reasons why Alana would be wanting something like Confluence in the first place.</p> <ul> <li>E.g., "Her team's knowledge is in silos"</li> </ul> <p>Then it basically has a list of requirements – what Alana is looking for in a product to solve the bottom pain points.&nbsp;This is essentially a mental shopping list for the group to refer to when mapping out the customer&nbsp;journey.</p> <ul> <li>E.g., "Provide structure"</li> </ul> <p>Then it has the outcomes – goals that Alana wants to achieve by using the product</p> <ul> <li>E.g., "To keep my team focused on their work instead of distracted by unnecessary emails and shoulder-taps"</li> </ul> <p>And finally the highest-level goal for her and her team.</p> <ul> <li>E.g., "Improve team efficiency"</li> </ul> <p>Round off the back story by getting someone to say out loud what they think the overall story so far is, highlighting the main goals the customer has. This ensures a shared understanding that will inform the journey mapping, and improve the chances that your team will map it from the persona's point of view (not their own).</p> <ul> <li>E.g., "Alana and her team are frustrated by having to spend so much time explaining their work to each other, and to stakeholders. They want a way to share their knowledge, and organize it so it's easy for people outside their team to find, so they can focus more energy on the tasks at hand."</li> </ul> </div> </div> <div class="column colspan-2 play-step__aside imkt-equalheights-child"> <div class="tip tip--image-modal gray-light middle"> <h5 class="h5 tip--image-modal__heading">FOR EXAMPLE...</h5> <p>Here's a backstory the Confluence team created.&nbsp;</p> <div class="link-wrap"><a href="https://www.atlassian.com/dam/jcr:3cc2cf89-768a-4bc3-aba2-8877bb89641c/journeymapping-goal.jpg" class="button green-hollow standard" data-track-event="playbook.clicked.confluence-example">Show me</a></div> <script type="text/x-component"> { "type":"imkt.ui.ModalImage", "params": { "imgSrc":"/dam/jcr:3cc2cf89-768a-4bc3-aba2-8877bb89641c/journeymapping-goal.jpg", "useImgSrc":true, "useDomRoot":true } } </script></div> </div> </div> </section> <section class="wpl play-step"> <div class="grid grid-7 tablet-grid-1 mobile-grid-1 vertical-gutters-standard imkt-equalheights-parent"> <div class="column colspan-all play-step__heading"> <h5 class="h5 "> STEP 3 </h5> </div> <div class="column colspan-5 play-step__main"> <h3>Map what the customer thinks and feels (30 min)</h3> <p>With the target persona, back story, and destination in place, it's time to walk a mile in her shoes. Show participants how to get going by writing the first thing that the persona does on a sticky note. The whole group can then grab stickies and markers and continue plotting the journey action by action, one action per sticky.</p> <p>This can also include questions and decisions! If the journey branches based on the answers or choices, have one participant map out each path.</p> <p>Sometimes customer&nbsp;journeys involve more than one&nbsp;channel for interaction, and this could be important for your group to capture. For each action on the journey, ask what channel(s) are involved, and write them as initials on that sticky. Depending on your context, channels might include a website, phone, email, postal mail, face-to-face, and/or social media.</p> <p>It might also help to visually split the mapping area in&nbsp;zones, such as "on-stage" (what the customer experiences) versus "back-stage" (what systems and processes are active in the background).</p> <p>Journey mapping can open up rich discussion, but try to avoid delving into the wrong sort of detail. The idea is to explore the journey and mine it for opportunities to improve the experience instead of coming up with solutions on the spot.&nbsp;Try to be the commentator, not the critic. And remember: you're there to call out what’s going on for the&nbsp;persona, not explain what’s going on with internal systems and processes.</p> </div> <div class="column colspan-2 play-step__aside imkt-equalheights-child"> <div class="tip tip--protip gray-light middle"> <h5 class="h5 tip--protip__heading">Pro tip</h5> <p>Use different color sticky notes for actions, questions, decisions, etc. so it's easier to see each element when you look at the whole map.</p> </div> <div class="tip tip--troubleshooting gray-light middle"> <h5 class="h5 tip--troubleshooting__heading">ANTI-PATTERN</h5> <p><strong>Your map has heaps of branches and loops.</strong></p> <p>Your scope is probably too high-level. Map a specific journey that focuses on a specific task, rather than mapping how a customer might explore for the first time.</p> </div> </div> </div> </section> <section class="wpl play-step"> <div class="grid grid-7 tablet-grid-1 mobile-grid-1 vertical-gutters-standard imkt-equalheights-parent"> <div class="column colspan-all play-step__heading"> <h5 class="h5 "> STEP 4 </h5> </div> <div class="column colspan-5 play-step__main"> <h3>Map the pain points (10 min)</h3> <p>"Ok, show me where it hurts." Go back over the map and jot down pain points&nbsp;on sticky notes. Place them underneath the corresponding touchpoints on the journey. Where is there frustration? Errors? Bottlenecks? Things not working as expected?</p> <p>For added value, talk about the impact of each pain point. Is it trivial, or is it likely to necessitate some kind of hack or work-around. Even worse: does it cause the persona to abandon their journey entirely?</p> </div> <div class="column colspan-2 play-step__aside imkt-equalheights-child"> </div> </div> </section> <section class="wpl play-step"> <div class="grid grid-7 tablet-grid-1 mobile-grid-1 vertical-gutters-standard imkt-equalheights-parent"> <div class="column colspan-all play-step__heading"> <h5 class="h5 "> STEP 5 </h5> </div> <div class="column colspan-5 play-step__main"> <h3>Chart a sentiment line (15 min)</h3> <p>(Optional, but totally worth it.) Plot the persona's sentiment in an area under your journey map, so that you can see how their emotional experience changes with each touchpoint. Look for things like:</p> <ul> <li>Areas of sawtooth sentiment – going up and down a lot is pretty common, but that doesn't mean it's not exhausting for the persona.</li> <li>Rapid drops&nbsp;– this indicates large gaps in expectations, and frustration.</li> <li>Troughs&nbsp;– these indicate opportunities for lifting overall sentiments.</li> <li>Positive peaks&nbsp;– can you design an experience that lifts them even higher? Can you delight the persona and inspire her to recommend you?</li> </ul> <p>Remember that pain points don't always cause immediate drops in customer sentiment. Consider whether a pain point early in the journey might result in negative feelings later on.</p> </div> <div class="column colspan-2 play-step__aside imkt-equalheights-child"> <div class="tip tip--protip gray-light bottom"> <h5 class="h5 tip--protip__heading">Pro tip</h5> <p>Having a customers in the session to help validate and challenge the journey map means you'll be more confident what comes out of this session.&nbsp;</p> </div> </div> </div> </section> <section class="wpl play-step"> <div class="grid grid-7 tablet-grid-1 mobile-grid-1 vertical-gutters-standard imkt-equalheights-parent"> <div class="column colspan-all play-step__heading"> <h5 class="h5 "> STEP 6 </h5> </div> <div class="column colspan-5 play-step__main"> <h3>Analyse the big picture (15 min)</h3> <p>As a group, stand back from the journey map and discuss&nbsp;trends and patterns in the experience.</p> <ul> <li>Where are the areas of greatest confusion/frustration?</li> <li>Where is the journey falling short of expectations?</li> <li>Are there any new un-met needs that have come up for the user type?</li> <li>Are there areas in the process being needlessly complicated or duplicated?&nbsp;Are there lots of emails being sent that aren’t actually useful?&nbsp;</li> </ul> <p>Then, discuss&nbsp;areas of opportunity to improve the experience. E.g., are there areas in the process where seven steps could be reduced to three? Is that verification email actually needed?</p> <script type="application/ld+json"> { "@context": "https://schema.org", "@type": "VideoObject", "name": "How to create a customer journey map", "description": "Customer journey mapping helps you visualize how customers experience your product or service, and how they feel along the way. Use these step-by-step instructions to visualize the customer journey from a specific persona's perspective so you can design a better experience.", "thumbnailUrl": "https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F648459821_1280x720.webp&src1=https%3A%2F%2Ff.vimeocdn.com%2Fimages_v6%2Fshare%2Fplay_icon_overlay.png", "uploadDate": "2017-08-04T15:16:44-04:00", "duration": "PT00H00M53S", "embedUrl": "https://player.vimeo.com/video/228414844", "interactionCount": "5514" } </script> </div> <div class="column colspan-2 play-step__aside imkt-equalheights-child"> <div class="tip tip--image-modal gray-light bottom"> <h5 class="h5 tip--image-modal__heading">FOR EXAMPLE...</h5> <p>Here's a user onboarding jouney map our Engaging First Impressions team created.</p> <div class="link-wrap"><a href="https://www.atlassian.com/dam/jcr:5bb71879-8fd4-492f-ad46-0947a7e546be/example-EFI-journeymapping.jpg" class="button green-hollow standard" data-track-event="playbook.clicked.engaging-first-impressions-example">Show me</a></div> <script type="text/x-component"> { "type":"imkt.ui.ModalImage", "params": { "imgSrc":"/dam/jcr:5bb71879-8fd4-492f-ad46-0947a7e546be/example-EFI-journeymapping.jpg", "useImgSrc":true, "useDomRoot":true } } </script></div> </div> </div> </section> <section class="wpl play-cta blue dark"> <div class="grid grid-1 vertical-padding-standard"> <div class="column colspan-all text-center"> <h2>Nailed it?</h2> <p>Be sure to run a full Health Monitor session or checkpoint with your team to see if you're improving.</p> <a href="https://www.atlassian.com/team-playbook/health-monitor#" class="button blue-dark standard" data-track-event="playbook.clicked.health-monitor">Find your Health Monitor</a> </div> </div> </section> <section class="wpl play-conclusion white"> <div class="grid grid-3 tablet-grid-1 vertical-gutters-standard vertical-padding-standard"> <div class="column colspan-1"> <h3>Variations</h3> <h5>MAP A FUTURE STATE</h5> <p>Instead of mapping the current experience, map out an experience you haven't delivered yet. You can map one that simply improves on existing pain points, or design an absolutely visionary amazeballs awesome experience.</p> </div> <div class="column colspan-1"> <h3>Follow-ups</h3> <p>After the mapping session, capture notes and photos of the group and the artifacts created on a Confluence page. Include a write-up of your analysis and recommendations you came up with. What pain points have the highest impact to customers' evaluation, adoption and usage of our products? What opportunities are there, and which teams should know about them?</p> <h5>KEEP IT VISIBLE</h5> <p>It's best if you can keep the journey on a wall near your team. If not, capture the journey map in pixels using Illustrator, Gliffy, or a similar tool. While you're at it, try to add some order and structure to the journey map you created.</p> <h5>KEEP IT REAL</h5> <p>Validate your journey map with customers if at all possible. And yes: you might learn that your entire map is invalid and have to start again from scratch. (Better to find that out now, versus after you've delivered the journey!) Major initiatives typically make multiple journey maps to capture the needs of multiple personas, and often iterate on each map.</p> <link> </div> <div class="column colspan-1"> <h5>RELATED PLAYS</h5> <ul> <li><a data-track-event="playbook.clicked.customer-interview" href="https://www.atlassian.com/team-playbook/plays/customer-interview.html">Customer Interview</a></li> <li><a data-track-event="playbook.clicked.project-poster" href="https://www.atlassian.com/team-playbook/plays/project-poster.html">Project Poster</a></li> </ul> </div> </div> </section> <section class="wpl imkt-equalheights-parent sharing-community-ctas"> <div class="grid grid-2 vertical-gutters-standard vertical-padding-standard"> <div class="column colspan-1 column-cta blue dark imkt-equalheights-child text-center" style="height: 235px;"> <h3>Want even more Playbook?</h3> <p>Drop your email below to be notified when we add new Health Monitors and plays.&nbsp;</p> <div class="exact-target-form exact-target-form__wrapper"> <form class="exact-target-form__form-element" data-mailing-list-id="1395680" data-track-event="playbook.clicked.submit-email" novalidate="novalidate"> <span class="exact-target-form__hp-field-wrapper"> <input type="text" name="list_name" aria-label="Keep this field blank"> </span> <span class="exact-target-form__email-field-wrapper email-input-text-span"> <input type="email" name="email" placeholder="Please enter your work email" autocomplete="email" aria-label="Enter email address"> </span> <span class="exact-target-form__button-wrapper email-input-submit-span"> <input type="submit" class="button white-hollow small" value="Submit"> </span> </form> <div class="exact-target-form__success-message success-message display-none"> <p>Thanks! Now get back to work.</p> </div> <script type="text/x-component-translate"> /* <sl:translate_json> */ { "sl_translate": "consentLabel", "type":"imkt.common.ExactTargetForm", "params": { "mailingListId":"1395680", "externalLink":"", "subscriptionKey":"atlassian.atlassianTeamPlaybook", "useGdpr":true, "needsConsent":false, "consentKey":"", "consentLabel":"", "privacyPolicy":"", "gdprId":"gdpr-48c251da-3829-4d19-b867-c204fdf9b8cf", "site":"atlassian" } } /* </sl:translate_json> */ </script></div> </div> <div class="column colspan-1 blue column-cta imkt-equalheights-child text-center" style="height: 235px;"> <div class=" block block--heading-text-block"> <h3>Got feedback?</h3> <p>Drop a question or comment on the Atlassian&nbsp;Community&nbsp;site.</p> </div> <a href="https://community.atlassian.com/t5/Team-Playbook/ct-p/team-playbook" class="button white-hollow secondary" data-track-event="playbook.clicked.community">Join the conversation</a> </div> </div> </section> <div> <script async="" type="text/javascript" src="./user_journey_video_files/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin_issuecollector.js"></script> </div> </main> <footer id="footer" class="footer footer--wac"> <div class="container-fluid xs-none-bottom n20"> <div class="container-fluid xs-none-top footer-links"> <div class="row"> <div class="column column-lg-2 column-lg-offset-1"> <div class="component component--image"> <a href="https://www.atlassian.com/" class="component--image__link"> <img id="1bdd15c9" alt="Atlassian" class="lozad component__image" style="width:125px;" data-src="https://wac-cdn.atlassian.com/dam/jcr:bec8148d-b7dc-493f-bbba-7519b0637581/logos-atlassian-logo-gradient-horizontal-neutral.svg?cdnVersion=733" src="./user_journey_video_files/logos-atlassian-logo-gradient-horizontal-neutral.svg" data-loaded="true"> </a> </div> </div> <div class="column column-md-3 column-lg-2 column-xs-6"> <div class="component component--heading"> <h3 class="h5 heading"> Products </h3> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/software/jira" class="component__link default"> Jira Software </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/software/jira/align" class="component__link default"> Jira Align </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/software/jira/service-desk" class="component__link default"> Jira Service Desk </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/software/confluence" class="component__link default"> Confluence </a> </div> <div class="component component--link-button"> <a href="https://www.trello.com/home" class="component__link default"> Trello </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/software/bitbucket" class="component__link default"> Bitbucket </a> </div> <div class="component component--link-button footer-view-all"> <a href="https://www.atlassian.com/software" class="component__link default"> View all products </a> </div> </div> <div class="column column-md-3 column-lg-2 column-xs-6"> <div class="component component--heading"> <h3 class="h5 heading"> Resources </h3> </div> <div class="component component--link-button"> <a href="https://support.atlassian.com/" class="component__link default"> Technical Support </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/licensing/purchase-licensing" class="component__link default"> Purchasing &amp; licensing </a> </div> <div class="component component--link-button"> <a href="https://community.atlassian.com/" class="component__link default"> Atlassian Community </a> </div> <div class="component component--link-button"> <a href="https://confluence.atlassian.com/kb" class="component__link default"> Knowledge base </a> </div> <div class="component component--link-button"> <a href="https://marketplace.atlassian.com/" class="component__link default"> Marketplace </a> </div> <div class="component component--link-button"> <a href="https://my.atlassian.com/products/index" class="component__link default"> My Account </a> </div> <div class="component component--link-button footer-view-all"> <a href="https://support.atlassian.com/contact/" class="component__link default"> Create support ticket </a> </div> </div> <div class="column column-md-3 column-lg-2 column-xs-6"> <div class="component component--heading"> <h3 class="h5 heading"> Expand &amp; Learn </h3> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/partners" class="component__link default"> Partners </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/university" class="component__link default"> Training &amp; Certification </a> </div> <div class="component component--link-button"> <a href="https://confluence.atlassian.com/display/ALLDOC/Atlassian+Documentation" class="component__link default"> Documentation </a> </div> <div class="component component--link-button"> <a href="https://developer.atlassian.com/" class="component__link default"> Developer Resources </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/licensing/purchase-licensing" class="component__link default"> Purchasing FAQ </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/enterprise/services" class="component__link default"> Enterprise services </a> </div> <div class="component component--link-button footer-view-all"> <a href="https://www.atlassian.com/resources" class="component__link default"> View all resources </a> </div> </div> <div class="column column-md-3 column-lg-2 column-xs-6"> <div class="component component--heading"> <h3 class="h5 heading"> About Atlassian </h3> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/company" class="component__link default"> Company </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/company/careers" class="component__link default"> Careers </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/company/events" class="component__link default"> Events </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/blog" class="component__link default"> Blogs </a> </div> <div class="component component--link-button"> <a href="https://investors.atlassian.com/" class="component__link default"> Investor Relations </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/trust" class="component__link default"> Trust &amp; Security </a> </div> <div class="component component--link-button footer-view-all"> <a href="https://www.atlassian.com/company/contact" class="component__link default"> Contact us </a> </div> </div> </div> </div> <div class="container-fluid xs-none footer--wac__copyright"> <div class="row"> <div class="column column-lg-10 column-lg-offset-1 flex-container"> <div class="language-selector"> <a class="language-selector--text" href="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping#">Languages</a> <form action="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping#" method="GET"> <select option="language-selector" name="url"> <option disabled="">Choose your language</option> <option aria-label="Deutsch" label="Deutsch" class="notranslate SL_opaque" data-lang="de" value="https://www.atlassian.com/de/team-playbook/plays/customer-journey-mapping" selected="selected">Deutsch</option> <option aria-label="English" label="English" class="notranslate SL_opaque" data-lang="en" value="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping">English</option> <option aria-label="Čeština" label="Čeština" class="notranslate SL_opaque" data-lang="cs" value="https://www.atlassian.com/cs/team-playbook/plays/customer-journey-mapping">Čeština</option> <option aria-label="Español" label="Español" class="notranslate SL_opaque" data-lang="es" value="https://www.atlassian.com/es/team-playbook/plays/customer-journey-mapping">Español</option> <option aria-label="Français" label="Français" class="notranslate SL_opaque" data-lang="fr" value="https://www.atlassian.com/fr/team-playbook/plays/customer-journey-mapping">Français</option> <option aria-label="Italiano" label="Italiano" class="notranslate SL_opaque" data-lang="it" value="https://www.atlassian.com/it/team-playbook/plays/customer-journey-mapping">Italiano</option> <option aria-label="한국어" label="한국어" class="notranslate SL_opaque" data-lang="ko" value="https://www.atlassian.com/ko/team-playbook/plays/customer-journey-mapping">한국어</option> <option aria-label="Magyar" label="Magyar" class="notranslate SL_opaque" data-lang="hu" value="https://www.atlassian.com/hu/team-playbook/plays/customer-journey-mapping">Magyar</option> <option aria-label="Nederlands" label="Nederlands" class="notranslate SL_opaque" data-lang="nl" value="https://www.atlassian.com/nl/team-playbook/plays/customer-journey-mapping">Nederlands</option> <option aria-label="日本語" label="日本語" class="notranslate SL_opaque" data-lang="ja" value="https://www.atlassian.com/ja/team-playbook/plays/customer-journey-mapping">日本語</option> <option aria-label="Polski" label="Polski" class="notranslate SL_opaque" data-lang="pl" value="https://www.atlassian.com/pl/team-playbook/plays/customer-journey-mapping">Polski</option> <option aria-label="Português" label="Português" class="notranslate SL_opaque" data-lang="br" value="https://www.atlassian.com/br/team-playbook/plays/customer-journey-mapping">Português</option> <option aria-label="Română" label="Română" class="notranslate SL_opaque" data-lang="ro" value="https://www.atlassian.com/ro/team-playbook/plays/customer-journey-mapping">Română</option> <option aria-label="Suomi" label="Suomi" class="notranslate SL_opaque" data-lang="fi" value="https://www.atlassian.com/fi/team-playbook/plays/customer-journey-mapping">Suomi</option> <option aria-label="русский" label="русский" class="notranslate SL_opaque" data-lang="ru" value="https://www.atlassian.com/ru/team-playbook/plays/customer-journey-mapping">русский</option> <option aria-label="中文" label="中文" class="notranslate SL_opaque" data-lang="zh" value="https://www.atlassian.com/zh/team-playbook/plays/customer-journey-mapping">中文</option> </select> <script type="text/x-component"> { "type":"imkt.common.LanguageSelector", "params": { } } </script></form> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/legal/privacy-policy" class="component__link default"> Privacy policy </a> </div> <div class="component component--link-button"> <a href="https://www.atlassian.com/legal/cloud-terms-of-service" class="component__link default"> Terms </a> </div> <div class="component component--copyright"> <p>Copyright © 2019 Atlassian</p> </div> <div class="imkt-social-buttons-group"> <div class="imkt-social-buttons standard"> <ul> <li class="imkt-social-button social-code facebook"> <a href="https://www.facebook.com/Atlassian" title="Atlassian on Facebook"></a> </li> <li class="imkt-social-button social-code twitter"> <a href="https://twitter.com/atlassian" title="Follow us on Twitter"></a> </li> <li class="imkt-social-button social-code linked-in"> <a href="https://www.linkedin.com/company/atlassian" title="Atlassian on LinkedIn"></a> </li> <li class="imkt-social-button social-code youtube"> <a href="https://www.youtube.com/user/GoAtlassian" title="Atlassian on YouTube"></a> </li> </ul> </div> </div> </div> </div> </div> </div> </footer> <iframe src="./user_journey_video_files/a1096093.html" hidden="" aria-hidden="true" tabindex="-1" title="Optimizely Internal Frame" height="0" width="0" style="display: none;"></iframe><script type="text/javascript" src="./user_journey_video_files/react-bundle.min.js"></script> <script type="text/javascript" src="./user_journey_video_files/header.min.js"></script> <script type="text/javascript" src="./user_journey_video_files/imkt-vendors.min.js"></script> <script type="text/javascript" src="./user_journey_video_files/main.min.js"></script> <script type="text/javascript"> (function(){ var imkt = window.imkt || (window.imkt = {}); imkt.isEditMode = false; imkt.isProduction = true; imkt.constants = imkt.constants || {}; imkt.constants.rootPath = "/"; imkt.constants.assetPath = "https://wac-cdn.atlassian.com" + "/assets/"; imkt.constants.libPath = imkt.constants.assetPath + "bower_components/"; imkt.constants.cdnVersionQuery = "?cdnVersion=733"; imkt.constants.isDevUser = false; imkt.constants.isFreeEnabled = true; imkt.constants.getUserAccounts = false; imkt.constants.headerLoginMenu = true; imkt.constants.public = true; imkt.constants.mobileBreakpoint = 640; })(); </script> <script type="text/javascript" src="./user_journey_video_files/app.min.js"></script> <script type="text/x-component"> { "type":"imkt.pages.WACPage", "params": { } } </script> <script> function initializeATLAnalytics() { var pageViewProperties = { contentSite: 'Team Playbook Microsite', contentType: 'Microsite', contentProduct: 'Other' }; if (typeof ace !== 'undefined') { ace.analytics.Initializer.initWithPageAnalytics('kiv6wyh2nw', pageViewProperties, null, null, window.atlGlobalLoadStart); } if (imkt && imkt.utils && imkt.utils.tracking) { imkt.utils.tracking.initProductAnalytics(); imkt.utils.tracking.trackPage(window.location.origin + window.location.pathname); } } </script> <script type="text/javascript" class="optanon-category-2"> loadExternalJS("https://atl-global.atlassian.com/js/atl-global.min.js", document.body, initializeATLAnalytics); </script><script src="./user_journey_video_files/atl-global.min.js" type="text/javascript"></script> <!-- polyfill for Object.assign & IntersectionObserver--> <script crossorigin="anonymous" src="./user_journey_video_files/polyfill.min.js"></script> <script type="text/javascript" src="./user_journey_video_files/lozad.min.js"></script> <script type="text/javascript"> if (typeof toastr !== "undefined") { toastr.options = { "progressBar": true, "timeOut": "1500" } } /*Initialize library to lazy load images*/ var observer = lozad(".lozad", { threshold: 0.1, load: function(el) { if (el.getAttribute("data-src") != undefined) { el.src = el.getAttribute("data-src"); } if (typeof toastr !== "undefined") { el.onload = function() { toastr["success"](el.localName.toUpperCase() + " lazy loaded.") } } } }); /*Picture observer*/ /*with default `load` method*/ var pictureObserver = lozad(".lozad-picture", { threshold: 0.1 }); /*Background observer*/ /*with default `load` method*/ var backgroundObserver = lozad(".lozad-background", { threshold: 0.1 }); observer.observe(); pictureObserver.observe(); backgroundObserver.observe(); </script>  <!-- LastRendered: Dec 25, 2019 10:20:18 AM --> 
+<a href="https://www.atlassian.com/team-playbook/plays/customer-journey-mapping#" id="atlwdg-trigger" class="atlwdg-trigger atlwdg-RIGHT">Give Feedback</a><div id="atlwdg-blanket" class="atlwdg-blanket" style="display: none;"></div><iframe height="0" width="0" style="display: none; visibility: hidden;" src="./user_journey_video_files/activityi.html"></iframe><div id="atlwdg-container" class="atlwdg-popup atlwdg-hidden"></div><script type="text/javascript" id="">(function(a,b,c,d,e){a=b.createElement(c);b=b.getElementsByTagName(c)[0];a.async=1;a.id=e;a.src=d;b.parentNode.insertBefore(a,b)})(window,document,"script","https://scripts.demandbase.com/BwkB5d1U.min.js","demandbase_js_lib");</script>
+
+<script type="text/javascript" id="">var google_conversion_id=975152762,google_custom_params=window.google_tag_params,google_remarketing_only=!0;</script>
+<script type="text/javascript" id="" src="./user_journey_video_files/f(1).txt"></script>
+<script type="text/javascript" id="" src="./user_journey_video_files/oct.js"></script><script type="text/javascript" id="" charset="utf-8">var _eiq=_eiq||[],_engagio_settings={accountId:"bdc0527e86ab81381442177575715e753bc2af37"};(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://":"http://")+"web-analytics.engagio.com/js/ei.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();</script><script type="text/javascript" id="">ace.mkt.Helpers.throttle=function(a,h){var c,f,b,d=null,e=0,k=function(){e=new Date;d=null;b=a.apply(c,f)};return function(){var l=new Date;e||(e=l);var m=h-(l-e);c=this;f=arguments;0>=m?(clearTimeout(d),d=null,e=l,b=a.apply(c,f)):d||(d=setTimeout(k,m));return b}};ace.analytics.Tracking._autoTrackScrollEvent=function(a,h,c,f){ace.analytics.Tracking.trackEvent("scroll",{initialPercentage:a,windowHeight:h,documentHeight:c,percentage:f,_atl_path:ace.mkt.Cookie.readCookie("__atl_path")||""})};
+ace.analytics.Tracking.autoTrackScroll=function(){try{var a=Math.max(document.body.scrollHeight,document.body.offsetHeight,document.documentElement.clientHeight,document.documentElement.scrollHeight,document.documentElement.offsetHeight),h=window.innerHeight?window.innerHeight:window.screen.height,c=document.querySelector("body").scrollTop+h,f=parseInt(c/a*100),b=25,d={};for(a=1;a<100/b+1;a++)d[a*b]=!1;var e=ace.mkt.Helpers.throttle(function(){for(var a=Math.max(document.body.scrollHeight,document.body.offsetHeight,
+document.documentElement.clientHeight,document.documentElement.scrollHeight,document.documentElement.offsetHeight),c=window.innerHeight?window.innerHeight:window.screen.height,e=document.documentElement.scrollTop+c,g=1;g<100/b+1;g++)e>=(a-1)*g*b/100&&!d[g*b]&&(ace.analytics.Tracking._autoTrackScrollEvent(f,c,a,g*b),d[g*b]=!0)},500);window.addEventListener("scroll",e)}catch(k){"undefined"!==typeof Bugsnag&&Bugsnag.notifyException(k)}};ace.analytics.Tracking.autoTrackScroll();</script>
+<script type="text/javascript" id="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","221213238088884");fbq("track","PageView");</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=221213238088884&amp;ev=PageView&amp;noscript=1"></noscript>
+
+<script type="text/javascript" id="">(function(){function b(){!1===c&&(c=!0,Munchkin.init("594-ATC-127"))}var c=!1,a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="//munchkin.marketo.net/munchkin.js";a.onreadystatechange=function(){"complete"!=this.readyState&&"loaded"!=this.readyState||b()};a.onload=b;document.getElementsByTagName("head")[0].appendChild(a)})();</script>
+<script type="text/javascript" id="">(function(a,d){var b="pdst-capture",e="script";if(!d.getElementById(b)){a.pdst=a.pdst||function(){(a.pdst.q=a.pdst.q||[]).push(arguments)};var c=d.createElement(e);c.id=b;c.async=1;c.src="https://cdn.pdst.fm/ping.min.js";b=d.getElementsByTagName(e)[0];b.parentNode.insertBefore(c,b)}a.pdst("conf",{key:"92fd761d664a49d2af940150dafdc777"});a.pdst("view")})(window,document);</script> <script type="text/javascript" id="">!function(){var a=window.driftt=window.drift=window.driftt||[];if(!a.init){if(a.invoked)return void(window.console&&console.error&&console.error("Drift snippet included twice."));a.invoked=!0;a.methods="identify config track reset debug show ping page hide off on".split(" ");a.factory=function(c){return function(){var b=Array.prototype.slice.call(arguments);return b.unshift(c),a.push(b),a}};a.methods.forEach(function(c){a[c]=a.factory(c)});a.load=function(a){var b=3E5,c=Math.ceil(new Date/b)*b;b=
+document.createElement("script");b.type="text/javascript";b.async=!0;b.crossorigin="anonymous";b.src="https://js.driftt.com/include/"+c+"/"+a+".js";a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)}}}();drift.SNIPPET_VERSION="0.3.1";drift.load("stw9er5atsvc");</script> <script type="text/javascript" id="">(function(a,b){"function"!=typeof a.ClickTaleCreateDOMElement&&(a.ClickTaleCreateDOMElement=function(a){return b.createElementNS?b.createElementNS("http://www.w3.org/1999/xhtml",a):b.createElement(a)});a.WRInitTime=(new Date).getTime();var c=ClickTaleCreateDOMElement("script");c.type="text/javascript";var d="https:"==b.location.protocol?"https://cdnssl.clicktale.net/":"http://cdn.clicktale.net/";d+="www33/ptc/ef81b94c-8498-4f12-b358-eb76a000a247.js";c.src=d;b.getElementsByTagName("body")[0].appendChild(c)})(window,
+document);</script><script type="text/javascript" src="./user_journey_video_files/ef81b94c-8498-4f12-b358-eb76a000a247.js"></script><img style="display:none" alt="" aria-hidden="true" id="db_bw_pixel_ad" src="./user_journey_video_files/demandbase"><script type="text/javascript">// Copyright 2006-2019 ClickTale Ltd., US Patent Pending
+// PID: 45
+// WR destination: www33
+// WR version: latest
+// Recording ratio: 0.6
+
+(function (){
+	var dependencyCallback;
+        var scriptSyncTokens = ["wr"];
+        var ct2Callback, isRecorderReady;
+    var dependencies = scriptSyncTokens.slice(0);
+    var clickTaleOnReadyList = window.ClickTaleOnReadyList || (window.ClickTaleOnReadyList = []);
+    var indexOf = (function(){if(Array.prototype.indexOf){return function(array,value){return array.indexOf(value)}}return function(array,value){var length=array.length;for(var i=0;i<length;i++){if(array[i]===value){return i}}return -1}})();
+    function isValidToken(token) {
+        if (indexOf(scriptSyncTokens, token) > -1) {
+            var index = indexOf(dependencies, token);
+
+            if (index > -1) {
+                dependencies.splice(index, 1);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    clickTaleOnReadyList.push(function () {
+        if (ct2Callback) {
+            ct2Callback();
+        }
+
+        isRecorderReady = true;
+    });
+
+    ClickTaleGlobal.scripts.dependencies = {
+        setDependencies: function (deps) {
+            scriptSyncTokens = deps;
+        },
+        onDependencyResolved: function (callback) {
+            dependencyCallback = callback;
+        },
+        notifyScriptLoaded: function (token) {
+            if (isValidToken(token)) {
+                if (dependencies.length === 0 && typeof dependencyCallback === "function") {
+                    dependencyCallback();
+                }
+            }
+        }
+    };
+
+    ClickTaleGlobal.scripts.integration = {
+        onReady: function (callback) {
+            if (isRecorderReady) {
+                callback();
+            }
+            else {
+                ct2Callback = callback;
+            }
+        }
+    };
+})();
+
+
+window.ClickTaleGlobal.VisualEditorDesignerExists = !!0;
+
+window.ClickTaleIsXHTMLCompliant = true;
+if (typeof (ClickTaleCreateDOMElement) != "function")
+{
+	ClickTaleCreateDOMElement = function(tagName)
+	{
+		if (document.createElementNS)
+		{
+			return document.createElementNS('http://www.w3.org/1999/xhtml', tagName);
+		}
+		return document.createElement(tagName);
+	}
+}
+
+if (typeof (ClickTaleAppendInHead) != "function")
+{
+	ClickTaleAppendInHead = function(element)
+	{
+		var parent = document.getElementsByTagName('head').item(0) || document.documentElement;
+		parent.appendChild(element);
+	}
+}
+
+if (typeof (ClickTaleXHTMLCompliantScriptTagCreate) != "function")
+{
+	ClickTaleXHTMLCompliantScriptTagCreate = function(code)
+	{
+		var script = ClickTaleCreateDOMElement('script');
+		script.setAttribute("type", "text/javascript");
+		script.text = code;
+		return script;
+	}
+}	
+
+
+
+// Start of user-defined pre WR code (PreLoad)
+//PTC Code Version 8
+
+window.ClickTaleSettings = window.ClickTaleSettings || {};
+window.ClickTaleSettings.PTC = window.ClickTaleSettings.PTC || {};
+if (document.readyState === 'complete') {
+    window.ClickTaleIncludedOnWindowLoad = true;
+}
+window.ClickTaleIncludedOnDOMReady = true;
+window.ClickTaleSettings.PTC.EnableChangeMonitor = false;
+window.ClickTaleSettings.PTC.UseTransport = true;
+window.ClickTaleUIDCookieName = 'WRUIDAWS';
+
+
+
+window.ClickTaleSettings.PTC.doOnlyWhen = function (toDoHandler, toCheckHandler, interval, times, failHandler) {
+    if ((!toDoHandler) || (!toCheckHandler)) return;
+    if (typeof interval == "undefined") interval = 100;
+    if (typeof times == "undefined") times = 10;
+    if (--times < 0) {
+        if (typeof failHandler === 'function') {
+            failHandler();
+        }
+        return;
+    }
+    if (toCheckHandler()) {
+        toDoHandler();
+        return;
+    }
+    setTimeout(function () {
+        window.ClickTaleSettings.PTC.doOnlyWhen(toDoHandler, toCheckHandler, interval, times, failHandler);
+    }, interval);
+};
+
+var staticIps = ['4.14.7.234', '4.15.43.214', '4.15.43.223', '14.143.132.208', '38.122.224.67', '62.87.203.114', '72.48.156.242', '72.48.156.244', '78.31.154.237', '103.233.242.8', '103.233.242.9',
+    '104.192.136.147', '104.192.136.211', '104.192.138.240', '104.192.139.144', '104.192.139.145', '104.192.139.233', '119.17.160.225',
+    '119.17.160.226', '153.150.114.121', '165.254.21.32', '165.254.21.33', '175.143.105.73', '177.101.193.50', '177.101.193.51', '185.48.102.19', '185.166.140.232', '191.32.51.97',
+    '191.32.51.98', '195.160.232.244', '195.160.235.244', '200.210.150.226', '203.177.65.173', '210.1.85.111', '210.19.86.66', '210.213.237.166', '213.208.192.131', '222.127.28.30'];
+
+window.CEC = window.CEC || {};
+window.CEC.onInit = function () {
+    if (localStorage.getItem('ctShouldRec') === 'false') {
+        CEC.disable();
+    }
+    else if (localStorage.getItem('ctShouldRec') !== 'true') {
+        /**
+         *
+         * @param {XMLHttpRequest} xhr
+         */
+        CEC.onXhrCreated = function (xhr) {
+            var oldOpen = xhr.open;
+            xhr.open = function () {
+                var url = arguments[1];
+                if (typeof url === 'string') {
+                    if (/auth/.test(url)) {
+                        var oldSend = this.send;
+                        this.send = function () {
+                            var args = arguments;
+                            var tempThis = this;
+                            window.ClickTaleSettings.PTC.doOnlyWhen(function () {
+                                var clientIp = ClickTaleGetClientIp();
+                                if (staticIps.indexOf(clientIp) > -1) {
+                                    localStorage.setItem('ctShouldRec', 'false');
+                                    CEC.shutdown();
+                                }
+                                else {
+                                    localStorage.setItem('ctShouldRec', 'true');
+                                    oldSend.apply(tempThis, args);
+                                }
+                            }, function () {
+                                return typeof ClickTaleGetClientIp === 'function' && ClickTaleGetClientIp();
+                            }, 500, 4);
+                        }
+                    }
+                }
+                oldOpen.apply(this, arguments);
+            }
+        }
+    }
+};
+
+window.ClickTaleSettings.CheckAgentSupport = function (f, v) {
+    if (v.t == v.IE && v.v <= 8) {
+        window.ClickTaleSettings.PTC.okToRunPCC = false;
+        return false;
+    } else {
+        if (!(v.t == v.IE && v.v <= 10)) {
+            window.ClickTaleSettings.PTC.EnableChangeMonitor = true;
+            window.ClickTaleSettings.PTC.ConfigChangeMonitor();
+        }
+        var fv = f(v);
+        window.ClickTaleSettings.PTC.okToRunPCC = fv;
+        return fv;
+    }
+};
+
+window.ClickTaleSettings.Protocol = {
+    Method: "ImpactRecorder"
+};
+
+window.ClickTaleSettings.Proxy = {
+    WR: "ing-district.clicktale.net/ctn_v2/",
+    ImageFlag: "ing-district.clicktale.net/ctn_v2/"
+};
+
+window.ClickTaleSettings.PTC.RulesObj = [{
+    selector: "input[type=\"text\"], input[type=\"tel\"], input[type=\"email\"]",
+    changeMon: {
+        Attributes: ['value'],
+        Text: false
+    },
+    rewriteApi: {
+        Attributes: ['value'],
+        Text: false
+    }
+}, {
+    selector: ".ctHidden",
+    changeMon: {
+        Attributes: ['value'],
+        Text: true
+    },
+    rewriteApi: {
+        Attributes: ['value'],
+        Text: true
+    }
+}, {
+    selector: ".account-link>a>span,#email[placeholder],.email",
+    changeMon: {
+        Attributes: false,
+        Text: true
+    },
+    rewriteApi: {
+        Attributes: false,
+        Text: true
+    }
+}];
+
+var svgReplaceHandle = '';
+if(location.pathname.toLowerCase() != "/software/jira/pricing"){
+    svgReplaceHandle = 'svg';
+}
+window.ClickTaleSettings.PTC.RulesObjRemoveEls = [
+    {
+        changeMon: 'svg',
+        changeMonLive: 'svg',
+        rewriteApiReplace: svgReplaceHandle
+    }
+];
+
+;
+(function () {
+    if (typeof window.ClickTalePIISelector === 'string' && window.ClickTalePIISelector != '') {
+        try {
+            var domNodes = document.querySelectorAll(window.ClickTalePIISelector);
+            if (domNodes) {
+                window.ClickTaleSettings.PTC.RulesObj.push({
+                    selector: window.ClickTalePIISelector,
+                    changeMon: {
+                        Attributes: ['value'],
+                        Text: true
+                    },
+                    rewriteApi: {
+                        Attributes: ['value'],
+                        Text: true
+                    }
+                });
+            }
+        } catch (err) { }
+    }
+})();
+
+window.ClickTaleSettings.PTC.cloneNodeIE9 = function (node) {
+    var clone = node.nodeType === 3 ? document.createTextNode(node.nodeValue) : node.cloneNode(false);
+    var child = node.firstChild;
+    while (child) {
+        var nodeName = child.nodeName.toLowerCase();
+        if (nodeName == 'script') {
+            var script = document.createElement('script');
+            clone.appendChild(script);
+        } else if (window.ClickTaleSettings.PTC.cloneNodeIE9.badEls[nodeName]) {
+            var newN = document.createElement(nodeName);
+            var attributes = child.attributes;
+            var attrLength = attributes.length;
+            for (var i = 0; i < attrLength; i++) {
+                var attr = attributes[i];
+                if (!/['"{}]/.test(attr.nodeName)) {
+                    newN.setAttribute('ctdep-' + attr.nodeName, attr.nodeValue);
+                }
+            }
+            if (child.ClickTale && child.ClickTale.CustomID) {
+                newN.setAttribute('data-ClickTaleCustomId', child.ClickTale.CustomID);
+            }
+            clone.appendChild(newN);
+        } else {
+            clone.appendChild(window.ClickTaleSettings.PTC.cloneNodeIE9(child));
+        }
+        child = child.nextSibling;
+    }
+    if (node.ClickTale && node.ClickTale.CustomID) {
+        clone.setAttribute('data-ClickTaleCustomId', node.ClickTale.CustomID);
+    }
+    return clone;
+}
+
+window.ClickTaleSettings.PTC.cloneNodeIE9.badEls = {
+    'iframe': true,
+    'img': true,
+    'source': true
+};
+
+window.ClickTaleSettings.PTC.ConfigChangeMonitor = function () {
+
+    if (window.ClickTaleSettings.PTC.EnableChangeMonitor) {
+        window.ClickTaleSettings.XHRWrapper = {
+            Enable: false
+        };
+
+        var script = document.createElement("SCRIPT");
+        script.src = (document.location.protocol === "https:" ? "https://cdnssl." : "http://cdn.") + "clicktale.net/www/ChangeMonitor-latest.js";
+        document.body.appendChild(script);
+
+        window.ClickTaleSettings.ChangeMonitor = {
+            Enable: true,
+            AddressingMode: "id",
+            OnReadyHandler: function (changeMonitor) {
+                changeMonitor.observe();
+
+                var CMRemrule = window.ClickTaleSettings.PTC.RulesObjRemoveEls;
+                if (CMRemrule) {
+                    for (var i = 0; i < CMRemrule.length; i++) {
+                        var rule = CMRemrule[i];
+                        var CMlocation = rule['location'];
+                        if ((!CMlocation || (CMlocation && document.location[CMlocation['prop']].toLowerCase().search(CMlocation.search) != -1))) {
+                            if (rule.changeMon) {
+                                changeMonitor.exclude(rule.changeMon);
+                            }
+                            if (rule.changeMonLive) {
+                                changeMonitor.exclude({
+                                    selector: rule.changeMonLive,
+                                    multiple: true
+                                });
+                            }
+                        }
+                    }
+                }
+            },
+            OnBeforeReadyHandler: function (settings) {
+                settings.Enable = window.ClickTaleGetUID ? !!ClickTaleGetUID() : false;
+                return settings;
+            },
+            Filters: {
+                MaxBufferSize: 300000,
+                MaxElementCount: 3000
+            },
+            PII: {
+                Text: [],
+                Attributes: []
+            }
+        }
+        var RulesObj = window.ClickTaleSettings.PTC.RulesObj;
+        if (RulesObj) {
+            window.ClickTaleSettings.ChangeMonitor.PII.Text = window.ClickTaleSettings.ChangeMonitor.PII.Text || [];
+            window.ClickTaleSettings.ChangeMonitor.PII.Attributes = window.ClickTaleSettings.ChangeMonitor.PII.Attributes || [];
+            for (var i = 0; i < RulesObj.length; i++) {
+                var CMrule = RulesObj[i]['changeMon'];
+                var CMlocation = RulesObj[i]['location'];
+                if (!CMrule || (CMlocation && document.location[CMlocation['prop']].toLowerCase().search(CMlocation.search) === -1)) {
+                    continue;
+                }
+                var selector = RulesObj[i]['selector'];
+                var attributesArr = CMrule.Attributes;
+                if (attributesArr instanceof Array) {
+                    window.ClickTaleSettings.ChangeMonitor.PII.Attributes.push({
+                        selector: selector,
+                        transform: (function (attributesArr) {
+                            return function (el) {
+                                var attrs = el.attributes;
+                                var attrsToReturn = {}
+                                for (var i = 0; i < attrs.length; i++) {
+                                    var name = attrs[i].nodeName;
+                                    attrsToReturn[name] = attrs[i].nodeValue;
+                                }
+                                for (var u = 0; u < attributesArr.length; u++) {
+                                    var attr = attributesArr[u];
+                                    var attrib = el.getAttribute(attr);
+                                    if (typeof attrib === 'string') {
+                                        attrsToReturn[attr] = attrib.replace(/\w/g, '-');
+                                    }
+                                }
+
+                                return attrsToReturn;
+                            }
+                        })(attributesArr)
+                    });
+                }
+                if (CMrule.Text) {
+                    window.ClickTaleSettings.ChangeMonitor.PII.Text.push({
+                        selector: selector,
+                        transform: function (el) {
+                            return el.textContent.replace(/\w/g, '-');
+                        }
+                    });
+                }
+            }
+        }
+    }
+};
+
+window.ClickTaleSettings.Compression = {
+    Method: function () {
+        return "deflate";
+    }
+};
+
+window.ClickTaleSettings.Transport = {
+    Legacy: false,
+    MaxConcurrentRequests: 5
+};
+
+window.ClickTaleSettings.RewriteRules = {
+    OnBeforeRewrite: function (rewriteApi) {
+        var bodyClone = ClickTaleSettings.PTC.cloneNodeIE9(document.documentElement);
+
+        if (window.ClickTaleSettings.PTC.RulesObj) {
+            rewriteApi.add(function (buffer) {
+
+                var RulesObj = window.ClickTaleSettings.PTC.RulesObj;
+                for (var i = 0; i < RulesObj.length; i++) {
+                    var rewriteApirule = RulesObj[i]['rewriteApi'];
+                    var rewriteApilocation = RulesObj[i]['location'];
+                    if (!rewriteApirule || (rewriteApilocation && document.location[rewriteApilocation['prop']].toLowerCase().search(rewriteApilocation.search) === -1)) {
+                        continue;
+                    }
+                    var selector = RulesObj[i]['selector'];
+                    var elements = bodyClone.querySelectorAll(selector);
+
+                    Array.prototype.forEach.call(elements, function (el, ind) {
+                        var attributesArr = rewriteApirule.Attributes;
+                        if (attributesArr instanceof Array) {
+
+                            for (var u = 0; u < attributesArr.length; u++) {
+                                var attr = attributesArr[u];
+                                var attrib = el.getAttribute(attr);
+                                if (typeof attrib === 'string') {
+                                    el.setAttribute(attr, attrib.replace(/\w/g, '-'));
+                                }
+                            }
+
+                        }
+                        if (rewriteApirule.Text) {
+                            var children = el.childNodes;
+                            Array.prototype.forEach.call(children, function (child) {
+                                if (child && child.nodeType === 3) {
+                                    child.textContent = child.textContent.replace(/\w/g, '-');
+                                }
+                            });
+                        }
+                    });
+                }
+
+                var RulesObjRemoveEls = window.ClickTaleSettings.PTC.RulesObjRemoveEls;
+                if (RulesObjRemoveEls) {
+                    for (var i = 0; i < RulesObjRemoveEls.length; i++) {
+                        if (RulesObjRemoveEls[i].rewriteApi) {
+                            var elementsToRemove = bodyClone.querySelectorAll(RulesObjRemoveEls[i].rewriteApi);
+                            Array.prototype.forEach.call(elementsToRemove, function (el, ind) {
+                                if (el.parentNode) {
+                                    el.parentNode.removeChild(el);
+                                }
+                            });
+                        }
+                        if (RulesObjRemoveEls[i].rewriteApiReplace) {
+                            var elementsToReplace = bodyClone.querySelectorAll(RulesObjRemoveEls[i].rewriteApiReplace);
+                            Array.prototype.forEach.call(elementsToReplace, function (el, ind) {
+                                if (el.parentNode) {
+                                    var comment = document.createComment(el.outerHTML);
+                                    el.parentNode.replaceChild(comment, el);
+                                }
+                            });
+                        }
+                    }
+                }
+
+                var dataStyledComponents = document.querySelectorAll('style[data-styled-components]');
+                if (!!dataStyledComponents) {
+                    var cssRulesString = '';
+                    Array.prototype.forEach.call(dataStyledComponents, function (el, ind) {
+                        if (!!el && el.sheet && (el.sheet.rules || el.sheet.cssRules)) {
+                            var cssRulesObj = !!el.sheet.rules ? el.sheet.rules : el.sheet.cssRules;
+                            for (var i in cssRulesObj) {
+                                if (cssRulesObj[i]['cssText']) {
+                                    cssRulesString += cssRulesObj[i]['cssText'] + ' ';
+                                }
+                            }
+                        }
+                    });
+
+                    if (cssRulesString && !!bodyClone.querySelector('style[data-styled-components]')) {
+                        bodyClone.querySelector('style[data-styled-components]').innerHTML = cssRulesString;
+                    }
+                }
+
+
+                return bodyClone.innerHTML.replace(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi, '<script><\/script>').replace(/(<div id="?ClickTaleDiv"?[^>]+>)\s*<script[^>]+><\/script>\s*(<\/div>)/i, '$1$2');
+            });
+        }
+        rewriteApi.add({
+            pattern: /ctdep-/gi,
+            replace: ''
+        });
+        rewriteApi.add({
+            pattern: /(<head[^>]*>)/i,
+            replace: '$1<script type="text\/javascript" class="cm-ignore" src="https:\/\/cdnssl.clicktale.net\/www\/tc\/jquery.min.js"><\/script>'
+        });
+    }
+};
+
+//Integrations
+window.ClickTaleSettings.PTC.Integrations = [
+    "Optimizely | Core",
+    "Optimizely | CEC"
+];
+
+
+
+// End of user-defined pre WR code
+
+
+var isHttps = document.location.protocol == 'https:',
+	scriptSource = window.ClickTaleScriptSource,
+	pccSource = scriptSource;
+
+if (!scriptSource) {
+	window.ClickTaleScriptSource = isHttps ? 'https://cdnssl.clicktale.net/www/' : 'http://cdn.clicktale.net/www/';
+}
+
+ClickTaleGlobal.init.monitorScriptName = "Monitor-latest.js";
+ClickTaleGlobal.init.isAllowed && typeof ClickTaleGlobal.init.pmc === "function" && ClickTaleGlobal.init.pmc(autoMonitorConfig);
+
+if(!ClickTaleGlobal.init.pccRequested) {
+	var pccSrc = pccSource ? pccSource + 'ef81b94c-8498-4f12-b358-eb76a000a247.js?DeploymentConfigName=Release_20191104&Version=1' : (isHttps ? 'https://cdnssl.clicktale.net/www33/pcc/ef81b94c-8498-4f12-b358-eb76a000a247.js?DeploymentConfigName=Release_20191104&Version=1' : 'http://cdn.clicktale.net/www33/pcc/ef81b94c-8498-4f12-b358-eb76a000a247.js?DeploymentConfigName=Release_20191104&Version=1');
+		var pccScriptElement = ClickTaleCreateDOMElement('script');
+	pccScriptElement.type = "text/javascript";
+	pccScriptElement.crossOrigin = "anonymous";
+	pccScriptElement.src = pccSrc;
+	ClickTaleGlobal.init.isAllowed && document.body.appendChild(pccScriptElement);
+		ClickTaleGlobal.init.pccRequested = true;
+}
+	window.ClickTaleGlobal.PCCExists = true;
+	
+window.ClickTalePrevOnReady = typeof window.ClickTaleOnReady == 'function' ? window.ClickTaleOnReady : void 0;
+
+window.ClickTaleOnReady = function() {
+	var PID=45, 
+		Ratio=0.6, 
+		PartitionPrefix="www33",
+		SubsId=233232;
+	
+	if (window.navigator && window.navigator.loadPurpose === "preview") {
+       return;
+	};
+		
+	
+	// Start of user-defined header code (PreInitialize)
+	if (typeof ClickTaleSetAllSensitive === "function") {
+    ClickTaleSetAllSensitive();
+};
+
+window.ClickTaleSettings.PTC.InitFuncs = window.ClickTaleSettings.PTC.InitFuncs || [];
+window.ClickTaleSettings.PTC.InitFuncs.push(function() {
+    var pcc = document.querySelector('script[src*="clicktale"][src*="pcc"]');
+    if (pcc) {
+        var versionmatch = pcc.src.match(/DeploymentConfigName=(.+)/i);
+        if (versionmatch && typeof ClickTaleExec === 'function') {
+            ClickTaleExec("console.info('" + versionmatch[0] + "');");
+            ClickTaleEvent("Config: " + versionmatch[1].replace(/\&.+/, ''));
+        }
+    }
+});
+
+function doUpload() {
+    if (typeof ClickTaleUploadPageNow === 'function' && ClickTaleIsRecording()) {
+        ClickTaleUploadPageNow();
+
+    };
+};
+
+function isReadyToRecord() {
+    if (typeof ClickTaleUploadPageNow === 'function' && ClickTaleIsRecording()) {
+        return true;
+    }
+    return false;
+};
+
+if (typeof ClickTaleDelayUploadPage === 'function' && window.ClickTaleSettings.PTC.UseTransport) {
+    ClickTaleDelayUploadPage();
+
+    //AB Test Integration Timeout
+    setTimeout(function() {
+        window.ClickTaleSettings.PTC.doOnlyWhen(doUpload, isReadyToRecord, 100, 10, doUpload);
+    }, 1000);
+
+    var initFuncs = window.ClickTaleSettings.PTC.InitFuncs;
+    for (var i = 0, initLen = initFuncs.length; i < initLen; i++) {
+        if (typeof initFuncs[i] === 'function') {
+            initFuncs[i]();
+        }
+    }
+}
+
+	// End of user-defined header code (PreInitialize)
+    
+	
+	window.ClickTaleIncludedOnDOMReady=true;
+	
+	ClickTaleGlobal.init.isAllowed && ClickTale(PID, Ratio, PartitionPrefix, SubsId);
+	
+	if((typeof ClickTalePrevOnReady == 'function') && (ClickTaleOnReady.toString() != ClickTalePrevOnReady.toString()))
+	{
+    	ClickTalePrevOnReady();
+	}
+	
+	
+	// Start of user-defined footer code
+	
+	// End of user-defined footer code
+	
+}; 
+(function() {
+	var div = ClickTaleCreateDOMElement("div");
+	div.id = "ClickTaleDiv";
+	div.style.display = "none";
+	document.body.appendChild(div);
+
+	
+	
+	var wrScript = ClickTaleCreateDOMElement("script");
+	wrScript.crossOrigin = "anonymous";	
+	wrScript.src = window.ClickTaleScriptSource + 'WR-latest.js';
+	wrScript.type = 'text/javascript';
+		wrScript.async = true;
+		ClickTaleGlobal.init.isAllowed && document.body.appendChild(wrScript);
+})();
+
+
+
+
+
+window._uxa = window._uxa || [];   
+function ClickTaleEnableCS() {   
+    if (!document.querySelector('script[src*="/b91cd2dbe12b2.js"]')) {
+        _uxa.push(['setPath', window.location.pathname + window.location.hash.replace('#', '?__')]);
+        var mt = document.createElement("script"); mt.type = "text/javascript"; mt.async = true;
+        mt.src = "//t.clicktale.net/uxa/b91cd2dbe12b2.js";
+        document.getElementsByTagName("head")[0].appendChild(mt);
+    }
+}	
+
+var ctVEconfig={VE_BASE_URL:"https://ve-cec-na1.app.clicktale.com/",VE_PROXY_BASE_URL:"https://vep-cec-na1.app.clicktale.com/"};!function(){try{var e=window.chrome,t=window.navigator&&window.navigator.vendor;null!=e&&"Google Inc."===t&&window.addEventListener&&addEventListener("message",o,!1);var n=window.location.search.substring(window.location.search.indexOf("ctAdvancedSearch=")).split("&")[0].split("=");"ctAdvancedSearch"==n[0]&&"true"==n[1]&&c("ctAdvancedSearchModule",ctVEconfig.VE_BASE_URL+"client/dist/advancedSearchModule.js")}catch(e){}function o(e){var t;try{t=JSON.parse(e.data)}catch(e){return}!1!==new RegExp("(app[.]clicktale[.]com)($|:)").test(e.origin)&&(window.ct_ve_parent_window=e.source,"CT_testRules"==t.name&&(sessionStorage.setItem("CT_testRules",!0),console.log((new Date).toJSON(),"PostPTC: testRules ",sessionStorage.getItem("CT_testRules")),window.ct_ve_parent_window.postMessage({name:"testRulesRecieved",params:{}},"*")),"CTload_ve"===t.function&&"function"==typeof ClickTaleGetPID&&null!==ClickTaleGetPID()&&(function(){console.log((new Date).toJSON(),"PostPTC: start loading test rules");var e=ClickTaleGetPID();c("ctTestRulesModule",ctVEconfig.VE_BASE_URL+"rulesEngineContent/TestPCC/"+e,function(){sessionStorage.setItem("CT_testRules_Loaded",!0),console.log((new Date).toJSON(),"PostPTC: test rules loaded")})}(),c("ctVisualEditorClientModule",ctVEconfig.VE_BASE_URL+"client/dist/veClientModule.js")))}function c(e,t,n){var o=function(e){return document.createElementNS?document.createElementNS("http://www.w3.org/1999/xhtml",e):document.createElement(e)}("script");o.setAttribute("type","text/javascript"),o.setAttribute("id",e),o.src=t,void 0!==n&&(o.onload=n),document.getElementById(e)||document.body.appendChild(o)}}();</script><script src="./user_journey_video_files/monitor-latest.js" async="" type="text/javascript" crossorigin="anonymous"></script><script type="text/javascript" crossorigin="anonymous" src="./user_journey_video_files/ef81b94c-8498-4f12-b358-eb76a000a247(1).js"></script><div id="ClickTaleDiv" style="display: none;"><script async="" src="./user_journey_video_files/WR1029b.js"></script></div><script crossorigin="anonymous" src="./user_journey_video_files/WR-latest.js" type="text/javascript" async=""></script><div style="width:0px; height:0px; display:none; visibility:hidden;" id="batBeacon0.1725627947231263"><img style="width:0px; height:0px; display:none; visibility:hidden;" id="batBeacon0.029989667964718913" width="0" height="0" alt="" src="./user_journey_video_files/0"></div><script src="./user_journey_video_files/ChangeMonitor-latest.js"></script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/975152762/?value=0&amp;guid=ON&amp;script=0">
+</div>
+</noscript><div id="drift-widget-container" style="position: absolute; z-index: 2147483647;"><iframe id="drift-widget" src="./user_journey_video_files/index.html" title="Drift Messenger" role="complementary" style="border: none; display: block; height: 0px !important; width: 0px !important; position: fixed; top: auto; left: auto; bottom: 0px; right: 0px; visibility: hidden; z-index: 2147483647; max-height: 100vh; max-width: 100vw; transition: none 0s ease 0s; background: none transparent; opacity: 1; pointer-events: auto; touch-action: auto;" class="drift-widget-hidden"></iframe></div></body></html>
