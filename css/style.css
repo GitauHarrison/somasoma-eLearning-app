@@ -123,3 +123,31 @@ h5{
     font-size: 15px;
     font-weight: 200;
 }
+
+/* How It Works section */
+.journey_section{
+    text-align: center;
+}
+.journey_section h1{
+    padding: 10px;    
+}
+.journey_section .col{
+    margin: 10px;
+}
+.journey_title{
+    border: 1px solid orange;
+    text-align: center;
+    padding: 10px;
+}
+.journey_section .journey_content{
+    margin: 10px;
+    padding: 10px;
+}
+.journey_section .journey_content video{
+    width: 100%;
+    height: 100%;
+}
+.journey_section .journey_content img{
+    width: 100%;
+    height: 100%;
+}
