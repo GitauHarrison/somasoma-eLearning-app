@@ -25,18 +25,4 @@ h5{
     font-size: 15px;
 }
 
-/* Nav header */
-
-.header_nav .nav-item .btn_login{
-    border: 1px solid #fadc89 ;
-    color: #fadc89;;
-    text-transform: uppercase;
-    /* background: radial-gradient(#ebe8ca, #cfbd13); */
-    
-}
-.header_nav .nav-item .btn_login:hover{
-    border: 1px solid #705301 ;
-    color: #705301;;
-    text-transform: uppercase;
-    /* background: radial-gradient(#ebe8ca, #cfbd13); */    
-}
+/* Hero section */
