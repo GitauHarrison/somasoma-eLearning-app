@@ -2,5 +2,15 @@
 body{
     width: 980px;
     font-family: 'Muli', sans-serif;
+    background-color: black;
 }
-h1
+
+
+/* -------------------- */
+/* TYPOGRAPHY */
+/* -------------------- */
+h1{
+    font-size: 40px;
+    line-height: 30px;
+    color: white;
+}
