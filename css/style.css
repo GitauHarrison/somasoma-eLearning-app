@@ -26,3 +26,100 @@ h5{
 }
 
 /* Hero section */
+.hero h3{
+    font-size: 30px;
+}
+.hero .btn_register{
+    color: orange;
+    border: 1px solid  orange;
+    border-radius: 5px;
+    padding: 7px;
+}
+.hero .btn_register:hover{
+    color: #2e2816;
+    text-decoration: none;    
+    background: radial-gradient(#fae5aa, #9c7d25)
+
+}
+.hero img{
+    height: 100%;
+    width: 100%;
+}
+
+/* Skills section */
+.skills_learnt{
+    text-align: center;
+}
+.skills_learnt h1{
+    padding: 10px;    
+}
+.skills_learnt .col{
+    margin: 10px;
+}
+.skills_learnt .row .slide img{
+    height: 100%;
+    width: 100%;
+}
+.skills_learnt h5{
+    color: black;
+    font-size: 30px;    
+}
+#carouselExampleCaptions{
+    margin: 20px;
+}
+
+/* Products section */
+.products_section{
+    text-align: center;
+}
+.products_section h1{
+    padding: 10px;    
+}
+.products_section .col{
+    margin: 10px;
+}
+.products_section .tab-content img{
+    height: 100%;
+    width: 100%;
+}
+.products_section .tab-content h3{
+    padding: 10px;
+}
+.products_section .tab-content p{
+    padding-bottom: 10px;
+}
+.products_section .tab-content a{
+    color: #cfb048;
+}
+.products_section .tab-content a:hover{
+    color: #997602;
+    text-decoration: none;
+}
+
+/* Features section */
+.features_section{
+    text-align: center;
+}
+.features_section h1{
+    padding: 10px;    
+}
+.features_section .feartures_cards{
+    border: 1px solid #9c9992;
+    padding: 25px;
+}
+.features_section .feartures_cards{
+    margin: 5px;
+}
+.features_section .feartures_cards img{
+    padding: 5px;
+}
+.features_section .feartures_cards h3{
+    font-size: 20px;
+    padding-bottom: 5px;
+    font-weight: 800;
+    color: #cfb048;
+}
+.features_section .feartures_cards p{
+    font-size: 15px;
+    font-weight: 200;
+}
