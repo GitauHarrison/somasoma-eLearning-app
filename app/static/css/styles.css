@@ -1,0 +1,41 @@
+/* General */
+body{
+    font-family: 'Roboto', sans-serif;
+}
+p{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 15px;
+}
+
+/* Forms */
+.my_form{
+    border: 1px solid #e6e6e6;
+    padding: 20px;
+    border-radius: 3px;
+    margin: 20px;
+}
+
+/* Images */
+.img{
+    box-shadow: 5px 5px 5px#E6E6E6;
+    border-radius: 7px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+/* Buttons */
+.btn{
+    border-radius: 3px;
+    border: 1px solid #e6e6e6;
+    padding: 5px;
+    background-color: #fff;
+    font-size: 15px;
+    color: #706d6c;
+}
+.btn:hover{
+    background-color: #f2f2f2;
+    color:  #706d6c;
+    border: 1px solid  #f2f2f2;
+}
