@@ -2,10 +2,18 @@ from app import app, db
 from flask import render_template, url_for, redirect, flash, request
 from app.forms import StudentRegistrationForm, ParentRegistrationForm,\
     TeacherRegistrationForm, LoginForm, RquestPasswordResetForm,\
-    ResetPasswordForm
+    ResetPasswordForm, EditProfileForm
 from flask_login import login_user, logout_user, current_user, login_required
 from app.models import Teacher, Student, Parent
 from werkzeug.urls import url_parse
+from datetime import datetime
+
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
 
 
 @app.route('/')
@@ -105,7 +113,7 @@ def parent_login():
         login_user(parent, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('home')
+            next_page = url_for('parent_profile', username=current_user.username)
         return redirect(next_page)
     return render_template('login.html',
                            form=form,
@@ -126,7 +134,7 @@ def student_login():
         login_user(student, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('home')
+            next_page = url_for('student_profile', username=current_user.username)
         return redirect(next_page)
     return render_template('login.html',
                            form=form,
@@ -147,7 +155,7 @@ def teacher_login():
         login_user(teacher, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('home')
+            next_page = url_for('teacher_profile', username=current_user.username)
         return redirect(next_page)
     return render_template('login.html',
                            form=form,
@@ -155,9 +163,17 @@ def teacher_login():
                            )
 
 
-@app.route('/logout')
-def logout():
-    logout_user()
+@app.route('/parent/<username>/logout')
+def parent_logout(username):
+    parent = Parent.query.filter_by(username=username).first_or_404()
+    logout_user(parent)
+    return redirect(url_for('login'))
+
+
+@app.route('/student/<username>/logout')
+def student_logout(username):
+    student = Student.query.filter_by(username=username).first_or_404()
+    logout_user(student)
     return redirect(url_for('login'))
 
 
@@ -181,3 +197,91 @@ def reset_password():
 # --------------------------
 # End of User Authentication
 # --------------------------
+
+
+# ------------
+# User Profile
+# ------------
+
+@app.route('/profile/parent/<username>')
+@login_required
+def parent_profile(username):
+    parent = Parent.query.filter_by(username=username).first_or_404()
+    return render_template('parent_profile.html',
+                           parent=parent,
+                           title='Parent Profile'
+                           )
+
+
+@app.route('/profile/parent/edit-profile', methods=['GET', 'POST'])
+def edit_parent_profile():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash('Your changes have been saved')
+        return redirect(url_for('parent_profile', username=current_user.username))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template('edit_profile.html',
+                           form=form,
+                           title='Edit Parent Profile'
+                           )
+
+
+@app.route('/profile/student/<username>')
+@login_required
+def student_profile(username):
+    student = Student.query.filter_by(username=username).first_or_404()
+    return render_template('student_profile.html',
+                           student=student,
+                           title='Student Profile'
+                           )
+
+
+@app.route('/profile/student/edit-profile', methods=['GET', 'POST'])
+def edit_student_profile():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash('Your changes have been saved')
+        return redirect(url_for('student_profile', username=current_user.username))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template('edit_profile.html',
+                           form=form,
+                           title='Edit Student Profile'
+                           )
+
+
+@app.route('/profile/teacher/<username>')
+@login_required
+def teacher_profile(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
+    return render_template('teacher_profile.html',
+                           teacher=teacher,
+                           title='Teacher Profile'
+                           )
+
+
+@app.route('/profile/teacher/edit-profile', methods=['GET', 'POST'])
+def edit_teacher_profile():
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.about_me = form.about_me.data
+        db.session.commit()
+        flash('Your changes have been saved')
+        return redirect(url_for('teacher_profile', username=current_user.username))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.about_me.data = current_user.about_me
+    return render_template('edit_profile.html',
+                           form=form,
+                           title='Edit Teacher Profile'
+                           )

@@ -40,9 +40,16 @@
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">Contact</a></li>
                         {% else %}
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact</a></li>                   
-                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                            {% if parent %}
+                                <li><a href="{{ url_for('parent_profile', username=current_user.username) }}">Profile</a></li>
+                                <li><a href="{{ url_for('parent_logout', username=current_user.username) }}">Logout</a></li>
+                            {% elif student %}
+                                <li><a href="{{ url_for('student_profile', username=current_user.username) }}">Profile</a></li>
+                                <li><a href="{{ url_for('student_logout', username=current_user.username) }}">Logout</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('teacher_profile', username=current_user.username) }}">Profile</a></li>
+                                <li><a href="{{ url_for('teacher_logout', username=current_user.username) }}">Logout</a></li>
+                            {% endif %}
                         {% endif %}
                     </ul>           
             </div>

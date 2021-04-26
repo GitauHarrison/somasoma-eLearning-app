@@ -1,5 +1,7 @@
 from app import db, login, bcrypt
 from flask_login import UserMixin
+from hashlib import md5
+from datetime import datetime
 
 
 class Parent(UserMixin, db.Model):
@@ -10,6 +12,8 @@ class Parent(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
     verification_phone = db.Column(db.String(16))
     password_hash = db.Column(db.String(128))
+    about_me = db.Column(db.String(300))
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f'{self.username} {self.email} {self.verification_phone}'
@@ -19,6 +23,10 @@ class Parent(UserMixin, db.Model):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
 
 class Student(UserMixin, db.Model):
@@ -29,6 +37,8 @@ class Student(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
     verification_phone = db.Column(db.String(16))
     password_hash = db.Column(db.String(128))
+    about_me = db.Column(db.String(300))
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f'{self.username} {self.email} {self.verification_phone}'
@@ -38,6 +48,10 @@ class Student(UserMixin, db.Model):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
 
 class Teacher(UserMixin, db.Model):
@@ -48,6 +62,8 @@ class Teacher(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
     verification_phone = db.Column(db.String(16))
     password_hash = db.Column(db.String(128))
+    about_me = db.Column(db.String(300))
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f'{self.username} {self.email} {self.verification_phone}'
@@ -57,6 +73,10 @@ class Teacher(UserMixin, db.Model):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password_hash, password)
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
 
 @login.user_loader
