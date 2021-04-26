@@ -16,7 +16,7 @@
                     {% endif %}
                     {% if teacher.last_seen %}
                         <p>
-                            Last seen on: {{ moment(teacher.last_seen).format('LLL') }}
+                            Last seen on: {{ moment(current_user.last_seen).format('LLL') }}
                         </p>
                     {% endif %}
                     {% if teacher %}
