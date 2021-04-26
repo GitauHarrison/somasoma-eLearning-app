@@ -64,7 +64,7 @@ p{
     margin-left: 1px;
 }
 .danger-warning, .deactivate-warning {
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 5px;  
 }
 
