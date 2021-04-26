@@ -43,7 +43,7 @@
                             {% if parent %}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="{{ url_for('parent_profile', username=parent.username) }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Profile<img class="img-fluid" style="max-width: 100%; height: auto;" src="{{ url_for('static', filename='images/dropdown.png') }}">
+                                      Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
                                       <a class="dropdown-item" href="#">All Your Posts</a><br>
@@ -54,7 +54,7 @@
                             {% elif student %}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="{{ url_for('student_profile', username=student.username) }}" data-bs-toggle="dropdown" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Profile<img class="img-fluid" style="max-width: 100%; height: auto;" src="{{ url_for('static', filename='images/dropdown.png') }}">
+                                      Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
                                       <a class="dropdown-item" href="#">All Your Posts</a><br>
@@ -65,7 +65,7 @@
                             {% elif teacher %}                                
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="{{ url_for('teacher_profile', username=teacher.username) }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Profile<img class="img-fluid" style="max-width: 100%; height: auto;" src="{{ url_for('static', filename='images/dropdown.png') }}">
+                                      Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
                                       <a class="dropdown-item" href="#">All Your Posts</a><br>
