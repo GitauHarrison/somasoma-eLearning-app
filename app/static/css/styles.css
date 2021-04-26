@@ -51,3 +51,19 @@ p{
 .card:hover{
     box-shadow: 5px 10px 18px #ebe6e3;
 }
+
+/* Permanent Actions */
+.deactivate-warning {
+    border: 1px solid #A9F5A9;  
+    background-color: #A9F5A9;
+    margin-right: 1px;
+}
+.danger-warning {
+    border: 1px solid #F5A9A9;    
+    background-color: #F5A9A9;
+    margin-left: 1px;
+}
+.danger-warning, .deactivate-warning {
+    border-radius: 5px;
+    padding: 5px;  
+}

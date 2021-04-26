@@ -26,6 +26,14 @@
                             </a>
                         </p>
                     {%endif%}
+                    <p>
+                        <span class="deactivate-warning">
+                            <a href="#">Deactivate Account</a>
+                        </span>
+                        <span class="danger-warning">
+                            <a href="{{ url_for('delete_student_account', username=student.username) }}">Delete Account Permanently</a>
+                        </span>
+                    </p>
                 </td>                
             </tr>
         </table>

@@ -232,6 +232,15 @@ def edit_parent_profile(username):
                            )
 
 
+@app.route('/profile/parent/<username>/delete-account')
+def delete_parent_account(username):
+    parent = Parent.query.filter_by(username=username).first_or_404()
+    db.session.delete(parent)
+    db.session.commit()
+    flash(f'Your parent account {parent.username} was successfully deleted')
+    return redirect(url_for('home'))
+
+
 @app.route('/profile/student/<username>')
 @login_required
 def student_profile(username):
@@ -262,6 +271,15 @@ def edit_student_profile(username):
                            )
 
 
+@app.route('/profile/student/<username>/delete-account')
+def delete_student_account(username):
+    student = Student.query.filter_by(username=username).first_or_404()
+    db.session.delete(student)
+    db.session.commit()
+    flash(f'Your student account {student.username} was successfully deleted')
+    return redirect(url_for('home'))
+
+
 @app.route('/profile/teacher/<username>')
 @login_required
 def teacher_profile(username):
@@ -290,3 +308,17 @@ def edit_teacher_profile(username):
                            form=form,
                            title='Edit Teacher Profile'
                            )
+
+
+@app.route('/profile/teacher/<username>/delete-account')
+def delete_teacher_account(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
+    db.session.delete(teacher)
+    db.session.commit()
+    flash(f'Your teacher account {teacher.username} was successfully deleted')
+    return redirect(url_for('home'))
+
+
+# -------------------
+# End of User Profile
+# -------------------

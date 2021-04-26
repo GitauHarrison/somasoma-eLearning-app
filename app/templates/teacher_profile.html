@@ -26,9 +26,18 @@
                             </a>
                         </p>
                     {%endif%}
-                </td>                
+                    <p>
+                        <span class="deactivate-warning">
+                            <a href="#">Deactivate Account</a>
+                        </span>
+                        <span class="danger-warning">
+                            <a href="{{ url_for('delete_teacher_account', username=teacher.username) }}">Delete Account Permanently</a>
+                        </span>
+                    </p>
+                </td>
             </tr>
         </table>
     </div>
 </div>
+
 {% endblock %}
