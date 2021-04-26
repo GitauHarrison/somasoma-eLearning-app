@@ -31,15 +31,15 @@ class ParentRegistrationForm(FlaskForm):
         except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
             raise ValidationError('Invalid phone number')
 
-    # def validate_username(self, username):
-    #     parent = Parent.query.filter_by(username=username.data).first()
-    #     if parent is not None:
-    #         raise ValidationError('Please use a different username')
+    def validate_username(self, username):
+        parent = Parent.query.filter_by(username=username.data).first()
+        if parent is not None:
+            raise ValidationError('Please use a different username')
 
-    # def validate_email(self, email):
-    #     parent = Parent.query.filter_by(email=email.data).first()
-    #     if parent is not None:
-    #         raise ValidationError('Please use a different email address')
+    def validate_email(self, email):
+        parent = Parent.query.filter_by(email=email.data).first()
+        if parent is not None:
+            raise ValidationError('Please use a different email address')
 
 
 class StudentRegistrationForm(FlaskForm):
@@ -67,15 +67,15 @@ class StudentRegistrationForm(FlaskForm):
         except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
             raise ValidationError('Invalid phone number')
 
-    # def validate_username(self, username):
-    #     student = Student.query.filter_by(username=username.data).first()
-    #     if student is not None:
-    #         raise ValidationError('Please use a different username')
+    def validate_username(self, username):
+        student = Student.query.filter_by(username=username.data).first()
+        if student is not None:
+            raise ValidationError('Please use a different username')
 
-    # def validate_email(self, email):
-    #     student = Student.query.filter_by(email=email.data).first()
-    #     if student is not None:
-    #         raise ValidationError('Please use a different email address')
+    def validate_email(self, email):
+        student = Student.query.filter_by(email=email.data).first()
+        if student is not None:
+            raise ValidationError('Please use a different email address')
 
 
 class TeacherRegistrationForm(FlaskForm):
@@ -102,15 +102,15 @@ class TeacherRegistrationForm(FlaskForm):
         except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
             raise ValidationError('Invalid phone number')
 
-    # def validate_username(self, username):
-    #     teacher = Teacher.query.filter_by(username=username.data).first()
-    #     if teacher is not None:
-    #         raise ValidationError('Please use a different username')
+    def validate_username(self, username):
+        teacher = Teacher.query.filter_by(username=username.data).first()
+        if teacher is not None:
+            raise ValidationError('Please use a different username')
 
-    # def validate_email(self, email):
-    #     teacher = Teacher.query.filter_by(email=email.data).first()
-    #     if teacher is not None:
-    #         raise ValidationError('Please use a different email address')
+    def validate_email(self, email):
+        teacher = Teacher.query.filter_by(email=email.data).first()
+        if teacher is not None:
+            raise ValidationError('Please use a different email address')
 
 
 class LoginForm(FlaskForm):
