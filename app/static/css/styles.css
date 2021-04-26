@@ -67,3 +67,28 @@ p{
     border-radius: 5px;
     padding: 5px;  
 }
+
+/* Dropdown */
+
+/* --- desktop view --- */
+@media all and (min-width: 992px) {
+	.navbar .nav-item .dropdown-menu{ display: none; }
+	.navbar .nav-item:hover .nav-link{   }
+	.navbar .nav-item:hover .dropdown-menu{ display: block; }
+	.navbar .nav-item .dropdown-menu{ margin-top:0; }
+}	
+/* --- desktop view .end// --- */
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown_content {
+    padding-left: 25px;
+    padding-right: 25px;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(138, 138, 138, 0.2);
+    z-index: 1;
+}
