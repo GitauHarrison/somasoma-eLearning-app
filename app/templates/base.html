@@ -41,15 +41,13 @@
                             <li><a href="#">Contact</a></li>
                         {% else %}
                             {% if parent %}
-                                <li><a href="{{ url_for('parent_profile', username=current_user.username) }}">Profile</a></li>
-                                <li><a href="{{ url_for('parent_logout', username=current_user.username) }}">Logout</a></li>
+                                <li><a href="{{ url_for('parent_profile', username=parent.username) }}">Profile</a></li>
                             {% elif student %}
-                                <li><a href="{{ url_for('student_profile', username=current_user.username) }}">Profile</a></li>
-                                <li><a href="{{ url_for('student_logout', username=current_user.username) }}">Logout</a></li>
-                            {% else %}
-                                <li><a href="{{ url_for('teacher_profile', username=current_user.username) }}">Profile</a></li>
-                                <li><a href="{{ url_for('teacher_logout', username=current_user.username) }}">Logout</a></li>
+                                <li><a href="{{ url_for('student_profile', username=student.username) }}">Profile</a></li>
+                            {% elif teacher %}
+                                <li><a href="{{ url_for('teacher_profile', username=teacher.username) }}">Profile</a></li>
                             {% endif %}
+                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
                         {% endif %}
                     </ul>           
             </div>

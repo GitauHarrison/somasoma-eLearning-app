@@ -1,27 +1,26 @@
 {% extends 'base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
 <div class="row">
     <div class="col-md-12">
         <table class="table table-hover">
             <tr valign='top'>
-                <td><img src="{{ current_user.avatar(128) }}"></td>
+                <td><img src="{{ parent.avatar(128) }}"></td>
                 <td>
-                    <h1>User: {{ current_user.username }}</h1>
-                    {% if current_user.about_me %}
+                    <h1>User: {{ parent.username }}</h1>
+                    {% if parent.about_me %}
                         <p>
-                            {{ current_user.about_me }}
+                            {{ parent.about_me }}
                         </p>
                     {% endif %}
-                    {% if current_user.last_seen %}
+                    {% if parent.last_seen %}
                         <p>
-                            Last seen on: {{ moment(current_user.last_seen).format('LLL') }}
+                            Last seen on: {{ moment(parent.last_seen).format('LLL') }}
                         </p>
                     {% endif %}
-                    {% if current_user %}
+                    {% if parent %}
                         <p>
-                            <a href="{{ url_for('edit_parent_profile') }}">
+                            <a href="{{ url_for('edit_parent_profile', username=parent.username) }}">
                                 Edit your profile
                             </a>
                         </p>

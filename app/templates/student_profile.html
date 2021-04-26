@@ -6,22 +6,22 @@
     <div class="col-md-12">
         <table class="table table-hover">
             <tr valign='top'>
-                <td><img src="{{ current_user.avatar(128) }}"></td>
+                <td><img src="{{ student.avatar(128) }}"></td>
                 <td>
-                    <h1>User: {{ current_user.username }}</h1>
-                    {% if current_user.about_me %}
+                    <h1>User: {{ student.username }}</h1>
+                    {% if student.about_me %}
                         <p>
-                            {{ current_user.about_me }}
+                            {{ student.about_me }}
                         </p>
                     {% endif %}
-                    {% if current_user.last_seen %}
+                    {% if student.last_seen %}
                         <p>
-                            Last seen on: {{ moment(current_user.last_seen).format('LLL') }}
+                            Last seen on: {{ moment(student.last_seen).format('LLL') }}
                         </p>
                     {% endif %}
-                    {% if current_user %}
+                    {% if student %}
                         <p>
-                            <a href="{{ url_for('edit_student_profile') }}">
+                            <a href="{{ url_for('edit_student_profile', username=student.username) }}">
                                 Edit your profile
                             </a>
                         </p>
