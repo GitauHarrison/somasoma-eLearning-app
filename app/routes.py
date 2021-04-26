@@ -2,7 +2,8 @@ from app import app, db
 from flask import render_template, url_for, redirect, flash, request
 from app.forms import StudentRegistrationForm, ParentRegistrationForm,\
     TeacherRegistrationForm, LoginForm, RquestPasswordResetForm,\
-    ResetPasswordForm, EditProfileForm
+    ResetPasswordForm, ParentEditProfileForm, StudentEditProfileForm,\
+    TeacherEditProfileForm
 from flask_login import login_user, logout_user, current_user, login_required
 from app.models import Teacher, Student, Parent
 from werkzeug.urls import url_parse
@@ -163,17 +164,9 @@ def teacher_login():
                            )
 
 
-@app.route('/parent/<username>/logout')
-def parent_logout(username):
-    parent = Parent.query.filter_by(username=username).first_or_404()
-    logout_user(parent)
-    return redirect(url_for('login'))
-
-
-@app.route('/student/<username>/logout')
-def student_logout(username):
-    student = Student.query.filter_by(username=username).first_or_404()
-    logout_user(student)
+@app.route('/logout')
+def logout():
+    logout_user()
     return redirect(url_for('login'))
 
 
@@ -215,7 +208,7 @@ def parent_profile(username):
 
 @app.route('/profile/parent/edit-profile', methods=['GET', 'POST'])
 def edit_parent_profile():
-    form = EditProfileForm()
+    form = ParentEditProfileForm(current_user.username)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
@@ -243,7 +236,7 @@ def student_profile(username):
 
 @app.route('/profile/student/edit-profile', methods=['GET', 'POST'])
 def edit_student_profile():
-    form = EditProfileForm()
+    form = StudentEditProfileForm(current_user.username)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
@@ -271,7 +264,7 @@ def teacher_profile(username):
 
 @app.route('/profile/teacher/edit-profile', methods=['GET', 'POST'])
 def edit_teacher_profile():
-    form = EditProfileForm()
+    form = TeacherEditProfileForm(current_user.username)
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.about_me = form.about_me.data
