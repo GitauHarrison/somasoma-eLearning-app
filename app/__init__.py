@@ -48,4 +48,4 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('Somasoma eLearning')
 
-from app import routes, models, errors
+from app import routes, models, errors, twilio_verify_api

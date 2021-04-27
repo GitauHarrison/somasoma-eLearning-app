@@ -1,13 +1,16 @@
 from app import app, db
-from flask import render_template, url_for, redirect, flash, request
+from flask import render_template, url_for, redirect, flash, request,\
+    session
 from app.forms import StudentRegistrationForm, ParentRegistrationForm,\
     TeacherRegistrationForm, LoginForm, RquestPasswordResetForm,\
     ResetPasswordForm, ParentEditProfileForm, StudentEditProfileForm,\
-    TeacherEditProfileForm
+    TeacherEditProfileForm, Enable2faForm, Confirm2faForm, Disable2faForm
 from flask_login import login_user, logout_user, current_user, login_required
 from app.models import Teacher, Student, Parent
 from werkzeug.urls import url_parse
 from datetime import datetime
+from app.twilio_verify_api import request_verification_token,\
+    check_verification_token
 
 
 @app.before_request
@@ -112,11 +115,19 @@ def parent_login():
         if parent is None or not parent.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('parent_login'))
-        login_user(parent, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('parent_profile',
-                                username=current_user.username)
+                                username=parent.username)
+        if parent.two_factor_enabled():
+            request_verification_token(parent.verification_phone)
+            session['username'] = parent.username
+            session['phone'] = parent.verification_phone
+            return redirect(url_for('parent_verify_2fa', username=parent.username,
+                                    next=next_page,
+                                    remember='1' if form.remember_me.data else '0'
+                                    ))
+        login_user(parent, remember=form.remember_me.data)
         return redirect(next_page)
     return render_template('login.html',
                            form=form,
@@ -134,11 +145,19 @@ def student_login():
         if student is None or not student.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('student_login'))
-        login_user(student, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('student_profile',
-                                username=current_user.username)
+                                username=student.username)
+        if student.two_factor_enabled():
+            request_verification_token(student.verification_phone)
+            session['username'] = student.username
+            session['phone'] = student.verification_phone
+            return redirect(url_for('student_verify_2fa', username=student.username,
+                                    next=next_page,
+                                    remember='1' if form.remember_me.data else '0'
+                                    ))
+        login_user(student, remember=form.remember_me.data)
         return redirect(next_page)
     return render_template('login.html',
                            form=form,
@@ -156,11 +175,19 @@ def teacher_login():
         if teacher is None or not teacher.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('teacher_login'))
-        login_user(teacher, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('teacher_profile',
-                                username=current_user.username)
+                                username=teacher.username)
+        if teacher.two_factor_enabled():
+            request_verification_token(teacher.verification_phone)
+            session['username'] = teacher.username
+            session['phone'] = teacher.verification_phone
+            return redirect(url_for('teacher_verify_2fa', username=teacher.username,
+                                    next=next_page,
+                                    remember='1' if form.remember_me.data else '0'
+                                    ))
+        login_user(teacher, remember=form.remember_me.data)
         return redirect(next_page)
     return render_template('login.html',
                            form=form,
@@ -189,6 +216,179 @@ def reset_password():
     return render_template('reset_password.html',
                            form=form,
                            title='Reset Password'
+                           )
+
+
+# Two-factor authentication
+
+@app.route('/parent/<username>/enable-2fa', methods=['GET', 'POST'])
+@login_required
+def parent_enable_2fa(username):
+    parent = Parent.query.filter_by(username=username).first_or_404()
+    form = Enable2faForm()
+    if form.validate_on_submit():
+        session['phone'] = form.verification_phone.data
+        request_verification_token(session['phone'])
+        return redirect(url_for('parent_verify_2fa', username=parent.username))
+    return render_template('enable_2fa.html',
+                           form=form,
+                           title='Enable 2FA'
+                           )
+
+
+@app.route('/parent/<username>/confirm-2fa', methods=['GET', 'POST'])
+def parent_verify_2fa(username):
+    parent = Parent.query.filter_by(username=username).first_or_404()
+    form = Confirm2faForm()
+    if form.validate_on_submit():
+        phone = session['phone']
+        if check_verification_token(phone, form.token.data):
+            del session['phone']
+            if parent.is_authenticated:
+                parent.verification_phone = phone
+                db.session.commit()
+                flash('You have enabled two-factor authentication')
+                return redirect(url_for('parent_profile', username=parent.username))
+            else:
+                username = session['username']
+                del session['username']
+                next_page = request.args.get('next')
+                remember = request.args.get('remember', '0') == '1'
+                login_user(parent, remember=remember)
+                return redirect(url_for(next_page))
+        form.token.errors.append('Invalid token')
+    return render_template('verify_2fa.html',
+                           form=form,
+                           title='Verify Token'
+                           )
+
+
+@app.route('/parent/<username>/disable-2fa', methods=['GET', 'POST'])
+def parent_disable_2fa(username):
+    parent = Parent.query.filter_by(username=username).first_or_404()
+    form = Disable2faForm()
+    if form.validate_on_submit():
+        parent.verification_phone = None
+        db.session.commit()
+        flash('You have diabled two-factor authentication')
+        return redirect(url_for('parent_profile', username=parent.username))
+    return render_template('disable_2fa.html',
+                           form=form,
+                           title='Disable 2FA'
+                           )
+
+
+@app.route('/student/<username>/enable-2fa', methods=['GET', 'POST'])
+@login_required
+def student_enable_2fa(username):
+    student = Student.query.filter_by(username=username).first_or_404()
+    form = Enable2faForm()
+    if form.validate_on_submit():
+        session['phone'] = form.verification_phone.data
+        request_verification_token(session['phone'])
+        return redirect(url_for('student_verify_2fa', username=student.username))
+    return render_template('enable_2fa.html',
+                           form=form,
+                           title='Enable 2FA'
+                           )
+
+
+@app.route('/student/<username>/confirm-2fa', methods=['GET', 'POST'])
+def student_verify_2fa(username):
+    student = Student.query.filter_by(username=username).first_or_404()
+    form = Confirm2faForm()
+    if form.validate_on_submit():
+        phone = session['phone']
+        if check_verification_token(phone, form.token.data):
+            del session['phone']
+            if student.is_authenticated:
+                student.verification_phone = phone
+                db.session.commit()
+                flash('You have enabled two-factor authentication')
+                return redirect(url_for('student_profile', username=student.username))
+            else:
+                username = session['username']
+                del session['username']
+                next_page = request.args.get('next')
+                remember = request.args.get('remember', '0') == '1'
+                login_user(student, remember=remember)
+                return redirect(url_for(next_page))
+        form.token.errors.append('Invalid token')
+    return render_template('verify_2fa.html',
+                           form=form,
+                           title='Verify Token'
+                           )
+
+
+@app.route('/student/<username>/disable-2fa', methods=['GET', 'POST'])
+def student_disable_2fa(username):
+    student = Student.query.filter_by(username=username).first_or_404()
+    form = Disable2faForm()
+    if form.validate_on_submit():
+        student.verification_phone = None
+        db.session.commit()
+        flash('You have diabled two-factor authentication')
+        return redirect(url_for('student_profile', username=student.username))
+    return render_template('disable_2fa.html',
+                           form=form,
+                           title='Disable 2FA'
+                           )
+
+
+@app.route('/teacher/<username>/enable-2fa', methods=['GET', 'POST'])
+@login_required
+def teacher_enable_2fa(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
+    form = Enable2faForm()
+    if form.validate_on_submit():
+        session['phone'] = form.verification_phone.data
+        request_verification_token(session['phone'])
+        return redirect(url_for('teacher_verify_2fa', username=teacher.username))
+    return render_template('enable_2fa.html',
+                           form=form,
+                           title='Enable 2FA'
+                           )
+
+
+@app.route('/teacher/<username>/confirm-2fa', methods=['GET', 'POST'])
+def teacher_verify_2fa(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
+    form = Confirm2faForm()
+    if form.validate_on_submit():
+        phone = session['phone']
+        if check_verification_token(phone, form.token.data):
+            del session['phone']
+            if teacher.is_authenticated:
+                teacher.verification_phone = phone
+                db.session.commit()
+                flash('You have enabled two-factor authentication')
+                return redirect(url_for('teacher_profile', username=teacher.username))
+            else:
+                username = session['username']
+                del session['username']
+                next_page = request.args.get('next')
+                remember = request.args.get('remember', '0') == '1'
+                login_user(teacher, remember=remember)
+                return redirect(url_for(next_page))
+        form.token.errors.append('Invalid token')
+    return render_template('verify_2fa.html',
+                           form=form,
+                           title='Verify Token'
+                           )
+
+
+@app.route('/teacher/<username>/disable-2fa', methods=['GET', 'POST'])
+def teacher_disable_2fa(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
+    form = Disable2faForm()
+    if form.validate_on_submit():
+        teacher.verification_phone = None
+        db.session.commit()
+        flash('You have diabled two-factor authentication')
+        return redirect(url_for('teacher_profile', username=teacher.username))
+    return render_template('disable_2fa.html',
+                           form=form,
+                           title='Disable 2FA'
                            )
 
 # --------------------------

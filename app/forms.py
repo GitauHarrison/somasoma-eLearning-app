@@ -7,6 +7,10 @@ from app.models import Parent, Student, Teacher
 import phonenumbers
 
 
+# ------------
+# Registration
+# ------------
+
 class ParentRegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
@@ -113,12 +117,20 @@ class TeacherRegistrationForm(FlaskForm):
             raise ValidationError('Please use a different email address')
 
 
+# -----
+# Login
+# -----
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
+
+# -------------
+# Email Support
+# -------------
 
 class RquestPasswordResetForm(FlaskForm):
     email = StringField('Email',
@@ -134,6 +146,10 @@ class ResetPasswordForm(FlaskForm):
                                                  EqualTo('password')])
     submit = SubmitField('Reset')
 
+
+# ------------
+# User Profile
+# ------------
 
 class ParentEditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -181,3 +197,31 @@ class TeacherEditProfileForm(FlaskForm):
             teacher = Teacher.query.filter_by(username=self.username.data).first()
             if teacher is not None:
                 raise ValidationError('Please use a different username.')
+
+
+# ------------------------
+# Two-factor authenticaion
+# ------------------------
+
+class Enable2faForm(FlaskForm):
+    verification_phone = StringField('Phone Number',
+                                     validators=[DataRequired()]
+                                     )
+    submit = SubmitField('Enable 2FA')
+
+    def validate_verification_number(self, verification_phone):
+        try:
+            p = phonenumbers.parse(verification_phone.data)
+            if not phonenumbers.is_valid_number(p):
+                raise ValueError
+        except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
+            raise ValidationError('Invalid phone number')
+
+
+class Confirm2faForm(FlaskForm):
+    token = StringField('Token', validators=[DataRequired()])
+    submit = SubmitField('Verify')
+
+
+class Disable2faForm(FlaskForm):
+    submit = SubmitField('Disable 2FA')

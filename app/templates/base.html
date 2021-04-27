@@ -102,4 +102,17 @@
     {{ super() }}
     {{ moment.include_moment() }}    
     <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput-jquery.min.js"></script>
+    <script>
+        $("#verification_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
+        $("#verification_phone").parent().append('<div><input type="tel" id="_verification_phone"></div>');
+        $("#_verification_phone").intlTelInput({
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
+        });
+        $("#_verification_phone").intlTelInput("setNumber", $('#verification_phone').val());
+        $('#_verification_phone').blur(function() {
+            $('#verification_phone').val($('#_verification_phone').intlTelInput("getNumber"));
+        });
+    </script>
 {% endblock %}

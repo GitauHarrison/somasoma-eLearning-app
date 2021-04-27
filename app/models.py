@@ -28,6 +28,9 @@ class Parent(UserMixin, db.Model):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
+    def two_factor_enabled(self):
+        return self.verification_phone is not None
+
 
 class Student(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -53,6 +56,9 @@ class Student(UserMixin, db.Model):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
+    def two_factor_enabled(self):
+        return self.verification_phone is not None
+
 
 class Teacher(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -77,6 +83,9 @@ class Teacher(UserMixin, db.Model):
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
+
+    def two_factor_enabled(self):
+        return self.verification_phone is not None
 
 
 @login.user_loader

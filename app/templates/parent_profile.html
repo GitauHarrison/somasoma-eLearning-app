@@ -25,6 +25,15 @@
                             </a>
                         </p>
                     {%endif%}
+                    {% if not parent.two_factor_enabled() %}
+                        <p>
+                            <a href="{{ url_for('parent_enable_2fa', username=parent.username) }}">Enable two-factor authentication</a>
+                        </p>
+                    {% else %}
+                        <p>
+                            <a href="{{ url_for('parent_disable_2fa', username=parent.username) }}">Disable two-factor authentication</a>
+                        </p>
+                    {% endif %}
                     <p>
                         <span class="deactivate-warning">
                             <a href="#">Deactivate Account</a>
