@@ -100,9 +100,11 @@ def teacher_registration():
                            )
 
 
-@app.route('/login')
+@app.route('/login/')
 def login():
-    return render_template('all_users_login.html', title='Login')
+    return render_template('all_users_login.html',
+                           title='Login'
+                           )
 
 
 @app.route('/login/parent/', methods=['GET', 'POST'])
@@ -165,7 +167,7 @@ def student_login():
                            )
 
 
-@app.route('/login/teacher', methods=['GET', 'POST'])
+@app.route('/login/teacher/', methods=['GET', 'POST'])
 def teacher_login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -244,6 +246,7 @@ def parent_verify_2fa(username):
         phone = session['phone']
         if check_verification_token(phone, form.token.data):
             del session['phone']
+            login_user(parent)
             if parent.is_authenticated:
                 parent.verification_phone = phone
                 db.session.commit()
@@ -252,6 +255,7 @@ def parent_verify_2fa(username):
             else:
                 username = session['username']
                 del session['username']
+                parent = Parent.query.filter_by(username=username).first()
                 next_page = request.args.get('next')
                 remember = request.args.get('remember', '0') == '1'
                 login_user(parent, remember=remember)
@@ -301,6 +305,7 @@ def student_verify_2fa(username):
         phone = session['phone']
         if check_verification_token(phone, form.token.data):
             del session['phone']
+            login(student)
             if student.is_authenticated:
                 student.verification_phone = phone
                 db.session.commit()
@@ -309,6 +314,7 @@ def student_verify_2fa(username):
             else:
                 username = session['username']
                 del session['username']
+                student = Student.query.filter_by(username=username).first()
                 next_page = request.args.get('next')
                 remember = request.args.get('remember', '0') == '1'
                 login_user(student, remember=remember)
@@ -358,6 +364,7 @@ def teacher_verify_2fa(username):
         phone = session['phone']
         if check_verification_token(phone, form.token.data):
             del session['phone']
+            login_user(teacher)
             if teacher.is_authenticated:
                 teacher.verification_phone = phone
                 db.session.commit()
@@ -366,6 +373,7 @@ def teacher_verify_2fa(username):
             else:
                 username = session['username']
                 del session['username']
+                teacher = Teacher.query.filter_by(username=username).first()
                 next_page = request.args.get('next')
                 remember = request.args.get('remember', '0') == '1'
                 login_user(teacher, remember=remember)
@@ -513,6 +521,7 @@ def delete_teacher_account(username):
     teacher = Teacher.query.filter_by(username=username).first_or_404()
     db.session.delete(teacher)
     db.session.commit()
+    
     flash(f'Your teacher account {teacher.username} was successfully deleted')
     return redirect(url_for('home'))
 

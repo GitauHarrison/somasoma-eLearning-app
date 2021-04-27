@@ -89,5 +89,15 @@ class Teacher(UserMixin, db.Model):
 
 
 @login.user_loader
-def load_user(id):
+def teacher_load_user(id):
     return Teacher.query.get(int(id))
+
+
+@login.user_loader
+def parent_load_user(id):
+    return Parent.query.get(int(id))
+
+
+@login.user_loader
+def student_load_user(id):
+    return Student.query.get(int(id))
