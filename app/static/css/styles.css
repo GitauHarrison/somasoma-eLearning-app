@@ -15,6 +15,11 @@ p{
     border-radius: 3px;
     margin: 20px;
 }
+#_verification_phone {
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    padding: 6px;
+}
 
 /* Images */
 .img{

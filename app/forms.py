@@ -89,7 +89,7 @@ class TeacherRegistrationForm(FlaskForm):
     email = StringField('Teacher Email',
                         validators=[DataRequired(), Email()],
                         render_kw={'placeholder': 'Valid email address'})
-    verification_phone = StringField('Student Phone Number',
+    verification_phone = StringField('Teacher Phone Number',
                                      validators=[DataRequired()],
                                      render_kw={'placeholder': '+254722000000'})
     password = PasswordField('Password', validators=[DataRequired()])
