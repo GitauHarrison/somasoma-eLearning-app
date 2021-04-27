@@ -404,8 +404,6 @@ def teacher_disable_2fa(username):
 @login_required
 def parent_profile(username):
     parent = Parent.query.filter_by(username=username).first_or_404()
-    print(parent)
-    print(parent.username)
     return render_template('parent_profile.html',
                            parent=parent,
                            title='Parent Profile'
