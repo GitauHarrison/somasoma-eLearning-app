@@ -35,11 +35,6 @@
                         </p>
                     {% endif %}
                     <p>
-                        <span class="deactivate-warning">
-                            <a href="#">Deactivate Account</a>
-                        </span>
-                    </p>
-                    <p>
                         <span class="danger-warning">
                             <a href="{{ url_for('delete_parent_account', username=parent.username) }}">Delete Account Permanently</a>
                         </span>
