@@ -20,6 +20,9 @@ p{
     border-radius: 5px;
     padding: 6px;
 }
+.registration-form {
+    margin-bottom: 69px;
+}
 
 /* Images */
 .img{
@@ -55,6 +58,9 @@ p{
 }
 .card:hover{
     box-shadow: 5px 10px 18px #ebe6e3;
+}
+.card li {
+    text-align: left;
 }
 
 /* Permanent Actions */
@@ -102,7 +108,7 @@ p{
 .my-footer{
     margin-bottom: 0px;
     position: absolute;
-    bottom: -20;
+    bottom: -40;
     width: 100%;
     /* height: 200px; */
 }
@@ -111,15 +117,17 @@ p{
     margin: 0px;
 }
 
-/* Home Page */
-.hero, .about, .courses {
+/* HOME PAGE */
+.hero, .about, .courses, .overview, .who-is-it-for {
     margin-bottom: 160px;
 }
+.hero h1, .about h1, #explore h1, .title h1, .overview h3, .who-is-it-for h3 {
+    font-weight: 800;
+}
+
+/* Hero section */
 .hero {
     margin-top: 100px;
-}
-.hero h1, .about h1, #explore h1 {
-    font-weight: 800;
 }
 .hero h1 {
     font-size: 60px;
@@ -140,4 +148,17 @@ p{
 }
 .hero span {
     color: orange;
+}
+
+/* About Section */
+
+
+/* Courses Section */
+.registration {
+    font-weight: 800;
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+.registration-cards {
+    margin-bottom: 160px;
 }

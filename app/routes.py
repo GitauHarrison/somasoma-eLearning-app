@@ -27,6 +27,20 @@ def before_request():
 def home():
     return render_template('home.html')
 
+
+@app.route('/python')
+def python_course():
+    return render_template('home_page_courses/python_course.html',
+                           title='Python'
+                           )
+
+
+@app.route('/scratch')
+def scratch_course():
+    return render_template('home_page_courses/scratch_course.html',
+                           title='Scratch'
+                           )
+
 # --------------------
 # User Authentication
 # --------------------

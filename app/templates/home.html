@@ -3,7 +3,7 @@
 {% block app_content %}
     <!-- Hero section -->
     <div class="row hero">
-        <div class="col-md-6">
+        <div class="col-md-6 first-col">
             <h1>Learn What <span>Matters The Most</span></h1>
             <a href="#explore"><button type="button" class="btn btn-warning">Explore</button></a>
         </div>
@@ -45,7 +45,7 @@
                   <p class="card-text">
                     Lorem ipsum is simply dummy text of the printing industry
                   </p>
-                  <a href=" # " class="btn">Learn More</a>
+                  <a href=" {{ url_for('python_course') }} " class="btn">Learn More</a>
                 </div>            
               </div>
               <!-- End of Python Card -->
@@ -64,7 +64,7 @@
                   <p class="card-text">
                     Lorem ipsum is simply dummy text of the printing industry
                   </p>
-                  <a href=" # " class="btn">Learn More</a>
+                  <a href=" {{ url_for('scratch_course') }} " class="btn">Learn More</a>
                 </div>            
               </div>
               <!-- End of Scratch Card -->
