@@ -34,11 +34,12 @@
                 </button>
                 <a class="navbar-brand" href="{{ url_for('home') }}">Somasoma eLearning</a>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">                
-                    <ul class="nav navbar-nav navbar-right"> 
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">                   
+                <ul class="nav navbar-nav navbar-right"> 
                         {% if current_user.is_anonymous %}                   
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#expore">Courses</a></li>
+                            <li><a href="#contact">Contact</a></li>
                         {% else %}
                             {% if parent %}
                                 <li class="nav-item dropdown">
@@ -96,6 +97,48 @@
 
         {% block app_content %}{% endblock %}
     </div>
+    {% if current_user.is_anonymous %}
+        {% block footer %}    
+            <nav class="my-footer navbar navbar-default" id="contact">
+                <div class="container">   
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 class="text-center"><strong>Address</strong></h5>
+                            <p>
+                                Nairobi Garage,<br>
+                                Ngong Road 
+                                Nairobi, Kenya
+                            </p>
+                        </div> 
+                        <div class="col-md-4">
+                            <h5 class="text-center"><strong>Careers</strong></h5>
+                            <p>
+                                Teaching<br>
+                                Software Development
+                            </p>
+                        </div> 
+                        <div class="col-md-4 text-center">
+                            <h5 class="text-center"><strong>Social Media</strong></h5>
+                            <a href="" target="_blank">
+                                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/instagram.svg')}}" alt="Instagram">
+                            </a>    
+                            <a href="" target="_blank">
+                                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/facebook.png')}}" alt="Facebook">
+                            </a>    
+                            <a href="" target="_blank">
+                                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/youtube.png')}}" alt="YouTube">
+                            </a>
+                        </div> 
+                    </div><hr>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                                &#169; {{ moment().format('YYYY') }}
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        {% endblock %}
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}

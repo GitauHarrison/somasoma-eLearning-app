@@ -1,13 +1,75 @@
 {% extends 'base.html' %}
 
 {% block app_content %}
-    <div class="row">
-        <div class="col-md-5">
-            <h1>Learn What Matters The Most</h1>
-            <a href="{{ url_for('parent_registration') }}"><button type="button" class="btn btn-warning">Apply</button></a>
+    <!-- Hero section -->
+    <div class="row hero">
+        <div class="col-md-6">
+            <h1>Learn What <span>Matters The Most</span></h1>
+            <a href="#explore"><button type="button" class="btn btn-warning">Explore</button></a>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6 text-center">
             <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{ url_for('static', filename='images/online_learning.svg') }}" alt="Online Learning">
         </div>        
+    </div>
+    <!-- About Section -->
+    <div class="row about" id="about">
+        <div class="col-md-12 text-center">
+            <h1>About</h1>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+            </p>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+            </p>
+        </div>
+    </div>
+    <!-- Courses Section -->
+    <div class="row" id="explore">
+        <div class="col-md-12 text-center">
+            <h1>Courses</h1>
+        </div>
+    </div>
+    <div class="row courses">
+        <div class="col-md-4">
+            <!-- Python Card -->
+            <div class="card-deck">
+              <div class="card">
+                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/python.svg')}}" alt="Parent">
+                <div class="card-body">
+                  <h3 class="card-title">Python</h3><hr>
+                  <p class="card-text">
+                    Lorem ipsum is simply dummy text of the printing industry
+                  </p>
+                  <p class="card-text">
+                    Lorem ipsum is simply dummy text of the printing industry
+                  </p>
+                  <a href=" # " class="btn">Learn More</a>
+                </div>            
+              </div>
+              <!-- End of Python Card -->
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- Scratc Card -->
+            <div class="card-deck">
+              <div class="card">
+                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/sratch.png')}}" alt="Parent">
+                <div class="card-body">
+                  <h3 class="card-title">Scratch</h3><hr>
+                  <p class="card-text">
+                    Lorem ipsum is simply dummy text of the printing industry
+                  </p>
+                  <p class="card-text">
+                    Lorem ipsum is simply dummy text of the printing industry
+                  </p>
+                  <a href=" # " class="btn">Learn More</a>
+                </div>            
+              </div>
+              <!-- End of Scratch Card -->
+            </div>
+        </div>
+        <!-- Another column will come here -->
     </div>
 {% endblock %}
