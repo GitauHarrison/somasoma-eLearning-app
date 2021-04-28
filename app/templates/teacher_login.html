@@ -14,6 +14,17 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-3">
+            <!-- Empty col -->
+        </div>
+        <div class="col-md-6 text-center">
+            <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher_login.svg')}}" alt="Forgot Password">
+        </div>
+        <div class="col-md-3">
+            <!-- Empty col -->
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
             <!-- Empty col -->
         </div>
@@ -21,7 +32,7 @@
             {{ wtf.quick_form(form) }}
             <p>
                 Forgot Password? 
-                <a href="{{ url_for('request_password_reset') }}">Reset Here</a>
+                <a href="{{ url_for('teacher_request_password_reset') }}">Reset Here</a>
             </p>
         </div>
         <div class="col-md-4">

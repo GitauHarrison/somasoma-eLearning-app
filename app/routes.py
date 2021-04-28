@@ -11,6 +11,8 @@ from werkzeug.urls import url_parse
 from datetime import datetime
 from app.twilio_verify_api import request_verification_token,\
     check_verification_token
+from app.email import parent_send_password_reset_email,\
+    teacher_send_password_reset_email, student_send_password_reset_email
 
 
 @app.before_request
@@ -131,7 +133,7 @@ def parent_login():
                                     ))
         login_user(parent, remember=form.remember_me.data)
         return redirect(next_page)
-    return render_template('login.html',
+    return render_template('parent_login.html',
                            form=form,
                            title='Parent Login'
                            )
@@ -161,7 +163,7 @@ def student_login():
                                     ))
         login_user(student, remember=form.remember_me.data)
         return redirect(next_page)
-    return render_template('login.html',
+    return render_template('student_login.html',
                            form=form,
                            title='Student Login'
                            )
@@ -191,7 +193,7 @@ def teacher_login():
                                     ))
         login_user(teacher, remember=form.remember_me.data)
         return redirect(next_page)
-    return render_template('login.html',
+    return render_template('teacher_login.html',
                            form=form,
                            title='Teacher Login'
                            )
@@ -203,22 +205,115 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/login/request-password-reset', methods=['GET', 'POST'])
-def request_password_reset():
+# Password reset
+
+@app.route('/login/parent/request-password-reset', methods=['GET', 'POST'])
+def parent_request_password_reset():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RquestPasswordResetForm()
+    if form.validate_on_submit():
+        parent = Parent.query.filter_by(email=form.email.data).first()
+        if parent:
+            parent_send_password_reset_email(parent)
+        flash('Check your email for instructions to reset your password')
+        return redirect(url_for('parent_login'))
     return render_template('request_password_reset.html',
                            form=form,
                            title='Request Password Reset'
                            )
 
 
-@app.route('/login/reset-password', methods=['GET', 'POST'])
-def reset_password():
+@app.route('/login/parent/reset-password/<token>', methods=['GET', 'POST'])
+def parent_reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    parent = Parent.verify_reset_password_token(token)
+    if not parent:
+        return redirect(url_for('parent_login'))
     form = ResetPasswordForm()
+    if form.validate_on_submit():
+        parent.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset. Login to continue')
+        return redirect(url_for('parent_login'))
     return render_template('reset_password.html',
                            form=form,
                            title='Reset Password'
                            )
+
+
+@app.route('/login/student/request-password-reset', methods=['GET', 'POST'])
+def student_request_password_reset():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RquestPasswordResetForm()
+    if form.validate_on_submit():
+        student = Student.query.filter_by(email=form.email.data).first()
+        if student:
+            student_send_password_reset_email(student)
+        flash('Check your email for instructions to reset your password')
+        return redirect(url_for('student_login'))
+    return render_template('request_password_reset.html',
+                           form=form,
+                           title='Request Password Reset'
+                           )
+
+
+@app.route('/login/student/reset-password/<token>', methods=['GET', 'POST'])
+def student_reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    student = Student.verify_reset_password_token(token)
+    if not student:
+        return redirect(url_for('student_login'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        student.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset. Login to continue')
+        return redirect(url_for('student_login'))
+    return render_template('reset_password.html',
+                           form=form,
+                           title='Reset Password'
+                           )
+
+
+@app.route('/login/teacher/request-password-reset', methods=['GET', 'POST'])
+def teacher_request_password_reset():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RquestPasswordResetForm()
+    if form.validate_on_submit():
+        teacher = Teacher.query.filter_by(email=form.email.data).first()
+        if teacher:
+            teacher_send_password_reset_email(teacher)
+        flash('Check your email for instructions to reset your password')
+        return redirect(url_for('teacher_login'))
+    return render_template('request_password_reset.html',
+                           form=form,
+                           title='Request Password Reset'
+                           )
+
+
+@app.route('/login/teacher/reset-password/<token>', methods=['GET', 'POST'])
+def teacher_reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    teacher = Teacher.verify_reset_password_token(token)
+    if not teacher:
+        return redirect(url_for('teacher_login'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        teacher.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset. Login to continue')
+        return redirect(url_for('teacher_login'))
+    return render_template('reset_password.html',
+                           form=form,
+                           title='Reset Password'
+                           )
+# End of password reset
 
 
 # Two-factor authentication
@@ -398,6 +493,7 @@ def teacher_disable_2fa(username):
                            form=form,
                            title='Disable 2FA'
                            )
+# End of two-factor authentication
 
 # --------------------------
 # End of User Authentication
