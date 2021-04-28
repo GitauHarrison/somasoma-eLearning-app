@@ -23,7 +23,7 @@ p{
 
 /* Images */
 .img{
-    box-shadow: 5px 5px 5px#E6E6E6;
+    /* box-shadow: 5px 5px 5px#E6E6E6; */
     border-radius: 7px;
     margin-top: 20px;
     margin-bottom: 20px;
