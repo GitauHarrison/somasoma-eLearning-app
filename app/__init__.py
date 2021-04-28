@@ -23,6 +23,17 @@ login.login_view = 'login'
 bcrypt = Bcrypt(app)
 mail = Mail(app)
 
+
+def start_ngrok():
+    from pyngrok import ngrok
+
+    url = ngrok.connect(5000)
+    print('* Tunnel: ', url)
+
+
+start_ngrok()
+
+
 if not app.debug:
     if app.config['MAIL_SERVER']:
         auth = None
