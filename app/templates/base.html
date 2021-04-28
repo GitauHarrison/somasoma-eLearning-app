@@ -144,7 +144,7 @@
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}    
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput-jquery.min.js"></script>
     <script>
         $("#verification_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
