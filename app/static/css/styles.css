@@ -163,3 +163,27 @@ p{
 .registration-cards {
     margin-bottom: 160px;
 }
+.parent-registration-form {
+    margin-bottom: 70px;
+}
+
+/* User Login */
+.hero-login {
+    margin-top: 100px;
+}
+.login {
+    margin-bottom: 252px;
+}
+.parent-login-form {
+    margin-bottom: 117px;
+}
+.student-login-form {
+    margin-bottom: 97px;
+}
+.teacher-login-form {
+    margin-bottom: 116px;
+}
+.user-reset-password {
+    margin-top: 63px;
+    margin-bottom: 200px;
+}
