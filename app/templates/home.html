@@ -33,43 +33,72 @@
     </div>
     <div class="row courses">
         <div class="col-md-4">
-            <!-- Python Card -->
+            <!-- Scratch Jr Card -->
             <div class="card-deck">
               <div class="card">
-                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/python.svg')}}" alt="Parent">
+                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/scratchjr.png')}}" alt="Scratch Jr">
                 <div class="card-body">
-                  <h3 class="card-title">Python</h3><hr>
-                  <p class="card-text">
-                    Lorem ipsum is simply dummy text of the printing industry
-                  </p>
-                  <p class="card-text">
-                    Lorem ipsum is simply dummy text of the printing industry
-                  </p>
-                  <a href=" {{ url_for('python_course') }} " class="btn">Learn More</a>
+                  <h3 class="card-title">Scratch Jr</h3><hr>
+                  <div class="card-text">
+                    <p>
+                        Lorem ipsum is simply dummy text [printing industry]
+                      </p>
+                      <p>
+                        Lorem ipsum is simply dummy text of the printing industry
+                      </p>
+                  </div>
+                  <a href=" {{ url_for('scratch_jr_course') }} " class="btn">Learn More</a>
                 </div>            
               </div>
-              <!-- End of Python Card -->
+              <!-- End of Scratch Jr Card -->
             </div>
         </div>
         <div class="col-md-4">
-            <!-- Scratc Card -->
+            <!-- Scratch Card -->
             <div class="card-deck">
               <div class="card">
                 <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/sratch.png')}}" alt="Parent">
                 <div class="card-body">
                   <h3 class="card-title">Scratch</h3><hr>
-                  <p class="card-text">
-                    Lorem ipsum is simply dummy text of the printing industry
-                  </p>
-                  <p class="card-text">
-                    Lorem ipsum is simply dummy text of the printing industry
-                  </p>
+                  <div class="card-text">
+                    <p>
+                        Lorem ipsum is simply dummy text of the printing industry.
+                        Lorem ipsum is simply dummy text for now.
+                      </p>
+                      <p>
+                        Lorem ipsum is simply dummy text of the printing industry.
+                        Lorem ipsum is simply dummytext for now.
+                      </p>
+                  </div>
                   <a href=" {{ url_for('scratch_course') }} " class="btn">Learn More</a>
                 </div>            
               </div>
               <!-- End of Scratch Card -->
             </div>
         </div>
-        <!-- Another column will come here -->
+        <div class="col-md-4">
+            <!-- Python Card -->
+            <div class="card-deck">
+              <div class="card">
+                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/python.svg')}}" alt="Parent">
+                <div class="card-body">
+                  <h3 class="card-title">Python</h3><hr>
+                  <div class="card-text">
+                    <p>
+                        Lorem ipsum is simply dummy text of the printing industry.
+                        Lorem ipsum is simply dummy text of the printing industry
+                      </p>
+                      <p>
+                        Lorem ipsum is simply dummy text of the printing industry.
+                        Lorem ipsum is simply dummy text of the printing industry
+                      </p>
+                  </div>
+                  <a href=" {{ url_for('python_course') }} " class="btn">Learn More</a>
+                </div>            
+              </div>
+              <!-- End of Python Card -->
+            </div>
+        </div>
     </div>
+    <!-- Another row of courses will come here -->
 {% endblock %}

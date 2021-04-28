@@ -51,10 +51,11 @@ p{
 /* Cards */
 .card{
     border: 1px solid #d6d4d3;
-    border-radius: 3px;
+    border-radius: 5px;
     padding:5px;
     text-align: center;
     margin: 5px;
+    box-shadow: 5px 5px 5px#E6E6E6;
 }
 .card:hover{
     box-shadow: 5px 10px 18px #ebe6e3;

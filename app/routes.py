@@ -30,14 +30,21 @@ def home():
 
 @app.route('/python')
 def python_course():
-    return render_template('home_page_courses/python_course.html',
+    return render_template('courses/home_page_courses/python_course.html',
                            title='Python'
+                           )
+
+
+@app.route('/scratch-jr')
+def scratch_jr_course():
+    return render_template('courses/home_page_courses/scratch_jr_course.html',
+                           title='Scratch Jr'
                            )
 
 
 @app.route('/scratch')
 def scratch_course():
-    return render_template('home_page_courses/scratch_course.html',
+    return render_template('courses/home_page_courses/scratch_course.html',
                            title='Scratch'
                            )
 
