@@ -11,7 +11,7 @@
             <!-- Python Card -->
             <div class="card-deck">
               <div class="card">
-                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/scratchjr.png')}}" alt="Scratch Jr">
+                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/python.svg')}}" alt="Scratch Jr">
                 <div class="card-body">
                   <h3 class="card-title">Python</h3><hr>
                   <div class="card-text">
@@ -20,7 +20,7 @@
                         Lorem ipsum is simply dummy text of the printing industry
                       </p>
                   </div>
-                  <a href=" # " class="btn">Start Lesson</a>
+                  <a href=" {{ url_for('student_start_python', username=student.username) }} " class="btn">Start Lesson</a>
                 </div>            
               </div>
               <!-- End of Python Card -->

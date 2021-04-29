@@ -7,6 +7,16 @@ p{
     margin-bottom: 10px;
     padding-top: 15px;
 }
+a:hover {
+    text-decoration: none;
+    color: rgb(141, 92, 1);
+}
+a:visited {
+    color: green;
+}
+a:visited:hover {
+    color: rgb(141, 92, 1);
+}
 
 /* Forms */
 .my_form{
@@ -145,7 +155,7 @@ p{
 }
 .hero button:hover {
     background-color: orange;
-    color: white;
+    color: black;
 }
 .hero span {
     color: orange;
@@ -169,10 +179,10 @@ p{
 
 /* User Login */
 .hero-login {
-    margin-top: 100px;
+    margin-top: 0px;
 }
 .login {
-    margin-bottom: 252px;
+    margin-bottom: 352px;
 }
 .parent-login-form {
     margin-bottom: 117px;
@@ -186,4 +196,7 @@ p{
 .user-reset-password {
     margin-top: 63px;
     margin-bottom: 200px;
+}
+.received-token {
+    margin-bottom: 514px;
 }

@@ -97,6 +97,10 @@ class Student(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(300))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    comments = db.relationship('StudentComment',
+                               backref='author',
+                               lazy='dynamic'
+                               )
 
     def __repr__(self):
         return f'{self.username} {self.email} {self.verification_phone}'
@@ -199,6 +203,16 @@ class Teacher(UserMixin, db.Model):
         except:
             return
         return Teacher.query.get(id)
+
+
+class StudentComment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(300), nullable=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Student comment: {self.body}'
 
 
 @login.user_loader

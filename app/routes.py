@@ -4,9 +4,10 @@ from flask import render_template, url_for, redirect, flash, request,\
 from app.forms import StudentRegistrationForm, ParentRegistrationForm,\
     TeacherRegistrationForm, LoginForm, RquestPasswordResetForm,\
     ResetPasswordForm, ParentEditProfileForm, StudentEditProfileForm,\
-    TeacherEditProfileForm, Enable2faForm, Confirm2faForm, Disable2faForm
+    TeacherEditProfileForm, Enable2faForm, Confirm2faForm, Disable2faForm,\
+    CommentForm
 from flask_login import login_user, logout_user, current_user, login_required
-from app.models import Teacher, Student, Parent
+from app.models import Teacher, Student, Parent, StudentComment
 from werkzeug.urls import url_parse
 from datetime import datetime
 from app.twilio_verify_api import request_verification_token,\
@@ -21,6 +22,8 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
+
+# Anonymous User
 
 @app.route('/')
 @app.route('/home')
@@ -172,7 +175,7 @@ def student_login():
             return redirect(url_for('student_login'))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('student_profile',
+            next_page = url_for('student_paid_courses',
                                 username=student.username)
         if student.two_factor_enabled():
             request_verification_token(student.verification_phone)
@@ -421,7 +424,7 @@ def student_verify_2fa(username):
         phone = session['phone']
         if check_verification_token(phone, form.token.data):
             del session['phone']
-            login(student)
+            login_user(student)
             if student.is_authenticated:
                 student.verification_phone = phone
                 db.session.commit()
@@ -519,6 +522,62 @@ def teacher_disable_2fa(username):
 # --------------------------
 # End of User Authentication
 # --------------------------
+
+
+# --------------------------
+# Logged In Student Courses
+# --------------------------
+
+
+@app.route('/student/<username>/courses')
+@login_required
+def student_paid_courses(username):
+    student = Student.query.filter_by(username=username).first()
+    return render_template('courses/signed_up_user_courses/python_course.html',
+                           student=student,
+                           title='Your Courses'
+                           )
+
+
+@app.route('/student/<username>/courses/python', methods=['GET', 'POST'])
+def student_start_python(username):
+    student = Student.query.filter_by(username=username).first()
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = StudentComment(body=form.body.data)
+        db.session.add(comment)
+        db.session.commit()
+        flash('You will receive an email when your comment is live')
+        return redirect(url_for('student_start_python',
+                                username=student.username
+                                )
+                        )
+    page = request.args.get('page', 1, type=int)
+    comments = StudentComment.query.order_by(
+        StudentComment.timestamp.desc()).paginate(
+            page, app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('student_start_python',
+                       username=student.username,
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('student_start_python',
+                       username=student.username,
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    all_comments = StudentComment.query.all()
+    total_comments = len(all_comments)
+    return render_template('courses/signed_up_user_courses/python_course_content.html',
+                           student=student,
+                           form=form,
+                           title='Python',
+                           total_comments=total_comments,
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items
+                           )
 
 
 # ------------
@@ -638,7 +697,6 @@ def delete_teacher_account(username):
     teacher = Teacher.query.filter_by(username=username).first_or_404()
     db.session.delete(teacher)
     db.session.commit()
-    
     flash(f'Your teacher account {teacher.username} was successfully deleted')
     return redirect(url_for('home'))
 

@@ -11,7 +11,7 @@
 
 {% block title %}
     {% if title %}
-       {{ title }} - Somasoma eLearning
+       {{ title }} | Somasoma eLearning
     {% else %}
         Welcome to Somasoma eLearning
     {% endif %}
@@ -53,14 +53,16 @@
                                     </div>
                                 </li>
                             {% elif student %}
+                            <li><a href="{{ url_for('student_paid_courses', username=student.username) }}">Courses</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="{{ url_for('student_profile', username=student.username) }}" data-bs-toggle="dropdown" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
-                                      <a class="dropdown-item" href="#">All Your Posts</a><br>
-                                      <a class="dropdown-item" href="#">Followed Users</a><br>
-                                      <a class="dropdown-item" href="#">Explore All Users</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('student_profile', username=student.username) }} ">Your Profile</a><br>
+                                        <a class="dropdown-item" href="#">All Your Posts</a><br>
+                                        <a class="dropdown-item" href="#">Followed Users</a><br>
+                                        <a class="dropdown-item" href="#">Explore All Users</a><br>
                                     </div>
                                 </li>
                             {% elif teacher %}                                

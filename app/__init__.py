@@ -31,7 +31,7 @@ def start_ngrok():
     print('* Tunnel: ', url)
 
 
-start_ngrok()
+# start_ngrok()
 
 
 if not app.debug:

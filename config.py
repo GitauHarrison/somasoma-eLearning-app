@@ -30,3 +30,6 @@ class Config(object):
 
     # Localhost testing
     NGROK = os.environ.get('NGROK')
+
+    # Pagination
+    POSTS_PER_PAGE = int(os.environ.get('POSTS_PER_PAGE'))

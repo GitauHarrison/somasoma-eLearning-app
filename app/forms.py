@@ -225,3 +225,12 @@ class Confirm2faForm(FlaskForm):
 
 class Disable2faForm(FlaskForm):
     submit = SubmitField('Disable 2FA')
+
+# ------------------------
+# Comments Form
+# ------------------------
+
+
+class CommentForm(FlaskForm):
+    body = TextAreaField('Your Comment', validators=[DataRequired()])
+    submit = SubmitField('Post')
