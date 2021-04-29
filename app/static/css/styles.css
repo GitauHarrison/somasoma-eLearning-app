@@ -93,13 +93,34 @@ a:visited:hover {
 /* Dropdown */
 
 /* --- desktop view --- */
+
+/* Profile */
 @media all and (min-width: 992px) {
 	.navbar .nav-item .dropdown-menu{ display: none; }
 	.navbar .nav-item:hover .nav-link{   }
 	.navbar .nav-item:hover .dropdown-menu{ display: block; }
 	.navbar .nav-item .dropdown-menu{ margin-top:0; }
 }	
+
+/* Courses */
+@media all and (min-width: 992px) {
+	.nav-item .dropdown-menu{ display: none; }
+	.nav-item:hover .nav-link{   }
+	.nav-item:hover .dropdown-menu{ display: block; }
+	.nav-item .dropdown-menu{ margin-top:0; }
+}	
+
 /* --- desktop view .end// --- */
+
+/* Tabs */
+.my-tab {
+    margin: 20px;
+    margin-top: 0px;
+}
+#overview, #topic1, #topic2, #topic3, #participants, #video_call {
+    background-color: rgb(241, 241, 241);
+    padding: 20px;
+}
 
 .dropdown {
     position: relative;

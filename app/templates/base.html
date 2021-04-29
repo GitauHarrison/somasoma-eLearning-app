@@ -159,4 +159,14 @@
             $('#verification_phone').val($('#_verification_phone').intlTelInput("getNumber"));
         });
     </script>
+    <!-- Tabs in Courses -->
+    <script>
+
+        $(document).ready(function(){ 
+        $("#myTab a").click(function(e){
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+    </script>
 {% endblock %}
