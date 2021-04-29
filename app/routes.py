@@ -540,6 +540,7 @@ def student_paid_courses(username):
 
 
 @app.route('/student/<username>/courses/python', methods=['GET', 'POST'])
+@login_required
 def student_start_python(username):
     student = Student.query.filter_by(username=username).first()
     form = CommentForm()
