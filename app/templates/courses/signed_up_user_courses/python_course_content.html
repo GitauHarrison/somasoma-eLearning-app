@@ -68,14 +68,19 @@
                 </div>
                 
                 <div role="tabpanel" class="tab-pane fade" id="participants">
-                    <h1 class="mt-2">Participants</h1>
-                    <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis 
-                        cardigan american apparel, butcher voluptate nisi qui. 
-                        Raw denim you probably haven't heard of them jean shorts Austin. 
-                        Nesciunt tofu stumptown aliqua, retro synth master cleanse. 
-                        Mustache cliche tempor, williamsburg carles vegan helvetica. R
-                        eprehenderit butcher retro keffiyeh dreamcatcher synth.
-                    </p>
+                    <h1 class="mt-2 text-center">Participants</h1><br>
+                    <table class="table">
+                        <tr valign='top'>
+                            <th>Avatar</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Last Seen</th>
+                        </tr>
+                        {% for student in all_students %}
+                            {% include 'courses/signed_up_user_courses/_python_participants.html' %}
+                        {% endfor %}
+                    </table>
                 </div>
             
                 <div role="tabpanel" class="tab-pane fade" id="video_call">

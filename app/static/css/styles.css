@@ -118,7 +118,7 @@ a:visited:hover {
     margin-top: 0px;
 }
 #overview, #topic1, #topic2, #topic3, #participants, #video_call {
-    background-color: rgb(241, 241, 241);
+    /* background-color: rgb(243, 241, 241); */
     padding: 20px;
 }
 
@@ -221,3 +221,14 @@ a:visited:hover {
 .received-token {
     margin-bottom: 514px;
 }
+
+/* Course Participants */
+.participants {
+    text-align: center;
+    margin-right: 100px;
+}
+
+/* Participants Table */
+tr:nth-child(even) {
+    background-color: #f7f7f7;
+  }

@@ -543,6 +543,7 @@ def student_paid_courses(username):
 @login_required
 def student_start_python(username):
     student = Student.query.filter_by(username=username).first_or_404()
+    all_students = Student.query.all()
     print(student)
     form = CommentForm()
     if form.validate_on_submit():
@@ -579,7 +580,8 @@ def student_start_python(username):
                            total_comments=total_comments,
                            next_url=next_url,
                            prev_url=prev_url,
-                           comments=comments.items
+                           comments=comments.items,
+                           all_students=all_students
                            )
 
 

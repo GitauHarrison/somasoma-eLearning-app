@@ -1,0 +1,12 @@
+<tr>
+    <td>
+        <a href="{{ url_for('student_profile', username=student.username) }}">
+            <img src=" {{ student.avatar(36) }} ">
+        </a>
+    </td>
+
+    <td> {{ student.first_name }} </td>
+    <td> {{ student.last_name }} </td>
+    <td> {{ student.email }} </td>
+    <td> {{ moment(student.last_seen).format('LLL') }} </td>
+</tr>
