@@ -212,7 +212,7 @@ class StudentComment(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
     def __repr__(self):
-        return f'Student comment: {self.body}'
+        return f'Body: {self.body}'
 
 
 @login.user_loader

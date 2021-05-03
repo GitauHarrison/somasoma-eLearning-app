@@ -83,7 +83,7 @@ def parent_registration():
 def student_registration():
     form = StudentRegistrationForm()
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('student_paid_courses'))
     if form.validate_on_submit():
         student = Student(first_name=form.first_name.data,
                           last_name=form.last_name.data,
@@ -270,7 +270,7 @@ def parent_reset_password(token):
 @app.route('/login/student/request-password-reset', methods=['GET', 'POST'])
 def student_request_password_reset():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('student_paid_courses'))
     form = RquestPasswordResetForm()
     if form.validate_on_submit():
         student = Student.query.filter_by(email=form.email.data).first()
@@ -287,7 +287,7 @@ def student_request_password_reset():
 @app.route('/login/student/reset-password/<token>', methods=['GET', 'POST'])
 def student_reset_password(token):
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('student_paid_courses'))
     student = Student.verify_reset_password_token(token)
     if not student:
         return redirect(url_for('student_login'))
@@ -393,7 +393,7 @@ def parent_disable_2fa(username):
     if form.validate_on_submit():
         parent.verification_phone = None
         db.session.commit()
-        flash('You have diabled two-factor authentication')
+        flash('You have disabled two-factor authentication')
         return redirect(url_for('parent_profile', username=parent.username))
     return render_template('disable_2fa.html',
                            form=form,
@@ -542,10 +542,12 @@ def student_paid_courses(username):
 @app.route('/student/<username>/courses/python', methods=['GET', 'POST'])
 @login_required
 def student_start_python(username):
-    student = Student.query.filter_by(username=username).first()
+    student = Student.query.filter_by(username=username).first_or_404()
+    print(student)
     form = CommentForm()
     if form.validate_on_submit():
-        comment = StudentComment(body=form.body.data)
+        comment = StudentComment(body=form.body.data,
+                                 author=current_user)
         db.session.add(comment)
         db.session.commit()
         flash('You will receive an email when your comment is live')
