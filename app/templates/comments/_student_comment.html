@@ -1,13 +1,13 @@
 <table class="table table-hover">
     <tr valign='top'>
         <td width='70px'>
-            <a href="#">
+            <a href="{{ url_for('student_profile', username=comment.author.username) }}">
                 <img src=" {{ comment.author.avatar(36) }} ">
             </a>
         </td>
         <td>
             <span style="color: #b37502;">
-                <a href="#">
+                <a href="{{ url_for('student_profile', username=comment.author.username) }}">
                     {{ comment.author.username }}
                 </a>
             </span>
