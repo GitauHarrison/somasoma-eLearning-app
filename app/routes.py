@@ -5,7 +5,7 @@ from app.forms import StudentRegistrationForm, ParentRegistrationForm,\
     TeacherRegistrationForm, LoginForm, RquestPasswordResetForm,\
     ResetPasswordForm, ParentEditProfileForm, StudentEditProfileForm,\
     TeacherEditProfileForm, Enable2faForm, Confirm2faForm, Disable2faForm,\
-    CommentForm
+    CommentForm, EmptyForm
 from flask_login import login_user, logout_user, current_user, login_required
 from app.models import Teacher, Student, Parent, StudentComment
 from werkzeug.urls import url_parse
@@ -630,9 +630,29 @@ def delete_parent_account(username):
 @login_required
 def student_profile(username):
     student = Student.query.filter_by(username=username).first_or_404()
+    page = request.args.get('page', 1, type=int)
+    comments = student.comments.order_by(
+        StudentComment.timestamp.desc()).paginate(
+            page, app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('student_profile',
+                       username=student.username,
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('student_profile',
+                       username=student.username,
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    form = EmptyForm()
     return render_template('student_profile.html',
                            student=student,
-                           title='Student Profile'
+                           form=form,
+                           title='Student Profile',
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items
                            )
 
 

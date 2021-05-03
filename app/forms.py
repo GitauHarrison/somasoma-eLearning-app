@@ -234,3 +234,7 @@ class Disable2faForm(FlaskForm):
 class CommentForm(FlaskForm):
     body = TextAreaField('Your Comment', validators=[DataRequired()])
     submit = SubmitField('Post')
+
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
