@@ -14,7 +14,8 @@ from app.twilio_verify_api import request_verification_token,\
     check_verification_token
 from app.email import parent_send_password_reset_email,\
     teacher_send_password_reset_email, student_send_password_reset_email,\
-    registration_email
+    payment_email, parent_registration_email, student_registration_email,\
+    teacher_registration_email
 import stripe
 
 
@@ -75,7 +76,8 @@ def parent_registration():
         db.session.commit()
         flash('Congratulations! Next, register your child.')
         if parent:
-            registration_email(parent)
+            payment_email(parent),
+            parent_registration_email(parent)
         return redirect(url_for('student_registration'))
     return render_template('parent_registration.html',
                            form=form,
@@ -98,8 +100,10 @@ def student_registration():
         student.set_password(form.password.data)
         db.session.add(student)
         db.session.commit()
-        flash("Registration complete! Check your parent\'s email for next step details")
-        return redirect(url_for('student_enrollment'))
+        flash("Check parent\'s email for enrolment details")
+        if student:
+            student_registration_email(student)
+        return redirect(url_for('home'))
     return render_template('student_registration.html',
                            form=form,
                            title='Register'
@@ -122,6 +126,8 @@ def teacher_registration():
         db.session.add(teacher)
         db.session.commit()
         flash('Congratulations! You have successfully registered as a teacher')
+        if teacher:
+            teacher_registration_email(teacher)
         return redirect(url_for('login'))
     return render_template('teacher_registration.html',
                            form=form,
@@ -273,7 +279,7 @@ def parent_reset_password(token):
 @app.route('/login/student/request-password-reset', methods=['GET', 'POST'])
 def student_request_password_reset():
     if current_user.is_authenticated:
-        return redirect(url_for('student_paid_courses'))
+        return redirect(url_for('home'))
     form = RquestPasswordResetForm()
     if form.validate_on_submit():
         student = Student.query.filter_by(email=form.email.data).first()
@@ -290,7 +296,7 @@ def student_request_password_reset():
 @app.route('/login/student/reset-password/<token>', methods=['GET', 'POST'])
 def student_reset_password(token):
     if current_user.is_authenticated:
-        return redirect(url_for('student_paid_courses'))
+        return redirect(url_for('home'))
     student = Student.verify_reset_password_token(token)
     if not student:
         return redirect(url_for('student_login'))
@@ -555,7 +561,7 @@ def student_start_python(username):
         db.session.commit()
         flash('You will receive an email when your comment is live')
         return redirect(url_for('student_start_python',
-                                username=student.username
+                                username=current_user.username
                                 )
                         )
     page = request.args.get('page', 1, type=int)
@@ -564,12 +570,12 @@ def student_start_python(username):
             page, app.config['POSTS_PER_PAGE'], False
         )
     next_url = url_for('student_start_python',
-                       username=student.username,
+                       username=current_user.username,
                        _anchor='comments',
                        page=comments.next_num) \
         if comments.has_next else None
     prev_url = url_for('student_start_python',
-                       username=student.username,
+                       username=current_user.username,
                        _anchor='comments',
                        page=comments.prev_num) \
         if comments.has_prev else None

@@ -240,4 +240,7 @@ a:visited:hover {
 /* Participants Table */
 tr:nth-child(even) {
     background-color: #f7f7f7;
-  }
+}
+.registration-email td {
+    border: 1px solid #e6e6e6;
+}

@@ -1,0 +1,28 @@
+<p>Dear {{ student.username }}</p>
+<p>
+    Your parent has successfully registered you into somasoma eLearning. 
+    As a reminder, these are the credentials you will need to log into your account:
+</p>
+<table class="table registraton-email">
+    <tr valign='top'>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        <td> {{ student.first_name }} </td>
+        <td> {{ student.last_name }} </td>
+        <td> {{ student.username }} </td>
+        <td> {{ student.email }} </td>
+    </tr>
+</table>
+<p>
+    Kindly note that your password is a secret. 
+    Not even somasoma eLearning knows what it is.
+</p>
+<p>
+    A similar registration email has been sent to your parent.
+</p>
+<p>Sincerely,</p>
+<p>somasoma eLearning Admin</p>

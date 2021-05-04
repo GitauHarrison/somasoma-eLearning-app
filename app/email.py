@@ -65,15 +65,47 @@ def teacher_send_password_reset_email(teacher):
                                          )
                )
 
-# Registration email
+# Payment email
 
 
-def registration_email(parent):
-    send_email('[somasoma eLearning] Successful Registration',
+def payment_email(parent):
+    send_email('[somasoma eLearning] Enrol Your Child',
                sender=app.config['ADMINS'][0],
                recipients=[parent.email],
-               text_body=render_template('email/registration_email.txt',
+               text_body=render_template('email/enrolment_email.txt',
                                          parent=parent),
-               html_body=render_template('email/registration_email.html',
+               html_body=render_template('email/enrolment_email.html',
                                          parent=parent))
-            
+
+
+# Registration details
+
+
+def parent_registration_email(parent):
+    send_email('[somasoma eLearning] Registration Details',
+               sender=app.config['ADMINS'][0],
+               recipients=[parent.email],
+               text_body=render_template('email/parent_registration_email.txt',
+                                         parent=parent),
+               html_body=render_template('email/parent_registration_email.html',
+                                         parent=parent))
+
+
+def student_registration_email(student):
+    send_email('[somasoma eLearning] Registration Details',
+               sender=app.config['ADMINS'][0],
+               recipients=[student.email],
+               text_body=render_template('email/student_registration_email.txt',
+                                         student=student),
+               html_body=render_template('email/student_registration_email.html',
+                                         student=student))
+
+
+def teacher_registration_email(teacher):
+    send_email('[somasoma eLearning] Registration Details',
+               sender=app.config['ADMINS'][0],
+               recipients=[teacher.email],
+               text_body=render_template('email/teacher_registration_email.txt',
+                                         teacher=teacher),
+               html_body=render_template('email/teacher_registration_email.html',
+                                         teacher=teacher))
