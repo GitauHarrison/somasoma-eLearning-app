@@ -225,7 +225,16 @@ a:visited:hover {
     margin-bottom: 294px;
 }
 .error-500 {
-
+    margin-bottom: 294px;
+}
+.purchase-page {
+    margin-bottom: 408px;
+}
+.stripe-cancel {
+    margin-bottom: 447px;
+}
+.stripe-success {
+    margin-bottom: 472px;
 }
 
 /* Participants Table */

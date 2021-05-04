@@ -1,10 +1,12 @@
 {% block app_content %}
-    <p>Dear {{ parent.email }},</p>
+    <p>Dear {{ parent.username }},</p>
     <p>
-        Thank you for registering your child! To complete registration, you need to enrol him by clicking the payment button below:
+        Thank you for registering your child! To complete registration, enrol your child by clicking the payment button below:
     </p>
     <p>
-        <button class="button is-primary" id="purchaseBtn">Purchase!</button>
+        <a href="{{ url_for('student_enrollment',  _external=True) }}">
+            <button class="button is-primary">Enrol Your Child</button>    
+        </a>
     </p>
     <p>Sincerely,</p>
     <p>somasoma eLearning</p>

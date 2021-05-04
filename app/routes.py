@@ -98,8 +98,8 @@ def student_registration():
         student.set_password(form.password.data)
         db.session.add(student)
         db.session.commit()
-        flash('Registration complete! Check your email for next step details')
-        return redirect(url_for('home'))
+        flash("Registration complete! Check your parent\'s email for next step details")
+        return redirect(url_for('student_enrollment'))
     return render_template('student_registration.html',
                            form=form,
                            title='Register'
@@ -737,6 +737,13 @@ def delete_teacher_account(username):
 # STRIPE PAYMENT INTEGRATION
 # --------------------------
 
+@app.route('/student/enrollment')
+def student_enrollment():
+    return render_template('stripe_student_enrollment.html',
+                           title='Student Enrollment'
+                           )
+
+
 @app.route('/config')
 def get_publishable_key():
     stripe_config = {'publicKey': app.config['STRIPE_PUBLISHABLE_KEY']}
@@ -760,15 +767,15 @@ def create_checkout_session():
             line_items=[
                 {
                     'quantity': 1,
-                    'price': 'prod_JQ7TrwtN2kdiAN',
+                    'price': 'price_1InHEyFjP6O4anVpZ3hFE4Oi',
                 },
                 {
                     'quantity': 1,
-                    'price': 'prod_JQ7VKMkeeOfBG9',
+                    'price': 'price_1InHGrFjP6O4anVpUxhXJJUz',
                 },
                 {
                     'quantity': 1,
-                    'price': 'prod_JQ7YYtYsvWWCjK',
+                    'price': 'price_1InHJ0FjP6O4anVpgFRikVVv',
                 }
             ]
         )
@@ -779,12 +786,12 @@ def create_checkout_session():
 
 @app.route('/success')
 def success():
-    return render_template('success.html', title='Success')
+    return render_template('stripe_success.html', title='Success')
 
 
 @app.route('/cancelled')
 def cancel():
-    return render_template('cancel.html', title='Cancel')
+    return render_template('stripe_cancel.html', title='Cancel')
 
 
 @app.route("/webhook", methods=["POST"])

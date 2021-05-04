@@ -1,8 +1,8 @@
 Dear {{ parent.email }},
 
-Thank you for registering your child. To complete registration, you need to enrol him/her by clicking the payment link below:
+Thank you for registering your child! To complete registration, enrol your child by clicking the payment link below:
 
-<button class="button is-primary" id="submitBtn">Purchase!</button>
+{{ (url_for('student_enrollment',  _external=True)) }}
 
 Sincerely,
 
