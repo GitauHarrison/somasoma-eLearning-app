@@ -33,3 +33,7 @@ class Config(object):
 
     # Pagination
     POSTS_PER_PAGE = int(os.environ.get('POSTS_PER_PAGE'))
+
+    # Stripe Payments
+    STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+    STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')

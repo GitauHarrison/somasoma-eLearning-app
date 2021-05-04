@@ -59,7 +59,7 @@
                                       Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href=" {{ url_for('student_profile', username=student.username) }} ">Your Profile</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('student_profile', username=current_user.username) }} ">Your Profile</a><br>
                                         <a class="dropdown-item" href="#">All Your Posts</a><br>
                                         <a class="dropdown-item" href="#">Followed Users</a><br>
                                         <a class="dropdown-item" href="#">Explore All Users</a><br>
@@ -145,7 +145,10 @@
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}    
+    <!-- Stripe integration -->
+    <script src="https://js.stripe.com/v3/"></script> 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- Improved UI/UX of phone number field -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput-jquery.min.js"></script>
     <script>
         $("#verification_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});

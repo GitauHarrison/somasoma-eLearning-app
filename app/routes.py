@@ -1,6 +1,6 @@
 from app import app, db
 from flask import render_template, url_for, redirect, flash, request,\
-    session
+    session, jsonify
 from app.forms import StudentRegistrationForm, ParentRegistrationForm,\
     TeacherRegistrationForm, LoginForm, RquestPasswordResetForm,\
     ResetPasswordForm, ParentEditProfileForm, StudentEditProfileForm,\
@@ -13,7 +13,9 @@ from datetime import datetime
 from app.twilio_verify_api import request_verification_token,\
     check_verification_token
 from app.email import parent_send_password_reset_email,\
-    teacher_send_password_reset_email, student_send_password_reset_email
+    teacher_send_password_reset_email, student_send_password_reset_email,\
+    registration_email
+import stripe
 
 
 @app.before_request
@@ -71,7 +73,9 @@ def parent_registration():
         parent.set_password(form.password.data)
         db.session.add(parent)
         db.session.commit()
-        flash('Congratulations! You have successfully registered as a parent')
+        flash('Congratulations! Next, register your child.')
+        if parent:
+            registration_email(parent)
         return redirect(url_for('student_registration'))
     return render_template('parent_registration.html',
                            form=form,
@@ -94,9 +98,8 @@ def student_registration():
         student.set_password(form.password.data)
         db.session.add(student)
         db.session.commit()
-        flash('Congratulations! You have successfully registered '
-              f'{student.first_name} as a student')
-        return redirect(url_for('login'))
+        flash('Registration complete! Check your email for next step details')
+        return redirect(url_for('home'))
     return render_template('student_registration.html',
                            form=form,
                            title='Register'
@@ -544,7 +547,6 @@ def student_paid_courses(username):
 def student_start_python(username):
     student = Student.query.filter_by(username=username).first_or_404()
     all_students = Student.query.all()
-    print(student)
     form = CommentForm()
     if form.validate_on_submit():
         comment = StudentComment(body=form.body.data,
@@ -729,3 +731,82 @@ def delete_teacher_account(username):
 # -------------------
 # End of User Profile
 # -------------------
+
+
+# --------------------------
+# STRIPE PAYMENT INTEGRATION
+# --------------------------
+
+@app.route('/config')
+def get_publishable_key():
+    stripe_config = {'publicKey': app.config['STRIPE_PUBLISHABLE_KEY']}
+    return jsonify(stripe_config)
+
+
+@app.route('/create-checkout-session')
+def create_checkout_session():
+    domain_url = 'http://localhost:5000/'
+    stripe.api_key = app.config['STRIPE_SECRET_KEY']
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            # ?session_id={CHECKOUT_SESSION_ID} means the redirect will have
+            # the session ID set as a query param
+            # success_url=domain_url + 'success?session_id={CHECKOUT_SESSION_ID}'
+            success_url=domain_url + 'success',
+            cancel_url=domain_url + 'cancelled',
+            payment_method_types=['card'],
+            billing_address_collection='required',
+            mode='payment',
+            line_items=[
+                {
+                    'quantity': 1,
+                    'price': 'prod_JQ7TrwtN2kdiAN',
+                },
+                {
+                    'quantity': 1,
+                    'price': 'prod_JQ7VKMkeeOfBG9',
+                },
+                {
+                    'quantity': 1,
+                    'price': 'prod_JQ7YYtYsvWWCjK',
+                }
+            ]
+        )
+        return jsonify({'sessionId': checkout_session['id']})
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+
+
+@app.route('/success')
+def success():
+    return render_template('success.html', title='Success')
+
+
+@app.route('/cancelled')
+def cancel():
+    return render_template('cancel.html', title='Cancel')
+
+
+@app.route("/webhook", methods=["POST"])
+def stripe_webhook():
+    payload = request.get_data(as_text=True)
+    sig_header = request.headers.get("Stripe-Signature")
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, app.config["STRIPE_ENDPOINT_SECRET"]
+        )
+
+    except ValueError as e:
+        # Invalid payload
+        return "Invalid payload", 400
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return "Invalid signature", 400
+
+    # Handle the checkout.session.completed event
+    if event["type"] == "checkout.session.completed":
+        print("Payment was successful.")
+        # TODO: you can run some custom code here
+
+    return "Success", 200

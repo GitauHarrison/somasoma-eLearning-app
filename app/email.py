@@ -16,6 +16,8 @@ def send_email(subject, sender, recipients, text_body, html_body):
     Thread(target=send_async_email, args=(app, msg)).start()
 
 
+# Reset email
+
 def parent_send_password_reset_email(parent):
     token = parent.get_reset_password_token()
     send_email('[somasoma eLearning] Reset Your Password',
@@ -62,3 +64,16 @@ def teacher_send_password_reset_email(teacher):
                                          token=token
                                          )
                )
+
+# Registration email
+
+
+def registration_email(parent):
+    send_email('[somasoma eLearning] Successful Registration',
+               sender=app.config['ADMINS'][0],
+               recipients=[parent.email],
+               text_body=render_template('email/registration_email.txt',
+                                         parent=parent),
+               html_body=render_template('email/registration_email.html',
+                                         parent=parent))
+            
