@@ -222,12 +222,6 @@ a:visited:hover {
     margin-bottom: 514px;
 }
 
-/* Course Participants */
-.participants {
-    text-align: center;
-    margin-right: 100px;
-}
-
 /* Participants Table */
 tr:nth-child(even) {
     background-color: #f7f7f7;
