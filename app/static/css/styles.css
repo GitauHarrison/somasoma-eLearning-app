@@ -221,6 +221,12 @@ a:visited:hover {
 .received-token {
     margin-bottom: 514px;
 }
+.error-404 {
+    margin-bottom: 294px;
+}
+.error-500 {
+
+}
 
 /* Participants Table */
 tr:nth-child(even) {
