@@ -32,6 +32,10 @@ class Parent(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(300))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    comments = db.relationship('ParentComment',
+                               backref='author',
+                               lazy='dynamic'
+                               )
 
     def __repr__(self):
         return f'{self.username} {self.email} {self.verification_phone}'
@@ -166,6 +170,10 @@ class Teacher(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(300))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    comments = db.relationship('TeacherComment',
+                               backref='author',
+                               lazy='dynamic'
+                               )
 
     def __repr__(self):
         return f'{self.username} {self.email} {self.verification_phone}'
@@ -210,6 +218,26 @@ class StudentComment(db.Model):
     body = db.Column(db.String(300), nullable=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Body: {self.body}'
+
+
+class ParentComment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(300), nullable=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    parent_id = db.Column(db.Integer, db.ForeignKey('parent.id'))
+
+    def __repr__(self):
+        return f'Body: {self.body}'
+
+
+class TeacherComment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(300), nullable=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
 
     def __repr__(self):
         return f'Body: {self.body}'

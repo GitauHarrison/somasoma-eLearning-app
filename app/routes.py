@@ -7,7 +7,8 @@ from app.forms import StudentRegistrationForm, ParentRegistrationForm,\
     TeacherEditProfileForm, Enable2faForm, Confirm2faForm, Disable2faForm,\
     CommentForm, EmptyForm
 from flask_login import login_user, logout_user, current_user, login_required
-from app.models import Teacher, Student, Parent, StudentComment
+from app.models import Teacher, Student, Parent, StudentComment, ParentComment,\
+    TeacherComment
 from werkzeug.urls import url_parse
 from datetime import datetime
 from app.twilio_verify_api import request_verification_token,\
@@ -566,7 +567,7 @@ def student_start_python(username):
                         )
     page = request.args.get('page', 1, type=int)
     comments = StudentComment.query.order_by(
-        StudentComment.timestamp.desc()).paginate(
+        StudentComment.timestamp.asc()).paginate(
             page, app.config['POSTS_PER_PAGE'], False
         )
     next_url = url_for('student_start_python',
@@ -636,33 +637,42 @@ def delete_parent_account(username):
     return redirect(url_for('home'))
 
 
+@app.route('/profile/parent/<username>/comments')
+def parent_profile_comment(username):
+    parent = Parent.query.filter_by(username=username)
+    page = request.args.get('page', 1, type=int)
+    comments = ParentComment.query.order_by(
+        ParentComment.timestamp.desc()).paginate(
+            page, app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('parent_profile',
+                       username=current_user.username,
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('parent_profile',
+                       username=current_user.username,
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    return render_template('comments/parent_profile_comment.html',
+                           parent=parent,
+                           title='Parent Comment',
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items
+                           )
+
+
 @app.route('/profile/student/<username>')
 @login_required
 def student_profile(username):
     student = Student.query.filter_by(username=username).first_or_404()
-    page = request.args.get('page', 1, type=int)
-    comments = student.comments.order_by(
-        StudentComment.timestamp.desc()).paginate(
-            page, app.config['POSTS_PER_PAGE'], False
-        )
-    next_url = url_for('student_profile',
-                       username=student.username,
-                       _anchor='comments',
-                       page=comments.next_num) \
-        if comments.has_next else None
-    prev_url = url_for('student_profile',
-                       username=student.username,
-                       _anchor='comments',
-                       page=comments.prev_num) \
-        if comments.has_prev else None
     form = EmptyForm()
     return render_template('student_profile.html',
                            student=student,
                            form=form,
-                           title='Student Profile',
-                           next_url=next_url,
-                           prev_url=prev_url,
-                           comments=comments.items
+                           title='Student Profile'
                            )
 
 
@@ -693,6 +703,33 @@ def delete_student_account(username):
     db.session.commit()
     flash(f'Your student account {student.username} was successfully deleted')
     return redirect(url_for('home'))
+
+
+@app.route('/profile/student/<username>/comments')
+def student_profile_comment(username):
+    student = Student.query.filter_by(username=username).first_or_404()
+    page = request.args.get('page', 1, type=int)
+    comments = StudentComment.query.order_by(
+        StudentComment.timestamp.desc()).paginate(
+            page, app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('student_profile',
+                       username=current_user.username,
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('student_profile',
+                       username=current_user.username,
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    return render_template('comments/student_profile_comment.html',
+                           student=student,
+                           title='Student Comment',
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items
+                           )
 
 
 @app.route('/profile/teacher/<username>')
@@ -732,6 +769,33 @@ def delete_teacher_account(username):
     db.session.commit()
     flash(f'Your teacher account {teacher.username} was successfully deleted')
     return redirect(url_for('home'))
+
+
+@app.route('/profile/teacher/<username>/comments')
+def teacher_profile_comment(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
+    page = request.args.get('page', 1, type=int)
+    comments = TeacherComment.query.order_by(
+        TeacherComment.timestamp.desc()).paginate(
+            page, app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('teacher_profile',
+                       username=current_user.username,
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('teacher_profile',
+                       username=current_user.username,
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    return render_template('comments/teacher_profile_comment.html',
+                           teacher=teacher,
+                           title='Teacher Comment',
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items
+                           )
 
 
 # -------------------

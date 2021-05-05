@@ -53,8 +53,8 @@ a:visited:hover {
     color: #706d6c;
 }
 .btn:hover{
-    background-color: #f2f2f2;
-    color:  #706d6c;
+    background-color: orange;
+    color:  white;
     border: 1px solid  #f2f2f2;
 }
 

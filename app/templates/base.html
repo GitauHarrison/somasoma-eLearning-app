@@ -47,9 +47,10 @@
                                       Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
-                                      <a class="dropdown-item" href="#">All Your Posts</a><br>
-                                      <a class="dropdown-item" href="#">Followed Users</a><br>
-                                      <a class="dropdown-item" href="#">Explore All Users</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('parent_profile', username=parent.username) }} ">Your Profile</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('parent_profile_comment', username=current_user.username) }} ">All Your Posts</a><br>
+                                        <a class="dropdown-item" href="#">Followed Users</a><br>
+                                        <a class="dropdown-item" href="#">Explore All Users</a><br>
                                     </div>
                                 </li>
                             {% elif student %}
@@ -60,7 +61,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href=" {{ url_for('student_profile', username=current_user.username) }} ">Your Profile</a><br>
-                                        <a class="dropdown-item" href="#">All Your Posts</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('student_profile_comment', username=current_user.username) }} ">All Your Posts</a><br>
                                         <a class="dropdown-item" href="#">Followed Users</a><br>
                                         <a class="dropdown-item" href="#">Explore All Users</a><br>
                                     </div>
@@ -71,9 +72,10 @@
                                       Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
-                                      <a class="dropdown-item" href="#">All Your Posts</a><br>
-                                      <a class="dropdown-item" href="#">Followed Users</a><br>
-                                      <a class="dropdown-item" href="#">Explore All Users</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('teacher_profile', username=current_user.username) }} ">Your Profile</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('teacher_profile_comment', username=current_user.username) }} ">All Your Posts</a><br>
+                                        <a class="dropdown-item" href="#">Followed Users</a><br>
+                                        <a class="dropdown-item" href="#">Explore All Users</a><br>
                                     </div>
                                 </li>
                             {% endif %}
