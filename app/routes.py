@@ -638,19 +638,20 @@ def delete_parent_account(username):
 
 
 @app.route('/profile/parent/<username>/comments')
+@login_required
 def parent_profile_comment(username):
-    parent = Parent.query.filter_by(username=username)
+    parent = Parent.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
-    comments = ParentComment.query.order_by(
+    comments = parent.comments.order_by(
         ParentComment.timestamp.desc()).paginate(
             page, app.config['POSTS_PER_PAGE'], False
         )
-    next_url = url_for('parent_profile',
+    next_url = url_for('parent_profile_comment',
                        username=current_user.username,
                        _anchor='comments',
                        page=comments.next_num) \
         if comments.has_next else None
-    prev_url = url_for('parent_profile',
+    prev_url = url_for('parent_profile_comment',
                        username=current_user.username,
                        _anchor='comments',
                        page=comments.prev_num) \
@@ -709,16 +710,16 @@ def delete_student_account(username):
 def student_profile_comment(username):
     student = Student.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
-    comments = StudentComment.query.order_by(
+    comments = student.comments.order_by(
         StudentComment.timestamp.desc()).paginate(
             page, app.config['POSTS_PER_PAGE'], False
         )
-    next_url = url_for('student_profile',
+    next_url = url_for('student_profile_comment',
                        username=current_user.username,
                        _anchor='comments',
                        page=comments.next_num) \
         if comments.has_next else None
-    prev_url = url_for('student_profile',
+    prev_url = url_for('student_profile_comment',
                        username=current_user.username,
                        _anchor='comments',
                        page=comments.prev_num) \
@@ -772,19 +773,20 @@ def delete_teacher_account(username):
 
 
 @app.route('/profile/teacher/<username>/comments')
+@login_required
 def teacher_profile_comment(username):
     teacher = Teacher.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
-    comments = TeacherComment.query.order_by(
+    comments = teacher.comments.order_by(
         TeacherComment.timestamp.desc()).paginate(
             page, app.config['POSTS_PER_PAGE'], False
         )
-    next_url = url_for('teacher_profile',
+    next_url = url_for('teacher_profile_comment',
                        username=current_user.username,
                        _anchor='comments',
                        page=comments.next_num) \
         if comments.has_next else None
-    prev_url = url_for('teacher_profile',
+    prev_url = url_for('teacher_profile_comment',
                        username=current_user.username,
                        _anchor='comments',
                        page=comments.prev_num) \
@@ -792,6 +794,78 @@ def teacher_profile_comment(username):
     return render_template('comments/teacher_profile_comment.html',
                            teacher=teacher,
                            title='Teacher Comment',
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items
+                           )
+
+
+@app.route('/profile/all-parents')
+@login_required
+def all_parents():
+    page = request.args.get('page', 1, type=int)
+    comments = ParentComment.query.order_by(
+        ParentComment.timestamp.desc()).paginate(
+            page, app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('all_parents',
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('all_parents',
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    return render_template('all_parents.html',
+                           title='Parents Comments',
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items
+                           )
+
+
+@app.route('/profile/all-students')
+@login_required
+def all_students():
+    page = request.args.get('page', 1, type=int)
+    comments = StudentComment.query.order_by(
+        StudentComment.timestamp.desc()).paginate(
+            page, app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('all_students',
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('all_students',
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    return render_template('all_students.html',
+                           title='Students Comments',
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items
+                           )
+
+
+@app.route('/profile/all-teachers')
+@login_required
+def all_teachers():
+    page = request.args.get('page', 1, type=int)
+    comments = TeacherComment.query.order_by(
+        TeacherComment.timestamp.desc()).paginate(
+            page, app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('all_teachers',
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('all_teachers',
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    return render_template('all_teachers.html',
+                           title='Parent Comment',
                            next_url=next_url,
                            prev_url=prev_url,
                            comments=comments.items

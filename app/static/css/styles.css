@@ -127,8 +127,8 @@ a:visited:hover {
     display: inline-block;
 }
 .dropdown_content {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
@@ -195,6 +195,9 @@ a:visited:hover {
     margin-bottom: 160px;
 }
 .parent-registration-form {
+    margin-bottom: 70px;
+}
+.teacher-registration-form {
     margin-bottom: 70px;
 }
 
