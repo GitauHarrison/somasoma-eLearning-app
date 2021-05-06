@@ -12,8 +12,6 @@ import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 
-app = Flask(__name__)
-app.config.from_object(Config)
 
 metadata = MetaData(
   naming_convention={
@@ -35,41 +33,57 @@ bcrypt = Bcrypt(app)
 mail = Mail(app)
 
 
-def start_ngrok():
-    from pyngrok import ngrok
+def create_app(config_class):
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-    url = ngrok.connect(5000)
-    print('* Tunnel: ', url)
+    db.init_app(app)
+    bootstrap.init_app(app)
+    moment.init_app(app)
+    migrate.init_app(app, db, render_as_batch=True)
+    login.init_app(app)
+    login.login_view = 'login'
+    bcrypt.init_app(app)
+    mail.init_app(app)
 
+    from app.auth import bp as auth_bp
+    app.register_blueprint(auth_bp, url_prefix='/auth')
 
-# start_ngrok()
+    def start_ngrok():
+        from pyngrok import ngrok
 
+        url = ngrok.connect(5000)
+        print('* Tunnel: ', url)
 
-if not app.debug:
-    if app.config['MAIL_SERVER']:
-        auth = None
-        if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
-            auth = (app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD'])
-        secure = None
-        if app.config['MAIL_USE_TLS']:
-            secure = ()
-        mail_handler = SMTPHandler(
-            mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
-            fromaddr='no-reply@' + app.config['MAIL_SERVER'],
-            toaddrs=app.config['ADMINS'], subject='eLearning App Failure',
-            credentials=auth, secure=secure)
-        mail_handler.setLevel(logging.ERROR)
-        app.logger.addHandler(mail_handler)
-    if not os.path.exists('logs'):
-        os.mkdir('logs')
-    file_handler = RotatingFileHandler('logs/somasoma.log', maxBytes=10240,
-                                       backupCount=10)
-    file_handler.setFormatter(logging.Formatter(
-        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
-    file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
+    # start_ngrok()
 
-    app.logger.setLevel(logging.INFO)
-    app.logger.info('Somasoma eLearning')
+    if not app.debug:
+        if app.config['MAIL_SERVER']:
+            auth = None
+            if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
+                auth = (app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD'])
+            secure = None
+            if app.config['MAIL_USE_TLS']:
+                secure = ()
+            mail_handler = SMTPHandler(
+                mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
+                fromaddr='no-reply@' + app.config['MAIL_SERVER'],
+                toaddrs=app.config['ADMINS'], subject='eLearning App Failure',
+                credentials=auth, secure=secure)
+            mail_handler.setLevel(logging.ERROR)
+            app.logger.addHandler(mail_handler)
+        if not os.path.exists('logs'):
+            os.mkdir('logs')
+        file_handler = RotatingFileHandler('logs/somasoma.log', maxBytes=10240,
+                                           backupCount=10)
+        file_handler.setFormatter(logging.Formatter(
+            '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+        file_handler.setLevel(logging.INFO)
+        app.logger.addHandler(file_handler)
+
+        app.logger.setLevel(logging.INFO)
+        app.logger.info('Somasoma eLearning')
+    
+    return app
 
 from app import routes, models, errors, twilio_verify_api
