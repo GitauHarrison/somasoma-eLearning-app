@@ -83,7 +83,7 @@ def create_app(config_class):
 
         app.logger.setLevel(logging.INFO)
         app.logger.info('Somasoma eLearning')
-    
+
     return app
 
 from app import routes, models, errors, twilio_verify_api
