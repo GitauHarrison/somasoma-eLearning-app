@@ -117,7 +117,7 @@ a:visited:hover {
     margin: 20px;
     margin-top: 0px;
 }
-#overview, #topic1, #topic2, #topic3, #participants, #video_call {
+#overview, #topic1, #topic2, #topic3, #participants, #video_call, #achievement {
     /* background-color: rgb(243, 241, 241); */
     padding: 20px;
 }
