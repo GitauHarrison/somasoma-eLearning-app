@@ -1,5 +1,7 @@
-from app import app, db
 from app.models import Teacher, Student, Parent, StudentComment
+from app import create_app, db
+
+app = create_app()
 
 
 @app.shell_context_processor

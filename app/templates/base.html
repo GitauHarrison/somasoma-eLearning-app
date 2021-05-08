@@ -32,7 +32,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('home') }}">Somasoma eLearning</a>
+                <a class="navbar-brand" href="{{ url_for('main.home') }}">Somasoma eLearning</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">                   
                 <ul class="nav navbar-nav navbar-right"> 
@@ -43,47 +43,47 @@
                         {% else %}
                             {% if parent %}
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="{{ url_for('parent_profile', username=parent.username) }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="{{ url_for('main.parent_profile', username=parent.username) }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href=" {{ url_for('parent_profile', username=parent.username) }} ">Your Profile</a><br>
-                                        <a class="dropdown-item" href=" {{ url_for('parent_profile_comment', username=parent.username) }} ">All Your Posts</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.parent_profile', username=parent.username) }} ">Your Profile</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.parent_profile_comment', username=parent.username) }} ">All Your Posts</a><br>
                                         <a class="dropdown-item" href="#">Followed Users</a><br>
-                                        <a class="dropdown-item" href=" {{ url_for('all_students') }} ">Explore All Students</a><br>
-                                        <a class="dropdown-item" href=" {{ url_for('all_parents') }} ">Explore All Parents</a><br>
-                                        <a class="dropdown-item" href=" {{ url_for('all_teachers') }} ">Explore All Teachers</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.all_students') }} ">Explore All Students</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.all_parents') }} ">Explore All Parents</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.all_teachers') }} ">Explore All Teachers</a><br>
                                     </div>
                                 </li>
                             {% elif student %}
-                            <li><a href="{{ url_for('student_paid_courses', username=student.username) }}">Courses</a></li>
+                            <li><a href="{{ url_for('main.student_paid_courses', username=student.username) }}">Courses</a></li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="{{ url_for('student_profile', username=student.username) }}" data-bs-toggle="dropdown" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="{{ url_for('main.student_profile', username=student.username) }}" data-bs-toggle="dropdown" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href=" {{ url_for('student_profile', username=student.username) }} ">Your Profile</a><br>
-                                        <a class="dropdown-item" href=" {{ url_for('student_profile_comment', username=student.username) }} ">All Your Posts</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.student_profile', username=student.username) }} ">Your Profile</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.student_profile_comment', username=student.username) }} ">All Your Posts</a><br>
                                         <a class="dropdown-item" href="#">Followed Users</a><br>
                                         <a class="dropdown-item" href="#">Explore All Users</a><br>
                                     </div>
                                 </li>
                             {% elif teacher %}                                
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="{{ url_for('teacher_profile', username=teacher.username) }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="{{ url_for('main.teacher_profile', username=teacher.username) }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href=" {{ url_for('teacher_profile', username=teacher.username) }} ">Your Profile</a><br>
-                                        <a class="dropdown-item" href=" {{ url_for('teacher_profile_comment', username=teacher.username) }} ">All Your Posts</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.teacher_profile', username=teacher.username) }} ">Your Profile</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.teacher_profile_comment', username=teacher.username) }} ">All Your Posts</a><br>
                                         <a class="dropdown-item" href="#">Followed Users</a><br>
-                                        <a class="dropdown-item" href=" {{ url_for('all_students') }} ">Explore All Students</a><br>
-                                        <a class="dropdown-item" href=" {{ url_for('all_parents') }} ">Explore All Parents</a><br>
-                                        <a class="dropdown-item" href=" {{ url_for('all_teachers') }} ">Explore All Teachers</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.all_students') }} ">Explore All Students</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.all_parents') }} ">Explore All Parents</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.all_teachers') }} ">Explore All Teachers</a><br>
                                     </div>
                                 </li>
                             {% endif %}
-                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
                         {% endif %}
                     </ul>           
             </div>

@@ -20,23 +20,23 @@
                     {% endif %}
                     {% if parent %}
                         <p>
-                            <a href="{{ url_for('edit_parent_profile', username=parent.username) }}">
+                            <a href="{{ url_for('main.edit_parent_profile', username=parent.username) }}">
                                 Edit your profile
                             </a>
                         </p>
                     {%endif%}
                     {% if not parent.two_factor_enabled() %}
                         <p>
-                            <a href="{{ url_for('parent_enable_2fa', username=parent.username) }}">Enable two-factor authentication</a>
+                            <a href="{{ url_for('auth.parent_enable_2fa', username=parent.username) }}">Enable two-factor authentication</a>
                         </p>
                     {% else %}
                         <p>
-                            <a href="{{ url_for('parent_disable_2fa', username=parent.username) }}">Disable two-factor authentication</a>
+                            <a href="{{ url_for('auth.parent_disable_2fa', username=parent.username) }}">Disable two-factor authentication</a>
                         </p>
                     {% endif %}
                     <p>
                         <span class="danger-warning">
-                            <a href="{{ url_for('delete_parent_account', username=parent.username) }}">Delete Account Permanently</a>
+                            <a href="{{ url_for('admin.delete_parent_account', username=parent.username) }}">Delete Account Permanently</a>
                         </span>
                     </p>
                 </td>                

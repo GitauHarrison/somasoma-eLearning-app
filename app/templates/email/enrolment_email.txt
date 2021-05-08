@@ -2,7 +2,7 @@ Dear {{ parent.email }},
 
 Thank you for registering your child! To complete registration, enrol your child by clicking the payment link below:
 
-{{ (url_for('student_enrollment',  _external=True)) }}
+{{ (url_for('main.student_enrollment',  _external=True)) }}
 
 Sincerely,
 

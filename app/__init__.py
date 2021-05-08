@@ -23,31 +23,39 @@ metadata = MetaData(
     }
 )
 
-bootstrap = Bootstrap(app)
-moment = Moment(app)
-db = SQLAlchemy(app, metadata=metadata)
-migrate = Migrate(app, db, render_as_batch=True)
-login = LoginManager(app)
-login.login_view = 'login'
-bcrypt = Bcrypt(app)
-mail = Mail(app)
+bootstrap = Bootstrap()
+moment = Moment()
+db = SQLAlchemy(metadata=metadata)
+migrate = Migrate()
+login = LoginManager()
+login.login_view = 'auth.login'
+bcrypt = Bcrypt()
+mail = Mail()
 
 
-def create_app(config_class):
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
 
     db.init_app(app)
     bootstrap.init_app(app)
     moment.init_app(app)
     migrate.init_app(app, db, render_as_batch=True)
     login.init_app(app)
-    login.login_view = 'login'
     bcrypt.init_app(app)
     mail.init_app(app)
 
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
+
+    from app.errors import bp as errors_bp
+    app.register_blueprint(errors_bp)
+
+    from app.admin import bp as admin_bp
+    app.register_blueprint(admin_bp, url_prefix='/admin')
+
+    from app.main import bp as main_bp
+    app.register_blueprint(main_bp)
 
     def start_ngrok():
         from pyngrok import ngrok
@@ -86,4 +94,4 @@ def create_app(config_class):
 
     return app
 
-from app import routes, models, errors, twilio_verify_api
+from app import models
