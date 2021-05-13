@@ -1,0 +1,13 @@
+<tr>
+    <td>
+        <a href="{{ url_for('main.client_profile', username=client.username) }}">
+            <img src=" {{ client.avatar(36) }} ">
+        </a>
+    </td>
+
+    <td> {{ client.first_name }} </td>
+    <td> {{ client.last_name }} </td>
+    <td> {{ client.username }} </td>
+    <td> {{ client.email }} </td>
+    <td> {{ moment(client.last_seen).format('LLL') }} </td>
+</tr>

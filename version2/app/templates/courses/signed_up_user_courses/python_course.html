@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="row title">
+        <div class="col-md-12 text-center">
+            <h1>Python</h1>
+        </div>
+    </div>
+    <div class="row registration-cards">
+        <div class="col-md-4">
+            <!-- Python Card -->
+            <div class="card-deck">
+              <div class="card">
+                <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/python.svg')}}" alt="Scratch Jr">
+                <div class="card-body">
+                  <h3 class="card-title">Python</h3><hr>
+                  <div class="card-text">
+                    <p>
+                        Lorem ipsum is simply dummy text of the printing industry. 
+                        Lorem ipsum is simply dummy text of the printing industry
+                      </p>
+                  </div>
+                  <a href=" {{ url_for('main.client_start_python', username=current_user.username) }} " class="btn">Start Lesson</a>
+                </div>            
+              </div>
+              <!-- End of Python Card -->
+            </div>
+        </div>
+    </div> 
+{% endblock %}

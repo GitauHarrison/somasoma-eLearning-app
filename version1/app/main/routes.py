@@ -286,7 +286,7 @@ def teacher_profile_comment(username):
                            )
 
 
-@bp.route('/profile/all-parents')
+@bp.route('/profile/parents/all')
 @login_required
 def all_parents():
     page = request.args.get('page', 1, type=int)
@@ -310,7 +310,7 @@ def all_parents():
                            )
 
 
-@bp.route('/profile/all-students')
+@bp.route('/profile/students/all')
 @login_required
 def all_students():
     page = request.args.get('page', 1, type=int)
@@ -334,7 +334,7 @@ def all_students():
                            )
 
 
-@bp.route('/profile/all-teachers')
+@bp.route('/profile/teachers/all')
 @login_required
 def all_teachers():
     page = request.args.get('page', 1, type=int)
