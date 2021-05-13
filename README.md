@@ -11,7 +11,7 @@ It is more less an **online school concept**.
 
 ## Design
 
-* [Somasoma eLearning App](https://www.figma.com/file/uG0hCD0uuAYbWZIhjf6fPz/somasoma-eLearning-app) on Figma
+* [Somasoma eLearning App](https://www.figma.com/proto/uG0hCD0uuAYbWZIhjf6fPz/somasoma-eLearning-app?node-id=179%3A2&scaling=min-zoom&page-id=0%3A1) on Figma
 
 ## Contributors
 
