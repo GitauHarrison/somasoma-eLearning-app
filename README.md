@@ -13,6 +13,9 @@ It is more less an **online school concept**.
 
 * [Somasoma eLearning App](https://www.figma.com/proto/uG0hCD0uuAYbWZIhjf6fPz/somasoma-eLearning-app?node-id=179%3A2&scaling=min-zoom&page-id=0%3A1) on Figma
 
+## Deployed Application
+* [somasoma eLearning](https://somasoma-elearning-app.herokuapp.com/) on Heroku
+
 ## Contributors
 
 [![GitHub Contributors](https://img.shields.io/github/contributors/GitauHarrison/somasoma-eLearning-app)](https://github.com/GitauHarrison/somasoma-eLearning-app/graphs/contributors)
