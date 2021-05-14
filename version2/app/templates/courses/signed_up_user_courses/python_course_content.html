@@ -96,13 +96,12 @@
                     <table class="table">
                         <tr valign='top'>
                             <th>Avatar</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Username</th>
-                            <th>Email</th>
+                            <th>Student Name</th>
+                            <th>Student Email</th>
+                            <th>Verifiction Phone</th>
                             <th>Last Seen</th>
                         </tr>
-                        {% for student in all_students %}
+                        {% for client in clients %}
                             {% include 'courses/signed_up_user_courses/_python_participants.html' %}
                         {% endfor %}
                     </table>
@@ -110,23 +109,18 @@
             
                 <div role="tabpanel" class="tab-pane fade" id="video_call">
                     <h1 class="mt-2">Video Call</h1>
-                    <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis 
-                        cardigan american apparel, butcher voluptate nisi qui. 
-                        Raw denim you probably haven't heard of them jean shorts Austin. 
-                        Nesciunt tofu stumptown aliqua, retro synth master cleanse. 
-                        Mustache cliche tempor, williamsburg carles vegan helvetica. R
-                        eprehenderit butcher retro keffiyeh dreamcatcher synth.
+                    <p>
+                        Link to join the class video call will go here. A student can
+                        also create his own call and invite others to join the call.
                     </p>
                 </div>
 
                 <div role="tabpanel" class="tab-pane fade" id="achievement">
                     <h1 class="mt-2">Achievements</h1>
-                    <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis 
-                        cardigan american apparel, butcher voluptate nisi qui. 
-                        Raw denim you probably haven't heard of them jean shorts Austin. 
-                        Nesciunt tofu stumptown aliqua, retro synth master cleanse. 
-                        Mustache cliche tempor, williamsburg carles vegan helvetica. R
-                        eprehenderit butcher retro keffiyeh dreamcatcher synth.
+                    <p>
+                        The rubric to determine how well a student performed in the class
+                        will be found here. A student will fill his own rubic, and that 
+                        data will be stored in the database and used for learning analytics.
                     </p>
                 </div>
             </div>
@@ -138,7 +132,7 @@
             <h1 id="comments">{{ total_comments }} Comments</h1>
             <!-- Comments list -->
             {% for comment in comments %}
-                {% include 'comments/_student_comment.html' %}
+                {% include 'comments/_client_comment.html' %}
             {% endfor %}
             <!-- Pagination Links -->
             <nav aria-label="...">

@@ -53,7 +53,7 @@ def scratch_course():
 @bp.route('/client/<username>/courses')
 @login_required
 def client_paid_courses(username):
-    client = Client.query.filter_by(username=username).first()
+    client = Client.query.filter_by(student_username=username).first()
     return render_template('courses/signed_up_user_courses/python_course.html',
                            client=client,
                            title='Your Courses'
@@ -63,10 +63,12 @@ def client_paid_courses(username):
 @bp.route('/client/<username>/courses/python', methods=['GET', 'POST'])
 @login_required
 def client_start_python(username):
-    client = Client.query.filter_by(username=username).first_or_404()
+    client = Client.query.filter_by(student_username=username).first_or_404()
+    clients = Client.query.all()
     form = CommentForm()
     return render_template('courses/signed_up_user_courses/python_course_content.html',
                            client=client,
+                           clients=clients,
                            form=form,
                            title='Python',
                            )
@@ -112,7 +114,7 @@ def client_profile_comment(username):
     client = Client.query.filter_by(student_username=username).first_or_404()
     return render_template('comments/client_profile_comment.html',
                            client=client,
-                           title='Parent Comment'
+                           title='Client Comment'
                            )
 
 

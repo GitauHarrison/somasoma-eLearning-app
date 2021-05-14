@@ -67,7 +67,7 @@ def client_login():
             return redirect(url_for('auth.client_login'))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('main.client_profile',
+            next_page = url_for('main.client_paid_courses',
                                 username=client.student_username)
         if client.two_factor_enabled():
             request_verification_token(client.verification_phone)
@@ -144,7 +144,7 @@ def client_enable_2fa(username):
         session['phone'] = form.verification_phone.data
         request_verification_token(session['phone'])
         return redirect(url_for('auth.client_verify_2fa',
-                                username=client.username))
+                                username=client.student_username))
     return render_template('auth/enable_2fa.html',
                            form=form,
                            title='Enable 2FA'

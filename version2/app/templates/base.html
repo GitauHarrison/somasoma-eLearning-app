@@ -42,6 +42,7 @@
                             <li><a href="#contact">Contact</a></li>
                         {% else %}
                             {% if client %}
+                                <li><a href="{{ url_for('main.client_paid_courses', username=client.student_username) }}">Courses</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Profile &#9662;
