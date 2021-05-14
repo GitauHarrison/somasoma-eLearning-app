@@ -11,7 +11,7 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
     # Database management
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL?sslmode=require') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -37,3 +37,6 @@ class Config(object):
     # Stripe Payments
     STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
     STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+
+    # Heroku logs requirement
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
