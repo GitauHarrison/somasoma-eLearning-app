@@ -39,6 +39,7 @@ class Client(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(300))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    posts = db.relationship('ClientComment', backref='author', lazy='dynamic')
 
     def __repr__(self):
         return f'{self.student_username} {self.student_email} {self.verification_phone}'
@@ -76,6 +77,16 @@ class Client(UserMixin, db.Model):
         except:
             return
         return Client.query.get(id)
+
+
+class ClientComment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+
+    def __repr__(self):
+        return f'Post: {self.id} {self.body}'
 
 
 @login.user_loader

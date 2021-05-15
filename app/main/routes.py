@@ -5,7 +5,7 @@ from app import db
 from flask_login import login_required, current_user
 import stripe
 from datetime import datetime
-from app.models import Client
+from app.models import Client, ClientComment
 from app.main.forms import EmptyForm, CommentForm, ClientEditProfileForm
 
 
@@ -66,11 +66,42 @@ def client_start_python(username):
     client = Client.query.filter_by(student_username=username).first_or_404()
     clients = Client.query.all()
     form = CommentForm()
+    if form.validate_on_submit():
+        comment = ClientComment(body=form.body.data,
+                                author=current_user)
+        db.session.add(comment)
+        db.session.commit()
+        flash('You will receive an email when your comment is live')
+        return redirect(url_for('main.client_start_python',
+                                username=current_user.student_username
+                                )
+                        )
+    page = request.args.get('page', 1, type=int)
+    comments = ClientComment.query.order_by(
+        ClientComment.timestamp.asc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('main.client_start_python',
+                       username=current_user.student_username,
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('main.client_start_python',
+                       username=current_user.student_username,
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    all_comments = ClientComment.query.all()
+    total_comments = len(all_comments)
     return render_template('courses/signed_up_user_courses/python_course_content.html',
                            client=client,
                            clients=clients,
                            form=form,
                            title='Python',
+                           total_comments=total_comments,
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items,
                            )
 
 
@@ -112,9 +143,30 @@ def edit_client_profile(username):
 @login_required
 def client_profile_comment(username):
     client = Client.query.filter_by(student_username=username).first_or_404()
+    page = request.args.get('page', 1, type=int)
+    comments = ClientComment.query.order_by(
+        ClientComment.timestamp.asc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('main.client_profile_comment',
+                       username=current_user.student_username,
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('main.client_profile_comment',
+                       username=current_user.student_username,
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    all_comments = ClientComment.query.all()
+    total_comments = len(all_comments)
     return render_template('comments/client_profile_comment.html',
                            client=client,
-                           title='Client Comment'
+                           title='Client Comment',
+                           total_comments=total_comments,
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items,
                            )
 
 
