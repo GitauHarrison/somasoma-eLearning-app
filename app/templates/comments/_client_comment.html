@@ -1,14 +1,14 @@
 <table class="table table-hover">
     <tr valign='top'>
         <td width='70px'>
-            <a href="{{ url_for('main.client_profile', username=comment.author.username) }}">
+            <a href="{{ url_for('main.client_profile', username=comment.author.student_username) }}">
                 <img src=" {{ comment.author.avatar(36) }} ">
             </a>
         </td>
         <td>
             <span style="color: #b37502;">
-                <a href="{{ url_for('main.client_profile', username=comment.author.username) }}">
-                    {{ comment.author.username }}
+                <a href="{{ url_for('main.client_profile', username=comment.author.student_username) }}">
+                    {{ comment.author.student_username }}
                 </a>
             </span>
             said

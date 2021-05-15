@@ -120,16 +120,17 @@ def client_profile(username):
 
 
 @bp.route('/profile/client/<username>/edit-profile', methods=['GET', 'POST'])
+@login_required
 def edit_client_profile(username):
     client = Client.query.filter_by(student_username=username).first_or_404()
     form = ClientEditProfileForm(client.student_username)
     if form.validate_on_submit():
-        client.username = form.username.data
+        client.student_username = form.username.data
         client.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved')
         return redirect(url_for('main.client_profile',
-                                username=client.username))
+                                username=client.student_username))
     elif request.method == 'GET':
         form.username.data = client.student_username
         form.about_me.data = client.about_me
@@ -144,7 +145,7 @@ def edit_client_profile(username):
 def client_profile_comment(username):
     client = Client.query.filter_by(student_username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
-    comments = ClientComment.query.order_by(
+    comments = client.posts.order_by(
         ClientComment.timestamp.asc()).paginate(
             page, current_app.config['POSTS_PER_PAGE'], False
         )
@@ -158,12 +159,9 @@ def client_profile_comment(username):
                        _anchor='comments',
                        page=comments.prev_num) \
         if comments.has_prev else None
-    all_comments = ClientComment.query.all()
-    total_comments = len(all_comments)
     return render_template('comments/client_profile_comment.html',
                            client=client,
                            title='Client Comment',
-                           total_comments=total_comments,
                            next_url=next_url,
                            prev_url=prev_url,
                            comments=comments.items,

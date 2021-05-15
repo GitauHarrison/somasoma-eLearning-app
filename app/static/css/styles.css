@@ -12,7 +12,7 @@ a:hover {
     color: rgb(141, 92, 1);
 }
 a:visited {
-    color: gray;
+    color: #6876c5;
 }
 a:visited:hover {
     color: rgb(141, 92, 1);
@@ -194,6 +194,9 @@ a:visited:hover {
 }
 .teacher-registration-form {
     margin-bottom: 70px;
+}
+.edit-profile {
+    margin-bottom: 395px;
 }
 
 /* User Login */

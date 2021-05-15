@@ -19,7 +19,7 @@ class ClientEditProfileForm(FlaskForm):
 
     def validate_username(self, username):
         if username.data != self.original_username:
-            client = Client.query.filter_by(username=self.username.data).first()
+            client = Client.query.filter_by(student_username=self.username.data).first()
             if client is not None:
                 raise ValidationError('Please use a different username.')
 
