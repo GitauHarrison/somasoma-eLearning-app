@@ -85,6 +85,8 @@ $ mkvirtualenv somasoma-elearning # I am using virtualenvwrapper
 
 **As a student:**
 
+![Student](app/static/images/somasoma_student.gif)
+
 * Navigate to [_client registration page_](http://127.0.0.1:5000/auth/register/client)
 * Create a new client (ensure you provide valid phone number and email)
 * Check the flash messages and follow the instructions given
@@ -96,6 +98,8 @@ $ mkvirtualenv somasoma-elearning # I am using virtualenvwrapper
 * Secure your account by [_logging out_](http://127.0.0.1:5000/logout) when done
 
 **As a teacher:**
+
+![Teacher](app/static/images/somasoma_teacher.gif)
 
 * Navigate to [_client registration page_](http://127.0.0.1:5000/auth/register/teacher)
 * Create a new teacher (ensure you provide valid phone number and email)
