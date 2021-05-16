@@ -42,14 +42,27 @@
                             <li><a href="#contact">Contact</a></li>
                         {% else %}
                             {% if current_user == client %}
-                                <li><a href="{{ url_for('main.client_paid_courses', username=client.student_username) }}">Courses</a></li>
+                                <li><a href="{{ url_for('main.client_paid_courses', username=current_user.student_username) }}">Courses</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Profile &#9662;
                                     </a>
                                     <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href=" {{ url_for('main.client_profile', username=client.student_username) }} ">Your Profile</a><br>
-                                        <a class="dropdown-item" href=" {{ url_for('main.client_profile_comment', username=client.student_username) }} ">All Your Posts</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.client_profile', username=current_user.student_username) }} ">Your Profile</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.client_profile_comment', username=current_user.student_username) }} ">All Your Posts</a><br>
+                                        <a class="dropdown-item" href="#">Followed Users</a><br>
+                                    </div>
+                                </li>
+                            {% endif %}
+                            {% if current_user == teacher %}
+                                <li><a href="#">Students</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Profile &#9662;
+                                    </a>
+                                    <div class="dropdown-menu dropdown_content" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href=" {{ url_for('main.teacher_profile', username=current_user.teacher_username) }} ">Your Profile</a><br>
+                                        <a class="dropdown-item" href=" {{ url_for('main.teacher_profile_comment', username=current_user.teacher_username) }} ">All Your Posts</a><br>
                                         <a class="dropdown-item" href="#">Followed Users</a><br>
                                     </div>
                                 </li>

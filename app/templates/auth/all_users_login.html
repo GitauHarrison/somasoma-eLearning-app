@@ -16,7 +16,7 @@
     <!-- Login Cards -->
     <div class="row login">
         <div class="col-md-6">
-          <!-- Parent Card -->
+          <!-- Client Card -->
           <div class="card-deck">
             <div class="card">
               <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/parent.svg')}}" alt="Parent">
@@ -41,7 +41,7 @@
                   <p class="card-text">
                     Login as Teacher
                   </p>
-                  <a href=" # " class="btn">Login</a>
+                  <a href=" {{ url_for('auth.teacher_login') }} " class="btn">Login</a>
                 </div>            
               </div>
               <!-- End of Teacher Card-->

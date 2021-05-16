@@ -189,11 +189,8 @@ a:visited:hover {
 .registration-cards {
     margin-bottom: 160px;
 }
-.parent-registration-form {
-    margin-bottom: 70px;
-}
 .teacher-registration-form {
-    margin-bottom: 70px;
+    margin-bottom: 144px;
 }
 .edit-profile {
     margin-bottom: 395px;
@@ -204,16 +201,10 @@ a:visited:hover {
     margin-top: 0px;
 }
 .login {
-    margin-bottom: 352px;
+    margin-bottom: 277px;
 }
-.parent-login-form {
+.client-login, .teacher-login {
     margin-bottom: 117px;
-}
-.student-login-form {
-    margin-bottom: 97px;
-}
-.teacher-login-form {
-    margin-bottom: 116px;
 }
 .user-reset-password {
     margin-top: 63px;

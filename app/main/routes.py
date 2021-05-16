@@ -5,8 +5,9 @@ from app import db
 from flask_login import login_required, current_user
 import stripe
 from datetime import datetime
-from app.models import Client, ClientComment
-from app.main.forms import EmptyForm, CommentForm, ClientEditProfileForm
+from app.models import Client, ClientComment, Teacher, TeacherComment
+from app.main.forms import EmptyForm, CommentForm, ClientEditProfileForm,\
+    TeacherEditProfileForm
 
 
 @bp.before_request
@@ -105,9 +106,9 @@ def client_start_python(username):
                            )
 
 
-# ------------
-# User Profile
-# ------------
+# --------------
+# Client Profile
+# --------------
 
 @bp.route('/profile/client/<username>')
 @login_required
@@ -176,9 +177,85 @@ def all_clients():
                            )
 
 
-# -------------------
-# End of User Profile
-# -------------------
+# ---------------------
+# End of Client Profile
+# ---------------------
+
+
+# --------------
+# Teacher Profile
+# --------------
+
+@bp.route('/profile/teacher/<username>')
+@login_required
+def teacher_profile(username):
+    teacher = Teacher.query.filter_by(teacher_username=username).first_or_404()
+    return render_template('teacher_profile.html',
+                           teacher=teacher,
+                           title='Teacher Profile'
+                           )
+
+
+@bp.route('/profile/teacher/<username>/edit-profile', methods=['GET', 'POST'])
+@login_required
+def edit_teacher_profile(username):
+    teacher = Teacher.query.filter_by(teacher_username=username).first_or_404()
+    form = TeacherEditProfileForm(teacher.teacher_username)
+    if form.validate_on_submit():
+        teacher.teacher_username = form.username.data
+        teacher.about_me = form.about_me.data
+        db.session.commit()
+        flash('Your changes have been saved')
+        return redirect(url_for('main.teacher_profile',
+                                username=teacher.teacher_username))
+    elif request.method == 'GET':
+        form.username.data = teacher.teacher_username
+        form.about_me.data = teacher.about_me
+    return render_template('edit_profile.html',
+                           form=form,
+                           title='Edit Teacher Profile'
+                           )
+
+
+@bp.route('/profile/teacher/<username>/comments')
+@login_required
+def teacher_profile_comment(username):
+    teacher = Teacher.query.filter_by(teacher_username=username).first_or_404()
+    page = request.args.get('page', 1, type=int)
+    comments = teacher.posts.order_by(
+        TeacherComment.timestamp.asc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False
+        )
+    next_url = url_for('main.teacher_profile_comment',
+                       username=current_user.teacher_username,
+                       _anchor='comments',
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('main.teacher_profile_comment',
+                       username=current_user.teacher_username,
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    return render_template('comments/teacher_profile_comment.html',
+                           teacher=teacher,
+                           title='Teacher Comment',
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           comments=comments.items,
+                           )
+
+
+@bp.route('/profile/teacher/all')
+@login_required
+def all_teacher():
+    return render_template('all_teachers.html',
+                           title='Teachers Comments'
+                           )
+
+
+# ----------------------
+# End of Teacher Profile
+# ----------------------
 
 
 # --------------------------
