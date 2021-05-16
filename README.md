@@ -1,4 +1,4 @@
-# eLearning App
+# somasoma eLearning App
 
 ![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103) ![GitHub Open Issues](https://img.shields.io/github/issues/GitauHarrison/somasoma-eLearning-app) ![GitHub Closed Issues](https://img.shields.io/github/issues-closed/GitauHarrison/somasoma-eLearning-app) ![GitHub Pull Request Open](https://img.shields.io/github/issues-pr/GitauHarrison/somasoma-eLearning-app) ![GitHub Pull Request Closed](https://img.shields.io/github/issues-pr-closed/GitauHarrison/somasoma-eLearning-app) ![GitHub forks](https://img.shields.io/github/forks/GitauHarrison/somasoma-eLearning-app) ![GitHub Stars](https://img.shields.io/github/stars/GitauHarrison/somasoma-eLearning-app) ![GitHub License](https://img.shields.io/github/license/GitauHarrison/somasoma-eLearning-app)
 
@@ -14,7 +14,7 @@ My intention with this project is to record my ideas on how to go about creating
 * Email Notification
 * Credit Card Payment
 
-Comming Soon ...
+Coming Soon ...
 
 * Comment Moderation
 * In-app Video Conferencing Facilities
@@ -126,7 +126,7 @@ Comming soon ...
 * The client's parent will receive an email containing an attached payment reciept
 * Whenever a student posts a comment in the class, the teacher will be notified via email about that particular comment
 * The teacher will see the comment before other students for moderation. The teacher can _allow_ or _delete_ the student's comment
-If comment is allowed to appear in the class page, the student will be notified via email that their comment is now live. A link to check their live comment will be provided in the email.
+* If comment is allowed to appear in the class page, the student will be notified via email that their comment is now live. A link to check their live comment will be provided in the email.
 
 NOTE:
 
