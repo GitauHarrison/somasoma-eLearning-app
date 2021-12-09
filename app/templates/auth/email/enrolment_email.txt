@@ -1,9 +1,0 @@
-Dear {{ client.parent_full_name }},
-
-Thank you for registering your child! To complete registration, enrol your child by clicking the payment link below:
-
-{{ (url_for('main.client_enrollment',  _external=True)) }}
-
-Sincerely,
-
-somasoma eLearning
