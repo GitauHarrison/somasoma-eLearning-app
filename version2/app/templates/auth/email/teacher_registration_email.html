@@ -1,0 +1,32 @@
+<p>Dear {{ teacher.teacher_full_name }}</p>
+<p>
+    Thank you for submitting your registration information. 
+    As a reminder, these are the credentials you will need to log 
+    into somasoma eLearning account:
+</p>
+<table class="table registraton-email">
+    <tr valign='top'>
+        <th>Teacher Name</th>
+        <th>Teacher Email</th>
+        <th>Teacher Username</th>
+    </tr>
+    <tr>
+        <td> {{ teacher.teacher_full_name }} </td>
+        <td> {{ teacher.teacher_email }} </td>
+        <td> {{ teacher.teacher_username }} </td>
+    </tr>
+</table>
+<p>
+    Kindly note that your password is a secret. 
+    Not even somasoma eLearning knows what it is.
+</p>
+<p>
+    To continue into your account, click the button below:
+</p>
+<p>
+    <a href="{{ url_for('auth.teacher_login',  _external=True) }}">
+        <button class="button is-primary">Teacher Login</button>    
+    </a>
+</p>
+<p>Sincerely,</p>
+<p>somasoma eLearning Admin</p>

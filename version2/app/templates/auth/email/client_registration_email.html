@@ -1,0 +1,29 @@
+<p>Dear {{ client.parent_full_name }}</p>
+<p>
+    Thank you for submitting your registration information. 
+    As a reminder, these are the credentials your child will need to log 
+    into somasoma eLearning account:
+</p>
+<table class="table registraton-email">
+    <tr valign='top'>
+        <th>Student Name</th>
+        <th>Student Email</th>
+        <th>Student Username</th>
+    </tr>
+    <tr>
+        <td> {{ client.student_full_name }} </td>
+        <td> {{ client.student_email }} </td>
+        <td> {{ client.student_username }} </td>
+    </tr>
+</table>
+<p>
+    Kindly note that your child's password is a secret. 
+    Not even somasoma eLearning knows what it is.
+</p>
+<p>
+    If you would wish to know the progress of your child, you
+    can log into their account using the credentials above.
+    All learning analytics are found in their profile pages.
+</p>
+<p>Sincerely,</p>
+<p>somasoma eLearning Admin</p>

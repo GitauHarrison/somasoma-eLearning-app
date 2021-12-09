@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-md-4">
+            <!--  -->
+        </div>
+        <div class="col-md-4 text-center">
+            <img class="img img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/payment_cancelled.svg')}}" alt="Payment Successful">
+        </div>
+        <div class="col-md-4">
+            <!--  -->
+        </div>
+    </div>
+    <div class="row stripe-cancel text-center">
+        <div class="col-md-4">
+            <!--  -->
+        </div>
+        <div class="col-md-4">
+            <p>You cancelled your payment.</p>
+            <p>To make another payment, check your email address for the enrolment button.</p>
+            <p>Otherwise, return to the <a href="{{url_for('main.home')}}">home page</a>.</p>
+        </div>
+        <div class="col-md-4">
+            <!--  -->
+        </div>
+    </div>
+{% endblock %}
