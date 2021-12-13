@@ -1,7 +1,8 @@
 from app import app
 from flask import render_template
 from app.forms import LoginForm, ParentRegistrationForm,\
-    StudentRegistrationForm, RequestPasswordResetForm
+    StudentRegistrationForm, RequestPasswordResetForm,\
+    ResetPasswordForm
 
 
 @app.route('/')
@@ -42,5 +43,14 @@ def request_password_reset():
     form = RequestPasswordResetForm()
     return render_template('request_password_reset.html',
                            title='Request Password Reset',
+                           form=form
+                           )
+
+
+@app.route('/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    form = ResetPasswordForm()
+    return render_template('reset_password.html',
+                           title='Reset Password',
                            form=form
                            )
