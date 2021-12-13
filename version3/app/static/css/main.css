@@ -1,7 +1,8 @@
 /* Forms */
-.my-form {
+.my-form, .card-deck {
   padding: 15px;
   border: 1px solid #ddd;
   margin-top: 15px;
   margin-bottom: 15px;
 }
+

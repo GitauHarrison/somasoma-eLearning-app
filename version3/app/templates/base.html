@@ -34,9 +34,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            {% if parent %}
+            {% if current_user == parent %}
                 <a class="navbar-brand" href=" {{ url_for('parent_dashboard') }} ">somasoma eLearning</a>
-            {% elif student %}
+            {% elif current_user == student %}
                 <a class="navbar-brand" href=" {{ url_for('student_dashboard') }} ">somasoma eLearning</a>
             {% else %}
                 <a class="navbar-brand" href=" # ">somasoma eLearning</a>
@@ -44,8 +44,8 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">            
             <ul class="nav navbar-nav navbar-right">  
-                {% if current_user.is_authenticated %}                   
-                    <li><a href=" {{ url_for('logout') }} ">Logout</a></li>
+                {% if current_user.is_authenticated %} 
+                    <li><a href=" {{ url_for('logout') }} ">Logout</a></li>                  
                 {% else %}
                     <li><a href=" {{ url_for('login') }} ">Login</a></li>
                 {% endif %}
