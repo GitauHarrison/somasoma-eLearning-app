@@ -23,7 +23,7 @@ class LoginForm(FlaskForm):
 # Client Registration Form
 # ========================================
 
-class ParentRegistrationForm(FlaskForm):
+class ClientRegistrationForm(FlaskForm):
     parent_full_name = StringField('Parent Full Name',
                                    validators=[DataRequired(),
                                                Length(min=2, max=20)
@@ -49,21 +49,7 @@ class ParentRegistrationForm(FlaskForm):
                                                         EqualTo('parent_password')
                                                         ]
                                             )
-
-    submit = SubmitField('Register')
-
-    def validate_parent_full_name(self, parent_full_name):
-        parent = Client.query.filter_by(parent_full_name=parent_full_name.data).first()
-        if parent:
-            raise ValidationError('Name already taken. Please choose a different one.')
-
-    def validate_parent_email(self, parent_email):
-        parent = Client.query.filter_by(parent_email=parent_email.data).first()
-        if parent:
-            raise ValidationError('Name already taken. Please choose a different one.')
-
-
-class StudentRegistrationForm(FlaskForm):
+    # Student
     student_full_name = StringField('Student Full Name',
                                     validators=[DataRequired(),
                                                 Length(min=2, max=20)
@@ -89,7 +75,18 @@ class StudentRegistrationForm(FlaskForm):
                                                          EqualTo('student_password')
                                                          ]
                                              )
+
     submit = SubmitField('Register')
+
+    def validate_parent_full_name(self, parent_full_name):
+        parent = Client.query.filter_by(parent_full_name=parent_full_name.data).first()
+        if parent:
+            raise ValidationError('Name already taken. Please choose a different one.')
+
+    def validate_parent_email(self, parent_email):
+        parent = Client.query.filter_by(parent_email=parent_email.data).first()
+        if parent:
+            raise ValidationError('Name already taken. Please choose a different one.')
 
     def validate_student_full_name(self, student_full_name):
         student = Client.query.filter_by(student_full_name=student_full_name.data).first()
