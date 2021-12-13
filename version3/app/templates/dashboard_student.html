@@ -1,7 +1,199 @@
 {% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-<div class="col-sm-12">
-    <H1>Student Dashboard</H1>
+<div class="row">
+
+    <!-- Start of sidebar -->
+    <div class="col-sm-2 sidebar">
+        <div class="mini-submenu">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </div>
+        <div class="list-group">
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'enrolled-courses')" id="defaultOpen">
+                Enrolled Courses
+            </a>
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
+                Live Class
+            </a>
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'community')">
+                Community
+            </a>
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'account')">
+                Account
+            </a>
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'analytics')">
+                Analytics
+            </a>
+        </div>   
+    </div>
+    <!-- End of sidebar -->
+    
+    <!-- Start of tab contents -->
+    <div class="col-sm-10 ">
+
+        <!-- ENROLLED COURSE TAB -->
+        <div id="enrolled-courses" class="tabcontent">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h1>Your Courses</h1>
+                    <!-- Enrolled Courses Card -->
+                    <div class="card-deck text-center">
+                        <div class="card">
+                            <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Parent">
+                            <div class="card-body">
+                                <h4 class="card-title">Web Development</h4><hr>
+                                <p class="card-text">
+                                    You will learn how to build a website using HTML, CSS, and JavaScript.
+                                    Learn best practices for building responsive websites.
+                                </p>
+                                <a href=" # " class="btn btn-primary">Start Lesson</a>
+                                <a href=" # " class="btn btn-primary">Quizzes</a>
+                            </div>            
+                        </div>
+                    </div>
+                    <!-- End of Enrolled Courses Card -->
+                </div>
+                <div class="col-sm-4">
+                    <!-- Empty column -->
+                </div>
+                <div class="col-sm-4">
+                    <!-- Empty column -->
+                </div>
+            </div>
+        </div>
+        <!-- ENROLLED COURSE TAB -->
+
+        <!-- LIVE CLASS TAB -->
+        <div id="live-class" class="tabcontent">
+            <div class="row text-center">
+                <h1>Live Class</h1>
+                <div class="col-sm-6">
+                    <!-- Start Meeting Card -->
+                    <div class="card-deck text-center">
+                        <div class="card">
+                            <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/start-meeting.svg')}}" alt="Parent">
+                            <div class="card-body">
+                                <h4 class="card-title">New Meeting</h4><hr>
+                                <p class="card-text">
+                                    Create your own meeting and invite your friends to join.
+                                </p>
+                                <a href=" # " class="btn btn-primary">Start New Meeting</a>
+                            </div>            
+                        </div>
+                    </div>
+                    <!-- End of Start Meeting Card -->
+                </div>
+                <div class="col-sm-6">
+                    <!-- Join Meeting Card -->
+                    <div class="card-deck text-center">
+                        <div class="card">
+                            <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/join-meeting.svg')}}" alt="Parent">
+                            <div class="card-body">
+                                <h4 class="card-title">Join Meeting</h4><hr>
+                                <p class="card-text">
+                                    You can join a meeting that is currently in progress.
+                                </p>
+                                <a href=" # " class="btn btn-primary">Join Meeting</a>
+                            </div>            
+                        </div>
+                    </div>
+                    <!-- End of Join Meeting Card -->
+                </div>
+            </div>
+        </div>
+        <!-- END OFLIVE CLASS TAB -->
+
+        <!-- COMMUNITY TAB -->
+        <div id="community" class="tabcontent">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Explore</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    {{ wtf.quick_form(comment_form) }}
+                </div>
+                <div class="col-sm-6">
+                    <!-- Empty column -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    {% include '_comments.html' %}
+                </div>
+                <div class="col-sm-6">
+                    <!-- Empty column -->
+                </div>
+            </div>
+        </div>
+        <!-- COMMUNITY TAB -->
+
+        <!-- ACCOUNT TAB -->
+        <div id="account" class="tabcontent">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Your Account</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-striped">
+                        <tr valign='top'>
+                            <td width="30px">
+                                <img src="#">
+                            </td>
+                            <td>
+                                Username: <span>harry</span>  <br>
+                                About: <span>I am a student at the University of Washington</span> <br>
+                                3 Followers, 10 Following
+                            </td>
+                        </tr>    
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Update Account Details</h2>
+                    <a href="{{ url_for('request_password_reset') }}" class="btn btn-primary">Reset Password</a>
+                    <a href="#" class="btn btn-primary">Update Bio</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Two-Factor Authentication</h2>
+                    <p>
+                        Add an extra layer of security to your account by enabling two-factor authentication.
+                    </p>
+                    <a href="#" class="btn btn-primary">Enable Two-Factor Authentication</a>
+                </div>
+                <div class="col-sm-6">
+                    <!-- Empty column -->
+                </div>
+            </div>
+        </div>
+        <!-- ACCOUNT TAB -->
+
+        <!-- ANALYTICS TAB -->
+        <div id="analytics" class="tabcontent">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Analytics</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    Your Analytics will appear here.
+                </div>
+            </div>
+        </div>
+        <!-- COMMUNITY TAB -->
+
+    </div>
+    <!-- End of tab contents -->
+
 </div>
 {% endblock %}

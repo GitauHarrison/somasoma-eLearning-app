@@ -129,3 +129,18 @@ class ResetPasswordForm(FlaskForm):
 # ========================================
 # End of password reset form
 # ========================================
+
+# ========================================
+# Comment Form
+# ========================================
+
+
+class CommentForm(FlaskForm):
+    comment = StringField('Comment',
+                          validators=[DataRequired()]
+                          )
+    submit = SubmitField('Post')
+
+# ========================================
+# Comment Form
+# ========================================

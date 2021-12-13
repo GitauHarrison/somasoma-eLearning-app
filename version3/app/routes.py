@@ -1,15 +1,23 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash
 from app.forms import LoginForm, ClientRegistrationForm,\
-    RequestPasswordResetForm, ResetPasswordForm
+    RequestPasswordResetForm, ResetPasswordForm, CommentForm
 from app.models import Client
 from flask_login import current_user, login_user, logout_user, login_required    
 
 
-@app.route('/student/dashboard')
+# ========================================
+# MAIN ROUTES
+# ========================================
+
+@app.route('/student/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_student():
-    return render_template('dashboard_student.html')
+    comment_form = CommentForm()
+    return render_template(
+                           'dashboard_student.html',
+                           comment_form=comment_form
+                           )
 
 
 @app.route('/parent/dashboard')
@@ -30,6 +38,14 @@ def login():
                            title='Login'
                            )
 
+
+# ========================================
+# END OF MAIN ROUTES
+# ========================================
+
+# ========================================
+# AUTHENTICATION ROUTES
+# ========================================
 
 @app.route('/parent/login', methods=['GET', 'POST'])
 def login_parent():
@@ -118,3 +134,7 @@ def reset_password():
                            title='Reset Password',
                            form=form
                            )
+
+# ========================================
+# END OF AUTHENTICATION ROUTES
+# ========================================
