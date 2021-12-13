@@ -1,0 +1,64 @@
+{% extends 'bootstrap/base.html' %}
+
+<!-- Head content will go here -->
+{% block head %}
+    {{ super() }}
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename = 'images/somasomalogo.png') }}">
+
+{% endblock %}
+
+<!-- Title Section -->
+{% block title %}
+    {% if title %}
+        {{ title }}
+    {% else %}
+        Somasoma eLearning
+    {% endif %}
+{% endblock %}
+
+<!-- Link Styles -->
+{% block styles %}
+    {{ super() }}
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/main.css') }}">
+
+{% endblock %}
+
+<!-- Navbar Section -->
+{% block navbar %}
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href=" # ">somasoma eLearning</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">            
+            <ul class="nav navbar-nav navbar-right">                     
+                <li><a href=" # ">Login</a></li>
+            </ul>                       
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+<!-- Blog Content Goes Here -->
+{% block content %}
+    <div class="container">                 
+        {% block app_content %}
+
+        {% endblock %}
+    </div>
+
+    <!-- Footer will go here -->
+    
+{% endblock %}
+
+<!-- Scripts will go here -->
+{% block scripts %}
+        {{ super() }}
+        
+{% endblock %}

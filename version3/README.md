@@ -47,6 +47,11 @@ Comming soon:
 
 [![GitHub Contributors](https://img.shields.io/github/contributors/GitauHarrison/somasoma-eLearning-app)](https://github.com/GitauHarrison/somasoma-eLearning-app/graphs/contributors)
 
+## Deployment
+
+- [Somasoma]() on Heroku
+- [Somasoma]() on Docker
+
 ## Testing the Application Locally
 
 * Clone this repo:
@@ -80,7 +85,7 @@ $ mkvirtualenv somasoma-elearning # I am using virtualenvwrapper
 
 * Access the application on http://127.0.0.1:5000/
 
-## Using the Application Locally
+## Using the Application
 
 ### Student
 
@@ -88,7 +93,7 @@ $ mkvirtualenv somasoma-elearning # I am using virtualenvwrapper
 - [Apply]() for a virtual class.
 - Complete [registration]().
 - [Enrol]() by making payment.
-- Check your email for a confirmation email.
+- Check your email for a confirmation email _(On Heroku this feature does not work)_.
 - Click on the confirmation link to access your virtual classes.
 - [Login]() to your virtual class.
 - [Start]() your course.
