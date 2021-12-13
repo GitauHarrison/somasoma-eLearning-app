@@ -1,8 +1,9 @@
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 
-class Client(db.Model):
+class Client(UserMixin, db.Model):
     __tablename__ = 'client'
     id = db.Column(db.Integer, primary_key=True)
     parent_full_name = db.Column(db.String(64), index=True)
