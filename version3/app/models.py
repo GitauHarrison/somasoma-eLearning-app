@@ -1,4 +1,5 @@
-from app import db
+from app import db, login
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class Client(db.Model):
@@ -20,3 +21,20 @@ class Client(db.Model):
 
     def __repr__(self):
         return f'Client: {self.parent_full_name} - {self.student_full_name}'
+
+    def set_parent_password(self, password):
+        self.parent_password_hash = generate_password_hash(password)
+
+    def check_paremt_password(self, password):
+        return check_password_hash(self.parent_password_hash, password)
+
+    def set_student_password(self, password):
+        self.student_password_hash = generate_password_hash(password)
+
+    def check_student_password(self, password):
+        return check_password_hash(self.student_password_hash, password)
+
+
+@login.user_loader
+def load_user(id):
+    return Client.query.get(int(id))

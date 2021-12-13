@@ -4,12 +4,24 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
 
+# ========================================
+# Login form
+# ========================================
+
+
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()],
+                        render_kw={"placeholder": "Valid Email Address"}
+                        )
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
+
+# ========================================
+# Client Registration Form
+# ========================================
 
 class ParentRegistrationForm(FlaskForm):
     parent_full_name = StringField('Parent Full Name',
@@ -41,13 +53,13 @@ class ParentRegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_parent_full_name(self, parent_full_name):
-        client = Client.query.filter_by(parent_full_name=parent_full_name.data).first()
-        if client:
+        parent = Client.query.filter_by(parent_full_name=parent_full_name.data).first()
+        if parent:
             raise ValidationError('Name already taken. Please choose a different one.')
 
     def validate_parent_email(self, parent_email):
-        client = Client.query.filter_by(parent_email=parent_email.data).first()
-        if client:
+        parent = Client.query.filter_by(parent_email=parent_email.data).first()
+        if parent:
             raise ValidationError('Name already taken. Please choose a different one.')
 
 
@@ -80,14 +92,22 @@ class StudentRegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_student_full_name(self, student_full_name):
-        client = Client.query.filter_by(student_full_name=student_full_name.data).first()
-        if client:
+        student = Client.query.filter_by(student_full_name=student_full_name.data).first()
+        if student:
             raise ValidationError('Name already taken. Please choose a different one.')
 
     def validate_student_email(self, student_email):
-        client = Client.query.filter_by(student_email=student_email.data).first()
-        if client:
+        student = Client.query.filter_by(student_email=student_email.data).first()
+        if student:
             raise ValidationError('Name already taken. Please choose a different one.')
+
+# ========================================
+# End of client registration form
+# ========================================
+
+# ========================================
+# Password reset form
+# ========================================
 
 
 class RequestPasswordResetForm(FlaskForm):
@@ -108,3 +128,7 @@ class ResetPasswordForm(FlaskForm):
                                                  ]
                                      )
     submit = SubmitField('Reset Password')
+
+# ========================================
+# End of password reset form
+# ========================================
