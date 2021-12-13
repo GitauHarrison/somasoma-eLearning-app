@@ -22,17 +22,17 @@ class Client(db.Model):
     def __repr__(self):
         return f'Client: {self.parent_full_name} - {self.student_full_name}'
 
-    def set_parent_password(self, password):
-        self.parent_password_hash = generate_password_hash(password)
+    def set_parent_password(self, parent_password):
+        self.parent_password_hash = generate_password_hash(parent_password)
 
-    def check_paremt_password(self, password):
-        return check_password_hash(self.parent_password_hash, password)
+    def check_parent_password(self, parent_password):
+        return check_password_hash(self.parent_password_hash, parent_password)
 
-    def set_student_password(self, password):
-        self.student_password_hash = generate_password_hash(password)
+    def set_student_password(self, student_password):
+        self.student_password_hash = generate_password_hash(student_password)
 
-    def check_student_password(self, password):
-        return check_password_hash(self.student_password_hash, password)
+    def check_student_password(self, student_password):
+        return check_password_hash(self.student_password_hash, student_password)
 
 
 @login.user_loader
