@@ -42,16 +42,17 @@
         {% endfor %}
     </div>
 </div>
-<div class="row">
+<div class="row text-center">
     <div class="col-sm-4">
         <!-- Empty columns -->
     </div>
     <div class="col-sm-4">
-        <a href=" {{ url_for('dashboard_student', student_full_name=student.student_full_name) }} ">
-            <span class="glyphicon glyphicon-arrow-left btn btn-primary" aria-hidden="true">
-                Back to Dashboard
-            </span>
-        </a>
+        <p>
+            <a href=" {{ url_for('dashboard_student') }} " class="btn btn-primary">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    Back to Dashboard
+            </a>
+        </p>
     </div>
     <div class="col-sm-4">
         <!-- Empty columns -->
