@@ -3,7 +3,7 @@
 <!-- Head content will go here -->
 {% block head %}
     {{ super() }}
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename = 'images/somasomalogo.png') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename = 'images/eLearning.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@100;300&display=swap" rel="stylesheet">
@@ -38,7 +38,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href=" # ">somasoma eLearning</a>
+            <a class="navbar-brand" href=" # ">
+                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
+                
+            </a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">            
             <ul class="nav navbar-nav navbar-right">  
