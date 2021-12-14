@@ -38,9 +38,16 @@ p, li, td, .btn, .btn-alt, .schedule-btn{
   padding-bottom: 15px;
   box-shadow: 5px 5px 10px 5px #ebeae9;
   margin-bottom: 20px;
+
 }
 .profile:hover, .update-account:hover, .two-factor-auth:hover {
   box-shadow: 5px 5px 10px 5px #c4c4c4;
+}
+a:hover {
+  text-decoration: none;
+}
+.navbar-brand {
+  margin-top: 10px;
 }
 /* ------------------------------------------ */
 /* HOMEPAGE VERTICAL TABS */

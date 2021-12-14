@@ -1,11 +1,15 @@
 <table class="table table-striped">
     <tr valign='top'>
         <td width="30px">
-            <img src=" {{ comment.author.avatar_student(30) }}  ">
+            <a href=" {{ url_for('profile_student', student_full_name=comment.author.student_full_name) }} ">
+                <img src=" {{ comment.author.avatar_student(30) }}  ">
+            </a>
         </td>
         <td>
             <span class="comment-id"># {{ comment.id }} </span>
-            <span class="comment-author-admin"> {{ comment.author.student_full_name }} </span>  
+            <a href="{{ url_for('profile_student', student_full_name=comment.author.student_full_name) }}">
+                <span class="comment-author-admin"> {{ comment.author.student_full_name }} </span>  
+            </a>
             said {{ moment(comment.timestamp).fromNow() }}:
             <br>
             <div class="comment-body">

@@ -38,7 +38,7 @@
         <div id="enrolled-courses" class="tabcontent">
             <div class="row">
                 <h1>Your Courses</h1>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <!-- Enrolled Courses Card -->
                     <div class="card-deck text-center">
                         <div class="card">
@@ -56,10 +56,7 @@
                     </div>
                     <!-- End of Enrolled Courses Card -->
                 </div>
-                <div class="col-sm-4">
-                    <!-- Empty column -->
-                </div>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <!-- Empty column -->
                 </div>
             </div>
@@ -193,35 +190,35 @@
             <div class="row profile">
                 <div class="col-sm-12">
                     <h2>Profile</h2>
-                    <table class="table">
-                        <tr valign='top'>
-                            <td width="30px">
-                                <img src=" {{ current_user.avatar_student(128) }} ">
-                            </td>
-                            <td>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img src=" {{ current_user.avatar_student(128) }} ">
+                        </div>
+                        <div class="col-sm-9">
+                            <p>
+                                Your Full Name: <span style="font-weight: 600;">{{ current_user.student_full_name }}</span> 
+                            </p>
+                            <p>
+                                Your Parent Full Name: <span style="font-weight: 600;">{{ current_user.parent_full_name }}</span> 
+                            </p>
+                            <p>
+                                Email: <span style="font-weight: 600;">{{ current_user.student_email }}</span> 
+                            </p>
+                            {% if current_user.student_about_me %}
                                 <p>
-                                    Your Full Name: <span>{{ current_user.student_full_name }}</span> 
+                                    About me: <span style="font-weight: 600;">{{ current_user.student_about_me }}</span>
                                 </p>
+                            {% endif %}
+                            {% if current_user.student_last_seen %}
                                 <p>
-                                    Your Parent Full Name: <span>{{ current_user.parent_full_name }}</span> 
+                                    Last seen on: <span style="font-weight: 600;">{{ moment(current_user.student_last_seen).format('LLL') }}</span>
                                 </p>
-                                <p>
-                                    Email: <span>{{ current_user.student_email }}</span> 
-                                </p>
-                                {% if current_user.student_about_me %}
-                                    <p>
-                                        About me: {{ current_user.student_about_me }}
-                                    </p>
-                                {% endif %}
-                                {% if current_user.student_last_seen %}
-                                    <p>
-                                        Last seen on: {{ moment(current_user.student_last_seen).format('LLL') }}
-                                    </p>
-                                {% endif %}
-                                3 Followers, 10 Following
-                            </td>
-                        </tr>    
-                    </table>
+                            {% endif %}
+                            <p>
+                                Followers: <span style="font-weight: 600;">3</span>, Following: <span style="font-weight: 600;">3</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row update-account">
