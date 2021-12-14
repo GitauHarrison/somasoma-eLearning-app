@@ -37,8 +37,8 @@
         <!-- ENROLLED COURSE TAB -->
         <div id="enrolled-courses" class="tabcontent">
             <div class="row">
+                <h1>Your Courses</h1>
                 <div class="col-sm-4">
-                    <h1>Your Courses</h1>
                     <!-- Enrolled Courses Card -->
                     <div class="card-deck text-center">
                         <div class="card">
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <!-- ENROLLED COURSE TAB -->
+        <!-- END OF ENROLLED COURSE TAB -->
 
         <!-- LIVE CLASS TAB -->
         <div id="live-class" class="tabcontent">
@@ -141,9 +141,10 @@
                     <h1>Your Account</h1>
                 </div>
             </div>
-            <div class="row">
+            <div class="row profile">
                 <div class="col-sm-12">
-                    <table class="table table-striped">
+                    <h2>Profile</h2>
+                    <table class="table">
                         <tr valign='top'>
                             <td width="30px">
                                 <img src=" {{ current_user.avatar_student(128) }} ">
@@ -174,25 +175,29 @@
                     </table>
                 </div>
             </div>
-            <div class="row">
+            <div class="row update-account">
                 <div class="col-sm-12">
                     <h2>Update Account Details</h2>
                     <div class="col-sm-6">
                         <p>
                             Change your student account password <br>
+                        </p>
+                        <p>
                             <a href="{{ url_for('request_password_reset') }}" class="btn btn-primary">Reset Password</a>
                         </p>
                     </div>
                     <div class="col-sm-6">
                         <p>
-                            Update your student bio information <br>
+                            Update your student bio information <br>                            
+                        </p>
+                        <p>
                             <a href=" {{ url_for('edit_profile_student') }} " class="btn btn-primary">Update Bio</a>
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-6">
+            <div class="row two-factor-auth">
+                <div class="col-sm-12">
                     <h2>Two-Factor Authentication</h2>
                     <p>
                         Add an extra layer of security to your account by enabling two-factor authentication.
@@ -207,9 +212,6 @@
                         </p>
                     {% endif %}
                     
-                </div>
-                <div class="col-sm-6">
-                    <!-- Empty column -->
                 </div>
             </div>
         </div>
