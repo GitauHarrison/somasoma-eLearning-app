@@ -33,7 +33,7 @@ def before_request_parent():
 @app.route('/student/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_student():
-    comments = CommunityComment.query.all()
+    comments = CommunityComment.query.order_by(CommunityComment.timestamp.desc()).all()
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         comment = CommunityComment(
@@ -70,6 +70,18 @@ def login():
                            )
 
 
+@app.route('/student/<student_full_name>/profile')
+@login_required
+def profile_student(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first()
+    comments = CommunityComment.query.order_by(CommunityComment.timestamp.desc()).all()
+    return render_template('profile_student.html',
+                           title='Profile',
+                           student=student,
+                           comments=comments
+                           )
+
+
 @app.route('/student/edit-profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile_student():
@@ -96,6 +108,7 @@ def edit_profile_student():
 # AUTHENTICATION ROUTES
 # ========================================
 
+
 @app.route('/parent/login', methods=['GET', 'POST'])
 def login_parent():
     if current_user.is_authenticated:
@@ -117,7 +130,7 @@ def login_parent():
 @app.route('/student/login', methods=['GET', 'POST'])
 def login_student():
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard_student'))
+        return redirect(url_for('dashboard_student', student_full_name=current_user.student_full_name))
     form = LoginForm()
     if form.validate_on_submit():
         student = Client.query.filter_by(student_email=form.email.data).first()
@@ -131,7 +144,7 @@ def login_student():
             request_verification_token(student.student_phone)
             session['student_email'] = student.student_email
             session['phone'] = student.student_phone
-            return redirect(url_for('verify_2fa_student',
+            return redirect(url_for('verify_2fa_student', student_full_name=student.student_full_name,
                                     next=next_page,
                                     remember='1' if form.remember_me.data else '0'
                                     )
@@ -199,9 +212,9 @@ def reset_password():
 # Two-factor authentication
 
 
-@app.route('/student/enable-2fa', methods=['GET', 'POST'])
+@app.route('/student//enable-2fa', methods=['GET', 'POST'])
 @login_required
-def enable_2fa_student():
+def enable_2fa_student(student_full_name):
     form = Enable2faForm()
     if form.validate_on_submit():
         session['phone'] = form.verification_phone.data
@@ -213,7 +226,7 @@ def enable_2fa_student():
                            )
 
 
-@app.route('/student/verify-2fa', methods=['GET', 'POST'])
+@app.route('/student//verify-2fa', methods=['GET', 'POST'])
 def verify_2fa_student():
     form = Confirm2faForm()
     if form.validate_on_submit():
@@ -242,7 +255,7 @@ def verify_2fa_student():
 
 @app.route('/student/disable-2fa', methods=['GET', 'POST'])
 @login_required
-def disable_2fa_student():
+def disable_2fa_student(student_full_name):
     form = Disable2faForm()
     if form.validate_on_submit():
         current_user.student_phone = None
