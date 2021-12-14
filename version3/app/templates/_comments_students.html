@@ -1,0 +1,16 @@
+<table class="table table-striped">
+    <tr valign='top'>
+        <td width="30px">
+            <img src=" {{ comment.author.avatar_student(30) }}  ">
+        </td>
+        <td>
+            <span class="comment-id"># {{ comment.id }} </span>
+            <span class="comment-author-admin"> {{ comment.author.student_full_name }} </span>  
+            said {{ moment(comment.timestamp).fromNow() }}:
+            <br>
+            <div class="comment-body">
+                {{ comment.body }}
+            </div>
+        </td>
+    </tr>    
+</table>

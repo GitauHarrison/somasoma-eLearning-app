@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, flash, session,\
 from app.forms import LoginForm, ClientRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, CommentForm,\
     Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm
-from app.models import Client
+from app.models import Client, CommunityComment
 from app.twilio_verify_api import check_verification_token,\
     request_verification_token
 from flask_login import current_user, login_user, logout_user, login_required
@@ -33,10 +33,21 @@ def before_request_parent():
 @app.route('/student/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_student():
+    comments = CommunityComment.query.all()
     comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        comment = CommunityComment(
+            body=comment_form.comment.data,
+            author=current_user
+        )
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been posted!', 'success')
+        return redirect(url_for('dashboard_student'))
     return render_template(
                            'dashboard_student.html',
-                           comment_form=comment_form
+                           comment_form=comment_form,
+                           comments=comments
                            )
 
 

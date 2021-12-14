@@ -5,6 +5,11 @@ from datetime import datetime
 from hashlib import md5
 
 
+@login.user_loader
+def load_user(id):
+    return Client.query.get(int(id))
+
+
 class Client(UserMixin, db.Model):
     __tablename__ = 'client'
     id = db.Column(db.Integer, primary_key=True)
@@ -25,6 +30,8 @@ class Client(UserMixin, db.Model):
     student_password_hash = db.Column(db.String(128))
     student_about_me = db.Column(db.String(140))
     student_last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+
+    comments = db.relationship('CommunityComment', backref='author', lazy='dynamic')
 
     def __repr__(self):
         return f'Client: {self.parent_full_name} - {self.student_full_name}'
@@ -63,6 +70,12 @@ class Client(UserMixin, db.Model):
             digest, size)
 
 
-@login.user_loader
-def load_user(id):
-    return Client.query.get(int(id))
+class CommunityComment(db.Model):
+    __tablename__ = 'community_comment'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+
+    def __repr__(self):
+        return f'Comment: {self.body}'
