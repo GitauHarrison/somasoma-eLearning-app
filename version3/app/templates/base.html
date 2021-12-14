@@ -74,6 +74,7 @@
 <!-- Scripts will go here -->
 {% block scripts %}
         {{ super() }}
+        {{ moment.include_moment() }}
         <!-- Tabs -->
         <script>
             function openCity(evt, cityName) {

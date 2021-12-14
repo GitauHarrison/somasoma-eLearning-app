@@ -147,8 +147,19 @@
                                 <img src="#">
                             </td>
                             <td>
-                                Email: <span>{{ current_user.student_email }}</span>  <br>
-                                About: <span>I am a student at the University of Washington</span> <br>
+                                <p>
+                                    Email: <span>{{ current_user.student_email }}</span> 
+                                </p>
+                                {% if current_user.student_about_me %}
+                                    <p>
+                                        {{ current_user.student_about_me }}
+                                    </p>
+                                {% endif %}
+                                {% if current_user.student_last_seen %}
+                                    <p>
+                                        Last seen on: {{ moment(current_user.student_last_seen).format('LLL') }}
+                                    </p>
+                                {% endif %}
                                 3 Followers, 10 Following
                             </td>
                         </tr>    

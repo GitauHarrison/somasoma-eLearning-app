@@ -9,7 +9,21 @@ from app.twilio_verify_api import check_verification_token,\
     request_verification_token
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from datetime import datetime
 
+
+@app.before_request
+def before_request_student():
+    if current_user.is_authenticated:
+        current_user.student_last_seen = datetime.utcnow()
+        db.session.commit()
+
+
+@app.before_request
+def before_request_parent():
+    if current_user.is_authenticated:
+        current_user.parent_last_seen = datetime.utcnow()
+        db.session.commit()
 
 # ========================================
 # MAIN ROUTES
