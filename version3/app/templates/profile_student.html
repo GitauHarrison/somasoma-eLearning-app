@@ -37,11 +37,9 @@
 </div>
 <div class="row">
     <div class="col-sm-12">
-        {% if student == current_user %}
-            {% for comment in comments %}
-                {% include '_comments_students.html' %}
-            {% endfor %}
-        {% endif %}
+        {% for comment in comments %}
+            {% include '_comments_students.html' %}
+        {% endfor %}
     </div>
 </div>
 <div class="row">

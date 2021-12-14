@@ -73,8 +73,8 @@ def login():
 @app.route('/student/<student_full_name>/profile')
 @login_required
 def profile_student(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first()
-    comments = CommunityComment.query.order_by(CommunityComment.timestamp.desc()).all()
+    student = Client.query.filter_by(student_full_name=student_full_name).first_or_404()
+    comments = student.comments.order_by(CommunityComment.timestamp.desc()).all()
     return render_template('profile_student.html',
                            title='Profile',
                            student=student,
