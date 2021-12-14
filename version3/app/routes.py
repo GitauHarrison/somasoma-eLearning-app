@@ -214,7 +214,7 @@ def reset_password():
 
 @app.route('/student//enable-2fa', methods=['GET', 'POST'])
 @login_required
-def enable_2fa_student(student_full_name):
+def enable_2fa_student():
     form = Enable2faForm()
     if form.validate_on_submit():
         session['phone'] = form.verification_phone.data
@@ -255,7 +255,7 @@ def verify_2fa_student():
 
 @app.route('/student/disable-2fa', methods=['GET', 'POST'])
 @login_required
-def disable_2fa_student(student_full_name):
+def disable_2fa_student():
     form = Disable2faForm()
     if form.validate_on_submit():
         current_user.student_phone = None
