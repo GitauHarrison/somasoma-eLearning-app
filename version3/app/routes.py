@@ -55,7 +55,7 @@ def login():
 @app.route('/parent/login', methods=['GET', 'POST'])
 def login_parent():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('dashboard_parent'))
     form = LoginForm()
     if form.validate_on_submit():
         parent = Client.query.filter_by(parent_email=form.email.data).first()
@@ -73,7 +73,7 @@ def login_parent():
 @app.route('/student/login', methods=['GET', 'POST'])
 def login_student():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('dashboard_student'))
     form = LoginForm()
     if form.validate_on_submit():
         student = Client.query.filter_by(student_email=form.email.data).first()
@@ -109,7 +109,7 @@ def logout():
 @app.route('/client/register', methods=['GET', 'POST'])
 def register_client():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
     form = ClientRegistrationForm()
     if form.validate_on_submit():
         client = Client(parent_full_name=form.parent_full_name.data,
