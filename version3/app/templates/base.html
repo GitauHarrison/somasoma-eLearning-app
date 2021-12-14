@@ -115,6 +115,7 @@
         <!-- Beautiful phone number fields -->
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput-jquery.min.js"></script>
+        <!-- 2fa phone number field -->
         <script>
             $("#verification_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
             $("#verification_phone").parent().append('<div><input type="tel" id="_verification_phone"></div>');
@@ -125,6 +126,32 @@
             $("#_verification_phone").intlTelInput("setNumber", $('#verification_phone').val());
             $('#_verification_phone').blur(function() {
                 $('#verification_phone').val($('#_verification_phone').intlTelInput("getNumber"));
+            });
+        </script>
+        <!-- parent phone number -->
+        <script>
+            $("#parent_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
+            $("#parent_phone").parent().append('<div><input type="tel" id="_parent_verification_phone"></div>');
+            $("#_parent_verification_phone").intlTelInput({
+                separateDialCode: true,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
+            });
+            $("#_parent_verification_phone").intlTelInput("setNumber", $('#parent_phone').val());
+            $('#_parent_verification_phone').blur(function() {
+                $('#parent_phone').val($('#_parent_verification_phone').intlTelInput("getNumber"));
+            });
+        </script>
+         <!-- student phone number -->
+         <script>
+            $("#student_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
+            $("#student_phone").parent().append('<div><input type="tel" id="_student_verification_phone"></div>');
+            $("#_student_verification_phone").intlTelInput({
+                separateDialCode: true,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
+            });
+            $("#_student_verification_phone").intlTelInput("setNumber", $('#student_phone').val());
+            $('#_student_verification_phone').blur(function() {
+                $('#student_phone').val($('#_student_verification_phone').intlTelInput("getNumber"));
             });
         </script>
 
