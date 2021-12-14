@@ -18,3 +18,6 @@ class Config(object):
     TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID')
     TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_ACCOUNT_TOKEN')
     TWILIO_VERIFY_SERVICE_ID = os.environ.get('TWILIO_VERIFY_SERVICE_ID')
+
+    # Pagination
+    POSTS_PER_PAGE = int(os.environ.get('POSTS_PER_PAGE')) or 10

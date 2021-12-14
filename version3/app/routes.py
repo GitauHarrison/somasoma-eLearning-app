@@ -33,7 +33,13 @@ def before_request_parent():
 @app.route('/student/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_student():
-    comments = CommunityComment.query.order_by(CommunityComment.timestamp.desc()).all()
+    page = request.args.get('page', 1, type=int)
+    comments = CommunityComment.query.order_by(CommunityComment.timestamp.desc()).paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('dashboard_student', page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('dashboard_student', page=comments.prev_num) \
+        if comments.has_prev else None
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         comment = CommunityComment(
@@ -47,7 +53,9 @@ def dashboard_student():
     return render_template(
                            'dashboard_student.html',
                            comment_form=comment_form,
-                           comments=comments
+                           comments=comments.items,
+                           next_url=next_url,
+                           prev_url=prev_url
                            )
 
 
@@ -74,11 +82,19 @@ def login():
 @login_required
 def profile_student(student_full_name):
     student = Client.query.filter_by(student_full_name=student_full_name).first_or_404()
-    comments = student.comments.order_by(CommunityComment.timestamp.desc()).all()
+    page = request.args.get('page', 1, type=int)
+    comments = student.comments.order_by(CommunityComment.timestamp.desc()).paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('dashboard_student', page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('dashboard_student', page=comments.prev_num) \
+        if comments.has_prev else None
     return render_template('profile_student.html',
                            title='Profile',
                            student=student,
-                           comments=comments
+                           comments=comments.items,
+                           next_url=next_url,
+                           prev_url=prev_url
                            )
 
 
