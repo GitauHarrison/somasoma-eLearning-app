@@ -35,6 +35,12 @@ class Client(UserMixin, db.Model):
     def check_student_password(self, student_password):
         return check_password_hash(self.student_password_hash, student_password)
 
+    def two_factor_parent_enabled(self):
+        return self.parent_phone is not None
+
+    def two_factor_student_enabled(self):
+        return self.student_phone is not None
+
 
 @login.user_loader
 def load_user(id):
