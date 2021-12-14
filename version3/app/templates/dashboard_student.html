@@ -148,11 +148,17 @@
                             </td>
                             <td>
                                 <p>
+                                    Your Full Name: <span>{{ current_user.student_full_name }}</span> 
+                                </p>
+                                <p>
+                                    Your Parent Full Name: <span>{{ current_user.parent_full_name }}</span> 
+                                </p>
+                                <p>
                                     Email: <span>{{ current_user.student_email }}</span> 
                                 </p>
                                 {% if current_user.student_about_me %}
                                     <p>
-                                        {{ current_user.student_about_me }}
+                                        About me: {{ current_user.student_about_me }}
                                     </p>
                                 {% endif %}
                                 {% if current_user.student_last_seen %}
@@ -169,8 +175,18 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h2>Update Account Details</h2>
-                    <a href="{{ url_for('request_password_reset') }}" class="btn btn-primary">Reset Password</a>
-                    <a href="#" class="btn btn-primary">Update Bio</a>
+                    <div class="col-sm-6">
+                        <p>
+                            Change your student account password <br>
+                            <a href="{{ url_for('request_password_reset') }}" class="btn btn-primary">Reset Password</a>
+                        </p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>
+                            Update your student bio information <br>
+                            <a href=" {{ url_for('edit_profile_student') }} " class="btn btn-primary">Update Bio</a>
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="row">

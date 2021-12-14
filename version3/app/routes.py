@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, flash, session,\
     request
 from app.forms import LoginForm, ClientRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, CommentForm,\
-    Enable2faForm, Disable2faForm, Confirm2faForm
+    Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm
 from app.models import Client
 from app.twilio_verify_api import check_verification_token,\
     request_verification_token
@@ -28,6 +28,7 @@ def before_request_parent():
 # ========================================
 # MAIN ROUTES
 # ========================================
+
 
 @app.route('/student/dashboard', methods=['GET', 'POST'])
 @login_required
@@ -57,6 +58,24 @@ def login():
                            title='Login'
                            )
 
+
+@app.route('/student/edit-profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile_student():
+    form = EditProfileForm(current_user.student_email)
+    if form.validate_on_submit():
+        current_user.student_email = form.email.data
+        current_user.student_about_me = form.about_me.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('dashboard_student'))
+    elif request.method == 'GET':
+        form.email.data = current_user.student_email
+        form.about_me.data = current_user.student_about_me
+    return render_template('edit_profile_student.html',
+                           title='Edit Profile',
+                           form=form
+                           )
 
 # ========================================
 # END OF MAIN ROUTES
