@@ -2,6 +2,7 @@ from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
+from hashlib import md5
 
 
 class Client(UserMixin, db.Model):
@@ -28,6 +29,8 @@ class Client(UserMixin, db.Model):
     def __repr__(self):
         return f'Client: {self.parent_full_name} - {self.student_full_name}'
 
+    # Password verification
+
     def set_parent_password(self, parent_password):
         self.parent_password_hash = generate_password_hash(parent_password)
 
@@ -40,11 +43,24 @@ class Client(UserMixin, db.Model):
     def check_student_password(self, student_password):
         return check_password_hash(self.student_password_hash, student_password)
 
+    # Two-factor authentication
     def two_factor_parent_enabled(self):
         return self.parent_phone is not None
 
     def two_factor_student_enabled(self):
         return self.student_phone is not None
+
+    # Client avatar
+
+    def avatar_parent(self, size):
+        digest = md5(self.parent_email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+
+    def avatar_student(self, size):
+        digest = md5(self.student_email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
 
 
 @login.user_loader
