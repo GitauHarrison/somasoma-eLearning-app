@@ -4,6 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField,\
     TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo,\
     ValidationError
+import phonenumbers
 
 
 # ========================================
@@ -144,5 +145,31 @@ class CommentForm(FlaskForm):
     submit = SubmitField('Post')
 
 # ========================================
-# Comment Form
+# End of Comment Form
 # ========================================
+
+# ========================================
+# Two-factor Authentication Form
+# ========================================
+
+
+class Enable2faForm(FlaskForm):
+    verification_phone = StringField('Phone', validators=[DataRequired()])
+    submit = SubmitField('Enalble 2fa')
+
+    def validate_verification_number(self, verification_phone):
+        try:
+            p = phonenumbers.parse(verification_phone.data)
+            if not phonenumbers.is_valid_number(p):
+                raise ValueError
+        except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
+            raise ValidationError('Invalid phone number')
+
+
+class Confirm2faForm(FlaskForm):
+    token = StringField('Token')
+    submit = SubmitField('Verify')
+
+
+class Disable2faForm(FlaskForm):
+    submit = SubmitField('Disable 2fa')

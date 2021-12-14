@@ -168,7 +168,16 @@
                     <p>
                         Add an extra layer of security to your account by enabling two-factor authentication.
                     </p>
-                    <a href="#" class="btn btn-primary">Enable Two-Factor Authentication</a>
+                    {% if not current_user.two_factor_student_enabled() %}
+                        <p>
+                            <a href=" {{ url_for('enable_2fa_student') }} " class="btn btn-primary">Enable Two-Factor Authentication</a>
+                        </p>
+                    {% else %}
+                        <p>
+                            <a href=" {{ url_for('disable_2fa_student') }} " class="btn btn-primary">Disable Two-Factor Authentication</a>
+                        </p>
+                    {% endif %}
+                    
                 </div>
                 <div class="col-sm-6">
                     <!-- Empty column -->

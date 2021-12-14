@@ -20,6 +20,7 @@
 {% block styles %}
     {{ super() }}
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/css/intlTelInput.css">
 
 {% endblock %}
 
@@ -34,13 +35,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            {% if current_user == parent %}
-                <a class="navbar-brand" href=" {{ url_for('parent_dashboard') }} ">somasoma eLearning</a>
-            {% elif current_user == student %}
-                <a class="navbar-brand" href=" {{ url_for('student_dashboard') }} ">somasoma eLearning</a>
-            {% else %}
-                <a class="navbar-brand" href=" # ">somasoma eLearning</a>
-            {% endif %}
+            <a class="navbar-brand" href=" # ">somasoma eLearning</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">            
             <ul class="nav navbar-nav navbar-right">  
@@ -116,5 +111,23 @@
                 });
         </script>
         <!-- End of tab -->
+
+        <!-- Beautiful phone number fields -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput-jquery.min.js"></script>
+        <script>
+            $("#verification_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
+            $("#verification_phone").parent().append('<div><input type="tel" id="_verification_phone"></div>');
+            $("#_verification_phone").intlTelInput({
+                separateDialCode: true,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
+            });
+            $("#_verification_phone").intlTelInput("setNumber", $('#verification_phone').val());
+            $('#_verification_phone').blur(function() {
+                $('#verification_phone').val($('#_verification_phone').intlTelInput("getNumber"));
+            });
+        </script>
+
+    <!-- End of beautiful phone number fields -->
         
 {% endblock %}
