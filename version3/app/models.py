@@ -31,7 +31,16 @@ class Client(UserMixin, db.Model):
     student_about_me = db.Column(db.String(140))
     student_last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
-    comments = db.relationship('CommunityComment', backref='author', lazy='dynamic')
+    comments = db.relationship(
+                               'CommunityComment',
+                               backref='author',
+                               lazy='dynamic'
+                               )
+    chapter1_comments = db.relationship(
+                                        'Chapter1Comment',
+                                        backref='author',
+                                        lazy='dynamic'
+                                        )
 
     def __repr__(self):
         return f'Client: {self.parent_full_name} - {self.student_full_name}'
@@ -78,4 +87,15 @@ class CommunityComment(db.Model):
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
 
     def __repr__(self):
-        return f'Comment: {self.body}'
+        return f'Community Comment: {self.body}'
+
+
+class Chapter1Comment(db.Model):
+    __tablename__ = 'chapter1_comment'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+
+    def __repr__(self):
+        return f'Chapter 1 Comment: {self.body}'

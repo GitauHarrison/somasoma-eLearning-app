@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1> {{ title }} </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Overview</h2>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                when an unknown printer took a galley of type and scrambled it to make a 
+                type specimen book. It has survived not only five centuries, but also the 
+                leap into electronic typesetting, remaining essentially unchanged.             
+            </p>
+            <p>
+                It was popularised in the 1960s with the release of Letraset sheets containing 
+                Lorem Ipsum passages, and more recently with desktop publishing software like 
+                Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>What You Will Accomplish</h2>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s            
+            </p>
+            <div class="col-sm-12  embed-responsive embed-responsive-16by9">
+                <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/YwBxwB8u9uY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Getting Started</h2>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                when an unknown printer took a galley of type and scrambled it to make a 
+                type specimen book. It has survived not only five centuries, but also the 
+                leap into electronic typesetting, remaining essentially unchanged.             
+            </p>
+            <p>
+                It was popularised in the 1960s with the release of Letraset sheets containing 
+                Lorem Ipsum passages, and more recently with desktop publishing software like 
+                Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Creation</h2>
+            <p>
+                Contrary to popular belief, Lorem Ipsum is not simply random text. 
+                It has roots in a piece of classical Latin literature from 45 BC, making 
+                it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney 
+                College in Virginia, looked up one of the more obscure Latin words, consectetur, 
+                from a Lorem Ipsum passage, and going through the cites of the word in classical 
+                literature, discovered the undoubtable source.             
+            </p>
+            <p>
+                Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" 
+                (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise 
+                on the theory of ethics, very popular during the Renaissance.
+            </p>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                when an unknown printer took a galley of type and scrambled it to make a 
+                type specimen book. It has survived not only five centuries, but also the 
+                leap into electronic typesetting, remaining essentially unchanged.             
+            </p>
+            <p>
+                It was popularised in the 1960s with the release of Letraset sheets containing 
+                Lorem Ipsum passages, and more recently with desktop publishing software like 
+                Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Conclusion</h2>
+            <p>
+                Contrary to popular belief, Lorem Ipsum is not simply random text. 
+                It has roots in a piece of classical Latin literature from 45 BC, making 
+                it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney 
+                College in Virginia, looked up one of the more obscure Latin words, consectetur, 
+                from a Lorem Ipsum passage, and going through the cites of the word in classical 
+                literature, discovered the undoubtable source.             
+            </p>
+            <p>
+                Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" 
+                (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise 
+                on the theory of ethics, very popular during the Renaissance.
+            </p>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Achievement of Lesson Goals</h2>
+        </div>
+    </div>
+    <!-- Chapter navigation -->
+    <div class="row text-center">
+        <div class="col-sm-6">
+            <p>
+                <a href=" {{ url_for('web_development_overview') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Course Overview
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-6">
+            <p>
+                <a href=" {{ url_for('web_development_chapter_2') }} " class="btn btn-primary">
+                    Chapter 2
+                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+    <!-- End of chapter navigation -->
+    <hr>
+
+    <!-- COMMENTS SECTION-->
+    
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row" id="comments">
+        <div class="col-sm-6">
+            <h2>Comments</h2>
+        </div>
+        <div class="col-sm-6">
+            <h2 class="text-right">{{ all_comments }} Comments</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            {% for comment in comments %}
+                {% include '_comments_students.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> Newer posts
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            Older posts <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- End of pagination -->
+    <div class="row">
+        <div class="col-sm-12 my-form">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+    <!-- END OF COMMENTS SECTION-->
+{% endblock %}

@@ -200,3 +200,7 @@ class EditProfileForm(FlaskForm):
             student = Client.query.filter_by(student_email=self.email.data).first()
             if student is not None:
                 raise ValidationError('Please use a different email.')
+
+# ========================================
+# End of Profile Form
+# ========================================

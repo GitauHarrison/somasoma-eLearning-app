@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, flash, session,\
 from app.forms import LoginForm, ClientRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, CommentForm,\
     Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm
-from app.models import Client, CommunityComment
+from app.models import Chapter1Comment, Client, CommunityComment
 from app.twilio_verify_api import check_verification_token,\
     request_verification_token
 from flask_login import current_user, login_user, logout_user, login_required
@@ -285,4 +285,71 @@ def disable_2fa_student():
 
 # ========================================
 # END OF AUTHENTICATION ROUTES
+# ========================================
+
+# ========================================
+# WEB DEVELOPMENT COURSE ROUTES
+# ========================================
+
+
+@app.route('/student/web-development-overview')
+@login_required
+def web_development_overview():
+    return render_template('web-development-course/web_development_overview.html',
+                           title='Web Development'
+                           )
+
+
+@app.route('/student/web-development-chapter-1', methods=['GET', 'POST'])
+@login_required
+def web_development_chapter_1():
+    page = request.args.get('page', 1, type=int)
+    comments = Chapter1Comment.query.order_by(Chapter1Comment.timestamp.desc()).paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for(
+                       'web_development_chapter_1',
+                       _anchor="comments",
+                       page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for(
+                       'web_development_chapter_1',
+                       _anchor='comments',
+                       page=comments.prev_num) \
+        if comments.has_prev else None
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Chapter1Comment(
+            body=form.comment.data,
+            author=current_user
+        )
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been posted!', 'success')
+        return redirect(url_for(
+                                'web_development_chapter_1',
+                                _anchor='comments'
+                                )
+                        )
+    all_comments = len(Chapter1Comment.query.all())
+    return render_template('web-development-course/web_development_chapter_1.html',
+                           title='Chapter 1: Introduction to Web Development',
+                           form=form,
+                           comments=comments.items,
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           all_comments=all_comments
+                           )
+
+
+@app.route('/student/web-development-chapter-2', methods=['GET', 'POST'])
+@login_required
+def web_development_chapter_2():
+    form = CommentForm()
+    return render_template('web-development-course/web_development_chapter_2.html',
+                           title='Chapter 2: What is HTML?',
+                           form=form
+                           )
+
+# ========================================
+# END OF WEB DEVELOPMENT COURSE ROUTES
 # ========================================

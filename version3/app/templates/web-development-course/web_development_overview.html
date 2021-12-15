@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1> {{ title }} </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Overview</h2>
+            <p>
+                This course is designed to teach you the basics of web development.
+                It will cover HTML, CSS, JavaScript, and PHP. You will learn how to
+                create a web page, how to style it, and how to add content to it.
+                You will also learn how to create a database and how to add data to it.
+                You will also learn how to create a web server and how to run it.
+                You will also learn how to create a web application and how to run it.              
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Completed Project</h2>
+            <p>
+               At the end of this course, you will have a completed web application. 
+               Not only will you follow through in the creation of the project below,
+               but you will also be able to create your own version             
+            </p>
+            <div class="col-sm-12  embed-responsive embed-responsive-16by9">
+                <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/O3vIMVrRK4k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Course Chapters</h2>
+            <ul>
+                <li>
+                    <a href="{{ url_for('web_development_chapter_1') }}">
+                        Chapter 1: Introduction to Web Development
+                    </a>
+                </li>
+                <li>
+                    <a href=" {{ url_for('web_development_chapter_2') }} ">
+                        Chapter 2: What is HTML?
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        Chapter 3: What is CSS
+                    </a>
+                </li>
+            </ul>            
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-6">
+            <p>
+                <a href=" {{ url_for('dashboard_student') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back to Dashboard
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-6">
+            <p>
+                <a href=" {{ url_for('web_development_chapter_1') }} " class="btn btn-primary">
+                    Chapter 1
+                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
