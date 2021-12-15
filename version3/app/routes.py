@@ -1,6 +1,6 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash, session,\
-    request
+    request, abort
 from app.forms import LoginForm, ClientRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, CommentForm,\
     Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm,\
@@ -364,9 +364,10 @@ def web_development_chapter_1():
                            )
 
 
-@app.route('/student/web-development/chapter-1/objectives-status')
+@app.route('/student/<student_full_name>/web-development/chapter-1/objectives-status')
 @login_required
-def web_development_chapter_1_objectives_status():
+def web_development_chapter_1_objectives_status(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first()
     page = request.args.get('page', 1, type=int)
     objectives = WebDevChapter1Objectives.query.order_by(WebDevChapter1Objectives.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
@@ -380,13 +381,34 @@ def web_development_chapter_1_objectives_status():
                        _anchor='objectives',
                        page=objectives.prev_num) \
         if objectives.has_prev else None
+
+    # Calculate the number of objectives achieved
     all_objectives = WebDevChapter1Objectives.query.all()
+    objectives_list = []
+    num_of_false_status = 0
+    num_of_true_status = 0
+    for objective in all_objectives:
+        objectives_list.append(objective.objective_1)
+        objectives_list.append(objective.objective_2)
+        objectives_list.append(objective.objective_3)
+        objectives_list.append(objective.objective_4)
+        objectives_list.append(objective.objective_5)
+        objectives_list.append(objective.objective_6)
+        objectives_list.append(objective.objective_7)
+    num_of_true_status = objectives_list.count(True)
+    try:
+        percentage_achieved = round((num_of_true_status / len(objectives_list)) * 100, 2)
+        percentage_incomplete = 100 - percentage_achieved
+    except ZeroDivisionError:
+        abort(404)
     return render_template('web-development-course/chapter_1_objectives_status.html',
                            title='Chapter 1: Achievement Status',
                            objectives=objectives.items,
                            next_url=next_url,
                            prev_url=prev_url,
-                           all_objectives=all_objectives
+                           all_objectives=all_objectives,
+                           percentage_achieved=percentage_achieved,
+                           percentage_incomplete=percentage_incomplete,
                            )
 
 

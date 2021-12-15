@@ -113,12 +113,16 @@
             <!-- End of flash message -->
 
             <!-- Lesson objectives form -->
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h2>Achievement of Lesson Goals</h2>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-3">
                     <!-- Empty column -->
                 </div>
                 <div class="col-sm-6 my-form">
-                    <h2>Achievement of Lesson Goals</h2>
                     {{ wtf.quick_form(objectives_form) }}
                 </div>
                 <div class="col-sm-3">
@@ -140,7 +144,7 @@
                 </div>
                 <div class="col-sm-4">
                     <p>
-                        <a href=" {{ url_for('web_development_chapter_1_objectives_status') }} " target="_blank" class="btn btn-primary">
+                        <a href=" {{ url_for('web_development_chapter_1_objectives_status', student_full_name=current_user.student_full_name) }} " target="_blank" class="btn btn-primary">
                             See Student Achievements
                         </a>
                     </p>
