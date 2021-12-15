@@ -22,9 +22,9 @@ class Client(UserMixin, db.Model):
     parent_about_me = db.Column(db.String(140))
     parent_last_seen = db.Column(db.DateTime, default=datetime.utcnow)
 
-    student_full_name = db.Column(db.String(64), index=True)
-    student_email = db.Column(db.String(120), index=True)
-    student_phone = db.Column(db.String(120), index=True)
+    student_full_name = db.Column(db.String(64), index=True, unique=True)
+    student_email = db.Column(db.String(120), index=True, unique=True)
+    student_phone = db.Column(db.String(120), index=True, unique=True)
     student_school = db.Column(db.String(120), index=True)
     student_age = db.Column(db.Integer, index=True)
     student_password_hash = db.Column(db.String(128))
