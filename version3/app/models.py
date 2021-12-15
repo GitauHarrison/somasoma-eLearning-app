@@ -126,7 +126,7 @@ class WebDevChapter1Objectives(db.Model):
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
 
     def __repr__(self):
-        return f'Objectives: {self.objective_1}'
+        return f'Objectives: {self.objective_1} {self.objective_2} {self.objective_3} {self.objective_4} {self.objective_5} {self.objective_6} {self.objective_7}'
 
 # ============================================================
 # END OF WEB DEVELOPMENT

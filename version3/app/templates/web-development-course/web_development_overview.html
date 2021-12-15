@@ -20,22 +20,10 @@
             </p>
         </div>
     </div>
-    <div class="row">
+
+    <div class="row table-of-content">
         <div class="col-sm-12">
-            <h2>Completed Project</h2>
-            <p>
-               At the end of this course, you will have a completed web application. 
-               Not only will you follow through in the creation of the project below,
-               but you will also be able to create your own version             
-            </p>
-            <div class="col-sm-12  embed-responsive embed-responsive-16by9">
-                <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/O3vIMVrRK4k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <h2>Course Chapters</h2>
+            <h2>Table of Contents</h2>
             <ul>
                 <li>
                     <a href="{{ url_for('web_development_chapter_1') }}">
@@ -55,10 +43,23 @@
             </ul>            
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Completed Project</h2>
+            <p>
+               At the end of this course, you will have a completed web application. 
+               Not only will you follow through in the creation of the project below,
+               but you will also be able to create your own version             
+            </p>
+            <div class="col-sm-12  embed-responsive embed-responsive-16by9">
+                <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/O3vIMVrRK4k" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
     <div class="row text-center">
         <div class="col-sm-6">
             <p>
-                <a href=" {{ url_for('dashboard_student') }} " class="btn btn-primary">
+                <a href=" {{ url_for('dashboard_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                         Back to Dashboard
                 </a>

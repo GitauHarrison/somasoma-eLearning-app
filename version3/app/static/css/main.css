@@ -66,9 +66,33 @@ a:hover {
 .objective:hover {
   box-shadow: 5px 5px 10px 5px #c4c4c4;
 }
+
+/* Comments */
 .comment-body {
   margin-top: 5px;
 }
+
+/* Table of contents */
+.table-of-content {
+  background-color: #eeeeee;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+/* Analytics */
+.chapter-objectives {
+  background-color: #f3f3f3;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.chapter-objectives:hover {
+  box-shadow: 5px 5px 10px 5px #c4c4c4;
+}
+
+
 /* ------------------------------------------ */
 /* HOMEPAGE VERTICAL TABS */
 /* ------------------------------------------ */
