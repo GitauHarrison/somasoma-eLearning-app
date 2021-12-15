@@ -8,7 +8,7 @@ import phonenumbers
 
 
 # ========================================
-# Login form
+# AUTHENTICATION FORMS
 # ========================================
 
 
@@ -21,10 +21,6 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
-
-# ========================================
-# Client Registration Form
-# ========================================
 
 class ClientRegistrationForm(FlaskForm):
     parent_full_name = StringField('Parent Full Name',
@@ -101,14 +97,6 @@ class ClientRegistrationForm(FlaskForm):
         if student:
             raise ValidationError('Name already taken. Please choose a different one.')
 
-# ========================================
-# End of client registration form
-# ========================================
-
-# ========================================
-# Password reset form
-# ========================================
-
 
 class RequestPasswordResetForm(FlaskForm):
     email = StringField('Email',
@@ -129,28 +117,8 @@ class ResetPasswordForm(FlaskForm):
                                      )
     submit = SubmitField('Reset Password')
 
-# ========================================
-# End of password reset form
-# ========================================
 
-# ========================================
-# Comment Form
-# ========================================
-
-
-class CommentForm(FlaskForm):
-    comment = TextAreaField('Comment',
-                            validators=[DataRequired()]
-                            )
-    submit = SubmitField('Post')
-
-# ========================================
-# End of Comment Form
-# ========================================
-
-# ========================================
-# Two-factor Authentication Form
-# ========================================
+# Two-factor authentication
 
 
 class Enable2faForm(FlaskForm):
@@ -174,12 +142,29 @@ class Confirm2faForm(FlaskForm):
 class Disable2faForm(FlaskForm):
     submit = SubmitField('Disable 2fa')
 
+# End of two-factor authentication
+
 # ========================================
-# End of Two-factor Authentication Form
+# END OF AUTHENTICATION FORMS
 # ========================================
 
 # ========================================
-# Profile Form
+# COMMENT FORM
+# ========================================
+
+
+class CommentForm(FlaskForm):
+    comment = TextAreaField('Comment',
+                            validators=[DataRequired()]
+                            )
+    submit = SubmitField('Post')
+
+# ========================================
+# END OF COMMENT FORM
+# ========================================
+
+# ========================================
+# PROFILE FORM
 # ========================================
 
 
@@ -202,5 +187,26 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError('Please use a different email.')
 
 # ========================================
-# End of Profile Form
+# END OF PROFILE FORM
+# ========================================
+
+# ========================================
+# COURSES FORM
+# ========================================
+
+# Web Development
+
+
+class Chapter1WebDevelopmentForm(FlaskForm):
+    objective_1 = BooleanField('You can understand what HTML is used for in a web application')
+    objective_2 = BooleanField('You can create an empty HTML page')
+    objective_3 = BooleanField('You can add the general syntax of a HTML page')
+    objective_4 = BooleanField('You can add the head section of a HTML page')
+    objective_5 = BooleanField('You can add the body section of a HTML page')
+    objective_6 = BooleanField('You can understand the basic tags used in HTML')
+    objective_7 = BooleanField('You can add comments to a HTML page')
+    submit = SubmitField('Submit')
+
+# ========================================
+# COURSES FORM
 # ========================================

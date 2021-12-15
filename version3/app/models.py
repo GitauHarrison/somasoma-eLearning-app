@@ -36,8 +36,13 @@ class Client(UserMixin, db.Model):
                                backref='author',
                                lazy='dynamic'
                                )
-    chapter1_comments = db.relationship(
-                                        'Chapter1Comment',
+    webdev_chapter1_comments = db.relationship(
+                                        'WebDevChapter1Comment',
+                                        backref='author',
+                                        lazy='dynamic'
+                                        )
+    webdev_chapter1_objectives = db.relationship(
+                                        'WebDevChapter1Objectives',
                                         backref='author',
                                         lazy='dynamic'
                                         )
@@ -89,8 +94,12 @@ class CommunityComment(db.Model):
     def __repr__(self):
         return f'Community Comment: {self.body}'
 
+# ============================================================
+# WEB DEVELOPMENT
+# ============================================================
 
-class Chapter1Comment(db.Model):
+
+class WebDevChapter1Comment(db.Model):
     __tablename__ = 'chapter1_comment'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
@@ -99,3 +108,26 @@ class Chapter1Comment(db.Model):
 
     def __repr__(self):
         return f'Chapter 1 Comment: {self.body}'
+
+
+class WebDevChapter1Objectives(db.Model):
+    __tablename__ = 'web_dev_chapter1_objectives'
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Objectives
+    objective_1 = db.Column(db.Boolean, default=False)
+    objective_2 = db.Column(db.Boolean, default=False)
+    objective_3 = db.Column(db.Boolean, default=False)
+    objective_4 = db.Column(db.Boolean, default=False)
+    objective_5 = db.Column(db.Boolean, default=False)
+    objective_6 = db.Column(db.Boolean, default=False)
+    objective_7 = db.Column(db.Boolean, default=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+
+    def __repr__(self):
+        return f'Objectives: {self.objective_1}'
+
+# ============================================================
+# END OF WEB DEVELOPMENT
+# ============================================================

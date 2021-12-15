@@ -46,6 +46,12 @@ p, li, td, .btn, .btn-alt, .schedule-btn{
 a:hover {
   text-decoration: none;
 }
+.objective {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  box-shadow: 5px 5px 10px 5px #ebeae9;
+  margin: 20px;
+}
 
 /* ------------------------------------------ */
 /* HOMEPAGE VERTICAL TABS */

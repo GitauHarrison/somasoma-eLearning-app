@@ -3,8 +3,9 @@ from flask import render_template, redirect, url_for, flash, session,\
     request
 from app.forms import LoginForm, ClientRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, CommentForm,\
-    Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm
-from app.models import Chapter1Comment, Client, CommunityComment
+    Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm,\
+    Chapter1WebDevelopmentForm
+from app.models import WebDevChapter1Comment, Client, CommunityComment, WebDevChapter1Objectives
 from app.twilio_verify_api import check_verification_token,\
     request_verification_token
 from flask_login import current_user, login_user, logout_user, login_required
@@ -304,7 +305,7 @@ def web_development_overview():
 @login_required
 def web_development_chapter_1():
     page = request.args.get('page', 1, type=int)
-    comments = Chapter1Comment.query.order_by(Chapter1Comment.timestamp.desc()).paginate(
+    comments = WebDevChapter1Comment.query.order_by(WebDevChapter1Comment.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
                        'web_development_chapter_1',
@@ -318,7 +319,7 @@ def web_development_chapter_1():
         if comments.has_prev else None
     form = CommentForm()
     if form.validate_on_submit():
-        comment = Chapter1Comment(
+        comment = WebDevChapter1Comment(
             body=form.comment.data,
             author=current_user
         )
@@ -330,14 +331,62 @@ def web_development_chapter_1():
                                 _anchor='comments'
                                 )
                         )
-    all_comments = len(Chapter1Comment.query.all())
+    all_comments = len(WebDevChapter1Comment.query.all())
+
+    # Objectives form
+    objectives_form = Chapter1WebDevelopmentForm()
+    if objectives_form.validate_on_submit():
+        objectives = WebDevChapter1Objectives(
+            objective_1=objectives_form.objective_1.data,
+            objective_2=objectives_form.objective_2.data,
+            objective_3=objectives_form.objective_3.data,
+            objective_4=objectives_form.objective_4.data,
+            objective_5=objectives_form.objective_5.data,
+            objective_6=objectives_form.objective_6.data,
+            objective_7=objectives_form.objective_7.data,
+            author=current_user
+        )
+        db.session.add(objectives)
+        db.session.commit()
+        flash('Your response has been saved')
+        return redirect(url_for(
+            'web_development_chapter_1',
+            _anchor='objectives'
+        ))
     return render_template('web-development-course/web_development_chapter_1.html',
                            title='Chapter 1: Introduction to Web Development',
                            form=form,
+                           objectives_form=objectives_form,
                            comments=comments.items,
                            next_url=next_url,
                            prev_url=prev_url,
                            all_comments=all_comments
+                           )
+
+
+@app.route('/student/web-development/chapter-1/objectives-status')
+@login_required
+def web_development_chapter_1_objectives_status():
+    page = request.args.get('page', 1, type=int)
+    objectives = WebDevChapter1Objectives.query.order_by(WebDevChapter1Objectives.timestamp.desc()).paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for(
+                       'web_development_chapter_1_objectives_status',
+                       _anchor="objectives",
+                       page=objectives.next_num) \
+        if objectives.has_next else None
+    prev_url = url_for(
+                       'web_development_chapter_1_objectives_status',
+                       _anchor='objectives',
+                       page=objectives.prev_num) \
+        if objectives.has_prev else None
+    all_objectives = WebDevChapter1Objectives.query.all()
+    return render_template('web-development-course/chapter_1_objectives_status.html',
+                           title='Chapter 1: Achievement Status',
+                           objectives=objectives.items,
+                           next_url=next_url,
+                           prev_url=prev_url,
+                           all_objectives=all_objectives
                            )
 
 

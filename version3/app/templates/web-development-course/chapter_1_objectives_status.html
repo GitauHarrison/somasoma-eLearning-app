@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1> {{ title }} </h1>
+        </div>
+    </div>
+    {% for objective in objectives %}
+        <div class="row objective">
+            <div class="col-sm-4">
+                <p>
+                    <a href=" {{ url_for('profile_student', student_full_name=objective.author.student_full_name) }} ">
+                    <img src=" {{ objective.author.avatar_student(70) }}  ">
+                </a>
+                <span>
+                    <a href=" {{ url_for('profile_student', student_full_name=objective.author.student_full_name) }} ">
+                        {{ objective.author.student_full_name }}
+                    </a>
+                </span> status
+                {{ moment(objective.timestamp).fromNow() }}
+                </p>
+            </div>
+            <div class="col-sm-8">
+                <li>
+                    You can understand what HTML is used for in a web application: {{ objective.objective_1 }} 
+                </li>
+                <li>
+                    You can create an empty HTML page: {{ objective.objective_2 }}
+                </li>
+                <li>
+                    You can add the general syntax of a HTML page: {{ objective.objective_3 }}
+                </li>
+                <li>
+                    You can add the head section of a HTML page: {{ objective.objective_4 }}
+                </li>
+                <li>
+                    You can add the body section of a HTML page: {{ objective.objective_5 }}
+                </li>
+                <li>
+                    You can understand the basic tags used in HTML: {{ objective.objective_6 }}
+                </li>
+                <li>
+                    You can add comments to a HTML page: {{ objective.objective_7 }}
+                </li>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-sm-4">
+            <!-- Empty column -->
+        </div>
+        <div class="col-sm-4 text-center">
+            <p>
+                <a href=" {{ url_for('web_development_chapter_1', _anchor='objectives') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back to Chapter 1
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <!-- Empty column -->
+        </div>
+    </div>
+{% endblock %}
