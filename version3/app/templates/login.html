@@ -2,6 +2,13 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
+<!-- Flash message -->
+<div class="row">
+    <div class="col-sm-12">
+        {% include '_flash_message.html' %}
+    </div>
+</div>
+<!-- End of flash message -->
 <div class="row">
     <div class="col-sm-12 text-center">
         <h1>Login</h1>
