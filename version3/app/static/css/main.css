@@ -8,6 +8,13 @@
 }
 
 /* ------------------------------------------ */
+/* FORMS */
+/* ------------------------------------------ */
+.label {
+  margin: 3px;
+}
+
+/* ------------------------------------------ */
 /* CUSTOM STYLES */
 /* ------------------------------------------ */
 html, body {
@@ -33,6 +40,8 @@ p, li {
 p, li, td, .btn, .btn-alt, .schedule-btn{
   font-size: 20px;
 }
+
+/* Profile */
 .profile, .update-account, .two-factor-auth {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -46,13 +55,20 @@ p, li, td, .btn, .btn-alt, .schedule-btn{
 a:hover {
   text-decoration: none;
 }
+
+/* Lesson Objectives */
 .objective {
   padding-top: 15px;
   padding-bottom: 15px;
   box-shadow: 5px 5px 10px 5px #ebeae9;
   margin: 20px;
 }
-
+.objective:hover {
+  box-shadow: 5px 5px 10px 5px #c4c4c4;
+}
+.comment-body {
+  margin-top: 5px;
+}
 /* ------------------------------------------ */
 /* HOMEPAGE VERTICAL TABS */
 /* ------------------------------------------ */

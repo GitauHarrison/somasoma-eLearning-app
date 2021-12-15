@@ -22,27 +22,104 @@
                 </p>
             </div>
             <div class="col-sm-8">
-                <li>
-                    You can understand what HTML is used for in a web application: {{ objective.objective_1 }} 
-                </li>
-                <li>
-                    You can create an empty HTML page: {{ objective.objective_2 }}
-                </li>
-                <li>
-                    You can add the general syntax of a HTML page: {{ objective.objective_3 }}
-                </li>
-                <li>
-                    You can add the head section of a HTML page: {{ objective.objective_4 }}
-                </li>
-                <li>
-                    You can add the body section of a HTML page: {{ objective.objective_5 }}
-                </li>
-                <li>
-                    You can understand the basic tags used in HTML: {{ objective.objective_6 }}
-                </li>
-                <li>
-                    You can add comments to a HTML page: {{ objective.objective_7 }}
-                </li>
+                <!-- Achievement -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <li>
+                            You can understand what HTML is used for in a web application: 
+                            {% if objective.objective_1 == False %}
+                                <span class="label label-warning">
+                                    {{ objective.objective_1 }} 
+                                </span>
+                            {% elif objective.objective_1 == True %}
+                                <span class="label label-info">
+                                    {{ objective.objective_1 }} 
+                                </span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            You can create an empty HTML page: 
+                            {% if objective.objective_2 == False %}
+                                <span class="label label-warning">
+                                    {{ objective.objective_2 }}
+                                </span>
+                            {% elif objective.objective_2 == True %}
+                                <span class="label label-info">
+                                    {{ objective.objective_2 }}
+                                </span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            You can add the general syntax of a HTML page: 
+                            {% if objective.objective_3 == False %}
+                                <span class="label label-warning">
+                                    {{ objective.objective_3 }}
+                                </span>
+                            {% elif objective.objective_3 == True %}
+                                <span class="label label-info">
+                                    {{ objective.objective_3 }}
+                                </span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            You can add the head section of a HTML page: 
+                            {% if objective.objective_4 == False %}
+                                <span class="label label-warning">
+                                    {{ objective.objective_4 }}
+                                </span>
+                            {% elif objective.objective_4 == True %}
+                                <span class="label label-info">
+                                    {{ objective.objective_4 }}
+                                </span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            You can add the body section of a HTML page: 
+                            {% if objective.objective_5 == False %}
+                                <span class="label label-warning">
+                                    {{ objective.objective_5 }}
+                                </span>
+                            {% elif objective.objective_5 == True %}
+                                <span class="label label-info">
+                                    {{ objective.objective_5 }}
+                                </span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            You can understand the basic tags used in HTML: 
+                            {% if objective.objective_6 == False %}
+                                <span class="label label-warning">
+                                    {{ objective.objective_6 }}
+                                </span>
+                            {% elif objective.objective_6 == True %}
+                                <span class="label label-info">
+                                    {{ objective.objective_6 }}
+                                </span>
+                            {% endif %}
+                        </li>
+                        <li>
+                            You can add comments to a HTML page: 
+                            {% if objective.objective_7 == False %}
+                                <span class="label label-warning">
+                                    {{ objective.objective_7 }}
+                                </span>
+                            {% elif objective.objective_7 == True %}
+                                <span class="label label-info">
+                                    {{ objective.objective_7 }}
+                                </span>
+                            {% endif %}
+                        </li>
+                    </div>
+                </div>
+                <!-- End of achievement -->
+
+                <!-- Performance percentage -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        
+                    </div>
+                </div>
+                <!-- End of performance percentage -->
             </div>
         </div>
     {% endfor %}
