@@ -1,8 +1,15 @@
 from app import app
 from app import app, db
-from app.models import Client, CommunityComment
+from app.models import Client, CommunityComment, WebDevChapter1Comment,\
+    WebDevChapter1Objectives
 
 
 @app.shell_context_processor
 def make_shell_context():
-    return dict(db=db, Client=Client, CommunityComment=CommunityComment)
+    return dict(
+        db=db,
+        Client=Client,
+        CommunityComment=CommunityComment,
+        WebDevChapter1Comment=WebDevChapter1Comment,
+        WebDevChapter1Objectives=WebDevChapter1Objectives
+        )
