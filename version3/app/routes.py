@@ -300,7 +300,7 @@ def web_development_overview():
                            )
 
 
-@app.route('/student/web-development-chapter-1', methods=['GET', 'POST'])
+@app.route('/student/web-development/chapter-1', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_1():
     page = request.args.get('page', 1, type=int)
@@ -341,7 +341,7 @@ def web_development_chapter_1():
                            )
 
 
-@app.route('/student/web-development-chapter-2', methods=['GET', 'POST'])
+@app.route('/student/web-development/chapter-2', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_2():
     form = CommentForm()

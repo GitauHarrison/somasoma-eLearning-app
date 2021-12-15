@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1> {{ title }} </h1>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-3">
+           <!-- Empty column -->
+        </div>
+        <div class="col-sm-6">
+            <p>
+               There was an unexpected error. Sorry for the inconvenience.
+               The administrator has been notified.
+            </p>
+            <p>
+                <a href=" {{ url_for('dashboard_student') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back to Dashboard
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-3">
+            <!-- Empty column -->
+        </div>
+    </div>
+{% endblock %}
