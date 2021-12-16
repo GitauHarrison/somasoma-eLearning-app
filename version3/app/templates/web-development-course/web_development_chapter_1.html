@@ -136,7 +136,7 @@
             <div class="row text-center">
                 <div class="col-sm-4">
                     <p>
-                        <a href=" {{ url_for('web_development_overview') }} " class="btn btn-primary">
+                        <a href=" {{ url_for('web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                             <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                                 Course Overview
                         </a>
@@ -144,14 +144,14 @@
                 </div>
                 <div class="col-sm-4">
                     <p>
-                        <a href=" {{ url_for('web_development_chapter_1_objectives_status') }} " target="_blank" class="btn btn-primary">
+                        <a href=" {{ url_for('web_development_chapter_1_objectives_status', student_full_name=student.student_full_name) }} " target="_blank" class="btn btn-primary">
                             See Student Achievements
                         </a>
                     </p>
                 </div>
                 <div class="col-sm-4">
                     <p>
-                        <a href=" {{ url_for('web_development_chapter_2') }} " class="btn btn-primary">
+                        <a href=" {{ url_for('web_development_chapter_2', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                             Chapter 2
                             <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                         </a>

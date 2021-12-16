@@ -34,7 +34,7 @@ def before_request_parent():
 @app.route('/student/<student_full_name>/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_student(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first()
+    student = Client.query.filter_by(student_full_name=student_full_name).first_or_404()
     page = request.args.get('page', 1, type=int)
     comments = CommunityComment.query.order_by(CommunityComment.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
@@ -53,8 +53,8 @@ def dashboard_student(student_full_name):
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been posted!', 'success')
-        return redirect(url_for('dashboard_student'))
-    
+        return redirect(url_for('dashboard_student', student_full_name=student.student_full_name))
+
     # Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.order_by(
         WebDevChapter1Objectives.timestamp.desc()).all()
@@ -81,7 +81,8 @@ def dashboard_student(student_full_name):
                            next_url=next_url,
                            prev_url=prev_url,
                            all_objectives=all_objectives,
-                           percentage_achieved=percentage_achieved
+                           percentage_achieved=percentage_achieved,
+                           student=student
                            )
 
 
@@ -124,9 +125,10 @@ def profile_student(student_full_name):
                            )
 
 
-@app.route('/student/edit-profile', methods=['GET', 'POST'])
+@app.route('/student/<student_full_name>/edit-profile', methods=['GET', 'POST'])
 @login_required
-def edit_profile_student():
+def edit_profile_student(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first()
     form = EditProfileForm(current_user.student_email)
     if form.validate_on_submit():
         current_user.student_email = form.email.data
@@ -139,7 +141,8 @@ def edit_profile_student():
         form.about_me.data = current_user.student_about_me
     return render_template('edit_profile_student.html',
                            title='Edit Profile',
-                           form=form
+                           form=form,
+                           student=student
                            )
 
 # ========================================
@@ -234,12 +237,14 @@ def register_client():
                            )
 
 
-@app.route('/request-password-reset', methods=['GET', 'POST'])
-def request_password_reset():
+@app.route('/<student_full_name>/request-password-reset', methods=['GET', 'POST'])
+def request_password_reset(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first()
     form = RequestPasswordResetForm()
     return render_template('request_password_reset.html',
                            title='Request Password Reset',
-                           form=form
+                           form=form,
+                           student=student
                            )
 
 
@@ -254,9 +259,10 @@ def reset_password():
 # Two-factor authentication
 
 
-@app.route('/student//enable-2fa', methods=['GET', 'POST'])
+@app.route('/student/<student_full_name>/enable-2fa', methods=['GET', 'POST'])
 @login_required
-def enable_2fa_student():
+def enable_2fa_student(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first_or_404()
     form = Enable2faForm()
     if form.validate_on_submit():
         session['phone'] = form.verification_phone.data
@@ -264,7 +270,8 @@ def enable_2fa_student():
         return redirect(url_for('verify_2fa_student'))
     return render_template('enable_2fa.html',
                            form=form,
-                           title='Enable 2fa'
+                           title='Enable 2fa',
+                           student=student
                            )
 
 
@@ -295,9 +302,10 @@ def verify_2fa_student():
                            )
 
 
-@app.route('/student/disable-2fa', methods=['GET', 'POST'])
+@app.route('/student/<student_full_name>/disable-2fa', methods=['GET', 'POST'])
 @login_required
-def disable_2fa_student():
+def disable_2fa_student(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first_or_404()
     form = Disable2faForm()
     if form.validate_on_submit():
         current_user.student_phone = None
@@ -306,7 +314,8 @@ def disable_2fa_student():
         return redirect(url_for('dashboard_student', _anchor='account'))
     return render_template('disable_2fa.html',
                            form=form,
-                           title='Disable 2fa'
+                           title='Disable 2fa',
+                           student=student
                            )
 
 # ========================================
@@ -318,17 +327,20 @@ def disable_2fa_student():
 # ========================================
 
 
-@app.route('/student/web-development-overview')
+@app.route('/student/<student_full_name>/web-development-overview')
 @login_required
-def web_development_overview():
+def web_development_overview(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first()
     return render_template('web-development-course/web_development_overview.html',
-                           title='Web Development'
+                           title='Web Development',
+                           student=student
                            )
 
 
-@app.route('/student/web-development/chapter-1', methods=['GET', 'POST'])
+@app.route('/student/<student_full_name>/web-development/chapter-1', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_1():
+def web_development_chapter_1(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first()
     page = request.args.get('page', 1, type=int)
     comments = WebDevChapter1Comment.query.order_by(WebDevChapter1Comment.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
@@ -353,7 +365,8 @@ def web_development_chapter_1():
         flash('Your comment has been posted!', 'success')
         return redirect(url_for(
                                 'web_development_chapter_1',
-                                _anchor='comments'
+                                _anchor='comments',
+                                student=student
                                 )
                         )
     all_comments = len(WebDevChapter1Comment.query.all())
@@ -385,13 +398,15 @@ def web_development_chapter_1():
                            comments=comments.items,
                            next_url=next_url,
                            prev_url=prev_url,
-                           all_comments=all_comments
+                           all_comments=all_comments,
+                           student=student
                            )
 
 
-@app.route('/student/web-development/chapter-1/objectives-status')
+@app.route('/student/<student_full_name>/web-development/chapter-1/objectives-status')
 @login_required
-def web_development_chapter_1_objectives_status():
+def web_development_chapter_1_objectives_status(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first()
     page = request.args.get('page', 1, type=int)
     objectives = WebDevChapter1Objectives.query.order_by(WebDevChapter1Objectives.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
@@ -409,17 +424,20 @@ def web_development_chapter_1_objectives_status():
                            title='Chapter 1: Achievement Status',
                            objectives=objectives.items,
                            next_url=next_url,
-                           prev_url=prev_url
+                           prev_url=prev_url,
+                           student=student
                            )
 
 
-@app.route('/student/web-development/chapter-2', methods=['GET', 'POST'])
+@app.route('/student/<student_full_name>/web-development/chapter-2', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_2():
+def web_development_chapter_2(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first()
     form = CommentForm()
     return render_template('web-development-course/web_development_chapter_2.html',
                            title='Chapter 2: What is HTML?',
-                           form=form
+                           form=form,
+                           student=student
                            )
 
 # ========================================
