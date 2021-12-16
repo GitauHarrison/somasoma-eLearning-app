@@ -6,6 +6,12 @@
   border: 1px solid #ddd;
   margin: 15px;
 }
+.quiz-form {
+  box-shadow: 0px 0px 10px #ddd;
+}
+.quiz-form:hover {
+  box-shadow: 0px 0px 15px #bfbfbf;
+}
 
 /* ------------------------------------------ */
 /* FORMS */
