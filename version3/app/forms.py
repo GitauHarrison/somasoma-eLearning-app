@@ -1,7 +1,7 @@
 from app.models import Client
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField,\
-    TextAreaField
+    TextAreaField, RadioField
 from wtforms.validators import DataRequired, Length, Email, EqualTo,\
     ValidationError
 import phonenumbers
@@ -191,10 +191,10 @@ class EditProfileForm(FlaskForm):
 # ========================================
 
 # ========================================
-# COURSES FORM
+# OBJECTIVES FORM
 # ========================================
 
-# Web Development
+# Web Development Objectives
 
 
 class Chapter1WebDevelopmentForm(FlaskForm):
@@ -208,5 +208,27 @@ class Chapter1WebDevelopmentForm(FlaskForm):
     submit = SubmitField('Submit')
 
 # ========================================
-# COURSES FORM
+# END OF OBJECTIVES FORM
+# ========================================
+
+# ========================================
+# QUIZZES FORM
+# ========================================
+
+
+class QuizForm(FlaskForm):
+    title = StringField('Question', validators=[DataRequired()])
+    body = TextAreaField('Description', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+
+class Chapter1QuizOptionsForm(FlaskForm):
+    option_1 = BooleanField('Option 1')
+    option_2 = BooleanField('Option 2')
+    option_3 = BooleanField('Option 3')
+    option_4 = BooleanField('Option 4')
+    submit = SubmitField('Submit')
+
+# ========================================
+# END OF QUIZZES FORM
 # ========================================

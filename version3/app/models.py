@@ -46,6 +46,16 @@ class Client(UserMixin, db.Model):
                                         backref='author',
                                         lazy='dynamic'
                                         )
+    webdev_chapter1_quiz = db.relationship(
+                                        'WebDevChapter1Quiz',
+                                        backref='author',
+                                        lazy='dynamic'
+                                        )
+    webdev_chapter1_quiz_options = db.relationship(
+                                        'WebDevChapter1QuizOptions',
+                                        backref='author',
+                                        lazy='dynamic'
+                                        )
 
     def __repr__(self):
         return f'Client: {self.parent_full_name} - {self.student_full_name}'
@@ -127,6 +137,26 @@ class WebDevChapter1Objectives(db.Model):
 
     def __repr__(self):
         return f'Objectives: {self.objective_1} {self.objective_2} {self.objective_3} {self.objective_4} {self.objective_5} {self.objective_6} {self.objective_7}'
+
+
+class WebDevChapter1Quiz(db.Model):
+    __tablename__ = 'web_dev_chapter1_quiz'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64), index=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+
+
+class WebDevChapter1QuizOptions(db.Model):
+    __tablename__ = 'web_dev_chapter1_quiz_options'
+    id = db.Column(db.Integer, primary_key=True)
+    option_1 = db.Column(db.Boolean, default=False)
+    option_2 = db.Column(db.Boolean, default=False)
+    option_3 = db.Column(db.Boolean, default=False)
+    option_4 = db.Column(db.Boolean, default=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
 
 # ============================================================
 # END OF WEB DEVELOPMENT

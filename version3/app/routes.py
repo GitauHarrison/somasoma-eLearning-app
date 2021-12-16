@@ -4,8 +4,9 @@ from flask import render_template, redirect, url_for, flash, session,\
 from app.forms import LoginForm, ClientRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, CommentForm,\
     Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm,\
-    Chapter1WebDevelopmentForm
-from app.models import WebDevChapter1Comment, Client, CommunityComment, WebDevChapter1Objectives
+    Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm
+from app.models import WebDevChapter1Comment, Client, CommunityComment,\
+    WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions
 from app.twilio_verify_api import check_verification_token,\
     request_verification_token
 from flask_login import current_user, login_user, logout_user, login_required
@@ -326,6 +327,8 @@ def disable_2fa_student(student_full_name):
 # WEB DEVELOPMENT COURSE ROUTES
 # ========================================
 
+# Overview
+
 
 @app.route('/student/<student_full_name>/web-development-overview')
 @login_required
@@ -335,6 +338,8 @@ def web_development_overview(student_full_name):
                            title='Web Development',
                            student=student
                            )
+
+# Chapters
 
 
 @app.route('/student/<student_full_name>/web-development/chapter-1', methods=['GET', 'POST'])
@@ -403,6 +408,20 @@ def web_development_chapter_1(student_full_name):
                            )
 
 
+@app.route('/student/<student_full_name>/web-development/chapter-2', methods=['GET', 'POST'])
+@login_required
+def web_development_chapter_2(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first()
+    form = CommentForm()
+    return render_template('web-development-course/web_development_chapter_2.html',
+                           title='Chapter 2: What is HTML?',
+                           form=form,
+                           student=student
+                           )
+
+# Objectives
+
+
 @app.route('/student/<student_full_name>/web-development/chapter-1/objectives-status')
 @login_required
 def web_development_chapter_1_objectives_status(student_full_name):
@@ -429,17 +448,64 @@ def web_development_chapter_1_objectives_status(student_full_name):
                            )
 
 
-@app.route('/student/<student_full_name>/web-development/chapter-2', methods=['GET', 'POST'])
+# Quizzes
+
+
+@app.route('/student/<student_full_name>/web-development/chapter-1/quizzes/form', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_2(student_full_name):
+def web_development_chapter_1_quizzes_form(student_full_name):
     student = Client.query.filter_by(student_full_name=student_full_name).first()
-    form = CommentForm()
-    return render_template('web-development-course/web_development_chapter_2.html',
-                           title='Chapter 2: What is HTML?',
-                           form=form,
-                           student=student
+    form = QuizForm()
+    if form.validate_on_submit():
+        quiz = WebDevChapter1Quiz(
+            title=form.title.data,
+            body=form.body.data
+        )
+        db.session.add(quiz)
+        db.session.commit()
+        flash('Your quiz has been added!', 'success')
+        return redirect(url_for(
+            'web_development_chapter_1_quizzes_form',
+            student_full_name=student.student_full_name
+        ))
+    return render_template('quizzes-forms/quiz_type_1.html',
+                           title='Quiz Type 1',
+                           student=student,
+                           form=form
                            )
 
+
+@app.route('/student/<student_full_name>/web-development/chapter-1/quizzes', methods=['GET', 'POST'])
+@login_required
+def web_development_chapter_1_quiz(student_full_name):
+    student = Client.query.filter_by(student_full_name=student_full_name).first()
+    page = request.args.get('page', 1, type=int)
+    options = WebDevChapter1QuizOptions.query.order_by(WebDevChapter1QuizOptions.timestamp.asc()).paginate(
+        page, app.config['POSTS_PER_QUIZ_PAGE'], False)
+    quizzes = WebDevChapter1Quiz.query.order_by(WebDevChapter1Quiz.timestamp.asc()).paginate(
+        page, app.config['POSTS_PER_QUIZ_PAGE'], False)
+    next_url = url_for(
+                        'web_development_chapter_1_quiz',
+                        student_full_name=student.student_full_name,
+                        _anchor="quizzes",
+                        page=quizzes.next_num) \
+        if quizzes.has_next else None
+    prev_url = url_for(
+                        'web_development_chapter_1_quiz',
+                        student_full_name=student.student_full_name,
+                        _anchor='quizzes',
+                        page=quizzes.prev_num) \
+        if quizzes.has_prev else None
+    form = Chapter1QuizOptionsForm()
+    return render_template('web-development-course/chapter_1_quizzes.html',
+                           title='Chapter 1: Quizzes',
+                           student=student,
+                           quizzes=quizzes.items,
+                           options=options.items,
+                           form=form,
+                           next_url=next_url,
+                           prev_url=prev_url
+                           )
 # ========================================
 # END OF WEB DEVELOPMENT COURSE ROUTES
 # ========================================

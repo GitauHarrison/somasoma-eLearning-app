@@ -107,33 +107,41 @@
             <h2>Achievement of Lesson Goals</h2>
         </div>
     </div>
+    <!-- Chapter navigation -->
     <div class="row text-center">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <p>
-                <a href=" {{ url_for('web_development_chapter_1', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+                <a href=" {{ url_for('web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                    Chapter 1
+                        Course Overview
                 </a>
             </p>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
+            <p>
+                <a href="# " target="_blank" class="btn btn-primary">
+                    Assess Yourself
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-3">
             <p>
                 <a href=" {{ url_for('web_development_chapter_1_objectives_status', student_full_name=student.student_full_name) }} " target="_blank" class="btn btn-primary">
-                    See Student Achievements
+                    Student Achievements
                 </a>
             </p>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <p>
-                <a href=" # " class="btn btn-primary">
-                    Chapter 3
+                <a href=" {{ url_for('web_development_chapter_2', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+                    Chapter 2
                     <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                 </a>
             </p>
         </div>
     </div>
-    <hr>
     <!-- End of chapter navigation -->
+    <hr>
 
     <!-- COMMENTS SECTION-->
 

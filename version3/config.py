@@ -21,3 +21,4 @@ class Config(object):
 
     # Pagination
     POSTS_PER_PAGE = int(os.environ.get('POSTS_PER_PAGE')) or 10
+    POSTS_PER_QUIZ_PAGE = int(os.environ.get('POSTS_PER_QUIZ_PAGE')) or 1
