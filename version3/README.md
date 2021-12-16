@@ -2,6 +2,8 @@
 
 This is a sample eLearning application used to demonstrate how interactive virtual classes can take place. The people involved in this proeject will be a teacher, a student and a parent.
 
+![Student Dashboard](app/static/images/student_dashboard.png)
+
 The student will be able to create a virtual class and a teacher will join the student's class. A parent will have access to the student's progress. Lesson content are made available to students for their won perusal.
 
 Besides student-teacher interaction, there is also student-student interaction. This kind of interaction is referred to as _community_ in the application. Students can communicate with each other either about the lesson content (made available through a comments section in each lesson chapter) or in the _community center_ where discussions are open-ended and not limited to class-specific content.
