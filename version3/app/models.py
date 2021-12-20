@@ -94,6 +94,90 @@ class Client(UserMixin, db.Model):
             digest, size)
 
 
+class Student(UserMixin, db.Model):
+    __tablename__ = 'student'
+    id = db.Column(db.Integer, primary_key=True)
+    student_full_name = db.Column(db.String(64), index=True, unique=True)
+    student_email = db.Column(db.String(120), index=True, unique=True)
+    student_phone = db.Column(db.String(120), index=True, unique=True)
+    student_school = db.Column(db.String(120), index=True)
+    student_age = db.Column(db.Integer, index=True)
+    student_course = db.Column(db.String(120), index=True)
+    student_password_hash = db.Column(db.String(128))
+    student_about_me = db.Column(db.String(140))
+    student_last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+
+    comments = db.relationship(
+                               'CommunityComment',
+                               backref='author',
+                               lazy='dynamic'
+                               )
+    webdev_chapter1_comments = db.relationship(
+                                        'WebDevChapter1Comment',
+                                        backref='author',
+                                        lazy='dynamic'
+                                        )
+    webdev_chapter1_objectives = db.relationship(
+                                        'WebDevChapter1Objectives',
+                                        backref='author',
+                                        lazy='dynamic'
+                                        )
+    webdev_chapter1_quiz = db.relationship(
+                                        'WebDevChapter1Quiz',
+                                        backref='author',
+                                        lazy='dynamic'
+                                        )
+    webdev_chapter1_quiz_options = db.relationship(
+                                        'WebDevChapter1QuizOptions',
+                                        backref='author',
+                                        lazy='dynamic'
+                                        )
+
+    def set_password(self, student_password):
+        self.student_password_hash = generate_password_hash(student_password)
+
+    def check_password(self, student_password):
+        return check_password_hash(self.student_password_hash, student_password)
+
+    # Two-factor authentication
+    def two_factor_student_enabled(self):
+        return self.student_phone is not None
+
+    # Client avatar
+
+    def avatar_student(self, size):
+        digest = md5(self.student_email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+
+
+class Parent(UserMixin, db.Model):
+    __tablename__ = 'parent'
+    id = db.Column(db.Integer, primary_key=True)
+    parent_full_name = db.Column(db.String(64), index=True, unique=True)
+    parent_email = db.Column(db.String(120), index=True, unique=True)
+    parent_phone = db.Column(db.String(120), index=True, unique=True)
+    parent_occupation = db.Column(db.String(120), index=True)
+    parent_residence = db.Column(db.String(120), index=True)
+    parent_password_hash = db.Column(db.String(128))
+
+    def set_password(self, parent_password):
+        self.student_password_hash = generate_password_hash(parent_password)
+
+    def check_password(self, parent_password):
+        return check_password_hash(self.parent_password_hash, parent_password)
+
+    # Two-factor authentication
+    def two_factor_parent_enabled(self):
+        return self.parent_phone is not None
+
+    # Parent avatar
+    def avatar_parent(self, size):
+        digest = md5(self.parent_email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+
+
 class CommunityComment(db.Model):
     __tablename__ = 'community_comment'
     id = db.Column(db.Integer, primary_key=True)

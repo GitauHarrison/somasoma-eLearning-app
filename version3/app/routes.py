@@ -1,12 +1,14 @@
 from app import app, db
 from flask import render_template, redirect, url_for, flash, session,\
     request, abort
-from app.forms import LoginForm, ClientRegistrationForm,\
+from app.forms import LoginForm, StudentRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, CommentForm,\
     Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm,\
-    Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm
+    Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm,\
+    ParentRegistrationForm
 from app.models import WebDevChapter1Comment, Client, CommunityComment,\
-    WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions
+    WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
+    Parent, Student
 from app.twilio_verify_api import check_verification_token,\
     request_verification_token
 from flask_login import current_user, login_user, logout_user, login_required
@@ -15,17 +17,11 @@ from datetime import datetime
 
 
 @app.before_request
-def before_request_student():
+def before_request():
     if current_user.is_authenticated:
         current_user.student_last_seen = datetime.utcnow()
         db.session.commit()
 
-
-@app.before_request
-def before_request_parent():
-    if current_user.is_authenticated:
-        current_user.parent_last_seen = datetime.utcnow()
-        db.session.commit()
 
 # ========================================
 # MAIN ROUTES
@@ -161,13 +157,13 @@ def login_parent():
         return redirect(url_for('dashboard_parent'))
     form = LoginForm()
     if form.validate_on_submit():
-        parent = Client.query.filter_by(parent_email=form.email.data).first()
+        parent = Parent.query.filter_by(parent_email=form.email.data).first()
         if parent is None or not parent.check_parent_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login_parent'))
         login_user(parent, remember=form.remember_me.data)
         return redirect(url_for('dashboard_parent'))
-    return render_template('login.html',
+    return render_template('login_parent.html',
                            title='Parent Login',
                            form=form
                            )
@@ -179,7 +175,7 @@ def login_student():
         return redirect(url_for('dashboard_student', student_full_name=current_user.student_full_name))
     form = LoginForm()
     if form.validate_on_submit():
-        student = Client.query.filter_by(student_email=form.email.data).first()
+        student = Student.query.filter_by(student_email=form.email.data).first()
         if student is None or not student.check_student_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login_student'))
@@ -197,7 +193,7 @@ def login_student():
                             )
         login_user(student, remember=form.remember_me.data)
         return redirect(next_page)
-    return render_template('login.html',
+    return render_template('login_student.html',
                            title='Student Login',
                            form=form
                            )
@@ -209,31 +205,51 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/client/register', methods=['GET', 'POST'])
-def register_client():
+@app.route('/register/student', methods=['GET', 'POST'])
+def register_student():
     if current_user.is_authenticated:
         return redirect(url_for('login'))
-    form = ClientRegistrationForm()
+    form = StudentRegistrationForm()
     if form.validate_on_submit():
-        client = Client(parent_full_name=form.parent_full_name.data,
-                        parent_email=form.parent_email.data,
-                        parent_phone=form.parent_phone.data,
-                        parent_occupation=form.parent_occupation.data,
-                        parent_residence=form.parent_residence.data,
-                        student_full_name=form.student_full_name.data,
-                        student_email=form.student_email.data,
-                        student_phone=form.student_phone.data,
-                        student_school=form.student_school.data,
-                        student_age=form.student_age.data
-                        )
-        client.set_parent_password(form.parent_password.data)
-        client.set_student_password(form.student_password.data)
-        db.session.add(client)
+        student = Student(
+            student_full_name=form.student_full_name.data,
+            student_email=form.student_email.data,
+            student_phone=form.student_phone.data,
+            student_school=form.student_school.data,
+            student_age=form.student_age.data,
+            student_course=form.student_course.data
+        )
+        student.set_password(form.student_password.data)
+        db.session.add(student)
         db.session.commit()
-        flash('Parent and Student successfully registered. Login to continue!')
+        flash('Student successfully registered. Student can login to continue!')
+        return redirect(url_for('login_student'))
+    return render_template('register_student.html',
+                           title='Student Registration',
+                           form=form
+                           )
+
+
+@app.route('/register/parent', methods=['GET', 'POST'])
+def register_parent():
+    if current_user.is_authenticated:
         return redirect(url_for('login'))
-    return render_template('register_client.html',
-                           title='Client Registration',
+    form = ParentRegistrationForm()
+    if form.validate_on_submit():
+        parent = Parent(
+            parent_full_name=form.parent_full_name.data,
+            parent_email=form.parent_email.data,
+            parent_phone=form.parent_phone.data,
+            parent_occupation=form.parent_occupation.data,
+            parent_residence=form.parent_residence.data
+        )
+        parent.set_password(form.parent_password.data)
+        db.session.add(parent)
+        db.session.commit()
+        flash('Parent successfully registered. You can now register your child!')
+        return redirect(url_for('register_student'))
+    return render_template('register_parent.html',
+                           title='Parent Registration',
                            form=form
                            )
 

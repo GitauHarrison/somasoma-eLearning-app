@@ -23,7 +23,8 @@ bootstrap = Bootstrap(app)
 db = SQLAlchemy(app, metadata=metadata)
 migrate = Migrate(app, db, render_as_batch=True)
 login = LoginManager(app)
-login.login_view = 'login'
+login.login_view = 'login.student'
+login.login_view = 'login.parent'
 moment = Moment(app)
 
 from app import routes, models, errors, twilio_verify_api
