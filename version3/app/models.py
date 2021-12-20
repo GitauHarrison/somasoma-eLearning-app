@@ -79,9 +79,9 @@ class Student(UserMixin, db.Model):
 class Parent(UserMixin, db.Model):
     __tablename__ = 'parent'
     id = db.Column(db.Integer, primary_key=True)
-    parent_full_name = db.Column(db.String(64), index=True, unique=True)
-    parent_email = db.Column(db.String(120), index=True, unique=True)
-    parent_phone = db.Column(db.String(120), index=True, unique=True)
+    parent_full_name = db.Column(db.String(64), index=True)
+    parent_email = db.Column(db.String(120), index=True)
+    parent_phone = db.Column(db.String(120), index=True)
     parent_occupation = db.Column(db.String(120), index=True)
     parent_residence = db.Column(db.String(120), index=True)
     parent_password_hash = db.Column(db.String(128))
