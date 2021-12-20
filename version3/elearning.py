@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import Client, CommunityComment, WebDevChapter1Comment,\
+from app.models import CommunityComment, WebDevChapter1Comment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, Student, Parent
 
 
@@ -9,7 +9,6 @@ def make_shell_context():
         db=db,
         Student=Student,
         Parent=Parent,
-        Client=Client,
         CommunityComment=CommunityComment,
         WebDevChapter1Comment=WebDevChapter1Comment,
         WebDevChapter1Objectives=WebDevChapter1Objectives,
