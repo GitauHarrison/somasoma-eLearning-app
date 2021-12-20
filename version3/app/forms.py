@@ -46,10 +46,10 @@ class StudentRegistrationForm(FlaskForm):
     student_course = SelectField(
         'Student Course',
         choices=[
-            ('web', 'Flask'),
-            ('dsa', 'Python DSA'),
-            ('data', 'Data Science'),
-            ('ml', 'Machine Learning')
+            ('Flask Web Development', 'Flask Web Development'),
+            ('Python DSA', 'Python DSA'),
+            ('Data Science', 'Data Science'),
+            ('Machine Learning', 'Machine Learning')
             ],
         validators=[DataRequired()]
         )
