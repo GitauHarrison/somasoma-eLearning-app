@@ -27,6 +27,7 @@ class Student(UserMixin, db.Model):
     student_password_hash = db.Column(db.String(128))
     student_about_me = db.Column(db.String(140))
     student_last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    parent_id = db.Column(db.Integer, db.ForeignKey('parent.id'))
 
     comments = db.relationship(
                                'CommunityComment',
@@ -81,6 +82,7 @@ class Parent(UserMixin, db.Model):
     parent_occupation = db.Column(db.String(120), index=True)
     parent_residence = db.Column(db.String(120), index=True)
     parent_password_hash = db.Column(db.String(128))
+    child = db.relationship('Student', backref='parent', lazy='dynamic')
 
     def set_password(self, parent_password):
         self.parent_password_hash = generate_password_hash(parent_password)
