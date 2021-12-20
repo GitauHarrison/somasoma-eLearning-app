@@ -221,10 +221,19 @@
                                 Your Full Name: <span style="font-weight: 600;">{{ current_user.student_full_name }}</span> 
                             </p>
                             <p>
-                                Your Parent Full Name: <span style="font-weight: 600;">{{ current_user.parent_full_name }}</span> 
+                                Email: <span style="font-weight: 600;">{{ current_user.student_email }}</span> 
                             </p>
                             <p>
-                                Email: <span style="font-weight: 600;">{{ current_user.student_email }}</span> 
+                                Phone: <span style="font-weight: 600;">{{ current_user.student_phone }}</span> 
+                            </p>
+                            <p>
+                                Age: <span style="font-weight: 600;">{{ current_user.student_age }}</span> 
+                            </p>
+                            <p>
+                                School: <span style="font-weight: 600;">{{ current_user.student_school }}</span> 
+                            </p>
+                            <p>
+                                Course: <span style="font-weight: 600;">{{ current_user.student_course }}</span> 
                             </p>
                             {% if current_user.student_about_me %}
                                 <p>
