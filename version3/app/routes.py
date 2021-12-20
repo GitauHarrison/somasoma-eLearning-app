@@ -107,7 +107,13 @@ def dashboard_parent():
 @app.route('/teacher/dashboard')
 @login_required
 def dashboard_teacher():
-    return render_template('dashboard_teacher.html')
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    return render_template(
+        'dashboard_teacher.html',
+        teacher=teacher
+        )
 
 
 @app.route('/login')

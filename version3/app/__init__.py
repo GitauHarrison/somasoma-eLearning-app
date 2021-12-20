@@ -25,6 +25,7 @@ migrate = Migrate(app, db, render_as_batch=True)
 login = LoginManager(app)
 login.login_view = 'login_student'
 login.login_view = 'login_parent'
+login.login_view = 'login_teacher'
 moment = Moment(app)
 
 from app import routes, models, errors, twilio_verify_api
