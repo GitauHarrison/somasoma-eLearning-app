@@ -5,10 +5,10 @@ from app.forms import LoginForm, StudentRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, CommentForm,\
     Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm,\
     Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm,\
-    ParentRegistrationForm
+    ParentRegistrationForm, TeacherRegistrationForm
 from app.models import WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
-    Parent, Student
+    Parent, Student, Teacher
 from app.twilio_verify_api import check_verification_token,\
     request_verification_token
 from flask_login import current_user, login_user, logout_user, login_required
@@ -194,6 +194,24 @@ def login_parent():
                            )
 
 
+@app.route('/teacher/login', methods=['GET', 'POST'])
+def login_teacher():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard_teacher'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        teacher = Teacher.query.filter_by(teacher_email=form.email.data).first()
+        if teacher is None or not teacher.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login_teacher'))
+        login_user(teacher, remember=form.remember_me.data)
+        return redirect(url_for('dashboard_teacher'))
+    return render_template('login_teacher.html',
+                           title='Teacher Login',
+                           form=form
+                           )
+
+
 @app.route('/student/login', methods=['GET', 'POST'])
 def login_student():
     if current_user.is_authenticated:
@@ -239,10 +257,16 @@ def logout_parent():
     return redirect(url_for('login_parent'))
 
 
+@app.route('/teacher/logout')
+def logout_teacher():
+    logout_user()
+    return redirect(url_for('login_teacher'))
+
+
 @app.route('/register/student', methods=['GET', 'POST'])
 def register_student():
     if current_user.is_authenticated:
-        return redirect(url_for('login'))
+        return redirect(url_for('dashboard_student'))
     form = StudentRegistrationForm()
     if form.validate_on_submit():
         student = Student(
@@ -267,7 +291,7 @@ def register_student():
 @app.route('/register/parent', methods=['GET', 'POST'])
 def register_parent():
     if current_user.is_authenticated:
-        return redirect(url_for('login'))
+        return redirect(url_for('dashboard_parent'))
     form = ParentRegistrationForm()
     if form.validate_on_submit():
         parent = Parent(
@@ -284,6 +308,30 @@ def register_parent():
         return redirect(url_for('register_student'))
     return render_template('register_parent.html',
                            title='Parent Registration',
+                           form=form
+                           )
+
+
+@app.route('/register/teacher', methods=['GET', 'POST'])
+def register_teacher():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard_teacher'))
+    form = TeacherRegistrationForm()
+    if form.validate_on_submit():
+        teacher = Teacher(
+            teacher_full_name=form.teacher_full_name.data,
+            teacher_email=form.teacher_email.data,
+            teacher_phone=form.teacher_phone.data,
+            teacher_residence=form.teacher_residence.data,
+            teacher_course=form.teacher_course.data
+        )
+        teacher.set_password(form.teacher_password.data)
+        db.session.add(teacher)
+        db.session.commit()
+        flash('Teacher successfully registered. Login to continue!')
+        return redirect(url_for('login_teacher'))
+    return render_template('register_teacher.html',
+                           title='Teacher Registration',
                            form=form
                            )
 

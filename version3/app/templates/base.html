@@ -49,6 +49,11 @@
                         <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                         
                     </a>
+                {% elif teacher %}
+                    <a class="navbar-brand" href=" {{ url_for('dashboard_teacher') }} ">
+                        <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
+                        
+                    </a>
                 {% else %}
                     <a class="navbar-brand" href=" # ">
                         <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
@@ -68,18 +73,14 @@
                     {% if student %}
                         <li><a href=" {{ url_for('logout_student') }} ">Logout</a></li> 
                     {% elif parent %}
-                        <li><a href=" {{ url_for('logout_parent') }} ">Logout</a></li>                  
+                        <li><a href=" {{ url_for('logout_parent') }} ">Logout</a></li>
+                    {% elif teacher %}
+                        <li><a href=" {{ url_for('logout_teacher') }} ">Logout</a></li>                  
                     {% else %}
                         <li><a href=" # ">Logout</a></li> 
                     {% endif %}
                 {% else %}
-                    {% if student %}
-                        <li><a href=" {{ url_for('login_student') }} ">Login</a></li> 
-                    {% elif parent %}
-                        <li><a href=" {{ url_for('login_parent') }} ">Login</a></li>                  
-                    {% else %}
-                        <li><a href=" {{ url_for('login') }} ">Login</a></li> 
-                    {% endif %}
+                    <li><a href=" {{ url_for('login') }} ">Login</a></li>
                 {% endif %}
             </ul>                       
         </div>
@@ -182,6 +183,19 @@
             $("#_student_verification_phone").intlTelInput("setNumber", $('#student_phone').val());
             $('#_student_verification_phone').blur(function() {
                 $('#student_phone').val($('#_student_verification_phone').intlTelInput("getNumber"));
+            });
+        </script>
+        <!-- teacher phone number -->
+        <script>
+            $("#teacher_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
+            $("#teacher_phone").parent().append('<div><input type="tel" id="_teacher_verification_phone"></div>');
+            $("#_teacher_verification_phone").intlTelInput({
+                separateDialCode: true,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
+            });
+            $("#_teacher_verification_phone").intlTelInput("setNumber", $('#teacher_phone').val());
+            $('#_teacher_verification_phone').blur(function() {
+                $('#teacher_phone').val($('#_teacher_verification_phone').intlTelInput("getNumber"));
             });
         </script>
 

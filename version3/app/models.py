@@ -59,7 +59,10 @@ class Student(UserMixin, db.Model):
         self.student_password_hash = generate_password_hash(student_password)
 
     def check_password(self, student_password):
-        return check_password_hash(self.student_password_hash, student_password)
+        return check_password_hash(
+            self.student_password_hash,
+            student_password
+            )
 
     # Two-factor authentication
     def two_factor_student_enabled(self):
@@ -97,6 +100,36 @@ class Parent(UserMixin, db.Model):
     # Parent avatar
     def avatar_parent(self, size):
         digest = md5(self.parent_email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+
+
+class Teacher(UserMixin, db.Model):
+    __tablename__ = 'teacher'
+    id = db.Column(db.Integer, primary_key=True)
+    teacher_full_name = db.Column(db.String(64), index=True, unique=True)
+    teacher_email = db.Column(db.String(120), index=True, unique=True)
+    teacher_phone = db.Column(db.String(120), index=True, unique=True)
+    teacher_residence = db.Column(db.String(120), index=True)
+    teacher_course = db.Column(db.String(120), index=True)
+    teacher_password_hash = db.Column(db.String(128))
+
+    def set_password(self, teacher_password):
+        self.teacher_password_hash = generate_password_hash(teacher_password)
+
+    def check_password(self, teacher_password):
+        return check_password_hash(
+            self.teacher_password_hash,
+            teacher_password
+            )
+
+    # Two-factor authentication
+    def two_factor_teacher_enabled(self):
+        return self.teacher_phone is not None
+
+    # Parent avatar
+    def avatar_teacher(self, size):
+        digest = md5(self.teacher_email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
 

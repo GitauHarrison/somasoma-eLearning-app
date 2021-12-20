@@ -1,4 +1,4 @@
-from app.models import Parent, Student
+from app.models import Parent, Student, Teacher
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField,\
     TextAreaField, RadioField, SelectField
@@ -50,7 +50,8 @@ class StudentRegistrationForm(FlaskForm):
             ('dsa', 'Python DSA'),
             ('data', 'Data Science'),
             ('ml', 'Machine Learning')
-            ]
+            ],
+        validators=[DataRequired()]
         )
     student_password = PasswordField(
         'Student Password',
@@ -112,6 +113,54 @@ class ParentRegistrationForm(FlaskForm):
     def validate_parent_email(self, parent_email):
         parent = Parent.query.filter_by(parent_email=parent_email.data).first()
         if parent:
+            raise ValidationError('Name already taken. Please choose a different one.')
+
+
+class TeacherRegistrationForm(FlaskForm):
+    teacher_full_name = StringField(
+        'Teacher Full Name',
+        validators=[DataRequired(), Length(min=2, max=20)]
+        )
+    teacher_email = StringField(
+        'Teacher Email',
+        validators=[DataRequired(), Email()],
+        render_kw={"placeholder": "Valid Email Address"}
+        )
+    teacher_phone = StringField(
+        'Teacher Phone Number',
+        validators=[DataRequired()])
+    teacher_residence = StringField(
+        'Teacher Residence',
+        validators=[DataRequired()]
+        )
+    teacher_course = SelectField(
+        'Teaching Course',
+        choices=[
+            ('web', 'Flask'),
+            ('dsa', 'Python DSA'),
+            ('data', 'Data Science'),
+            ('ml', 'Machine Learning')
+            ],
+        validators=[DataRequired()]
+        )
+    teacher_password = PasswordField(
+        'Teacher Password',
+        validators=[DataRequired()]
+        )
+    teacher_confirm_password = PasswordField(
+        'Teacher Confirm Password',
+        validators=[DataRequired(), EqualTo('teacher_password')]
+        )
+    submit = SubmitField('Register')
+
+    def validate_teacher_full_name(self, teacher_full_name):
+        teacher = Parent.query.filter_by(teacher_full_name=teacher_full_name.data).first()
+        if teacher:
+            raise ValidationError('Name already taken. Please choose a different one.')
+
+    def validate_teacher_email(self, teacher_email):
+        teacher = Teacher.query.filter_by(teacher_email=teacher_email.data).first()
+        if teacher:
             raise ValidationError('Name already taken. Please choose a different one.')
 
 
