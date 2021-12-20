@@ -6,7 +6,7 @@ from app.forms import LoginForm, StudentRegistrationForm,\
     Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm,\
     Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm,\
     ParentRegistrationForm
-from app.models import WebDevChapter1Comment, Client, CommunityComment,\
+from app.models import WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
     Parent, Student
 from app.twilio_verify_api import check_verification_token,\
@@ -28,18 +28,24 @@ def before_request():
 # ========================================
 
 
-@app.route('/student/<student_full_name>/dashboard', methods=['GET', 'POST'])
+@app.route('/student/dashboard', methods=['GET', 'POST'])
 @login_required
-def dashboard_student(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first_or_404()
+def dashboard_student():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
     page = request.args.get('page', 1, type=int)
-    comments = CommunityComment.query.order_by(CommunityComment.timestamp.desc()).paginate(
+    comments = CommunityComment.query.order_by(
+        CommunityComment.timestamp.desc()
+        ).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-                    'dashboard_student', student_full_name=student_full_name,
+                    'dashboard_student',
                     page=comments.next_num) \
         if comments.has_next else None
-    prev_url = url_for('dashboard_student', page=comments.prev_num) \
+    prev_url = url_for(
+        'dashboard_student',
+        page=comments.prev_num) \
         if comments.has_prev else None
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
@@ -50,7 +56,7 @@ def dashboard_student(student_full_name):
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been posted!', 'success')
-        return redirect(url_for('dashboard_student', student_full_name=student.student_full_name))
+        return redirect(url_for('dashboard_student'))
 
     # Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.order_by(
@@ -67,7 +73,9 @@ def dashboard_student(student_full_name):
         objectives_list.append(objective.objective_7)
     num_of_true_status = objectives_list.count(True)
     try:
-        percentage_achieved = round((num_of_true_status / len(objectives_list)) * 100, 2)
+        percentage_achieved = round(
+            (num_of_true_status / len(objectives_list)) * 100, 2
+        )
     except ZeroDivisionError:
         abort(404)
     return render_template(
@@ -86,7 +94,14 @@ def dashboard_student(student_full_name):
 @app.route('/parent/dashboard')
 @login_required
 def dashboard_parent():
-    return render_template('dashboard_parent.html')
+    parent = Parent.query.filter_by(
+        parent_full_name=current_user.parent_full_name
+        ).first()
+    return render_template(
+        'dashboard_parent.html',
+        title='Parent Dashboard',
+        parent=parent
+        )
 
 
 @app.route('/teacher/dashboard')
@@ -97,7 +112,7 @@ def dashboard_teacher():
 
 @app.route('/login')
 def login():
-    return render_template('login_users.html',
+    return render_template('login.html',
                            title='Login'
                            )
 
@@ -105,13 +120,21 @@ def login():
 @app.route('/student/<student_full_name>/profile')
 @login_required
 def profile_student(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first_or_404()
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first_or_404()
     page = request.args.get('page', 1, type=int)
-    comments = student.comments.order_by(CommunityComment.timestamp.desc()).paginate(
+    comments = student.comments.order_by(
+        CommunityComment.timestamp.desc()
+        ).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('dashboard_student', page=comments.next_num) \
+    next_url = url_for(
+        'dashboard_student', student_full_name=student_full_name,
+        page=comments.next_num) \
         if comments.has_next else None
-    prev_url = url_for('dashboard_student', page=comments.prev_num) \
+    prev_url = url_for(
+        'dashboard_student', student_full_name=student_full_name,
+        page=comments.prev_num) \
         if comments.has_prev else None
     return render_template('profile_student.html',
                            title='Profile',
@@ -122,10 +145,12 @@ def profile_student(student_full_name):
                            )
 
 
-@app.route('/student/<student_full_name>/edit-profile', methods=['GET', 'POST'])
+@app.route('/student/edit-profile', methods=['GET', 'POST'])
 @login_required
-def edit_profile_student(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first()
+def edit_profile_student():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
     form = EditProfileForm(current_user.student_email)
     if form.validate_on_submit():
         current_user.student_email = form.email.data
@@ -158,7 +183,7 @@ def login_parent():
     form = LoginForm()
     if form.validate_on_submit():
         parent = Parent.query.filter_by(parent_email=form.email.data).first()
-        if parent is None or not parent.check_parent_password(form.password.data):
+        if parent is None or not parent.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login_parent'))
         login_user(parent, remember=form.remember_me.data)
@@ -172,11 +197,13 @@ def login_parent():
 @app.route('/student/login', methods=['GET', 'POST'])
 def login_student():
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard_student', student_full_name=current_user.student_full_name))
+        return redirect(url_for('dashboard_student'))
     form = LoginForm()
     if form.validate_on_submit():
-        student = Student.query.filter_by(student_email=form.email.data).first()
-        if student is None or not student.check_student_password(form.password.data):
+        student = Student.query.filter_by(
+            student_email=form.email.data
+            ).first()
+        if student is None or not student.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login_student'))
         next_page = request.args.get('next')
@@ -186,11 +213,12 @@ def login_student():
             request_verification_token(student.student_phone)
             session['student_email'] = student.student_email
             session['phone'] = student.student_phone
-            return redirect(url_for('verify_2fa_student', student_full_name=student.student_full_name,
-                                    next=next_page,
-                                    remember='1' if form.remember_me.data else '0'
-                                    )
-                            )
+            return redirect(url_for(
+                'verify_2fa_student',
+                next=next_page,
+                remember='1' if form.remember_me.data else '0'
+                )
+            )
         login_user(student, remember=form.remember_me.data)
         return redirect(next_page)
     return render_template('login_student.html',
@@ -199,10 +227,16 @@ def login_student():
                            )
 
 
-@app.route('/logout')
-def logout():
+@app.route('/student/logout')
+def logout_student():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('login_student'))
+
+
+@app.route('/parent/logout')
+def logout_parent():
+    logout_user()
+    return redirect(url_for('login_parent'))
 
 
 @app.route('/register/student', methods=['GET', 'POST'])
@@ -254,14 +288,12 @@ def register_parent():
                            )
 
 
-@app.route('/<student_full_name>/request-password-reset', methods=['GET', 'POST'])
-def request_password_reset(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first()
+@app.route('/request-password-reset', methods=['GET', 'POST'])
+def request_password_reset():
     form = RequestPasswordResetForm()
     return render_template('request_password_reset.html',
                            title='Request Password Reset',
-                           form=form,
-                           student=student
+                           form=form
                            )
 
 
@@ -276,10 +308,12 @@ def reset_password():
 # Two-factor authentication
 
 
-@app.route('/student/<student_full_name>/enable-2fa', methods=['GET', 'POST'])
+@app.route('/student/enable-2fa', methods=['GET', 'POST'])
 @login_required
-def enable_2fa_student(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first_or_404()
+def enable_2fa_student():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first_or_404()
     form = Enable2faForm()
     if form.validate_on_submit():
         session['phone'] = form.verification_phone.data
@@ -292,7 +326,7 @@ def enable_2fa_student(student_full_name):
                            )
 
 
-@app.route('/student//verify-2fa', methods=['GET', 'POST'])
+@app.route('/student/verify-2fa', methods=['GET', 'POST'])
 def verify_2fa_student():
     form = Confirm2faForm()
     if form.validate_on_submit():
@@ -303,11 +337,16 @@ def verify_2fa_student():
                 current_user.student_phone = phone
                 db.session.commit()
                 flash('You have enabled two-factor authentication')
-                return redirect(url_for('dashboard_student', _anchor='account'))
+                return redirect(url_for(
+                    'dashboard_student',
+                    _anchor='account')
+                    )
             else:
                 student_email = session['student_email']
                 del session['student_email']
-                student = Client.query.filter_by(student_email=student_email).first()
+                student = Student.query.filter_by(
+                    student_email=student_email
+                    ).first()
                 next_page = request.args.get('next')
                 remember = request.args.get('remember', '0') == '1'
                 login_user(student, remember=remember)
@@ -319,21 +358,24 @@ def verify_2fa_student():
                            )
 
 
-@app.route('/student/<student_full_name>/disable-2fa', methods=['GET', 'POST'])
+@app.route('/student/disable-2fa', methods=['GET', 'POST'])
 @login_required
-def disable_2fa_student(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first_or_404()
+def disable_2fa_student():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first_or_404()
     form = Disable2faForm()
     if form.validate_on_submit():
         current_user.student_phone = None
         db.session.commit()
         flash('You have disabled two-factor authentication')
         return redirect(url_for('dashboard_student', _anchor='account'))
-    return render_template('disable_2fa.html',
-                           form=form,
-                           title='Disable 2fa',
-                           student=student
-                           )
+    return render_template(
+        'disable_2fa.html',
+        form=form,
+        title='Disable 2fa',
+        student=student
+        )
 
 # ========================================
 # END OF AUTHENTICATION ROUTES
@@ -346,24 +388,31 @@ def disable_2fa_student(student_full_name):
 # Overview
 
 
-@app.route('/student/<student_full_name>/web-development-overview')
+@app.route('/student/web-development-overview')
 @login_required
-def web_development_overview(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first()
-    return render_template('web-development-course/web_development_overview.html',
-                           title='Web Development',
-                           student=student
-                           )
+def web_development_overview():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
+    return render_template(
+        'web-development-course/web_development_overview.html',
+        title='Web Development',
+        student=student
+        )
 
 # Chapters
 
 
-@app.route('/student/<student_full_name>/web-development/chapter-1', methods=['GET', 'POST'])
+@app.route('/student/web-development/chapter-1', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_1(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first()
+def web_development_chapter_1():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
     page = request.args.get('page', 1, type=int)
-    comments = WebDevChapter1Comment.query.order_by(WebDevChapter1Comment.timestamp.desc()).paginate(
+    comments = WebDevChapter1Comment.query.order_by(
+        WebDevChapter1Comment.timestamp.desc()
+        ).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
                        'web_development_chapter_1',
@@ -412,38 +461,46 @@ def web_development_chapter_1(student_full_name):
             'web_development_chapter_1',
             _anchor='objectives'
         ))
-    return render_template('web-development-course/web_development_chapter_1.html',
-                           title='Chapter 1: Introduction to Web Development',
-                           form=form,
-                           objectives_form=objectives_form,
-                           comments=comments.items,
-                           next_url=next_url,
-                           prev_url=prev_url,
-                           all_comments=all_comments,
-                           student=student
-                           )
+    return render_template(
+        'web-development-course/web_development_chapter_1.html',
+        title='Chapter 1: Introduction to Web Development',
+        form=form,
+        objectives_form=objectives_form,
+        comments=comments.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        all_comments=all_comments,
+        student=student
+        )
 
 
-@app.route('/student/<student_full_name>/web-development/chapter-2', methods=['GET', 'POST'])
+@app.route('/student/web-development/chapter-2', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_2(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first()
+def web_development_chapter_2():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
     form = CommentForm()
-    return render_template('web-development-course/web_development_chapter_2.html',
-                           title='Chapter 2: What is HTML?',
-                           form=form,
-                           student=student
-                           )
+    return render_template(
+        'web-development-course/web_development_chapter_2.html',
+        title='Chapter 2: What is HTML?',
+        form=form,
+        student=student
+        )
 
 # Objectives
 
 
-@app.route('/student/<student_full_name>/web-development/chapter-1/objectives-status')
+@app.route('/student/web-development/chapter-1/objectives-status')
 @login_required
-def web_development_chapter_1_objectives_status(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first()
+def web_development_chapter_1_objectives_status():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
     page = request.args.get('page', 1, type=int)
-    objectives = WebDevChapter1Objectives.query.order_by(WebDevChapter1Objectives.timestamp.desc()).paginate(
+    objectives = WebDevChapter1Objectives.query.order_by(
+        WebDevChapter1Objectives.timestamp.desc()
+        ).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
                        'web_development_chapter_1_objectives_status',
@@ -455,22 +512,25 @@ def web_development_chapter_1_objectives_status(student_full_name):
                        _anchor='objectives',
                        page=objectives.prev_num) \
         if objectives.has_prev else None
-    return render_template('web-development-course/chapter_1_objectives_status.html',
-                           title='Chapter 1: Achievement Status',
-                           objectives=objectives.items,
-                           next_url=next_url,
-                           prev_url=prev_url,
-                           student=student
-                           )
+    return render_template(
+        'web-development-course/chapter_1_objectives_status.html',
+        title='Chapter 1: Achievement Status',
+        objectives=objectives.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        student=student
+        )
 
 
 # Quizzes
 
 
-@app.route('/student/<student_full_name>/web-development/chapter-1/quizzes/form', methods=['GET', 'POST'])
+@app.route('/student/web-development/chapter-1/quizzes/form', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_1_quizzes_form(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first()
+def web_development_chapter_1_quizzes_form():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
     form = QuizForm()
     if form.validate_on_submit():
         quiz = WebDevChapter1Quiz(
@@ -484,21 +544,28 @@ def web_development_chapter_1_quizzes_form(student_full_name):
             'web_development_chapter_1_quizzes_form',
             student_full_name=student.student_full_name
         ))
-    return render_template('quizzes-forms/quiz_type_1.html',
-                           title='Quiz Type 1',
-                           student=student,
-                           form=form
-                           )
+    return render_template(
+        'quizzes-forms/quiz_type_1.html',
+        title='Quiz Type 1',
+        student=student,
+        form=form
+        )
 
 
 @app.route('/student/<student_full_name>/web-development/chapter-1/quizzes', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_1_quiz(student_full_name):
-    student = Client.query.filter_by(student_full_name=student_full_name).first()
+def web_development_chapter_1_quiz():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
     page = request.args.get('page', 1, type=int)
-    options = WebDevChapter1QuizOptions.query.order_by(WebDevChapter1QuizOptions.timestamp.asc()).paginate(
+    options = WebDevChapter1QuizOptions.query.order_by(
+        WebDevChapter1QuizOptions.timestamp.asc()
+        ).paginate(
         page, app.config['POSTS_PER_QUIZ_PAGE'], False)
-    quizzes = WebDevChapter1Quiz.query.order_by(WebDevChapter1Quiz.timestamp.asc()).paginate(
+    quizzes = WebDevChapter1Quiz.query.order_by(
+        WebDevChapter1Quiz.timestamp.asc()
+        ).paginate(
         page, app.config['POSTS_PER_QUIZ_PAGE'], False)
     next_url = url_for(
                         'web_development_chapter_1_quiz',
@@ -513,15 +580,17 @@ def web_development_chapter_1_quiz(student_full_name):
                         page=quizzes.prev_num) \
         if quizzes.has_prev else None
     form = Chapter1QuizOptionsForm()
-    return render_template('web-development-course/chapter_1_quizzes.html',
-                           title='Chapter 1: Quizzes',
-                           student=student,
-                           quizzes=quizzes.items,
-                           options=options.items,
-                           form=form,
-                           next_url=next_url,
-                           prev_url=prev_url
-                           )
+    return render_template(
+        'web-development-course/chapter_1_quizzes.html',
+        title='Chapter 1: Quizzes',
+        student=student,
+        quizzes=quizzes.items,
+        options=options.items,
+        form=form,
+        next_url=next_url,
+        prev_url=prev_url
+        )
+
 # ========================================
 # END OF WEB DEVELOPMENT COURSE ROUTES
 # ========================================

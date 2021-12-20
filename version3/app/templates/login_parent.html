@@ -21,10 +21,7 @@
     <div class="col-sm-4 my-form">
         {{ wtf.quick_form(form) }}
         <p>
-            Forgot password? <a href=" # ">Reset it here</a>!
-        </p>
-        <p>
-            Don't have an account? <a href=" # ">Sign up here</a>!
+            Forgot password? <a href=" {{ url_for('request_password_reset') }} ">Reset it here</a>!
         </p>
     </div>
     <div class="col-sm-4">
