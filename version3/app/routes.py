@@ -77,7 +77,7 @@ def dashboard_student():
             (num_of_true_status / len(objectives_list)) * 100, 2
         )
     except ZeroDivisionError:
-        abort(404)
+        percentage_achieved = 0
     return render_template(
                            'dashboard_student.html',
                            title='Student Dashboard',
@@ -606,7 +606,7 @@ def web_development_chapter_1_quizzes_form():
         )
 
 
-@app.route('/student/<student_full_name>/web-development/chapter-1/quizzes', methods=['GET', 'POST'])
+@app.route('/student/web-development/chapter-1/quizzes', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_1_quiz():
     student = Student.query.filter_by(
