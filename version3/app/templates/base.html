@@ -40,17 +40,17 @@
             </button>
             {% if current_user.is_authenticated %}
                 {% if student %}
-                    <a class="navbar-brand" href=" {{ url_for('dashboard_student') }} ">
+                    <a class="navbar-brand" href=" {{ url_for('main.dashboard_student') }} ">
                         <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                         
                     </a>
                 {% elif parent %}
-                    <a class="navbar-brand" href=" {{ url_for('dashboard_parent') }} ">
+                    <a class="navbar-brand" href=" {{ url_for('main.dashboard_parent') }} ">
                         <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                         
                     </a>
                 {% elif teacher %}
-                    <a class="navbar-brand" href=" {{ url_for('dashboard_teacher') }} ">
+                    <a class="navbar-brand" href=" {{ url_for('main.dashboard_teacher') }} ">
                         <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                         
                     </a>
@@ -61,7 +61,7 @@
                     </a>
                 {% endif %}
             {% else %}
-                <a class="navbar-brand" href=" {{ url_for('login') }} ">
+                <a class="navbar-brand" href=" {{ url_for('auth.login') }} ">
                     <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                     
                 </a>
@@ -71,16 +71,16 @@
             <ul class="nav navbar-nav navbar-right">  
                 {% if current_user.is_authenticated %} 
                     {% if student %}
-                        <li><a href=" {{ url_for('logout_student') }} ">Logout</a></li> 
+                        <li><a href=" {{ url_for('auth.logout_student') }} ">Logout</a></li> 
                     {% elif parent %}
-                        <li><a href=" {{ url_for('logout_parent') }} ">Logout</a></li>
+                        <li><a href=" {{ url_for('auth.logout_parent') }} ">Logout</a></li>
                     {% elif teacher %}
-                        <li><a href=" {{ url_for('logout_teacher') }} ">Logout</a></li>                  
+                        <li><a href=" {{ url_for('auth.logout_teacher') }} ">Logout</a></li>                  
                     {% else %}
                         <li><a href=" # ">Logout</a></li> 
                     {% endif %}
                 {% else %}
-                    <li><a href=" {{ url_for('login') }} ">Login</a></li>
+                    <li><a href=" {{ url_for('auth.login') }} ">Login</a></li>
                 {% endif %}
             </ul>                       
         </div>

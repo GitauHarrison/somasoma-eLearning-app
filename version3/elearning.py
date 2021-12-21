@@ -1,7 +1,9 @@
-from app import app, db
+from app import create_app, db
 from app.models import CommunityComment, WebDevChapter1Comment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, Student, Parent,\
     Teacher
+
+app = create_app()
 
 
 @app.shell_context_processor

@@ -59,7 +59,7 @@
                                     You will learn how to build a website using HTML, CSS, and JavaScript.
                                     Learn best practices for building responsive websites.
                                 </p>
-                                <a href=" {{ url_for('web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">Start Lesson</a>
+                                <a href=" {{ url_for('main.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">Start Lesson</a>
                                 <a href=" # " class="btn btn-primary">Quizzes</a>
                             </div>            
                         </div>
@@ -307,7 +307,7 @@
                             Change your student account password <br>
                         </p>
                         <p>
-                            <a href="{{ url_for('request_password_reset', student_full_name=student.student_full_name) }}" class="btn btn-primary">Reset Password</a>
+                            <a href="{{ url_for('auth.request_password_reset', student_full_name=student.student_full_name) }}" class="btn btn-primary">Reset Password</a>
                         </p>
                     </div>
                     <div class="col-sm-6">
@@ -315,7 +315,7 @@
                             Update your student bio information <br>                            
                         </p>
                         <p>
-                            <a href=" {{ url_for('edit_profile_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">Update Bio</a>
+                            <a href=" {{ url_for('main.edit_profile_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">Update Bio</a>
                         </p>
                     </div>
                 </div>
@@ -328,11 +328,11 @@
                     </p>
                     {% if not current_user.two_factor_student_enabled() %}
                         <p>
-                            <a href=" {{ url_for('enable_2fa_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">Enable Two-Factor Authentication</a>
+                            <a href=" {{ url_for('auth.enable_2fa_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">Enable Two-Factor Authentication</a>
                         </p>
                     {% else %}
                         <p>
-                            <a href=" {{ url_for('disable_2fa_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">Disable Two-Factor Authentication</a>
+                            <a href=" {{ url_for('auth.disable_2fa_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">Disable Two-Factor Authentication</a>
                         </p>
                     {% endif %}
                 </div>
@@ -348,7 +348,7 @@
                     <h2>Achievement of Lesson Objectives</h2>
                     <ul>
                         <li>
-                            <a href=" {{ url_for('web_development_chapter_1_objectives_status', student_full_name=student.student_full_name) }} ">Chapter 1: </a>{{ percentage_achieved }}%
+                            <a href=" {{ url_for('main.web_development_chapter_1_objectives_status', student_full_name=student.student_full_name) }} ">Chapter 1: </a>{{ percentage_achieved }}%
                         </li>
                     </ul>
                     <ul>

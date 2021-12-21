@@ -21,7 +21,7 @@
     <div class="col-sm-4 my-form">
         {{ wtf.quick_form(form) }}
         <p>
-            Forgot password? <a href=" {{ url_for('request_password_reset') }} ">Reset it here</a>!
+            Forgot password? <a href=" {{ url_for('auth.request_password_reset') }} ">Reset it here</a>!
         </p>
     </div>
     <div class="col-sm-4">
@@ -34,7 +34,7 @@
     </div>
     <div class="col-sm-4">
         <p>
-            <a href=" {{ url_for('login') }} " class="btn btn-primary">
+            <a href=" {{ url_for('auth.login') }} " class="btn btn-primary">
                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                     Login as Another User
             </a>

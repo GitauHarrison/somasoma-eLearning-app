@@ -1,16 +1,13 @@
 from app.models import Parent, Student, Teacher
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField,\
-    TextAreaField, RadioField, SelectField
+    SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo,\
     ValidationError
 import phonenumbers
 
 
-# ========================================
-# AUTHENTICATION FORMS
-# ========================================
-
+# Login form
 
 class LoginForm(FlaskForm):
     email = StringField('Email',
@@ -20,6 +17,10 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
+
+# End of Login form
+
+# Registration form
 
 
 class StudentRegistrationForm(FlaskForm):
@@ -64,14 +65,22 @@ class StudentRegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_student_full_name(self, student_full_name):
-        student = Student.query.filter_by(student_full_name=student_full_name.data).first()
+        student = Student.query.filter_by(
+            student_full_name=student_full_name.data
+            ).first()
         if student:
-            raise ValidationError('Name already taken. Please choose a different one.')
+            raise ValidationError(
+                'Name already taken. Please choose a different one.'
+                )
 
     def validate_student_email(self, student_email):
-        student = Student.query.filter_by(student_email=student_email.data).first()
+        student = Student.query.filter_by(
+            student_email=student_email.data
+            ).first()
         if student:
-            raise ValidationError('Name already taken. Please choose a different one.')
+            raise ValidationError(
+                'Name already taken. Please choose a different one.'
+                )
 
 
 class ParentRegistrationForm(FlaskForm):
@@ -106,14 +115,22 @@ class ParentRegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_parent_full_name(self, parent_full_name):
-        parent = Parent.query.filter_by(parent_full_name=parent_full_name.data).first()
+        parent = Parent.query.filter_by(
+            parent_full_name=parent_full_name.data
+            ).first()
         if parent:
-            raise ValidationError('Name already taken. Please choose a different one.')
+            raise ValidationError(
+                'Name already taken. Please choose a different one.'
+                )
 
     def validate_parent_email(self, parent_email):
-        parent = Parent.query.filter_by(parent_email=parent_email.data).first()
+        parent = Parent.query.filter_by(
+            parent_email=parent_email.data
+            ).first()
         if parent:
-            raise ValidationError('Name already taken. Please choose a different one.')
+            raise ValidationError(
+                'Name already taken. Please choose a different one.'
+                )
 
 
 class TeacherRegistrationForm(FlaskForm):
@@ -154,20 +171,35 @@ class TeacherRegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_teacher_full_name(self, teacher_full_name):
-        teacher = Parent.query.filter_by(teacher_full_name=teacher_full_name.data).first()
+        teacher = Teacher.query.filter_by(
+            teacher_full_name=teacher_full_name.data
+            ).first()
         if teacher:
-            raise ValidationError('Name already taken. Please choose a different one.')
+            raise ValidationError(
+                'Name already taken. Please choose a different one.'
+                )
 
     def validate_teacher_email(self, teacher_email):
-        teacher = Teacher.query.filter_by(teacher_email=teacher_email.data).first()
+        teacher = Teacher.query.filter_by(
+            teacher_email=teacher_email.data
+            ).first()
         if teacher:
-            raise ValidationError('Name already taken. Please choose a different one.')
+            raise ValidationError(
+                'Name already taken. Please choose a different one.'
+                )
+
+# End of registration form
+
+# Password reset form
 
 
 class RequestPasswordResetForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()],
-                        render_kw={"placeholder": "Valid Email Address Used During Registration"}
+                        render_kw={
+                            "placeholder":
+                            "Valid Email Address Used During Registration"
+                            }
                         )
     submit = SubmitField('Request Password Reset')
 
@@ -182,6 +214,8 @@ class ResetPasswordForm(FlaskForm):
                                                  ]
                                      )
     submit = SubmitField('Reset Password')
+
+# End of password reset form
 
 
 # Two-factor authentication
@@ -209,96 +243,3 @@ class Disable2faForm(FlaskForm):
     submit = SubmitField('Disable 2fa')
 
 # End of two-factor authentication
-
-# ========================================
-# END OF AUTHENTICATION FORMS
-# ========================================
-
-# ========================================
-# MAIN FORM
-# ========================================
-
-# Comment form
-
-
-class CommentForm(FlaskForm):
-    comment = TextAreaField('Comment',
-                            validators=[DataRequired()]
-                            )
-    submit = SubmitField('Post')
-
-
-# Follow form
-
-
-class EmptyForm(FlaskForm):
-    submit = SubmitField('Post')
-
-
-# Profile form
-
-
-class EditProfileForm(FlaskForm):
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()],
-                        render_kw={"placeholder": "Valid Email Address"}
-                        )
-    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
-    submit = SubmitField('Submit')
-
-    def __init__(self, original_email, *args, **kwargs):
-        super(EditProfileForm, self).__init__(*args, **kwargs)
-        self.original_email = original_email
-
-    def validate_student_email(self, email):
-        if email.data != self.original_email:
-            student = Student.query.filter_by(student_email=self.email.data).first()
-            if student is not None:
-                raise ValidationError('Please use a different email.')
-
-# ========================================
-# END OF MAIN FORM
-# ========================================
-
-# ========================================
-# OBJECTIVES FORM
-# ========================================
-
-# Web Development Objectives
-
-
-class Chapter1WebDevelopmentForm(FlaskForm):
-    objective_1 = BooleanField('You can understand what HTML is used for in a web application')
-    objective_2 = BooleanField('You can create an empty HTML page')
-    objective_3 = BooleanField('You can add the general syntax of a HTML page')
-    objective_4 = BooleanField('You can add the head section of a HTML page')
-    objective_5 = BooleanField('You can add the body section of a HTML page')
-    objective_6 = BooleanField('You can understand the basic tags used in HTML')
-    objective_7 = BooleanField('You can add comments to a HTML page')
-    submit = SubmitField('Submit')
-
-# ========================================
-# END OF OBJECTIVES FORM
-# ========================================
-
-# ========================================
-# QUIZZES FORM
-# ========================================
-
-
-class QuizForm(FlaskForm):
-    title = StringField('Question', validators=[DataRequired()])
-    body = TextAreaField('Description', validators=[DataRequired()])
-    submit = SubmitField('Submit')
-
-
-class Chapter1QuizOptionsForm(FlaskForm):
-    option_1 = BooleanField('Option 1')
-    option_2 = BooleanField('Option 2')
-    option_3 = BooleanField('Option 3')
-    option_4 = BooleanField('Option 4')
-    submit = SubmitField('Submit')
-
-# ========================================
-# END OF QUIZZES FORM
-# ========================================

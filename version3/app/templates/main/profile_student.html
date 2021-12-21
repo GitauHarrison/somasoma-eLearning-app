@@ -51,12 +51,12 @@
             <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
         </p>
         {% if not current_user.is_following(student) %}
-            <form action="{{ url_for('follow_student', student_full_name=student.student_full_name) }}" method="post">
+            <form action="{{ url_for('main.follow_student', student_full_name=student.student_full_name) }}" method="post">
                 {{ form.hidden_tag() }}
                 {{ form.submit(value='Follow', class_='btn btn-primary') }}
             </form>
         {% else %}
-            <form action="{{ url_for('unfollow_student', student_full_name=student.student_full_name) }}" method="post">
+            <form action="{{ url_for('main.unfollow_student', student_full_name=student.student_full_name) }}" method="post">
                 {{ form.hidden_tag() }}
                 {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
             </form>
@@ -94,7 +94,7 @@
     </div>
     <div class="col-sm-4">
         <p>
-            <a href=" {{ url_for('dashboard_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+            <a href=" {{ url_for('main.dashboard_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                     Back to Dashboard
             </a>

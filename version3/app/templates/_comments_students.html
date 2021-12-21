@@ -1,13 +1,13 @@
 <table class="table table-striped">
     <tr valign='top'>
         <td width="30px">
-            <a href=" {{ url_for('profile_student', student_full_name=comment.author.student_full_name) }} ">
+            <a href=" {{ url_for('main.profile_student', student_full_name=comment.author.student_full_name) }} ">
                 <img src=" {{ comment.author.avatar_student(30) }}  ">
             </a>
         </td>
         <td>
             <span class="comment-id label label-default"># {{ comment.id }} </span>
-            <a href="{{ url_for('profile_student', student_full_name=comment.author.student_full_name) }}">
+            <a href="{{ url_for('main.profile_student', student_full_name=comment.author.student_full_name) }}">
                 <span class="label label-success"> {{ comment.author.student_full_name }} </span>  
             </a>
             said {{ moment(comment.timestamp).fromNow() }}:
