@@ -104,6 +104,14 @@ class Student(UserMixin, db.Model):
         return self.followed.filter(
             followers.c.followed_id == student.id).count() > 0
 
+    def followed_posts(self):
+        followed = CommunityComment.query.join(
+            followers,
+            (followers.c.followed_id == CommunityComment.student_id)
+            ).filter(followers.c.follower_id == self.id)
+        own = CommunityComment.query.filter_by(student_id=self.id)
+        return followed.union(own).order_by(CommunityComment.timestamp.desc())
+
 
 class Parent(UserMixin, db.Model):
     __tablename__ = 'parent'
