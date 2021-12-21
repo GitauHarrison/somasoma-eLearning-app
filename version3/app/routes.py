@@ -244,6 +244,7 @@ def login_student():
                 )
             )
         login_user(student, remember=form.remember_me.data)
+        flash(f'Welcome {student.student_full_name}!')
         return redirect(next_page)
     return render_template('login_student.html',
                            title='Student Login',
