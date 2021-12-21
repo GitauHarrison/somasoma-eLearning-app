@@ -24,6 +24,18 @@
         <p>
             Email: <span style="font-weight: 600;">{{ student.student_email }}</span> 
         </p>
+        <p>
+            Phone: <span style="font-weight: 600;">{{ student.student_phone }}</span> 
+        </p>
+        <p>
+            Age: <span style="font-weight: 600;">{{ student.student_age }}</span> 
+        </p>
+        <p>
+            School: <span style="font-weight: 600;">{{ student.student_school }}</span> 
+        </p>
+        <p>
+            Course: <span style="font-weight: 600;">{{ student.student_course }}</span> 
+        </p>
         {% if student.student_about_me %}
             <p>
                 About me: <span style="font-weight: 600;">{{ student.student_about_me }}</span>
@@ -39,19 +51,15 @@
             <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
         </p>
         {% if not current_user.is_following(student) %}
-            <p>
-                <form action="{{ url_for('follow_student', student_full_name=student.student_full_name) }}" method="post">
-                    {{ form.hidden_tag() }}
-                    {{ form.submit(value='Follow', class_='btn btn-primary') }}
-                </form>
-            </p>
+            <form action="{{ url_for('follow_student', student_full_name=student.student_full_name) }}" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value='Follow', class_='btn btn-primary') }}
+            </form>
         {% else %}
-            <p>
-                <form action="{{ url_for('unfollow_student', student_full_name=student.student_full_name) }}" method="post">
-                    {{ form.hidden_tag() }}
-                    {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
-                </form>
-            </p>
+            <form action="{{ url_for('unfollow_student', student_full_name=student.student_full_name) }}" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
+            </form>
         {% endif %}
     </div>
 </div>
