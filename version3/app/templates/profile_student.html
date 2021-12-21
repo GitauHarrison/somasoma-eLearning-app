@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
 {% block app_content %}
+<!-- Flash message -->
+<div class="row">
+    <div class="col-sm-12">
+        {% include '_flash_message.html' %}
+    </div>
+</div>
+<!-- End of flash message -->
 <div class="row">
     <div class="col-sm-12">
         <H1>{{ title }}</H1>
@@ -28,8 +35,24 @@
             </p>
         {% endif %}
         <p>
-            Followers: <span style="font-weight: 600;">3</span>, Following: <span style="font-weight: 600;">3</span>
+            <span style="font-weight: 600;">{{ student.followers.count() }}</span> Followers,
+            <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
         </p>
+        {% if not current_user.is_following(student) %}
+            <p>
+                <form action="{{ url_for('follow_student', student_full_name=student.student_full_name) }}" method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit(value='Follow', class_='btn btn-primary') }}
+                </form>
+            </p>
+        {% else %}
+            <p>
+                <form action="{{ url_for('unfollow_student', student_full_name=student.student_full_name) }}" method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
+                </form>
+            </p>
+        {% endif %}
     </div>
 </div>
 <div class="row">

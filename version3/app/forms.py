@@ -215,8 +215,10 @@ class Disable2faForm(FlaskForm):
 # ========================================
 
 # ========================================
-# COMMENT FORM
+# MAIN FORM
 # ========================================
+
+# Comment form
 
 
 class CommentForm(FlaskForm):
@@ -225,13 +227,15 @@ class CommentForm(FlaskForm):
                             )
     submit = SubmitField('Post')
 
-# ========================================
-# END OF COMMENT FORM
-# ========================================
 
-# ========================================
-# PROFILE FORM
-# ========================================
+# Follow form
+
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Post')
+
+
+# Profile form
 
 
 class EditProfileForm(FlaskForm):
@@ -248,12 +252,12 @@ class EditProfileForm(FlaskForm):
 
     def validate_student_email(self, email):
         if email.data != self.original_email:
-            student = Client.query.filter_by(student_email=self.email.data).first()
+            student = Student.query.filter_by(student_email=self.email.data).first()
             if student is not None:
                 raise ValidationError('Please use a different email.')
 
 # ========================================
-# END OF PROFILE FORM
+# END OF MAIN FORM
 # ========================================
 
 # ========================================

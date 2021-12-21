@@ -5,7 +5,7 @@ from app.forms import LoginForm, StudentRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, CommentForm,\
     Enable2faForm, Disable2faForm, Confirm2faForm, EditProfileForm,\
     Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm,\
-    ParentRegistrationForm, TeacherRegistrationForm
+    ParentRegistrationForm, TeacherRegistrationForm, EmptyForm
 from app.models import WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
     Parent, Student, Teacher
@@ -127,7 +127,7 @@ def login():
 @login_required
 def profile_student(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
+        student_full_name=student_full_name
         ).first_or_404()
     page = request.args.get('page', 1, type=int)
     comments = student.comments.order_by(
@@ -142,12 +142,14 @@ def profile_student(student_full_name):
         'dashboard_student', student_full_name=student_full_name,
         page=comments.prev_num) \
         if comments.has_prev else None
+    form = EmptyForm()
     return render_template('profile_student.html',
                            title='Profile',
                            student=student,
                            comments=comments.items,
                            next_url=next_url,
-                           prev_url=prev_url
+                           prev_url=prev_url,
+                           form=form
                            )
 
 
@@ -172,6 +174,72 @@ def edit_profile_student():
                            form=form,
                            student=student
                            )
+
+
+@app.route('/follow/<student_full_name>', methods=['POST'])
+@login_required
+def follow_student(student_full_name):
+    student = Student.query.filter_by(
+        student_full_name=student_full_name
+        ).first()
+    form = EmptyForm()
+    if form.validate_on_submit():
+        student = Student.query.filter_by(
+            student_full_name=student_full_name
+            ).first()
+        if student is None:
+            flash(f'User {student_full_name} not found')
+            return redirect(url_for('dashboard_student'))
+        if student == current_user:
+            flash('You cannot follow yourself!')
+            return redirect(url_for(
+                'profile_student',
+                student_full_name=student_full_name
+                )
+            )
+        current_user.follow(student)
+        db.session.commit()
+        flash(f'You are following {student.student_full_name}!')
+        return redirect(url_for(
+            'profile_student',
+            student_full_name=student_full_name
+            )
+        )
+    else:
+        return redirect(url_for('dashboard_student'))
+
+
+@app.route('/unfollow/<student_full_name>', methods=['POST'])
+@login_required
+def unfollow_student(student_full_name):
+    student = Student.query.filter_by(
+        student_full_name=student_full_name
+        ).first()
+    form = EmptyForm()
+    if form.validate_on_submit():
+        student = Student.query.filter_by(
+            student_full_name=student_full_name
+            ).first()
+        if student is None:
+            flash(f'User {student_full_name} not found')
+            return redirect(url_for('dashboard_student'))
+        if student == current_user:
+            flash('You cannot unfollow yourself!')
+            return redirect(url_for(
+                'profile_student',
+                student_full_name=student_full_name
+                )
+            )
+        current_user.unfollow(student)
+        db.session.commit()
+        flash(f'You are not following {student.student_full_name}!')
+        return redirect(url_for(
+            'profile_student',
+            student_full_name=student_full_name
+            )
+        )
+    else:
+        return redirect(url_for('dashboard_student'))
 
 # ========================================
 # END OF MAIN ROUTES

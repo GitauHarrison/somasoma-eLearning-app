@@ -246,8 +246,9 @@
                                 </p>
                             {% endif %}
                             <p>
-                                Followers: <span style="font-weight: 600;">3</span>, Following: <span style="font-weight: 600;">3</span>
-                            </p>
+                                <span style="font-weight: 600;">{{ current_user.followers.count() }}</span> Followers,
+                                <span style="font-weight: 600;">{{ current_user.followed.count() }}</span> Following
+                            </p>                            
                         </div>
                     </div>
                 </div>
