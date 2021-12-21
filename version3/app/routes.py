@@ -39,6 +39,8 @@ def dashboard_student():
         CommunityComment.timestamp.desc()
         ).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
+    my_comments = current_user.followed_comments().paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
                     'dashboard_student',
                     page=comments.next_num) \
@@ -83,6 +85,7 @@ def dashboard_student():
                            title='Student Dashboard',
                            comment_form=comment_form,
                            comments=comments.items,
+                           my_comments=my_comments.items,
                            next_url=next_url,
                            prev_url=prev_url,
                            all_objectives=all_objectives,

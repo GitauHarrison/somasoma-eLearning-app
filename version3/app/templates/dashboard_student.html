@@ -25,8 +25,11 @@
             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
                 Live Class
             </a>
-            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'community')">
-                Community
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'explore-community')">
+                Explore Community
+            </a>
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'your-community')">
+                Your Community
             </a>
             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'account')">
                 Account
@@ -159,11 +162,11 @@
         </div>
         <!-- END OFLIVE CLASS TAB -->
 
-        <!-- COMMUNITY TAB -->
-        <div id="community" class="tabcontent">
+        <!-- EXPLORE COMMUNITY TAB -->
+        <div id="explore-community" class="tabcontent">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1>Explore</h1>
+                    <h1>Explore Community</h1>
                 </div>
             </div>
             <div class="row">
@@ -200,7 +203,50 @@
                 </div>
             </div>
         </div>
-        <!-- COMMUNITY TAB -->
+        <!-- END OF EXPLORE COMMUNITY TAB -->
+
+        <!-- YOUR COMMUNITY TAB -->
+        <div id="your-community" class="tabcontent">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Your Community</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 my-form">
+                    {{ wtf.quick_form(comment_form) }}
+                </div>
+                <div class="col-sm-6">
+                    <!-- Empty column -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    {% for comment in my_comments %}
+                        {% include '_comments_students.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <nav aria-label="...">
+                        <ul class="pager">
+                            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                                <a href="{{ prev_url or '#' }}">
+                                    <span aria-hidden="true">&larr;</span> Newer posts
+                                </a>
+                            </li>
+                            <li class="next{% if not next_url %} disabled{% endif %}">
+                                <a href="{{ next_url or '#' }}">
+                                    Older posts <span aria-hidden="true">&rarr;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- END OF YOUR COMMUNITY TAB -->
 
         <!-- ACCOUNT TAB -->
         <div id="account" class="tabcontent">
