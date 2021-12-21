@@ -104,7 +104,7 @@ class Student(UserMixin, db.Model):
         return self.followed.filter(
             followers.c.followed_id == student.id).count() > 0
 
-    def followed_posts(self):
+    def followed_comments(self):
         followed = CommunityComment.query.join(
             followers,
             (followers.c.followed_id == CommunityComment.student_id)
