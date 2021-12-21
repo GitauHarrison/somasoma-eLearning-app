@@ -15,6 +15,13 @@ def load_student(id):
 #     return Parent.query.get(int(id))
 
 
+followers = db.Table(
+    'followers',
+    db.Column('follower_id', db.Integer, db.ForeignKey('student.id')),
+    db.Column('followed_id', db.Integer, db.ForeignKey('student.id'))
+)
+
+
 class Student(UserMixin, db.Model):
     __tablename__ = 'student'
     id = db.Column(db.Integer, primary_key=True)
@@ -77,6 +84,25 @@ class Student(UserMixin, db.Model):
         digest = md5(self.student_email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
+
+    followed = db.relationship(
+        'Student',
+        secondary=followers,
+        primaryjoin=(followers.c.follower_id == id),
+        secondaryjoin=(followers.c.followed_id == id),
+        backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+
+    def follow(self, student):
+        if not self.is_following(student):
+            self.followed.append(student)
+
+    def unfollow(self, student):
+        if self.is_following(student):
+            self.followed.remove(student)
+
+    def is_following(self, student):
+        return self.followed.filter(
+            followers.c.followed_id == student.id).count() > 0
 
 
 class Parent(UserMixin, db.Model):
