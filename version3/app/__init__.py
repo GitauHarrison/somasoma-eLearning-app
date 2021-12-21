@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_moment import Moment
+from flask_mail import Mail
 from config import Config
 from sqlalchemy import MetaData
 
@@ -24,6 +25,7 @@ login.login_view = 'auth.login_student'
 login.login_view = 'auth.login_parent'
 login.login_view = 'auth.login_teacher'
 moment = Moment()
+mail = Mail()
 
 
 def create_app(config_class=Config):
@@ -35,6 +37,7 @@ def create_app(config_class=Config):
     migrate.init_app(app, db, render_as_batch=True)
     login.init_app(app)
     moment.init_app(app)
+    mail.init_app(app)
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
