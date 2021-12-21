@@ -22,3 +22,11 @@ class Config(object):
     # Pagination
     POSTS_PER_PAGE = int(os.environ.get('POSTS_PER_PAGE') or 10)
     POSTS_PER_QUIZ_PAGE = int(os.environ.get('POSTS_PER_QUIZ_PAGE') or 1)
+
+    # Email Support
+    MAIL_SERVER = os.environ.get('MAIL_SERVER')
+    MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
+    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') is not None
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    ADMINS = os.environ.get('ADMINS')
