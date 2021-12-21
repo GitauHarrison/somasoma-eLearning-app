@@ -55,6 +55,9 @@ class Student(UserMixin, db.Model):
                                         lazy='dynamic'
                                         )
 
+    def __repr__(self):
+        return f'Student {self.student_full_name}'
+
     def set_password(self, student_password):
         self.student_password_hash = generate_password_hash(student_password)
 
@@ -87,6 +90,9 @@ class Parent(UserMixin, db.Model):
     parent_password_hash = db.Column(db.String(128))
     child = db.relationship('Student', backref='parent', lazy='dynamic')
 
+    def __repr__(self):
+        return f'Parent {self.parent_full_name}'
+
     def set_password(self, parent_password):
         self.parent_password_hash = generate_password_hash(parent_password)
 
@@ -113,6 +119,9 @@ class Teacher(UserMixin, db.Model):
     teacher_residence = db.Column(db.String(120), index=True)
     teacher_course = db.Column(db.String(120), index=True)
     teacher_password_hash = db.Column(db.String(128))
+
+    def __repr__(self):
+        return f'Teacher {self.teacher_full_name}'
 
     def set_password(self, teacher_password):
         self.teacher_password_hash = generate_password_hash(teacher_password)
