@@ -9,6 +9,7 @@ from app.auth.forms import LoginForm, StudentRegistrationForm,\
 from app.models import Parent, Student, Teacher
 from app.auth.twilio_verify_api import check_verification_token,\
     request_verification_token
+from app.auth.email import send_password_reset_email_student
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
@@ -25,10 +26,11 @@ def login_parent():
             return redirect(url_for('auth.login_parent'))
         login_user(parent, remember=form.remember_me.data)
         return redirect(url_for('dashboard_parent'))
-    return render_template('auth/login_parent.html',
-                           title='Parent Login',
-                           form=form
-                           )
+    return render_template(
+        'auth/login_parent.html',
+        title='Parent Login',
+        form=form
+        )
 
 
 @bp.route('/teacher/login', methods=['GET', 'POST'])
@@ -45,10 +47,11 @@ def login_teacher():
             return redirect(url_for('auth.login_teacher'))
         login_user(teacher, remember=form.remember_me.data)
         return redirect(url_for('dashboard_teacher'))
-    return render_template('auth/login_teacher.html',
-                           title='Teacher Login',
-                           form=form
-                           )
+    return render_template(
+        'auth/login_teacher.html',
+        title='Teacher Login',
+        form=form
+        )
 
 
 @bp.route('/student/login', methods=['GET', 'POST'])
@@ -79,10 +82,11 @@ def login_student():
         login_user(student, remember=form.remember_me.data)
         flash(f'Welcome {student.student_full_name}!')
         return redirect(next_page)
-    return render_template('auth/login_student.html',
-                           title='Student Login',
-                           form=form
-                           )
+    return render_template(
+        'auth/login_student.html',
+        title='Student Login',
+        form=form
+        )
 
 
 @bp.route('/student/logout')
@@ -124,10 +128,11 @@ def register_student():
             'Student successfully registered. Student can login to continue!'
             )
         return redirect(url_for('auth.login_student'))
-    return render_template('auth/register_student.html',
-                           title='Student Registration',
-                           form=form
-                           )
+    return render_template(
+        'auth/register_student.html',
+        title='Student Registration',
+        form=form
+        )
 
 
 @bp.route('/register/parent', methods=['GET', 'POST'])
@@ -150,10 +155,11 @@ def register_parent():
             'Parent successfully registered. You can now register your child!'
             )
         return redirect(url_for('auth.register_student'))
-    return render_template('auth/register_parent.html',
-                           title='Parent Registration',
-                           form=form
-                           )
+    return render_template(
+        'auth/register_parent.html',
+        title='Parent Registration',
+        form=form
+        )
 
 
 @bp.route('/register/teacher', methods=['GET', 'POST'])
@@ -174,28 +180,51 @@ def register_teacher():
         db.session.commit()
         flash('Teacher successfully registered. Login to continue!')
         return redirect(url_for('auth.login_teacher'))
-    return render_template('auth/register_teacher.html',
-                           title='Teacher Registration',
-                           form=form
-                           )
+    return render_template(
+        'auth/register_teacher.html',
+        title='Teacher Registration',
+        form=form
+        )
 
 
 @bp.route('/request-password-reset', methods=['GET', 'POST'])
 def request_password_reset():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.dashboard_student'))
     form = RequestPasswordResetForm()
-    return render_template('auth/request_password_reset.html',
-                           title='Request Password Reset',
-                           form=form
-                           )
+    if form.validate_on_submit():
+        student = Student.query.filter_by(
+            student_email=form.email.data
+            ).first()
+        if student:
+            send_password_reset_email_student(student)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('auth.login_student'))
+    return render_template(
+        'auth/request_password_reset.html',
+        title='Request Password Reset',
+        form=form
+        )
 
 
-@bp.route('/reset-password', methods=['GET', 'POST'])
-def reset_password():
+@bp.route('/reset-password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('main.dashboard_student'))
+    student = Student.verify_reset_password_token(token)
+    if not student:
+        return redirect(url_for('main.dashboard_student'))
     form = ResetPasswordForm()
-    return render_template('auth/reset_password.html',
-                           title='Reset Password',
-                           form=form
-                           )
+    if form.validate_on_submit():
+        student.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('auth.login_student'))
+    return render_template(
+        'auth/reset_password.html',
+        title='Reset Password',
+        form=form
+        )
 
 # Two-factor authentication
 
@@ -211,11 +240,12 @@ def enable_2fa_student():
         session['phone'] = form.verification_phone.data
         request_verification_token(session['phone'])
         return redirect(url_for('auth.verify_2fa_student'))
-    return render_template('auth/enable_2fa.html',
-                           form=form,
-                           title='Enable 2fa',
-                           student=student
-                           )
+    return render_template(
+        'auth/enable_2fa.html',
+        form=form,
+        title='Enable 2fa',
+        student=student
+        )
 
 
 @bp.route('/student/verify-2fa', methods=['GET', 'POST'])
@@ -244,10 +274,11 @@ def verify_2fa_student():
                 login_user(student, remember=remember)
                 return redirect(next_page)
         form.token.errors.append('Invalid token')
-    return render_template('auth/verify_2fa.html',
-                           form=form,
-                           title='Verify Token'
-                           )
+    return render_template(
+        'auth/verify_2fa.html',
+        form=form,
+        title='Verify Token'
+        )
 
 
 @bp.route('/student/disable-2fa', methods=['GET', 'POST'])
@@ -268,3 +299,10 @@ def disable_2fa_student():
         title='Disable 2fa',
         student=student
         )
+
+
+@bp.route('/login')
+def login():
+    return render_template(
+        'auth/login.html',
+        title='Login')
