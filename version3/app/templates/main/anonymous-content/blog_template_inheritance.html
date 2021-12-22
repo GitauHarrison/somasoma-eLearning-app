@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
     <div class="row">
@@ -136,4 +137,59 @@
 
         </div>
     </div>
+    <hr>
+    <!-- COMMENTS SECTION-->
+
+     <!-- Flash message -->
+     <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+
+    <div class="row" id="comments">
+        <div class="col-sm-6">
+            <h2>Comments</h2>
+        </div>
+        <div class="col-sm-6">
+            <h2 class="text-right">{{ all_comments }} Comments</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            {% for comment in comments %}
+                {% include 'main/anonymous-content/_anonymous_comments.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> Newer posts
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            Older posts <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- End of pagination -->
+    <div class="row">
+        <div class="col-sm-6 my-form">
+            {{ wtf.quick_form(form) }}
+        </div>
+        <div class="col-sm-6">
+            <!-- Empty form -->
+        </div>
+    </div>
+    <!-- END OF COMMENTS SECTION-->
 {% endblock %}
