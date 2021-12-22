@@ -19,7 +19,7 @@
 <p>Our application structure from <a href="hello_world.md">chapter 1</a> was necessary to help us separate the application layout/presentation from the logic. Templates help us achieve this kind of separation. Flask templates are found in the <em>templates</em> subfolder within the application instance.</p>
 <h2 id="working-with-templates">Working with Templates</h2>
 <p>Below, I am going to create a template for the home page of our blog.</p>
-<p>app/static/templates/home.html: Home Page</p>
+<p class="code-title">app/static/templates/home.html: Home Page</p>
 <pre style="margin: 0; line-height: 125%">
 <span style="color: #888888"># Remove the forward slashes</span>
 
@@ -38,7 +38,7 @@
 </pre>
 <p>This is a very standard HTML page. It basically contains <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> tags enclosed in <code>&lt;html&gt;</code>. The <code>&lt;head&gt;</code> has a dynamic content enclosed in <code>/{/{ ... /}/}</code>. The <code>title</code> is a placeholder variable which will be known at runtime.</p>
 <p>With the simple presentation in place, we will now update our <code>home</code> view function.</p>
-<p>app/routes.py: Render the home template</p>
+<p class="code-title">app/routes.py: Render the home template</p>
 <pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">from</span> <span style="color: #0e84b5; font-weight: bold">flask</span> <span style="color: #008800; font-weight: bold">import</span> render_template
 <span style="color: #008800; font-weight: bold">from</span> <span style="color: #0e84b5; font-weight: bold">flask</span> <span style="color: #008800; font-weight: bold">import</span> app
     
@@ -49,7 +49,7 @@
 </pre>
 <p>Flask provides the <code>render_template</code> function which allows us to render (or to show) HTML templates. Above, we have returned the <code>home.html</code> template. Additionally, we have added a title to the function such that the placeholder value we saw previously will change to indicate &#39;Home&#39;. Jinja2 is responsible for substituting the placeholder value with the actual dynamic content.</p>
 <p>We can make the title of our blog a bit more interesting. Jinja2 provides support for control statements to be used in templates. Let us update our home page to include a control statement.</p>
-<p>app/templates/home.html: Conditional statements in template</p>
+<p class="code-title">app/templates/home.html: Conditional statements in template</p>
 <pre style="margin: 0; line-height: 125%">
 <span style="color: #888888"># Remove the forward slashes</span>
 
@@ -76,7 +76,7 @@
 <h2 id="template-inheritance">Template Inheritance</h2>
 <p>At this stage of the application, it is very easy to make edits in the templates. However, when the application becomes bigger and bigger, say, to have several templates, then making these edits on each template can become difficult and tiring. Thankfully, Flask allows for template inheritence where we can define a base layout for the entire blog. From this base layout, every other template that we will create will inherit the base styles and features. This makes is easy whenever we want to make changes to our growing application. The second reason to consider template inheritence is so that we can maintain a consistene theme or layout throughout our blog. We want that certain features be present in each template. For example, we would want to maintain our navigation bar and our footer everywhere.</p>
 <p>For these reasons, we have our <code>base.html</code> file in the templates sub-folder. This file will contain our navigation bar and our footer. Notabely, we will move our <code>&lt;head&gt;</code> logic from the <code>home.html</code> template we implemented earlier to the <code>base.html</code> template.</p>
-<p>app/templates/base.html: Title, Navigation bar and Footer</p>
+<p class="code-title">app/templates/base.html: Title, Navigation bar and Footer</p>
 <pre style="margin: 0; line-height: 125%">
 <span style="color: #888888"># Remove the forward slashes</span>
 
@@ -103,7 +103,7 @@
 <span style="color: #333333">&lt;/</span>html<span style="color: #333333">&gt;</span>
 </pre>
 <p>The <code>block</code> control statement is used to define where the derived templates can insert themselves. Blocks are to be given unique names which derived templates can reference to provide their own content.</p>
-<p>app/templates/home.html: Template inheritance</p>
+<p class="code-title">app/templates/home.html: Template inheritance</p>
 <pre style="margin: 0; line-height: 125%">
 <span style="color: #888888"># Remove the forward slashes</span>
 
@@ -112,7 +112,7 @@
 <span style="color: #333333">/</span>{<span style="color: #333333">%</span> block content <span style="color: #333333">%/</span>}
     <span style="color: #333333">&lt;</span>h1<span style="color: #333333">&gt;</span>Available Updates<span style="color: #333333">&lt;/</span>h1<span style="color: #333333">&gt;</span>
     <span style="color: #333333">&lt;</span>div<span style="color: #333333">&gt;</span>
-        <span style="color: #333333">&lt;</span><span style="color: #FF0000; background-color: #FFAAAA">!</span><span style="color: #333333">--</span>Home Page Content Goes Here<span style="color: #333333">--&gt;</span>
+        <span style="color: #333333">&lt;</span><span style="color: #FF0000; ">!</span><span style="color: #333333">--</span>Home Page Content Goes Here<span style="color: #333333">--&gt;</span>
     <span style="color: #333333">&lt;/</span>div<span style="color: #333333">&gt;</span>
 <span style="color: #333333">/</span>{<span style="color: #333333">%</span> endblock <span style="color: #333333">%/</span>}
 </pre>
@@ -127,7 +127,7 @@
 <li>My Interests template</li>
 </ul>
 <p>If you would like to see the changes you make in the application without the need to exit and restart the flask server every other time, you will need to update your flask environment variables. Add FLASK_ENV and FLASK_DEBUG environment variables in your <code>.flaskenv</code> file.</p>
-<p>.flaskenv: More environment variables</p>
+<p class="code-title">.flaskenv: More environment variables</p>
 <pre style="margin: 0; line-height: 125%"><span style="color: #888888">#...</span>
     FLASK_ENV<span style="color: #333333">=</span>development <span style="color: #888888"># you are working on a development server</span>
     FLASK_DEBUG<span style="color: #333333">=</span><span style="color: #008800; font-weight: bold">True</span> <span style="color: #888888"># catching of live updates</span>

@@ -282,3 +282,23 @@ a:hover {
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* ------------------------------------------ */
+/* CODE STYLING */
+/* ------------------------------------------ */
+
+/* This adds a code title */
+
+.code-title{
+  margin-bottom: -4px;
+  background-color: #e6e6e6;
+  padding: 10px;
+}
+.hljs-comment{
+  color: #b3b3b3;
+}
+blockquote{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #b3b3b3;
+}
