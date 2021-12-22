@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+    <div class="row course-title">
+        <div class="col-sm-12">
+            <h2>Overview</h2>
+            <p>
+                Flask was originally designed and developed by Armin Ronacher as an 
+                April Fool's Day joke in 2010. Despite the origin as a joke, 
+                the Flask framework became wildly popular as an alternative to 
+                Django projects with their monolithic structure and dependencies.
+            </p>
+            <p>
+                Flask's success created a lot of additional work in issue tickets and pull requests. 
+                Armin eventually created The Pallets Projects collection of open source code 
+                libraries after he had been managing Flask under his own GitHub account for 
+                several years. The Pallets Project now serves as the community-driven organization 
+                that handles Flask and other related Python libraries such as Lektor, 
+                Jinja and several others.
+            </p>
+            <p>
+                Flask is considered more Pythonic than the Django web framework because in 
+                common situations the equivalent Flask web application is more explicit. 
+                Flask is also easy to get started with as a beginner because there is little 
+                boilerplate code for getting a simple app up and running.
+            </p>
+        </div>
+    </div>
+    <div class="row course-title">
+        <h2>Stories From Real Students</h2>
+        <div class="col-sm-4 student student-alt">
+            <img class="img-fluid img-circle" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/rahima.png')}}" alt="Rahima">
+            <h3>Rahima</h3>
+            <p>
+                "Wow, what an amazing resource you've made. The app source is amazingly concise 
+                (clearly years of experience distilled). I'm a frustrated Django developer and 
+                was just getting started with Flask, trying to figure out how best to structure 
+                my app, absorb best practices, etc.. Funny thing is, every part of the stack 
+                you've chosen is exactly what I'd want to use."
+            </p>
+        </div>
+        <div class="col-sm-4 student">
+            <img class="img-fluid img-circle" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/mkay.png')}}" alt="MKay">
+            <h3>MKay</h3>
+            <p>
+                "Thorough, clear and logical presentation, and great material. 
+                Thanks for putting this course together."
+            </p>
+        </div>
+        <div class="col-sm-4 student student-alt">
+            <img class="img-fluid img-circle" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/alex.png')}}" alt="Alex">
+            <h3>Alex</h3>
+            <p>
+                "You have a great delivery style and each video feels like he's with you stepping 
+                you through the code. Whenever a problem has occurred, even if it's not directly 
+                related to the code/course content, he has been gone above and beyond in getting 
+                it resolved. I've never known any other course author to do that. 
+                If you want to learn Flask or just about building a SAAS app, look no further."
+            </p>
+        </div>
+    </div>
+    <div class="row course-title">
+        <div class="col-sm-12">
+            <h2>What You Will Learn</h2>
+            <ol>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>Python</li>
+                <li>Git</li>
+                <li>GitHub</li>
+                <li>Flask</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row course-title">
+        <div class="col-sm-12">
+            <h2>Learning Schedule</h2>
+            <p>
+                Week 1: HTML, CSS, and Git (Duration: 1 Week - 50 hours)
+            </p>
+            <p>
+                Week 2: Python and JavaScript Fundamentals (Duration: 1 Week - 50 hours)
+            </p>
+            <p>
+                Week 3: Python and JavaScript for Web, Front-End Development and Back-end Development (Duration: 1 Week - 50 hours)
+            </p>
+            <p>
+                Week 4: Object-Oriented Programming and Git Collaboration (Duration: 1 Week - 50 hours)
+            </p>
+            <p>
+                Week 5: Project Period (Duration: 1 Week - 50 hours)
+            </p>
+        </div>
+    </div>
+    <div class="row course-title course-details">
+        <div class="col-sm-4">
+            <p>
+                DURATION:<br>
+                <span>6 months</span>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <p>
+                MODE:<br>
+                <span>Remote Learning</span>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <p>
+                COST:<br>
+                <span>KES 165 000 (USD 1650)</span>
+            </p>
+        </div>
+    </div>
+    <div class="row course-title text-center">
+        <div class="col-sm-12">
+            <a class="btn btn-success" href="#">Register Now</a>
+        </div>
+    </div>
+{% endblock %}

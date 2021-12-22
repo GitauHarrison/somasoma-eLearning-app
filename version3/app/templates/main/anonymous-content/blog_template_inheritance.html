@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1>
+                {{ title }}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+     
+
+<p>The completed project used in this article can be referenced <a href="https://github.com/GitauHarrison/personal-blog-tutorial-project/commit/b388b9099738c53b44650ef8e99a4364a923964a">here</a>. </p>
+<p>In the previous chapter, you learnt how to display a string on the web browser. During this chapter, I will show you how to work with HTML templates that help create a more elaborate and dynamic web application.</p>
+<h1 id="understanding-templates">Understanding Templates</h1>
+<p>Our application structure from <a href="hello_world.md">chapter 1</a> was necessary to help us separate the application layout/presentation from the logic. Templates help us achieve this kind of separation. Flask templates are found in the <em>templates</em> subfolder within the application instance.</p>
+<h2 id="working-with-templates">Working with Templates</h2>
+<p>Below, I am going to create a template for the home page of our blog.</p>
+<p>app/static/templates/home.html: Home Page</p>
+<pre style="margin: 0; line-height: 125%">
+<span style="color: #888888"># Remove the forward slashes</span>
+
+<span style="color: #007700">&lt;html&gt;</span>
+    <span style="color: #007700">&lt;head&gt;</span>
+        <span style="color: #007700">&lt;title&gt;</span>
+            Gitau Harrison | /{/{ title /}/}
+        <span style="color: #007700">&lt;/title&gt;</span>  
+    <span style="color: #007700">&lt;/head&gt;</span>
+    <span style="color: #007700">&lt;body&gt;</span>
+        <span style="color: #007700">&lt;h1&gt;</span>
+            Available Updates
+        <span style="color: #007700">&lt;/h1&gt;</span>
+    <span style="color: #007700">&lt;/body&gt;</span>
+<span style="color: #007700">&lt;/html&gt;</span>
+</pre>
+<p>This is a very standard HTML page. It basically contains <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> tags enclosed in <code>&lt;html&gt;</code>. The <code>&lt;head&gt;</code> has a dynamic content enclosed in <code>/{/{ ... /}/}</code>. The <code>title</code> is a placeholder variable which will be known at runtime.</p>
+<p>With the simple presentation in place, we will now update our <code>home</code> view function.</p>
+<p>app/routes.py: Render the home template</p>
+<pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-weight: bold">from</span> <span style="color: #0e84b5; font-weight: bold">flask</span> <span style="color: #008800; font-weight: bold">import</span> render_template
+<span style="color: #008800; font-weight: bold">from</span> <span style="color: #0e84b5; font-weight: bold">flask</span> <span style="color: #008800; font-weight: bold">import</span> app
+    
+<span style="color: #555555; font-weight: bold">@app</span><span style="color: #333333">.</span>route(<span style="background-color: #fff0f0">&#39;/&#39;</span>)
+<span style="color: #555555; font-weight: bold">@app</span><span style="color: #333333">.</span>route(<span style="background-color: #fff0f0">&#39;/home&#39;</span>)
+<span style="color: #008800; font-weight: bold">def</span> <span style="color: #0066BB; font-weight: bold">home</span>():
+    <span style="color: #008800; font-weight: bold">return</span> render_template(<span style="background-color: #fff0f0">&#39;home.html&#39;</span>, title <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&#39;Home&#39;</span>)
+</pre>
+<p>Flask provides the <code>render_template</code> function which allows us to render (or to show) HTML templates. Above, we have returned the <code>home.html</code> template. Additionally, we have added a title to the function such that the placeholder value we saw previously will change to indicate &#39;Home&#39;. Jinja2 is responsible for substituting the placeholder value with the actual dynamic content.</p>
+<p>We can make the title of our blog a bit more interesting. Jinja2 provides support for control statements to be used in templates. Let us update our home page to include a control statement.</p>
+<p>app/templates/home.html: Conditional statements in template</p>
+<pre style="margin: 0; line-height: 125%">
+<span style="color: #888888"># Remove the forward slashes</span>
+
+<span style="color: #333333">&lt;</span>html<span style="color: #333333">&gt;</span>
+    <span style="color: #333333">&lt;</span>head<span style="color: #333333">&gt;</span>
+        <span style="color: #333333">/</span>{<span style="color: #333333">%</span> <span style="color: #008800; font-weight: bold">if</span> title <span style="color: #333333">%/</span>}
+            <span style="color: #333333">&lt;</span>title<span style="color: #333333">&gt;</span>
+                Gitau Harrison <span style="color: #333333">|</span> <span style="color: #333333">/</span>{<span style="color: #333333">/</span>{ title <span style="color: #333333">/</span>}<span style="color: #333333">/</span>}
+            <span style="color: #333333">&lt;/</span>title<span style="color: #333333">&gt;</span> 
+        <span style="color: #333333">/</span>{<span style="color: #333333">%</span> <span style="color: #008800; font-weight: bold">else</span> <span style="color: #333333">%/</span>}
+            <span style="color: #333333">&lt;</span>title<span style="color: #333333">&gt;</span>
+                Welcome to my Personal Blog
+            <span style="color: #333333">&lt;/</span>title<span style="color: #333333">&gt;</span> 
+        <span style="color: #333333">/</span>{<span style="color: #333333">%</span> endif <span style="color: #333333">%/</span>}         
+    <span style="color: #333333">&lt;/</span>head<span style="color: #333333">&gt;</span>
+    <span style="color: #333333">&lt;</span>body<span style="color: #333333">&gt;</span>
+        <span style="color: #333333">&lt;</span>h1<span style="color: #333333">&gt;</span>
+            Available Updates
+        <span style="color: #333333">&lt;/</span>h1<span style="color: #333333">&gt;</span>
+    <span style="color: #333333">&lt;/</span>body<span style="color: #333333">&gt;</span>
+<span style="color: #333333">&lt;/</span>html<span style="color: #333333">&gt;</span>
+</pre>
+<p>The template is slightly  smarter now to know when a title has been provided or not. If there is a title in the view function, then it will use it within it&#39;s head, otherwise, it will resort to displaying <em>Welcome to My Personal Blog</em>.</p>
+<h2 id="template-inheritance">Template Inheritance</h2>
+<p>At this stage of the application, it is very easy to make edits in the templates. However, when the application becomes bigger and bigger, say, to have several templates, then making these edits on each template can become difficult and tiring. Thankfully, Flask allows for template inheritence where we can define a base layout for the entire blog. From this base layout, every other template that we will create will inherit the base styles and features. This makes is easy whenever we want to make changes to our growing application. The second reason to consider template inheritence is so that we can maintain a consistene theme or layout throughout our blog. We want that certain features be present in each template. For example, we would want to maintain our navigation bar and our footer everywhere.</p>
+<p>For these reasons, we have our <code>base.html</code> file in the templates sub-folder. This file will contain our navigation bar and our footer. Notabely, we will move our <code>&lt;head&gt;</code> logic from the <code>home.html</code> template we implemented earlier to the <code>base.html</code> template.</p>
+<p>app/templates/base.html: Title, Navigation bar and Footer</p>
+<pre style="margin: 0; line-height: 125%">
+<span style="color: #888888"># Remove the forward slashes</span>
+
+<span style="color: #333333">&lt;</span>html<span style="color: #333333">&gt;</span>
+    <span style="color: #333333">&lt;</span>head<span style="color: #333333">&gt;</span>
+        <span style="color: #333333">/</span>{<span style="color: #333333">%</span> <span style="color: #008800; font-weight: bold">if</span> title <span style="color: #333333">%/</span>}
+            <span style="color: #333333">&lt;</span>title<span style="color: #333333">&gt;</span>
+                Gitau Harrison <span style="color: #333333">|</span> <span style="color: #333333">/</span>{<span style="color: #333333">/</span>{ title <span style="color: #333333">/</span>}<span style="color: #333333">/</span>}
+            <span style="color: #333333">&lt;/</span>title<span style="color: #333333">&gt;</span> 
+        <span style="color: #333333">/</span>{<span style="color: #333333">%</span> <span style="color: #008800; font-weight: bold">else</span> <span style="color: #333333">%/</span>}
+            <span style="color: #333333">&lt;</span>title<span style="color: #333333">&gt;</span>
+                Welcome to my Personal Blog
+            <span style="color: #333333">&lt;/</span>title<span style="color: #333333">&gt;</span> 
+        <span style="color: #333333">/</span>{<span style="color: #333333">%</span> endif <span style="color: #333333">%/</span>}         
+    <span style="color: #333333">&lt;/</span>head<span style="color: #333333">&gt;</span>
+    <span style="color: #333333">&lt;</span>body<span style="color: #333333">&gt;</span>
+        <span style="color: #333333">&lt;</span>div<span style="color: #333333">&gt;</span>
+            Gitau Harrison: <span style="color: #333333">&lt;</span>a href<span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;/home&quot;</span><span style="color: #333333">&gt;</span>Home<span style="color: #333333">&lt;/</span>a<span style="color: #333333">&gt;</span>
+        <span style="color: #333333">&lt;/</span>div<span style="color: #333333">&gt;</span>
+        <span style="color: #333333">/</span>{<span style="color: #333333">%</span> block content <span style="color: #333333">%/</span>}
+
+        <span style="color: #333333">/</span>{<span style="color: #333333">%</span> endblock <span style="color: #333333">%/</span>}
+    <span style="color: #333333">&lt;/</span>body<span style="color: #333333">&gt;</span>
+<span style="color: #333333">&lt;/</span>html<span style="color: #333333">&gt;</span>
+</pre>
+<p>The <code>block</code> control statement is used to define where the derived templates can insert themselves. Blocks are to be given unique names which derived templates can reference to provide their own content.</p>
+<p>app/templates/home.html: Template inheritance</p>
+<pre style="margin: 0; line-height: 125%">
+<span style="color: #888888"># Remove the forward slashes</span>
+
+<span style="color: #333333">/</span>{<span style="color: #333333">%</span> extends <span style="background-color: #fff0f0">&#39;base.html&#39;</span> <span style="color: #333333">%/</span>}
+
+<span style="color: #333333">/</span>{<span style="color: #333333">%</span> block content <span style="color: #333333">%/</span>}
+    <span style="color: #333333">&lt;</span>h1<span style="color: #333333">&gt;</span>Available Updates<span style="color: #333333">&lt;/</span>h1<span style="color: #333333">&gt;</span>
+    <span style="color: #333333">&lt;</span>div<span style="color: #333333">&gt;</span>
+        <span style="color: #333333">&lt;</span><span style="color: #FF0000; background-color: #FFAAAA">!</span><span style="color: #333333">--</span>Home Page Content Goes Here<span style="color: #333333">--&gt;</span>
+    <span style="color: #333333">&lt;/</span>div<span style="color: #333333">&gt;</span>
+<span style="color: #333333">/</span>{<span style="color: #333333">%</span> endblock <span style="color: #333333">%/</span>}
+</pre>
+<p>The <code>extends</code> statement used above establishes the inheritence link between the two templates. When Jinja2 is asked to render the home page, it will know that it also needs to embed the <code>base.html</code> file.</p>
+<p>Run your Flask application and you should be able to see your home page.</p>
+<p><img class="img-fluid" style="max-width: 100%; height: auto;" src="{{ url_for('static', filename='images/template_inheritence.png') }}" alt="Template Inheritence In Flask"></p>
+<p>With that, you can go ahead and create the other templates needed to complete our personal blog. For your reference, you will need:</p>
+<ul>
+<li>About Me template</li>
+<li>Portfolio template</li>
+<li>Hire Me template</li>
+<li>My Interests template</li>
+</ul>
+<p>If you would like to see the changes you make in the application without the need to exit and restart the flask server every other time, you will need to update your flask environment variables. Add FLASK_ENV and FLASK_DEBUG environment variables in your <code>.flaskenv</code> file.</p>
+<p>.flaskenv: More environment variables</p>
+<pre style="margin: 0; line-height: 125%"><span style="color: #888888">#...</span>
+    FLASK_ENV<span style="color: #333333">=</span>development <span style="color: #888888"># you are working on a development server</span>
+    FLASK_DEBUG<span style="color: #333333">=</span><span style="color: #008800; font-weight: bold">True</span> <span style="color: #888888"># catching of live updates</span>
+</pre>
+
+
+
+        </div>
+    </div>
+{% endblock %}

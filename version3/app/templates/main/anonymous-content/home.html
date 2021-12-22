@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="row hero">
+        <div class="col-sm-5 hero-text">
+            <p>
+                Stand out from the crowd.<br><br>
+                Learn what matters the most!
+            </p>
+            <a href="#" class="btn btn-success">Register Now</a>
+        </div>
+        <div class="col-sm-7 text-center hero-img">
+            <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/pair_programming.svg')}}" alt="Stand Out">
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 blog vertical-line">
+                <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/template_inheritance.svg')}}" alt="Template Inheritance">
+                <h2>Template Inheritance in Flask</h2>
+                <p>
+                    <blockquote>
+                        The most powerful part of Jinja is template inheritance. 
+                        Template inheritance allows you to build a base “skeleton” template 
+                        that contains all the common elements of your site and defines 
+                        blocks that child templates can override.
+                    </blockquote>
+                </p>
+                <a href=" {{ url_for('main.blog_template_inheritance') }} " class="btn btn-primary">Learn More</a>
+            </div>
+            <div class="col-sm-4 blog vertical-line">
+                <img class="img-fluid" style="max-width: 85%; height: auto;" src="{{url_for('static', filename = 'images/flask_mail.svg')}}" alt="Flask Mail">
+                <h2>Configure Flask to Send Mail</h2>
+                <p>
+                    Web-based applications typically require the ability to send mail to the user or client.
+                    Flask provides a simple way to send mail using the <code>Flask-Mail</code> extension. 
+                    This extension provides a simple interface to set up SMTP with your Flask application 
+                    and to send messages from your views and scripts.
+                </p>
+                <a href=" # " class="btn btn-primary disabled">Learn More</a>
+            </div>
+            <div class="col-sm-4 blog">
+                <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/timestamp.svg')}}" alt="Timestamp">
+                <h2>Beautiful Timestamps in Flask</h2>
+                <p>
+                    Most social media applications use timestamps to show when a post was created. This feedback
+                    is really helpful to the users of the platform. The ability of an application to remember 
+                    the time a post was made is a very important feature in the sense that the application
+                    can sort the posts by time.
+                </p>
+                <a href=" # " class="btn btn-primary disabled">Learn More</a>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-4 blog vertical-line">
+                <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/forms.svg')}}" alt="Web Forms">
+                <h2>Flask Web Forms</h2>
+                <p>
+                    It is a very common feature where web applications allow users to interact with
+                    the application. Users can post comments or send messages. All these data are 
+                    normally collected using web forms. Flask provides a simple way to create web forms
+                    using the <code>Flask-WTF</code> extension.
+                </p>
+                <a href=" # " class="btn btn-primary disabled">Learn More</a>
+            </div>
+            <div class="col-sm-4 blog vertical-line">
+                <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/timestamp.svg')}}" alt="Timestamp">
+                <h2>Beautiful Timestamps in Flask</h2>
+                <p>
+                    Most social media applications use timestamps to show when a post was created. This feedback
+                    is really helpful to the users of the platform. The ability of an application to remember 
+                    the time a post was made is a very important feature in the sense that the application
+                    can sort the posts by time.
+                </p>
+                <a href=" # " class="btn btn-primary disabled">Learn More</a>
+            </div>
+        </div>
+{% endblock %}

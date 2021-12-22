@@ -21,6 +21,26 @@
 }
 
 /* ------------------------------------------ */
+/*NAVBAR */
+/* ------------------------------------------ */
+.navbar-brand {
+  font-size: 30px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+/* Dropdown menu */
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
+.dropdown > .dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+  pointer-events: none;
+}
+.dropdown-item {
+  padding: 10px;
+}
+
+/* ------------------------------------------ */
 /* CUSTOM STYLES */
 /* ------------------------------------------ */
 html, body {
@@ -106,6 +126,74 @@ a:hover {
 .card-deck:hover {
   box-shadow: 5px 5px 10px 5px #c4c4c4;
 }
+
+/* Blog content */
+.blog {
+  margin-bottom:10px;
+  padding: 10px;
+}
+
+.blog:hover {
+  box-shadow: 5px 5px 10px 5px #c4c4c4;
+}
+
+/* Vertical line */
+.vertical-line {
+  border-right: 1px solid #ddd;
+}
+
+/* Hero Section */
+.hero {
+  margin-top: 200px;
+  margin-bottom: 200px;
+}
+.hero-text p {
+  font-size: 60px;
+  line-height: 60px;
+}
+.hero-text a {
+  background-color: orange;
+  font-size: 35px;
+}
+@media screen and (max-width: 600px) {
+  /* Place the timelime to the left */
+  .hero {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Courses */
+.course-details {
+  background-color: #fffaf1;
+  font-size: 30px;
+  font-weight: 600;
+}
+.course-details span {
+  color: orange;
+}
+.course-title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.course-title h2 {
+  font-size: 30px;
+  font-weight: 600;
+}
+.course-title a {
+  background-color: orange;
+  font-size: 35px;
+}
+.student-alt {
+  background-color: #f5f5f5;
+}
+.student {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 /* ------------------------------------------ */
 /* HOMEPAGE VERTICAL TABS */
 /* ------------------------------------------ */
