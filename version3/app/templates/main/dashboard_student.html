@@ -50,20 +50,67 @@
                 <h1>Your Courses</h1>
                 <div class="col-sm-6">
                     <!-- Enrolled Courses Card -->
-                    <div class="card-deck text-center">
-                        <div class="card">
-                            <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Parent">
-                            <div class="card-body">
-                                <h4 class="card-title">Web Development</h4><hr>
-                                <p class="card-text">
-                                    You will learn how to build a website using HTML, CSS, and JavaScript.
-                                    Learn best practices for building responsive websites.
-                                </p>
-                                <a href=" {{ url_for('main.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">Start Lesson</a>
-                                <a href=" # " class="btn btn-primary">Quizzes</a>
-                            </div>            
+                    {% if student.student_course == 'Flask Web Development' %}
+                        <div class="card-deck text-center">
+                            <div class="card">
+                                <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Parent">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ student.student_course }}</h4><hr>
+                                    <p class="card-text">
+                                        You will learn how to build a website using HTML, CSS, Python and the Flask Framework.
+                                        Learn best practices for building responsive websites.
+                                    </p>
+                                    <a href=" {{ url_for('main.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">Start Lesson</a>
+                                    <a href=" # " class="btn btn-primary">Quizzes</a>
+                                </div>            
+                            </div>
                         </div>
-                    </div>
+                    {% elif student.student_course == 'Python DSA' %}
+                        <div class="card-deck text-center">
+                            <div class="card">
+                                <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Parent">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ student.student_course }}</h4><hr>
+                                    <p class="card-text">
+                                        Understanding Data Structures and Algorithms is a must for any developer.
+                                        Not only is it required, but is also helps build your logical reasoning skills
+                                    </p>
+                                    <a href=" {{ url_for('main.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">Start Lesson</a>
+                                    <a href=" # " class="btn btn-primary">Quizzes</a>
+                                </div>            
+                            </div>
+                        </div>
+                    {% elif student.student_course == 'Data Science' %}
+                        <div class="card-deck text-center">
+                            <div class="card">
+                                <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Parent">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ student.student_course }}</h4><hr>
+                                    <p class="card-text">
+                                        Data has become the new gold. Being able to work with data will set you apart.
+                                        There are tons of data around that need to be analyzed to make meaning out of them.
+                                    </p>
+                                    <a href=" {{ url_for('main.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">Start Lesson</a>
+                                    <a href=" # " class="btn btn-primary">Quizzes</a>
+                                </div>            
+                            </div>
+                        </div>
+                    {% elif student.student_course == 'Machine Learning' %}
+                        <div class="card-deck text-center">
+                            <div class="card">
+                                <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Parent">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ student.student_course }}</h4><hr>
+                                    <p class="card-text">
+                                        Machine Learning is a discipline of Artificial Intelligence. You will learn how to 
+                                        make a computer become smarter and do stuff for you.
+                                    </p>
+                                    <a href=" {{ url_for('main.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">Start Lesson</a>
+                                    <a href=" # " class="btn btn-primary">Quizzes</a>
+                                </div>            
+                            </div>
+                        </div>
+                    {% endif %}
                     <!-- End of Enrolled Courses Card -->
                 </div>
                 <div class="col-sm-6">
