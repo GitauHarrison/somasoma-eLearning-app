@@ -65,7 +65,9 @@ def blog_template_inheritance():
         db.session.add(user)
         db.session.commit()
         flash('Your comment has been published.')
-        return redirect(url_for('main.blog_template_inheritance'))
+        return redirect(url_for(
+            'main.blog_template_inheritance',
+            _anchor='comments'))
     page = request.args.get('page', 1, type=int)
     comments = AnonymousTemplateInheritanceComment.query.order_by(
         AnonymousTemplateInheritanceComment.timestamp.desc()
@@ -74,9 +76,15 @@ def blog_template_inheritance():
         current_app.config['POSTS_PER_PAGE'],
         False
         )
-    next_url = url_for('main.blog_template_inheritance', page=comments.next_num) \
+    next_url = url_for(
+        'main.blog_template_inheritance',
+        page=comments.next_num,
+        _anchor="comments") \
         if comments.has_next else None
-    prev_url = url_for('main.blog_template_inheritance', page=comments.prev_num) \
+    prev_url = url_for(
+        'main.blog_template_inheritance',
+        page=comments.prev_num,
+        _anchor="comments") \
         if comments.has_prev else None
     all_comments = len(AnonymousTemplateInheritanceComment.query.all())
     return render_template(
