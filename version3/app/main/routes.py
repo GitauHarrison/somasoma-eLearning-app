@@ -4,10 +4,10 @@ from flask import render_template, redirect, url_for, flash, request,\
     current_app
 from app.main.forms import CommentForm, EditProfileForm,\
     Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm,\
-    EmptyForm
+    EmptyForm, AnonymousCommentForm
 from app.models import WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
-    Parent, Student, Teacher
+    Parent, Student, Teacher, User, AnonymousTemplateInheritanceComment
 from flask_login import current_user, login_required
 from datetime import datetime
 
@@ -52,11 +52,41 @@ def blog():
         )
 
 
-@bp.route('/blog/template-inheritance')
+@bp.route('/blog/template-inheritance', methods=['GET', 'POST'])
 def blog_template_inheritance():
+    form = AnonymousCommentForm()
+    if form.validate_on_submit():
+        user = User(name=form.name.data, email=form.email.data)
+        comment = AnonymousTemplateInheritanceComment(
+            body=form.comment.data,
+            author=user
+            )
+        db.session.add(comment)
+        db.session.add(user)
+        db.session.commit()
+        flash('Your comment has been published.')
+        return redirect(url_for('main.blog_template_inheritance'))
+    page = request.args.get('page', 1, type=int)
+    comments = AnonymousTemplateInheritanceComment.query.order_by(
+        AnonymousTemplateInheritanceComment.timestamp.desc()
+        ).paginate(
+        page,
+        current_app.config['POSTS_PER_PAGE'],
+        False
+        )
+    next_url = url_for('main.blog_template_inheritance', page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for('main.blog_template_inheritance', page=comments.prev_num) \
+        if comments.has_prev else None
+    all_comments = len(AnonymousTemplateInheritanceComment.query.all())
     return render_template(
         'main/anonymous-content/blog_template_inheritance.html',
-        title='Template Inheritance'
+        title='Template Inheritance',
+        form=form,
+        comments=comments.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        all_comments=all_comments
         )
 
 # Dashboard routes
