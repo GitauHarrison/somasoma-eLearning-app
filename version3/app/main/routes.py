@@ -19,6 +19,46 @@ def before_request():
         db.session.commit()
 
 
+@bp.route('/')
+@bp.route('/home')
+def home():
+    return render_template(
+        'main/anonymous-content/home.html',
+        title='Home'
+        )
+
+
+@bp.route('/flask-web-deveopment-course')
+def flask_web_deveopment_course():
+    return render_template(
+        'main/anonymous-content/courses_flask_web_development.html',
+        title='Flask Web Development Course'
+        )
+
+
+@bp.route('/events')
+def events():
+    return render_template(
+        'main/anonymous-content/events.html',
+        title='Events'
+        )
+
+
+@bp.route('/blog')
+def blog():
+    return render_template(
+        'main/anonymous-content/blog.html',
+        title='Blog'
+        )
+
+
+@bp.route('/blog/template-inheritance')
+def blog_template_inheritance():
+    return render_template(
+        'main/anonymous-content/blog_template_inheritance.html',
+        title='Template Inheritance'
+        )
+
 # Dashboard routes
 
 
