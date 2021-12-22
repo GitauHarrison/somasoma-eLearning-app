@@ -1,7 +1,7 @@
 from app import create_app, db
 from app.models import CommunityComment, WebDevChapter1Comment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, Student, Parent,\
-    Teacher
+    Teacher, WebDevChapter1QuizOptions
 
 app = create_app()
 
@@ -16,5 +16,6 @@ def make_shell_context():
         CommunityComment=CommunityComment,
         WebDevChapter1Comment=WebDevChapter1Comment,
         WebDevChapter1Objectives=WebDevChapter1Objectives,
-        WebDevChapter1Quiz=WebDevChapter1Quiz
+        WebDevChapter1Quiz=WebDevChapter1Quiz,
+        WebDevChapter1QuizOptions=WebDevChapter1QuizOptions
         )
