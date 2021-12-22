@@ -55,15 +55,14 @@
                         
                     </a>
                 {% else %}
-                    <a class="navbar-brand" href=" # ">
+                    <a class="navbar-brand" href=" {{ url_for('main.home') }} ">
                         <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                         
                     </a>
                 {% endif %}
             {% else %}
-                <a class="navbar-brand" href=" {{ url_for('auth.login') }} ">
-                    <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                    
+                <a class="navbar-brand" href=" {{ url_for('main.home') }} ">
+                    somaSoma
                 </a>
             {% endif %}
         </div>
@@ -80,7 +79,20 @@
                         <li><a href=" # ">Logout</a></li> 
                     {% endif %}
                 {% else %}
-                    <li><a href=" {{ url_for('auth.login') }} ">Login</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Courses
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href=" {{ url_for('main.flask_web_deveopment_course') }} ">Web Development</a><br>
+                            <!-- <a class="dropdown-item" href=" # ">Python DSA</a><br>
+                            <hr>
+                            <a class="dropdown-item disabled" href="#">Data Science</a><br>
+                            <a class="dropdown-item disabled" href="#">Machine Learning</a> -->
+                        </div>
+                    </li>
+                    <li><a href=" {{ url_for('main.events') }} ">Events</a></li> 
+                    <li><a href=" {{ url_for('main.blog') }} ">Blog</a></li> 
                 {% endif %}
             </ul>                       
         </div>
