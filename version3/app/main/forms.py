@@ -13,6 +13,22 @@ class CommentForm(FlaskForm):
     submit = SubmitField('Post')
 
 
+# Anonymous Comment form
+
+
+class AnonymousCommentForm(FlaskForm):
+    name = StringField('Name',
+                       validators=[DataRequired(), Length(min=2, max=20)]
+                       )
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()]
+                        )
+    comment = TextAreaField('Comment',
+                            validators=[DataRequired()]
+                            )
+    submit = SubmitField('Post')
+
+
 # Follow form
 
 
