@@ -25,6 +25,7 @@ def login_parent():
             flash('Invalid username or password')
             return redirect(url_for('auth.login_parent'))
         login_user(parent, remember=form.remember_me.data)
+        flash(f'Welcome {parent.parent_full_name}!')
         return redirect(url_for('dashboard_parent'))
     return render_template(
         'auth/login_parent.html',
@@ -46,6 +47,7 @@ def login_teacher():
             flash('Invalid username or password')
             return redirect(url_for('auth.login_teacher'))
         login_user(teacher, remember=form.remember_me.data)
+        flash(f'Welcome {teacher.teacher_full_name}!')
         return redirect(url_for('dashboard_teacher'))
     return render_template(
         'auth/login_teacher.html',
@@ -125,9 +127,9 @@ def register_student():
         db.session.add(student)
         db.session.commit()
         flash(
-            'Student successfully registered. Student can login to continue!'
+            'Student successfully registered. Pay to continue!'
             )
-        return redirect(url_for('auth.login_student'))
+        return redirect(url_for('main.checkout'))
     return render_template(
         'auth/register_student.html',
         title='Student Registration',

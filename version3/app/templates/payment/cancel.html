@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <p>
+                Don't worry. Your order has been cancelled. 
+            </p>
+            <p>
+                If you would like to make another order, 
+                click on <a href="{{  url_for('main.checkout')}}">this link</a> to go to the order page.
+            </p>
+        </div>
+    </div>
+{% endblock %}

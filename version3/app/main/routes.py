@@ -1,7 +1,7 @@
-from app import db
+from app import db, products
 from app.main import bp
 from flask import render_template, redirect, url_for, flash, request,\
-    current_app
+    current_app, abort
 from app.main.forms import CommentForm, EditProfileForm,\
     Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm,\
     EmptyForm, AnonymousCommentForm
@@ -10,6 +10,7 @@ from app.models import WebDevChapter1Comment, CommunityComment,\
     Parent, Student, Teacher, User, AnonymousTemplateInheritanceComment
 from flask_login import current_user, login_required
 from datetime import datetime
+import stripe
 
 
 @bp.before_request
@@ -17,6 +18,99 @@ def before_request():
     if current_user.is_authenticated:
         current_user.student_last_seen = datetime.utcnow()
         db.session.commit()
+
+
+# ===========================================================
+# PAYMENT
+# ===========================================================
+
+
+@bp.route('/checkout')
+def checkout():
+    return render_template(
+        'payment/orders.html',
+        title='Orders',
+        products=products
+    )
+
+
+@bp.route('/order/<product_id>', methods=['POST'])
+def order(product_id):
+    stripe.api_key = current_app.config['STRIPE_SECRET_KEY']
+    if product_id not in products:
+        abort(404)
+    checkout_session = stripe.checkout.Session.create(
+        line_items=[
+            {
+                'price_data': {
+                    'product_data': {
+                        'name': products[product_id]['name'],
+                    },
+                    'unit_amount': products[product_id]['price'],
+                    'currency': 'usd',
+                },
+                'quantity': 1,
+                'adjustable_quantity': products[product_id].get(
+                    'adjustable_quantity',
+                    {'enabled': False}
+                ),
+            },
+        ],
+        payment_method_types=['card'],
+        mode='payment',
+        success_url=request.host_url + 'order/success',
+        cancel_url=request.host_url + 'order/cancel',
+    )
+    return redirect(checkout_session.url)
+
+
+@bp.route('/order/success')
+def success():
+    flash(
+        'Thank you for your order! Check your email for further instructions'
+        )
+    return render_template(
+        'payment/success.html',
+        title='Order Successful'
+        )
+
+
+@bp.route('/order/cancel')
+def cancel():
+    flash('Your order has been cancelled')
+    return render_template(
+        'payment/cancel.html',
+        title='Order Cancelled'
+        )
+
+
+@bp.route('/event', methods=['POST'])
+def new_event():
+    event = None
+    payload = request.data
+    signature = request.headers['STRIPE_SIGNATURE']
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, signature, current_app.config['STRIPE_WEBHOOK_SECRET'])
+    except Exception as e:
+        # the payload could not be verified
+        abort(400)
+
+    if event['type'] == 'checkout.session.completed':
+        session = stripe.checkout.Session.retrieve(
+            event['data']['object'].id, expand=['line_items'])
+        print(f'Sale to {session.customer_details.email}:')
+        for item in session.line_items.data:
+            print(f'  - {item.quantity} {item.description} '
+                  f'${item.amount_total/100:.02f} {item.currency.upper()}')
+
+    return {'success': True}
+
+
+# ===========================================================
+# PAYMENT
+# ===========================================================
 
 
 @bp.route('/')

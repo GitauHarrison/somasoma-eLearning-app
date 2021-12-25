@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Order</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id in products %}
+                        <tr>
+                            <td>{{ products[id].name }}</td>
+                            <td>
+                                {{ "$%.2f"|format(products[id].price / 100) }} USD
+                                {% if products[id].per %} per {{ products[id].per }} {% endif %}
+                            </td>
+                            <td>
+                                <form method="POST" action="/order/{{ id }}">
+                                    <input type="submit" value="Order Now!">
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

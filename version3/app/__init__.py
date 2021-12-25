@@ -1,4 +1,4 @@
-from flask import Flask, current_app
+from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -29,6 +29,35 @@ login.login_view = 'auth.login_parent'
 login.login_view = 'auth.login_teacher'
 moment = Moment()
 mail = Mail()
+
+products = {
+        'flask': {
+            'name': 'Web Development with Flask and Python',
+            'price': 3900,
+        },
+        'python-dsa': {
+            'name': 'Python Data Structures and Algorithms',
+            'price': 3900,
+        },
+        'data-science': {
+            'name': 'Data Science with Python',
+            'price': 7000,
+        },
+        'machine-learning': {
+            'name': 'Machine Learning',
+            'price': 7000,
+        },
+        'support': {
+            'name': 'Python 1:1 support',
+            'price': 10000,
+            'per': 'hour',
+            'adjustable_quantity': {
+                'enabled': True,
+                'minimum': 1,
+                'maximum': 3
+            },
+        },
+    }
 
 
 def create_app(config_class=Config):
