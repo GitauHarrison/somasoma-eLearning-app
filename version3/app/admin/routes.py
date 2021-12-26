@@ -3,6 +3,7 @@ from app.admin import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app
 from app.admin.forms import EditProfileForm
+from app.auth.forms import TeacherRegistrationForm
 from app.models import CommunityComment, Admin, Student, Teacher, Parent, User
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -17,7 +18,7 @@ def before_request():
 
 # Dashboard
 
-@bp.route('/dashboard')
+@bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_admin():
     admin = Admin.query.filter_by(
@@ -29,6 +30,24 @@ def dashboard_admin():
     all_students = len(Student.query.all())
     all_teachers = len(Teacher.query.all())
     all_parents = len(Parent.query.all())
+
+    # Teacher Registration
+    teacher_form = TeacherRegistrationForm()
+    if teacher_form.validate_on_submit():
+        teacher = Teacher(
+            teacher_full_name=teacher_form.teacher_full_name.data,
+            teacher_email=teacher_form.teacher_email.data,
+            teacher_phone=teacher_form.teacher_phone.data,
+            teacher_residence=teacher_form.teacher_residence.data,
+            teacher_course=teacher_form.teacher_course.data
+        )
+        teacher.set_password(teacher_form.teacher_password.data)
+        db.session.add(teacher)
+        db.session.commit()
+        flash('Teacher successfully registered')
+        return redirect(url_for('admin.dashboard_admin'))
+    # End of teacher registration
+
     return render_template(
         'admin/dashboard_admin.html',
         admin=admin,
@@ -37,7 +56,8 @@ def dashboard_admin():
         parents=parents,
         all_students=all_students,
         all_teachers=all_teachers,
-        all_parents=all_parents
+        all_parents=all_parents,
+        teacher_form=teacher_form
         )
 
 

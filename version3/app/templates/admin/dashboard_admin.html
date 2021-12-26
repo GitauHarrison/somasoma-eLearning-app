@@ -161,44 +161,61 @@
         <div id="teachers" class="tabcontent">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1>All Teachers ({{ all_teachers }})</h1>
+                    <h1>Teachers</h1>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Full Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Residence</th>
-                                <th>Course</th>
-                                <th>Last Seen On</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for teacher in teachers %}
-                                <tr>
-                                    <td>{{ teacher.id }}</td>
-                                    <td>{{ teacher.teacher_full_name }}</td>
-                                    <td>{{ teacher.teacher_email }}</td>
-                                    <td>{{ teacher.teacher_phone }}</td>
-                                    <td>{{ teacher.teacher_residence }}</td>
-                                    <td>{{ teacher.teacher_course }}</td>
-                                    <td>{{ moment(teacher.teacher_last_seen).format('LLL') }}</td>
-                                    <td>
-                                        <span class="label label-danger">
-                                            <a href="{{ url_for('admin.delete_account_teacher', teacher_id=teacher.id) }}">Delete</a>
-                                        </span>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                <!-- Add new teachers -->
+                <div class="row admin-teacher">
+                    <div class="col-sm-6">
+                        <h2>Add New Teacher</h2>
+                        <div class="my-form">
+                            {{ wtf.quick_form(teacher_form) }}
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- Empty column -->
+                    </div>
                 </div>
+                <!-- List all teachers -->
+                <div class="row admin-teacher">
+                    <div class="col-sm-12">
+                        <h2>All Teachers ({{ all_teachers }})</h2>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Residence</th>
+                                    <th>Course</th>
+                                    <th>Last Seen On</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for teacher in teachers %}
+                                    <tr>
+                                        <td>{{ teacher.id }}</td>
+                                        <td>{{ teacher.teacher_full_name }}</td>
+                                        <td>{{ teacher.teacher_email }}</td>
+                                        <td>{{ teacher.teacher_phone }}</td>
+                                        <td>{{ teacher.teacher_residence }}</td>
+                                        <td>{{ teacher.teacher_course }}</td>
+                                        <td>{{ moment(teacher.teacher_last_seen).format('LLL') }}</td>
+                                        <td>
+                                            <span class="label label-danger">
+                                                <a href="{{ url_for('admin.delete_account_teacher', teacher_id=teacher.id) }}">Delete</a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- End of listing all teachers -->
             </div>
         </div>
         <!-- END OF ALL TEACHERS TAB -->

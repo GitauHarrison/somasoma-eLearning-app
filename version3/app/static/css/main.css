@@ -64,7 +64,7 @@ p, li, td, .btn, .btn-alt, .schedule-btn{
 }
 
 /* Profile */
-.profile, .update-account, .two-factor-auth {
+.profile, .update-account, .two-factor-auth, .admin-teacher {
   padding-top: 15px;
   padding-bottom: 15px;
   box-shadow: 5px 5px 10px 5px #ebeae9;
@@ -72,7 +72,7 @@ p, li, td, .btn, .btn-alt, .schedule-btn{
   margin-left: 10px;
 
 }
-.profile:hover, .update-account:hover, .two-factor-auth:hover {
+.profile:hover, .update-account:hover, .two-factor-auth:hover, .admin-teacher:hover {
   box-shadow: 5px 5px 10px 5px #c4c4c4;
 }
 a:hover {

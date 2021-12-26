@@ -213,31 +213,6 @@ def register_parent():
         )
 
 
-@bp.route('/register/teacher', methods=['GET', 'POST'])
-def register_teacher():
-    if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard_teacher'))
-    form = TeacherRegistrationForm()
-    if form.validate_on_submit():
-        teacher = Teacher(
-            teacher_full_name=form.teacher_full_name.data,
-            teacher_email=form.teacher_email.data,
-            teacher_phone=form.teacher_phone.data,
-            teacher_residence=form.teacher_residence.data,
-            teacher_course=form.teacher_course.data
-        )
-        teacher.set_password(form.teacher_password.data)
-        db.session.add(teacher)
-        db.session.commit()
-        flash('Teacher successfully registered. Login to continue!')
-        return redirect(url_for('auth.login_teacher'))
-    return render_template(
-        'auth/register_user.html',
-        title='Teacher Registration',
-        form=form
-        )
-
-
 @bp.route('/register/admin', methods=['GET', 'POST'])
 def register_admin():
     if current_user.is_authenticated:
