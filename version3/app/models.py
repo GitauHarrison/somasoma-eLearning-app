@@ -195,6 +195,7 @@ class Parent(UserMixin, db.Model):
     parent_phone = db.Column(db.String(120), index=True)
     parent_occupation = db.Column(db.String(120), index=True)
     parent_residence = db.Column(db.String(120), index=True)
+    parent_last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     parent_password_hash = db.Column(db.String(128))
     child = db.relationship('Student', backref='parent', lazy='dynamic')
 
@@ -226,6 +227,7 @@ class Teacher(UserMixin, db.Model):
     teacher_phone = db.Column(db.String(120), index=True, unique=True)
     teacher_residence = db.Column(db.String(120), index=True)
     teacher_course = db.Column(db.String(120), index=True)
+    teacher_last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     teacher_password_hash = db.Column(db.String(128))
 
     def __repr__(self):
