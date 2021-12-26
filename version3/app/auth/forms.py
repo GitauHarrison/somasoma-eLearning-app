@@ -1,4 +1,4 @@
-from app.models import Parent, Student, Teacher
+from app.models import Parent, Student, Teacher, Admin
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField,\
     SelectField
@@ -21,6 +21,49 @@ class LoginForm(FlaskForm):
 # End of Login form
 
 # Registration form
+
+
+class AdminRegistrationForm(FlaskForm):
+    admin_full_name = StringField(
+        'Admin Full Name',
+        validators=[DataRequired(), Length(min=2, max=20)]
+        )
+    admin_email = StringField(
+        'Admin Email',
+        validators=[DataRequired(), Email()],
+        render_kw={"placeholder": "Valid Email Address"}
+        )
+    admin_phone = StringField(
+        'Admin Phone Number',
+        validators=[DataRequired()]
+        )
+    admin_password = PasswordField(
+        'Admin Password',
+        validators=[DataRequired()]
+        )
+    admin_confirm_password = PasswordField(
+        'Admin Confirm Password',
+        validators=[DataRequired(), EqualTo('admin_password')]
+        )
+    submit = SubmitField('Register')
+
+    def validate_admin_full_name(self, admin_full_name):
+        admin = Admin.query.filter_by(
+            admin_full_name=admin_full_name.data
+            ).first()
+        if admin:
+            raise ValidationError(
+                'Name already taken. Please choose a different one.'
+                )
+
+    def validate_admin_email(self, admin_email):
+        admin = Admin.query.filter_by(
+            admin_email=admin_email.data
+            ).first()
+        if admin:
+            raise ValidationError(
+                'Name already taken. Please choose a different one.'
+                )
 
 
 class StudentRegistrationForm(FlaskForm):

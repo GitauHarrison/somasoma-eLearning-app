@@ -1,0 +1,18 @@
+<p>Dear {{ student.student_full_name }},</p>
+<p>
+    These are your registraion details:
+</p>
+<ul>
+    <li>{{ student.student_full_name }}</li>
+    <li>{{ student.student_email }}</li>
+    <li>{{ student.student_phone }}</li>
+    <li>{{ student.student_school }}</li>
+    <li>{{ student.student_age }}</li>
+    <li>{{ student.student_course }}</li>
+</ul>
+<p>
+    Kindly click the login button below to access your student dashboard:<br><br>
+    <a href="{{ url_for('auth.login, _external=True') }}" class="btn btn-primary">Login to Student Dashboard</a>
+</p>
+<p>Sincerely,</p>
+<p>The somasoma eLearning Team</p>

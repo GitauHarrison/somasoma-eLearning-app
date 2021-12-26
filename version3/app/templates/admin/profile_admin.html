@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+<!-- Flash message -->
+<div class="row">
+    <div class="col-sm-12">
+        {% include '_flash_message.html' %}
+    </div>
+</div>
+<!-- End of flash message -->
+<div class="row">
+    <div class="col-sm-12">
+        <H1>{{ title }}</H1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <img src=" {{ admin.avatar_admin(128) }} " class="img-circle">
+    </div>
+    <div class="col-sm-9">
+        <p>
+            Your Full Name: <span style="font-weight: 600;">{{ admin.admin_full_name }}</span> 
+        </p>
+        <p>
+            Email: <span style="font-weight: 600;">{{ admin.admin_email }}</span> 
+        </p>
+        <p>
+            Phone: <span style="font-weight: 600;">{{ admin.admin_phone }}</span> 
+        </p>
+        <p>
+            Age: <span style="font-weight: 600;">{{ admin.admin_age }}</span> 
+        </p>
+        <p>
+            School: <span style="font-weight: 600;">{{ admin.admin_school }}</span> 
+        </p>
+        <p>
+            Course: <span style="font-weight: 600;">{{ admin.admin_course }}</span> 
+        </p>
+        {% if admin.admin_about_me %}
+            <p>
+                About me: <span style="font-weight: 600;">{{ admin.admin_about_me }}</span>
+            </p>
+        {% endif %}
+        {% if admin.admin_last_seen %}
+            <p>
+                Last seen on: <span style="font-weight: 600;">{{ moment(admin.admin_last_seen).format('LLL') }}</span>
+            </p>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        {% for comment in comments %}
+            {% include '_comments_admins.html' %}
+        {% endfor %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <nav aria-label="...">
+            <ul class="pager">
+                <li class="previous{% if not prev_url %} disabled{% endif %}">
+                    <a href="{{ prev_url or '#' }}">
+                        <span aria-hidden="true">&larr;</span> Newer posts
+                    </a>
+                </li>
+                <li class="next{% if not next_url %} disabled{% endif %}">
+                    <a href="{{ next_url or '#' }}">
+                        Older posts <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-sm-4">
+        <!-- Empty columns -->
+    </div>
+    <div class="col-sm-4">
+        <p>
+            <a href=" {{ url_for('admin.dashboard_admin', admin_full_name=admin.admin_full_name) }} " class="btn btn-primary">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    Back to Dashboard
+            </a>
+        </p>
+    </div>
+    <div class="col-sm-4">
+        <!-- Empty columns -->
+    </div>
+</div>
+{% endblock %}

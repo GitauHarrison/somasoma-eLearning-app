@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
 
 {% block app_content %}
-<div class="col-sm-12">
-    <H1>Teacher Dashboard</H1>
-</div>
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            <H1>Hi, {{ teacher.teacher_full_name }}</H1>
+        </div>
+    </div>
 {% endblock %}

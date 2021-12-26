@@ -8,9 +8,14 @@ import jwt
 from time import time
 
 
+# @login.user_loader
+# def load_student(id):
+#     return Student.query.get(int(id))
+
+
 @login.user_loader
-def load_student(id):
-    return Student.query.get(int(id))
+def load_admin(id):
+    return Admin.query.get(int(id))
 
 
 # @login.user_loader
@@ -23,6 +28,54 @@ followers = db.Table(
     db.Column('follower_id', db.Integer, db.ForeignKey('student.id')),
     db.Column('followed_id', db.Integer, db.ForeignKey('student.id'))
 )
+
+
+class Admin(UserMixin, db.Model):
+    __tablename__ = 'admin'
+    id = db.Column(db.Integer, primary_key=True)
+    admin_full_name = db.Column(db.String(64), index=True, unique=True)
+    admin_email = db.Column(db.String(64), unique=True, index=True)
+    admin_phone = db.Column(db.String(64), unique=True, index=True)
+    admin_last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    admin_about_me = db.Column(db.String(140))
+    admin_password_hash = db.Column(db.String(128))
+
+    def __repr__(self):
+        return f'Admin: {self.admin_full_name}'
+
+    def set_password(self, password):
+        self.admin_password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.admin_password_hash, password)
+
+    def avatar_admin(self, size):
+        digest = md5(self.admin_email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
+
+    def get_reset_password_token(self, expires_in=600):
+        return jwt.encode(
+            {
+                'reset_password': self.id,
+                'exp': time() + expires_in},
+            current_app.config['SECRET_KEY'],
+            algorithm='HS256'
+        ).decode('utf-8')
+
+    # Two-factor authentication
+
+    def two_factor_admin_enabled(self):
+        return self.admin_phone is not None
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, current_app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['reset_password']
+        except:
+            return
+        return Admin.query.get(id)
 
 
 class Student(UserMixin, db.Model):

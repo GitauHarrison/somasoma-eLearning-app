@@ -7,7 +7,7 @@ from app.main.forms import CommentForm, EditProfileForm,\
     EmptyForm, AnonymousCommentForm
 from app.models import WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
-    Parent, Student, Teacher, User, AnonymousTemplateInheritanceComment
+    Parent, Student, Teacher, User, AnonymousTemplateInheritanceComment, Admin
 from flask_login import current_user, login_required
 from datetime import datetime
 import stripe
@@ -67,7 +67,8 @@ def order(product_id):
 @bp.route('/order/success')
 def success():
     flash(
-        'Thank you for your order! Check your email for further instructions'
+        'Thank you for your order! It will be reviewed and the admin will '
+        'contact you shortly via email.',
         )
     return render_template(
         'payment/success.html',
@@ -109,7 +110,7 @@ def new_event():
 
 
 # ===========================================================
-# PAYMENT
+# END OF PAYMENT
 # ===========================================================
 
 
@@ -319,6 +320,10 @@ def profile_student(student_full_name):
         form=form
     )
 
+# =====================================================
+# PROFILE ROUTES
+# =====================================================
+
 
 @bp.route('/student/edit-profile', methods=['GET', 'POST'])
 @login_required
@@ -343,7 +348,9 @@ def edit_profile_student():
         student=student
     )
 
-# End of profile routes
+# =====================================================
+# END OF PROFILE ROUTES
+# =====================================================
 
 # Followership routes
 
@@ -559,7 +566,10 @@ def web_development_chapter_1_objectives_status():
 # Quizzes
 
 
-@bp.route('/student/web-development/chapter-1/quizzes/form', methods=['GET', 'POST'])
+@bp.route(
+    '/student/web-development/chapter-1/quizzes/form',
+    methods=['GET', 'POST']
+    )
 @login_required
 def web_development_chapter_1_quizzes_form():
     student = Student.query.filter_by(
@@ -586,7 +596,10 @@ def web_development_chapter_1_quizzes_form():
         )
 
 
-@bp.route('/student/web-development/chapter-1/quizzes', methods=['GET', 'POST'])
+@bp.route(
+    '/student/web-development/chapter-1/quizzes',
+    methods=['GET', 'POST']
+    )
 @login_required
 def web_development_chapter_1_quiz():
     student = Student.query.filter_by(

@@ -1,0 +1,18 @@
+<p>Dear {{ parent.parent_full_name }},</p>
+<p>
+    These are your registraion details:
+</p>
+<ul>
+    <li>{{ parent.parent_full_name }}</li>
+    <li>{{ parent.parent_email }}</li>
+    <li>{{ parent.parent_phone }}</li>
+    <li>{{ parent.parent_school }}</li>
+    <li>{{ parent.parent_age }}</li>
+    <li>{{ parent.parent_course }}</li>
+</ul>
+<p>
+    Kindly click the login button below to access your parent dashboard:<br><br>
+    <a href="{{ url_for('auth.login, _external=True') }}" class="btn btn-primary">Login to parent Dashboard</a>
+</p>
+<p>Sincerely,</p>
+<p>The somasoma eLearning Team</p>

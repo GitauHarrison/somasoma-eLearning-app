@@ -54,6 +54,11 @@
                         <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                         
                     </a>
+                {% elif admin %}
+                    <a class="navbar-brand" href=" {{ url_for('main.dashboard_admin') }} ">
+                        <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
+                        
+                    </a>
                 {% else %}
                     <a class="navbar-brand" href=" {{ url_for('main.home') }} ">
                         <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
@@ -74,9 +79,11 @@
                     {% elif parent %}
                         <li><a href=" {{ url_for('auth.logout_parent') }} ">Logout</a></li>
                     {% elif teacher %}
-                        <li><a href=" {{ url_for('auth.logout_teacher') }} ">Logout</a></li>                  
+                        <li><a href=" {{ url_for('auth.logout_teacher') }} ">Logout</a></li> 
+                    {% elif admin %}
+                        <li><a href=" {{ url_for('auth.logout_admin') }} ">Logout</a></li>                  
                     {% else %}
-                        <li><a href=" # ">Logout</a></li> 
+                        <li><a href=" {{ url_for('auth.login') }} ">Logout</a></li> 
                     {% endif %}
                 {% else %}
                     <li class="nav-item dropdown">
@@ -208,6 +215,19 @@
             $("#_teacher_verification_phone").intlTelInput("setNumber", $('#teacher_phone').val());
             $('#_teacher_verification_phone').blur(function() {
                 $('#teacher_phone').val($('#_teacher_verification_phone').intlTelInput("getNumber"));
+            });
+        </script>
+        <!-- admin phone number -->
+        <script>
+            $("#admin_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
+            $("#admin_phone").parent().append('<div><input type="tel" id="_admin_verification_phone"></div>');
+            $("#_admin_verification_phone").intlTelInput({
+                separateDialCode: true,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
+            });
+            $("#_admin_verification_phone").intlTelInput("setNumber", $('#admin_phone').val());
+            $('#_admin_verification_phone').blur(function() {
+                $('#admin_phone').val($('#_admin_verification_phone').intlTelInput("getNumber"));
             });
         </script>
 
