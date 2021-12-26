@@ -2,12 +2,9 @@ from app import db, products
 from app.main import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app, abort
-from app.main.forms import CommentForm, EditProfileForm,\
-    Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm,\
-    EmptyForm, AnonymousCommentForm
-from app.models import WebDevChapter1Comment, CommunityComment,\
-    WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
-    Parent, Student, Teacher, User, AnonymousTemplateInheritanceComment, Admin
+from app.main.forms import AnonymousCommentForm
+from app.models import Parent, Teacher, User,\
+    AnonymousTemplateInheritanceComment
 from flask_login import current_user, login_required
 from datetime import datetime
 import stripe
