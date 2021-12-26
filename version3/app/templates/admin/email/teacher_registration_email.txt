@@ -8,7 +8,7 @@ These are your registraion details:
 {{ teacher.teacher_residence }}
 {{ teacher.teacher_course }}
 
-Your temporary password is: 12345
+Your temporary password is: 12345678
 
 Kindly click the link below to access your teacher dashboard:
 

@@ -205,11 +205,13 @@ class TeacherRegistrationForm(FlaskForm):
         )
     teacher_password = PasswordField(
         'Teacher Password',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Temporary: 12345678"}
         )
     teacher_confirm_password = PasswordField(
         'Teacher Confirm Password',
-        validators=[DataRequired(), EqualTo('teacher_password')]
+        validators=[DataRequired(), EqualTo('teacher_password')],
+        render_kw={"placeholder": "Temporary: 12345678"}
         )
     submit = SubmitField('Register')
 
