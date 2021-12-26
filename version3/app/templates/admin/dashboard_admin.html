@@ -19,23 +19,17 @@
             <span class="icon-bar"></span>
         </div>
         <div class="list-group">
-            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'enrolled-courses')" id="defaultOpen">
-                Enrolled Courses
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
+                Admin Account
             </a>
-            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
-                Live Class
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'students')">
+                All Students
             </a>
-            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'explore-community')">
-                Explore Community
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'teachers')">
+                All Teachers
             </a>
-            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'your-community')">
-                Your Community
-            </a>
-            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'account')">
-                Account
-            </a>
-            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'analytics')">
-                Analytics
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'parents')">
+                All Parents
             </a>
         </div>   
     </div>
@@ -44,51 +38,12 @@
     <!-- Start of tab contents -->
     <div class="col-sm-10 ">
 
-        <!-- ENROLLED COURSE TAB -->
-        <div id="enrolled-courses" class="tabcontent">
-            <div class="row">
-                <h1>All Courses</h1>
-                <div class="col-sm-12">
-                    <!-- Empty column -->
-                </div>
-            </div>
-        </div>
-        <!-- END OF ENROLLED COURSE TAB -->
-
-        <!-- LIVE CLASS TAB -->
-        <div id="live-class" class="tabcontent">
-            <div class="row text-center">
-                <h1>Live Class</h1>
-            </div>
-        </div>
-        <!-- END OFLIVE CLASS TAB -->
-
-        <!-- EXPLORE COMMUNITY TAB -->
-        <div id="explore-community" class="tabcontent">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1>Explore Community</h1>
-                </div>
-            </div>
-        </div>
-        <!-- END OF EXPLORE COMMUNITY TAB -->
-
-        <!-- YOUR COMMUNITY TAB -->
-        <div id="your-community" class="tabcontent">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h1>Your Community</h1>
-                </div>
-            </div>
-        </div>
-        <!-- END OF YOUR COMMUNITY TAB -->
-
-        <!-- ACCOUNT TAB -->
+        <!-- ADMIN ACCOUNT TAB -->
         <div id="account" class="tabcontent">
             <div class="row">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1>Your Account</h1>
+                        <h1>Admin Account</h1>
                     </div>
                 </div>
                 <div class="row profile">
@@ -154,19 +109,35 @@
                 </div>
             </div>
         </div>
-        <!-- END OF ACCOUNT TAB -->
+        <!-- END OF ADMIN ACCOUNT TAB -->
 
-        <!-- ANALYTICS TAB -->
-        <div id="analytics" class="tabcontent">
-            <div class="row chapter-objectives">
-                <div class="col-sm-12">
-                    <h1>Web Development</h1>
-                    
-                </div>
-                <!-- Graph will go here -->
+        <!-- ALL STUDENTS TAB -->
+        <div id="students" class="tabcontent">
+            <div class="row text-center">
+                <h1>All Students</h1>
             </div>
         </div>
-        <!-- END OF ANALYTICS TAB -->
+        <!-- END ALL STUDENTS TAB -->
+
+        <!-- ALL TEACHERS TAB -->
+        <div id="teachers" class="tabcontent">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>All Teachers</h1>
+                </div>
+            </div>
+        </div>
+        <!-- END OF ALL TEACHERS TAB -->
+
+        <!-- ALL PARENTS TAB -->
+        <div id="parents" class="tabcontent">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>All Parents</h1>
+                </div>
+            </div>
+        </div>
+        <!-- END OF ALL PARENTS TAB -->
 
     </div>
     <!-- End of tab contents -->
