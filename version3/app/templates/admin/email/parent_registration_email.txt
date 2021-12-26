@@ -2,21 +2,21 @@ Dear {{ parent.parent_full_name }} }},
 
 These are your registraion details:
 
-{{ parent.parent_full_name }}
+Full Name: {{ parent.parent_full_name }}
 
-{{ parent.parent_email }}
+Email: {{ parent.parent_email }}
 
-{{ parent.parent_phone }}
+Phone: {{ parent.parent_phone }}
 
-{{ parent.parent_school }}
+Occupation: {{ parent.parent_occupation }}
 
-{{ parent.parent_age }}
+Residence: {{ parent.parent_residence }}
 
-{{ parent.parent_course }}
+Registration Date: {{ moment(parent.parent_last_seen).format('LLL') }}
 
 Kindly click the login button below to access your parent dashboard:
 
-{{ url_for('auth.login, _external=True') }}
+{{ url_for('auth.login_parent', _external=True) }}
 
 Sincerely,
 

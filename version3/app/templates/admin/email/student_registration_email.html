@@ -3,16 +3,19 @@
     These are your registraion details:
 </p>
 <ul>
-    <li>{{ student.student_full_name }}</li>
-    <li>{{ student.student_email }}</li>
-    <li>{{ student.student_phone }}</li>
-    <li>{{ student.student_school }}</li>
-    <li>{{ student.student_age }}</li>
-    <li>{{ student.student_course }}</li>
+    <li>Full Name: {{ student.student_full_name }}</li>
+    <li>Email: {{ student.student_email }}</li>
+    <li>Phone: {{ student.student_phone }}</li>
+    <li>School: {{ student.student_school }}</li>
+    <li>Age: {{ student.student_age }}</li>
+    <li>Registered for: {{ student.student_course }}</li>
+    <li>Registration Date: {{ moment(student.student_last_seen).format('LLL') }}</li>
 </ul>
 <p>
     Kindly click the login button below to access your student dashboard:<br><br>
-    <a href="{{ url_for('auth.login, _external=True') }}" class="btn btn-primary">Login to Student Dashboard</a>
+    <button type="button" class="btn btn-primary">
+        <a href="{{ url_for('auth.login_student', _external=True) }}" class="btn btn-primary">Login to Student Dashboard</a>
+    </button>
 </p>
 <p>Sincerely,</p>
 <p>The somasoma eLearning Team</p>

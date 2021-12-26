@@ -2,21 +2,21 @@ Dear {{ student.student_full_name }} }},
 
 These are your registraion details:
 
-{{ student.student_full_name }}
+Full Name: {{ student.student_full_name }}
 
-{{ student.student_email }}
+Email: {{ student.student_email }}
 
-{{ student.student_phone }}
+Phone: {{ student.student_phone }}
 
-{{ student.student_school }}
+School: {{ student.student_school }}
 
-{{ student.student_age }}
+Age: {{ student.student_age }}
 
-{{ student.student_course }}
+Registered for: {{ student.student_course }}
 
 Kindly click the login button below to access your student dashboard:
 
-{{ url_for('auth.login, _external=True') }}
+{{ url_for('auth.login', _external=True) }}
 
 Sincerely,
 

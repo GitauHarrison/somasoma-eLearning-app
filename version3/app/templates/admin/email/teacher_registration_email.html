@@ -8,6 +8,7 @@
     <li>Phone: {{ teacher.teacher_phone }}</li>
     <li>Residence{{ teacher.teacher_residence }}</li>
     <li>Teaching Course: {{ teacher.teacher_course }}</li>
+    <li>Registration Date: {{ moment(teacher.teacher_last_seen).format('LLL') }}</li>
 </ul>
 <p>
     Your temporary password is: <strong>12345678</strong>.
@@ -18,7 +19,7 @@
 <p>
     Kindly click the login button below to access your teacher dashboard:<br><br>
     <button type="button" class="btn btn-primary">
-        <a href="{{ url_for('auth.login_teacher', _external=True) }}" class="btn btn-primary">Login to teacher Dashboard</a>
+        <a href="{{ url_for('auth.login_teacher', _external=True) }}" class="btn btn-primary">Login to Teacher Dashboard</a>
     </button>
 </p>
 <p>Sincerely,</p>
