@@ -12,7 +12,7 @@
             <!-- Empty column -->
         </div>
 
-        <div class="col-sm-4 my-form">
+        <div class="col-sm-4 my-form text-center">
             {{ wtf.quick_form(form) }}
         </div>
 
@@ -26,7 +26,7 @@
         </div>
         <div class="col-sm-4">
             <p>
-                <a href=" {{ url_for('main.dashboard_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+                <a href=" {{ url_for('student.dashboard_student') }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                         Back to Dashboard
                 </a>

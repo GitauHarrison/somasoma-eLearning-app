@@ -40,7 +40,7 @@
             </button>
             {% if current_user.is_authenticated %}
                 {% if student %}
-                    <a class="navbar-brand" href=" {{ url_for('main.dashboard_student') }} ">
+                    <a class="navbar-brand" href=" {{ url_for('student.dashboard_student') }} ">
                         <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                         
                     </a>

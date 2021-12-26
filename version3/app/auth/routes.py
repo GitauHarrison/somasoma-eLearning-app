@@ -67,7 +67,7 @@ def login_teacher():
 @bp.route('/login/student', methods=['GET', 'POST'])
 def login_student():
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard_student'))
+        return redirect(url_for('student.dashboard_student'))
     form = LoginForm()
     if form.validate_on_submit():
         student = Student.query.filter_by(
@@ -78,7 +78,7 @@ def login_student():
             return redirect(url_for('auth.login_student'))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('main.dashboard_student')
+            next_page = url_for('student.dashboard_student')
         if student.two_factor_student_enabled():
             request_verification_token(student.student_phone)
             session['student_email'] = student.student_email
@@ -161,7 +161,7 @@ def logout_admin():
 @bp.route('/register/student', methods=['GET', 'POST'])
 def register_student():
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard_student'))
+        return redirect(url_for('student.dashboard_student'))
     form = StudentRegistrationForm()
     if form.validate_on_submit():
         student = Student(
@@ -270,7 +270,7 @@ def register_admin():
 @bp.route('/request-password-reset', methods=['GET', 'POST'])
 def request_password_reset():
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard_student'))
+        return redirect(url_for('student.dashboard_student'))
     form = RequestPasswordResetForm()
     if form.validate_on_submit():
         student = Student.query.filter_by(
@@ -290,10 +290,10 @@ def request_password_reset():
 @bp.route('/reset-password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard_student'))
+        return redirect(url_for('student.dashboard_student'))
     student = Student.verify_reset_password_token(token)
     if not student:
-        return redirect(url_for('main.dashboard_student'))
+        return redirect(url_for('student.dashboard_student'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         student.set_password(form.password.data)
@@ -371,7 +371,7 @@ def enable_2fa_student():
         request_verification_token(session['phone'])
         return redirect(url_for('auth.verify_2fa_student'))
     return render_template(
-        'auth/two-factor-auth/enable_2fa.html',
+        'auth/two-factor-auth/student/enable_2fa.html',
         form=form,
         title='Enable 2fa',
         student=student
@@ -390,7 +390,7 @@ def verify_2fa_student():
                 db.session.commit()
                 flash('You have enabled two-factor authentication')
                 return redirect(url_for(
-                    'main.dashboard_student',
+                    'student.dashboard_student',
                     _anchor='account')
                     )
             else:
@@ -405,7 +405,7 @@ def verify_2fa_student():
                 return redirect(next_page)
         form.token.errors.append('Invalid token')
     return render_template(
-        'auth/two-factor-auth/verify_2fa.html',
+        'auth/two-factor-auth/student/verify_2fa.html',
         form=form,
         title='Verify Token'
         )
@@ -422,9 +422,13 @@ def disable_2fa_student():
         current_user.student_phone = None
         db.session.commit()
         flash('You have disabled two-factor authentication')
-        return redirect(url_for('main.dashboard_student', _anchor='account'))
+        return redirect(url_for(
+            'student.dashboard_student',
+            _anchor='account'
+            )
+        )
     return render_template(
-        'auth/two-factor-auth/disable_2fa.html',
+        'auth/two-factor-auth/student/disable_2fa.html',
         form=form,
         title='Disable 2fa',
         student=student
@@ -445,7 +449,7 @@ def enable_2fa_admin():
         request_verification_token(session['phone'])
         return redirect(url_for('auth.verify_2fa_admin'))
     return render_template(
-        'auth/two-factor-auth/enable_2fa_admin.html',
+        'auth/two-factor-auth/admin/enable_2fa_admin.html',
         form=form,
         title='Enable 2fa for Admin',
         admin=admin
@@ -479,7 +483,7 @@ def verify_2fa_admin():
                 return redirect(next_page)
         form.token.errors.append('Invalid token')
     return render_template(
-        'auth/two-factor-auth/verify_2fa_admin.html',
+        'auth/two-factor-auth/admin/verify_2fa_admin.html',
         form=form,
         title='Verify Token for Admin'
         )
@@ -498,7 +502,7 @@ def disable_2fa_admin():
         flash('You have disabled two-factor authentication')
         return redirect(url_for('admin.dashboard_admin', _anchor='account'))
     return render_template(
-        'auth/two-factor-auth/disable_2fa_admin.html',
+        'auth/two-factor-auth/admin/disable_2fa_admin.html',
         form=form,
         title='Disable 2fa for Admin',
         admin=admin

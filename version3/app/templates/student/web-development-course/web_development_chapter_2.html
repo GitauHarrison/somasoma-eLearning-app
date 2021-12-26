@@ -32,7 +32,7 @@
                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s            
             </p>
             <div class="col-sm-12  embed-responsive embed-responsive-16by9">
-                <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/YwBxwB8u9uY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/nR1xRDa9i4M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </div>
@@ -102,113 +102,93 @@
         </div>
     </div>
     <hr>
-
-    <div class="student_feedback" id="objectives">
-            <!-- Flash message -->
-            <div class="row">
-                <div class="col-sm-12">
-                    {% include '_flash_message.html' %}
-                </div>
-            </div>
-            <!-- End of flash message -->
-
-            <!-- Lesson objectives form -->
-            <div class="row text-center">
-                <div class="col-sm-12">
-                    <h2>Achievement of Lesson Goals</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <!-- Empty column -->
-                </div>
-                <div class="col-sm-6 my-form">
-                    {{ wtf.quick_form(objectives_form) }}
-                </div>
-                <div class="col-sm-3">
-                    <!-- Empty column -->
-                </div>
-            </div>
-            <!-- End of lesson objectives form -->
-            <hr>
-
-            <!-- Chapter navigation -->
-            <div class="row text-center">
-                <div class="col-sm-3">
-                    <p>
-                        <a href=" {{ url_for('main.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">
-                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                                Course Overview
-                        </a>
-                    </p>
-                </div>
-                <div class="col-sm-3">
-                    <p>
-                        <a href=" {{ url_for('main.web_development_chapter_1_quiz', student_full_name=student.student_full_name) }} " target="_blank" class="btn btn-primary">
-                            Assess Yourself
-                        </a>
-                    </p>
-                </div>
-                <div class="col-sm-3">
-                    <p>
-                        <a href=" {{ url_for('main.web_development_chapter_1_objectives_status', student_full_name=student.student_full_name) }} " target="_blank" class="btn btn-primary">
-                            Student Achievements
-                        </a>
-                    </p>
-                </div>
-                <div class="col-sm-3">
-                    <p>
-                        <a href=" {{ url_for('main.web_development_chapter_2', student_full_name=student.student_full_name) }} " class="btn btn-primary">
-                            Chapter 2
-                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-                        </a>
-                    </p>
-                </div>
-            </div>
-            <!-- End of chapter navigation -->
-
-            <!-- COMMENTS SECTION-->
-
-            <div class="row" id="comments">
-                <div class="col-sm-6">
-                    <h2>Comments</h2>
-                </div>
-                <div class="col-sm-6">
-                    <h2 class="text-right">{{ all_comments }} Comments</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    {% for comment in comments %}
-                        {% include '_comments_students.html' %}
-                    {% endfor %}
-                </div>
-            </div>
-            <!-- Pagination -->
-            <div class="row">
-                <div class="col-sm-12">
-                    <nav aria-label="...">
-                        <ul class="pager">
-                            <li class="previous{% if not prev_url %} disabled{% endif %}">
-                                <a href="{{ prev_url or '#' }}">
-                                    <span aria-hidden="true">&larr;</span> Newer posts
-                                </a>
-                            </li>
-                            <li class="next{% if not next_url %} disabled{% endif %}">
-                                <a href="{{ next_url or '#' }}">
-                                    Older posts <span aria-hidden="true">&rarr;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <!-- End of pagination -->
-            <div class="row">
-                <div class="col-sm-12 my-form">
-                    {{ wtf.quick_form(form) }}
-                </div>
-            </div>
-            <!-- END OF COMMENTS SECTION-->
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Achievement of Lesson Goals</h2>
+        </div>
     </div>
+    <!-- Chapter navigation -->
+    <div class="row text-center">
+        <div class="col-sm-3">
+            <p>
+                <a href=" {{ url_for('student.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Course Overview
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-3">
+            <p>
+                <a href="# " target="_blank" class="btn btn-primary">
+                    Assess Yourself
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-3">
+            <p>
+                <a href=" {{ url_for('student.web_development_chapter_1_objectives_status', student_full_name=student.student_full_name) }} " target="_blank" class="btn btn-primary">
+                    Student Achievements
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-3">
+            <p>
+                <a href=" {{ url_for('student.web_development_chapter_2', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+                    Chapter 2
+                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+    <!-- End of chapter navigation -->
+    <hr>
+
+    <!-- COMMENTS SECTION-->
+
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row" id="comments">
+        <div class="col-sm-6">
+            <h2>Comments</h2>
+        </div>
+        <div class="col-sm-6 text-right">
+            <h2>{{ all_comments }} Comments</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Comments will be displayed here -->
+        </div>
+    </div>
+     <!-- Pagination -->
+     <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> Newer posts
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            Older posts <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- End of pagination -->
+    <div class="row">
+        <div class="col-sm-12 my-form">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+    <!-- END OF COMMENTS SECTION-->
 {% endblock %}

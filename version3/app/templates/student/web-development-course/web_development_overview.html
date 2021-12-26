@@ -26,12 +26,12 @@
             <h2>Table of Contents</h2>
             <ul>
                 <li>
-                    <a href="{{ url_for('main.web_development_chapter_1', student_full_name=student.student_full_name) }}">
+                    <a href="{{ url_for('student.web_development_chapter_1', student_full_name=student.student_full_name) }}">
                         Chapter 1: Introduction to Web Development
                     </a>
                 </li>
                 <li>
-                    <a href=" {{ url_for('main.web_development_chapter_2', student_full_name=student.student_full_name) }} ">
+                    <a href=" {{ url_for('student.web_development_chapter_2', student_full_name=student.student_full_name) }} ">
                         Chapter 2: What is HTML?
                     </a>
                 </li>
@@ -59,7 +59,7 @@
     <div class="row text-center">
         <div class="col-sm-6">
             <p>
-                <a href=" {{ url_for('main.dashboard_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+                <a href=" {{ url_for('student.dashboard_student') }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                         Back to Dashboard
                 </a>
@@ -67,7 +67,7 @@
         </div>
         <div class="col-sm-6">
             <p>
-                <a href=" {{ url_for('main.web_development_chapter_1', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+                <a href=" {{ url_for('student.web_development_chapter_1') }} " class="btn btn-primary">
                     Chapter 1
                     <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                 </a>
