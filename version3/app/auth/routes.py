@@ -460,7 +460,7 @@ def verify_2fa_admin():
         if check_verification_token(phone, form.token.data):
             del session['phone']
             if current_user.is_authenticated:
-                current_user.student_phone = phone
+                current_user.admin_phone = phone
                 db.session.commit()
                 flash('You have enabled two-factor authentication')
                 return redirect(url_for(

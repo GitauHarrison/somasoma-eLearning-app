@@ -2,6 +2,7 @@ from app import db
 from app.admin import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app
+from app.admin.forms import EditProfileForm
 from app.models import CommunityComment, Admin
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -50,15 +51,13 @@ def profile_admin(admin_full_name):
         'admin.dashboard_admin', admin_full_name=admin_full_name,
         page=comments.prev_num) \
         if comments.has_prev else None
-    form = EmptyForm()
     return render_template(
         'admin/profile_admin.html',
         title='Profile',
         admin=admin,
         comments=comments.items,
         next_url=next_url,
-        prev_url=prev_url,
-        form=form
+        prev_url=prev_url
     )
 
 # Edit profile routes
