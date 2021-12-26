@@ -3,7 +3,7 @@ from app.admin import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app
 from app.admin.forms import EditProfileForm
-from app.models import CommunityComment, Admin
+from app.models import CommunityComment, Admin, Student, Teacher, Parent, User
 from flask_login import current_user, login_required
 from datetime import datetime
 
@@ -11,7 +11,7 @@ from datetime import datetime
 @bp.before_request
 def before_request():
     if current_user.is_authenticated:
-        current_user.student_last_seen = datetime.utcnow()
+        current_user.admin_last_seen = datetime.utcnow()
         db.session.commit()
 
 
@@ -23,9 +23,21 @@ def dashboard_admin():
     admin = Admin.query.filter_by(
         admin_full_name=current_user.admin_full_name
         ).first()
+    students = Student.query.order_by(Student.student_last_seen.desc()).all()
+    teachers = Teacher.query.order_by(Teacher.teacher_last_seen.desc()).all()
+    parents = Parent.query.order_by(Parent.parent_last_seen.desc()).all()
+    all_students = len(Student.query.all())
+    all_teachers = len(Teacher.query.all())
+    all_parents = len(Parent.query.all())
     return render_template(
         'admin/dashboard_admin.html',
-        admin=admin
+        admin=admin,
+        students=students,
+        teachers=teachers,
+        parents=parents,
+        all_students=all_students,
+        all_teachers=all_teachers,
+        all_parents=all_parents
         )
 
 
@@ -85,3 +97,39 @@ def edit_profile_admin():
         form=form,
         admin=admin
     )
+
+
+# Delete account routes
+
+
+@bp.route('/student/<student_id>/delete-account')
+def delete_account_student(student_id):
+    student = Student.query.filter_by(
+        id=student_id
+        ).first()
+    db.session.delete(student)
+    db.session.commit()
+    flash(f'Student {student_id} account has been deleted!')
+    return redirect(url_for('admin.dashboard_admin'))
+
+
+@bp.route('/teacher/<teacher_id>/delete-account')
+def delete_account_teacher(teacher_id):
+    teacher = Teacher.query.filter_by(
+        id=teacher_id
+        ).first()
+    db.session.delete(teacher)
+    db.session.commit()
+    flash(f'Teacher {teacher_id} account has been deleted!')
+    return redirect(url_for('admin.dashboard_admin'))
+
+
+@bp.route('/parent/<parent_id>/delete-account')
+def delete_account_parent(parent_id):
+    parent = Parent.query.filter_by(
+        id=parent_id
+        ).first()
+    db.session.delete(parent)
+    db.session.commit()
+    flash(f'Parent {parent_id} account has been deleted!')
+    return redirect(url_for('admin.dashboard_admin'))

@@ -113,8 +113,46 @@
 
         <!-- ALL STUDENTS TAB -->
         <div id="students" class="tabcontent">
-            <div class="row text-center">
-                <h1>All Students</h1>
+            <div class="row">
+                <h1>All Students ({{ all_students }})</h1>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Age</th>
+                                <th>School</th>
+                                <th>Course</th>
+                                <th>Last Seen On</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                                <tr>
+                                    <td>{{ student.id }}</td>
+                                    <td>{{ student.student_full_name }}</td>
+                                    <td>{{ student.student_email }}</td>
+                                    <td>{{ student.student_phone }}</td>
+                                    <td>{{ student.student_age }}</td>
+                                    <td>{{ student.student_school }}</td>
+                                    <td>{{ student.student_course }}</td>
+                                    <td>{{ moment(student.student_last_seen).format('LLL') }}</td>
+                                    <td>
+                                        <span class="label label-danger">
+                                            <a href="{{ url_for('admin.delete_account_student', student_id=student.id) }}">Delete</a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <!-- END ALL STUDENTS TAB -->
@@ -123,7 +161,43 @@
         <div id="teachers" class="tabcontent">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1>All Teachers</h1>
+                    <h1>All Teachers ({{ all_teachers }})</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Residence</th>
+                                <th>Course</th>
+                                <th>Last Seen On</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for teacher in teachers %}
+                                <tr>
+                                    <td>{{ teacher.id }}</td>
+                                    <td>{{ teacher.teacher_full_name }}</td>
+                                    <td>{{ teacher.teacher_email }}</td>
+                                    <td>{{ teacher.teacher_phone }}</td>
+                                    <td>{{ teacher.teacher_residence }}</td>
+                                    <td>{{ teacher.teacher_course }}</td>
+                                    <td>{{ moment(teacher.teacher_last_seen).format('LLL') }}</td>
+                                    <td>
+                                        <span class="label label-danger">
+                                            <a href="{{ url_for('admin.delete_account_teacher', teacher_id=teacher.id) }}">Delete</a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -133,7 +207,43 @@
         <div id="parents" class="tabcontent">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1>All Parents</h1>
+                    <h1>All Parents ({{ all_parents }})</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Occupation</th>
+                                <th>Residence</th>
+                                <th>Last Seen On</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for parent in parents %}
+                                <tr>
+                                    <td>{{ parent.id }}</td>
+                                    <td>{{ parent.parent_full_name }}</td>
+                                    <td>{{ parent.parent_email }}</td>
+                                    <td>{{ parent.parent_phone }}</td>
+                                    <td>{{ parent.parent_occupation }}</td>
+                                    <td>{{ parent.parent_residence }}</td>
+                                    <td>{{ moment(parent.parent_last_seen).format('LLL') }}</td>
+                                    <td>
+                                        <span class="label label-danger">
+                                            <a href="{{ url_for('admin.delete_account_parent', parent_id=parent.id) }}">Delete</a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
