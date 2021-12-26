@@ -7,6 +7,7 @@ from app.auth.forms import TeacherRegistrationForm
 from app.models import CommunityComment, Admin, Student, Teacher, Parent, User
 from flask_login import current_user, login_required
 from datetime import datetime
+from app.admin.email import send_registration_details_teacher
 
 
 @bp.before_request
@@ -44,12 +45,14 @@ def dashboard_admin():
         teacher.set_password(teacher_form.teacher_password.data)
         db.session.add(teacher)
         db.session.commit()
+        send_registration_details_teacher(teacher)
         flash('Teacher successfully registered')
         return redirect(url_for('admin.dashboard_admin'))
     # End of teacher registration
 
     return render_template(
         'admin/dashboard_admin.html',
+        title='Admin Dashboard',
         admin=admin,
         students=students,
         teachers=teachers,

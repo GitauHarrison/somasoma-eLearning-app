@@ -1,0 +1,25 @@
+<p>Dear {{ teacher.teacher_full_name }},</p>
+<p>
+    These are your registraion details:
+</p>
+<ul>
+    <li>Full Name: {{ teacher.teacher_full_name }}</li>
+    <li>Email: {{ teacher.teacher_email }}</li>
+    <li>Phone: {{ teacher.teacher_phone }}</li>
+    <li>Residence{{ teacher.teacher_residence }}</li>
+    <li>Teaching Course: {{ teacher.teacher_course }}</li>
+</ul>
+<p>
+    Your temporary password is: <strong>12345</strong>.
+</p>
+<p>
+    You are advised to change your password after logging in.
+</p>
+<p>
+    Kindly click the login button below to access your teacher dashboard:<br><br>
+    <button type="button" class="btn btn-primary">
+        <a href="{{ url_for('auth.login_teacher', _external=True) }}" class="btn btn-primary">Login to teacher Dashboard</a>
+    </button>
+</p>
+<p>Sincerely,</p>
+<p>The somasoma eLearning Team</p>
