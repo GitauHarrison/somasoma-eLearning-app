@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, flash, request,\
     current_app, abort
 from app.main.forms import AnonymousCommentForm
 from app.models import Parent, Teacher, User,\
-    AnonymousTemplateInheritanceComment
+    AnonymousTemplateInheritanceComment, Courses
 from flask_login import current_user, login_required
 from datetime import datetime
 import stripe
@@ -117,6 +117,34 @@ def home():
     return render_template(
         'main/anonymous-content/home.html',
         title='Home'
+        )
+
+
+@bp.route('/courses')
+def courses():
+    page = request.args.get('page', 1, type=int)
+    allowed_courses = Courses.query.filter_by(
+        allowed_status=True).order_by(Courses.timestamp.desc()).paginate(
+        page,
+        current_app.config['POSTS_PER_PAGE'],
+        False
+        )
+    next_url = url_for(
+        'main.courses',
+        _anchor='courses-offerings',
+        page=allowed_courses.next_num) \
+        if allowed_courses.has_next else None
+    prev_url = url_for(
+        'main.courses',
+        _anchor='courses-offerings',
+        page=allowed_courses.prev_num) \
+        if allowed_courses.has_prev else None
+    return render_template(
+        'anonymous-content/courses.html',
+        title='Courses',
+        allowed_courses=allowed_courses.items,
+        next_url=next_url,
+        prev_url=prev_url
         )
 
 
