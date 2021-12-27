@@ -261,14 +261,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12 my-form">
-                    {{ wtf.quick_form(comment_form) }}
-                </div>
-                <div class="col-sm-6">
-                    <!-- Empty column -->
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-12">
                     {% for comment in my_comments %}
                         {% include 'student/_comments_students.html' %}
