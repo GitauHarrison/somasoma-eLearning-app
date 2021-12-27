@@ -27,6 +27,7 @@ login = LoginManager()
 login.login_view = 'auth.login_student'
 login.login_view = 'auth.login_parent'
 login.login_view = 'auth.login_teacher'
+login.login_view = 'auth.login_admin'
 moment = Moment()
 mail = Mail()
 
