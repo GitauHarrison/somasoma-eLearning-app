@@ -87,6 +87,9 @@ def create_app(config_class=Config):
     from app.student import bp as student_bp
     app.register_blueprint(student_bp, url_prefix='/student')
 
+    from app.teacher import bp as teacher_bp
+    app.register_blueprint(teacher_bp, url_prefix='/teacher')
+
     if not app.debug and not app.testing:
         if app.config['MAIL_SERVER']:
             auth = None

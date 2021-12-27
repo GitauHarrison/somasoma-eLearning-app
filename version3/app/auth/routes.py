@@ -46,7 +46,7 @@ def login_parent():
 @bp.route('/login/teacher', methods=['GET', 'POST'])
 def login_teacher():
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard_teacher'))
+        return redirect(url_for('teacher.dashboard_teacher'))
     form = LoginForm()
     if form.validate_on_submit():
         teacher = Teacher.query.filter_by(
@@ -57,7 +57,7 @@ def login_teacher():
             return redirect(url_for('auth.login_teacher'))
         login_user(teacher, remember=form.remember_me.data)
         flash(f'Welcome {teacher.teacher_full_name}!')
-        return redirect(url_for('dashboard_teacher'))
+        return redirect(url_for('teacher.dashboard_teacher'))
     return render_template(
         'auth/login_teacher.html',
         title='Teacher Login',

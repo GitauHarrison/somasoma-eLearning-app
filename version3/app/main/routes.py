@@ -334,16 +334,4 @@ def dashboard_parent():
         parent=parent
         )
 
-
-@bp.route('/teacher/dashboard')
-@login_required
-def dashboard_teacher():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
-    return render_template(
-        'main/dashboard_teacher.html',
-        teacher=teacher
-        )
-
 # End of dashboard routes
