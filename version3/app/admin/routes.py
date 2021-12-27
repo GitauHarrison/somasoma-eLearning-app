@@ -404,22 +404,22 @@ def review_flask_stories():
     admin = Admin.query.filter_by(
         admin_full_name=current_user.admin_full_name
         ).first()
-    flask_page = request.args.get('page', 1, type=int)
+    page = request.args.get('page', 1, type=int)
     flask_students = FlaskStudentStories.query.order_by(
         FlaskStudentStories.timestamp.desc()
         ).paginate(
-            flask_page,
+            page,
             current_app.config['POSTS_PER_PAGE'],
             False
             )
     next_url = url_for(
-        'admin.student_stories_review',
-        flask_page=flask_students.next_num,
+        'admin.review_flask_stories',
+        page=flask_students.next_num,
         _anchor="student-stories") \
         if flask_students.has_next else None
     prev_url = url_for(
-        'admin.student_stories_review',
-        flask_page=flask_students.prev_num,
+        'admin.review_flask_stories',
+        page=flask_students.prev_num,
         _anchor="student-stories") \
         if flask_students.has_prev else None
     all_flask_students = len(FlaskStudentStories.query.all())
