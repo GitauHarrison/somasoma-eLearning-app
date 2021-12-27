@@ -1,10 +1,13 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
 <div class="row">
     <div class="col-sm-12 text-center">
         <h1>{{ title }}</h1>
     </div>
 </div>
 <!-- Overview -->
-<div class="row courses">
+<div class="row courses-on-offer">
     <div class="col-sm-5">
         <p>
             Our programs are challenging, impactful, and designed to fit your schedule and skill level. 
@@ -66,7 +69,7 @@
                                     <h3>Overview</h3>
                                     <p>{{ course.overview }}</p>
                                     <h3>Next Class: {{ course.next_class_date }}</h3>
-                                    <a class="btn btn-success" href="{{ course.link }} ">Explore</a>
+                                    <a class="btn btn-primary" href="{{ course.link }} ">Explore</a>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
