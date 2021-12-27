@@ -425,7 +425,7 @@ def review_flask_stories():
     all_flask_students = len(FlaskStudentStories.query.all())
     return render_template(
         'admin/stories/flask.html',
-        title='Flask Stories Review',
+        title='Review Flask Stories',
         flask_students=flask_students.items,
         next_url=next_url,
         prev_url=prev_url,
