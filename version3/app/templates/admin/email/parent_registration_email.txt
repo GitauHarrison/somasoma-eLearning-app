@@ -12,8 +12,6 @@ Occupation: {{ parent.parent_occupation }}
 
 Residence: {{ parent.parent_residence }}
 
-Registration Date: {{ moment(parent.parent_last_seen).format('LLL') }}
-
 Kindly click the login button below to access your parent dashboard:
 
 {{ url_for('auth.login_parent', _external=True) }}
