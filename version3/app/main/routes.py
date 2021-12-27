@@ -140,7 +140,7 @@ def courses():
         page=allowed_courses.prev_num) \
         if allowed_courses.has_prev else None
     return render_template(
-        'anonymous-content/courses.html',
+        'main/anonymous-content/courses.html',
         title='Courses',
         allowed_courses=allowed_courses.items,
         next_url=next_url,
