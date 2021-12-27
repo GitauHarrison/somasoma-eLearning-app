@@ -2,6 +2,7 @@ from app.models import Admin
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
+from flask_wtf.file import FileField, FileAllowed
 
 
 class EditProfileForm(FlaskForm):
@@ -21,3 +22,32 @@ class EditProfileForm(FlaskForm):
             admin = Admin.query.filter_by(admin_email=self.email.data).first()
             if admin is not None:
                 raise ValidationError('Please use a different email.')
+
+
+class CoursesForm(FlaskForm):
+    course_image = FileField(
+        'Courses Image',
+        validators=[DataRequired(), FileAllowed(['jpg', 'png'])],
+        )
+    title = StringField(
+        'Title',
+        validators=[DataRequired(), Length(min=2, max=100)]
+        )
+    body = TextAreaField(
+        'Body',
+        validators=[DataRequired()]
+        )
+    overview = TextAreaField(
+        'Overview',
+        validators=[DataRequired()]
+    )
+    next_class_date = StringField(
+        'Next Class Date',
+        validators=[DataRequired(), Length(min=2, max=100)],
+        render_kw={'placeholder': 'December 26, 2021'}
+        )
+    link = StringField(
+        'Link',
+        validators=[DataRequired(), Length(min=2, max=100)]
+        )
+    submit = SubmitField('Update')
