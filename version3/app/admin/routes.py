@@ -373,7 +373,7 @@ def delete_blog_article(blog_article_id):
     db.session.delete(blog_article)
     db.session.commit()
     flash(f'Blog article {blog_article_id} has been deleted')
-    return redirect(url_for('admin.admin_dashboard'))
+    return redirect(url_for('admin.dashboard_admin'))
 
 
 @bp.route('/blog/articles/<blog_article_id>/allow')

@@ -121,7 +121,7 @@ class StudentStoriesForm(FlaskForm):
                         render_kw={"placeholder": "Valid Email Address"}
                         )
     body = TextAreaField(
-        'Body',
+        'Your Story',
         validators=[DataRequired()]
         )
     submit = SubmitField('Update')

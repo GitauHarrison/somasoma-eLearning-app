@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
 
 {% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1>{{ title }} ({{ all_blogs }})</h1>
+        </div>
+    </div>
     {% for blog in blogs %}
     <!-- Blog artilce -->
         <div class="row blog">
@@ -64,6 +76,7 @@
             <!-- End of pagination -->
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-sm-4">
             <!-- Empty column -->
