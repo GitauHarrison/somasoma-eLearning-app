@@ -436,6 +436,7 @@ class FlaskStudentStories(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True)
     student_image = db.Column(db.String(300))
+    email = db.Column(db.String(64), unique=True)
     body = db.Column(db.String(300))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     allowed_status = db.Column(db.Boolean, default=False)
@@ -443,6 +444,23 @@ class FlaskStudentStories(db.Model):
 
     def __repr__(self):
         return f'Flask Story: {self.body}'
+
+    # Password reset
+    def get_reset_password_token(self, expires_in=600):
+        return jwt.encode(
+            {'reset_password': self.id, 'exp': time() + expires_in},
+            current_app.config['SECRET_KEY'],
+            algorithm='HS256'
+        ).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, current_app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['reset_password']
+        except:
+            return
+        return FlaskStudentStories.query.get(id)
 
 
 class AnonymousTemplateInheritanceComment(db.Model):

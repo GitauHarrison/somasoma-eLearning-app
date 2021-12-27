@@ -116,6 +116,10 @@ class StudentStoriesForm(FlaskForm):
         'Username',
         validators=[DataRequired(), Length(min=2, max=100)]
         )
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()],
+                        render_kw={"placeholder": "Valid Email Address"}
+                        )
     body = TextAreaField(
         'Body',
         validators=[DataRequired()]

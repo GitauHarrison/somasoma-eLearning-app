@@ -18,3 +18,21 @@ def send_registration_details_teacher(teacher):
                    token=token
                    )
                )
+
+
+def send_flask_stories_email(student):
+    token = student.get_reset_password_token()
+    send_email('[somasoma eLearning] Your Flask Story is Live!',
+               sender=current_app.config['ADMINS'][0],
+               recipients=[student.email],
+               text_body=render_template(
+                   'admin/email/flask_story_email.txt',
+                   student=student,
+                   token=token
+                   ),
+               html_body=render_template(
+                   'admin/email/flask_story_email.html',
+                   student=student,
+                   token=token
+                   )
+               )

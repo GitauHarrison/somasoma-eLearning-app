@@ -1,0 +1,11 @@
+Dear {{student.username}}
+
+Your story in the Flask Course is now live! 
+
+You can check it by clicking the button below:
+
+{{ url_for('main.flask_web_deveopment_course', _external=True) }}
+
+Sincerely,
+
+The somasoma eLearning Team

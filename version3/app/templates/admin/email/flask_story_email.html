@@ -1,0 +1,12 @@
+<p>Dear {{student.username}}</p>
+<p>
+    Your story in the <strong>Flask Course</strong> is now live! 
+    You can check it by clicking the button below:<br><br>
+    <button class="btn btn-primary" type="button">
+        <a href=" {{ url_for('main.flask_web_deveopment_course', _external=True) }} ">
+            Check Your Flask Story
+        </a>
+    </button>
+</p>
+<p>Sincerely,</p>
+<p>The somasoma eLearning Team</p>

@@ -1,0 +1,12 @@
+<p>Dear {{admin.admin_full_name}}</p>
+<p>
+    You have received a new story for your <strong>Flask Course</strong>. 
+    Please review it by clicking the button below:<br><br>
+    <button class="btn btn-primary" type="button">
+        <a href=" {{ url_for('admin.review_flask_stories', _external=True) }} ">
+            Review Flask Story
+        </a>
+    </button>
+</p>
+<p>Sincerely,</p>
+<p>The somasoma eLearning Team</p>

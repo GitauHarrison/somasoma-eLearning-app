@@ -4,11 +4,12 @@ from flask import render_template, redirect, url_for, flash, request,\
     current_app
 from app.admin.forms import EditProfileForm, CoursesForm, BlogArticlesForm
 from app.auth.forms import TeacherRegistrationForm
-from app.models import BlogArticles, CommunityComment, Admin, Student, Teacher,\
-    Parent, User, Courses, BlogArticles, FlaskStudentStories
+from app.models import BlogArticles, CommunityComment, Admin, Student,\
+    Teacher, Parent, User, Courses, BlogArticles, FlaskStudentStories
 from flask_login import current_user, login_required
 from datetime import datetime
-from app.admin.email import send_registration_details_teacher
+from app.admin.email import send_registration_details_teacher,\
+    send_flask_stories_email
 import os
 from werkzeug.utils import secure_filename
 
@@ -452,6 +453,7 @@ def allow_flask_stories(id):
     student.allowed_status = True
     db.session.add(student)
     db.session.commit()
+    send_flask_stories_email(student)
     flash(f'Flask story {id} has been approved.')
     return redirect(url_for(
         'admin.review_flask_stories',

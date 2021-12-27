@@ -1,10 +1,11 @@
-from app import db, products
+from app import db, email, products
 from app.main import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app, abort
 from app.main.forms import AnonymousCommentForm, StudentStoriesForm
-from app.models import BlogArticles, Parent, Teacher, User,\
+from app.models import BlogArticles, Parent, Teacher, User, Admin,\
     AnonymousTemplateInheritanceComment, Courses, FlaskStudentStories
+from app.main.email import send_flask_stories_email
 from flask_login import current_user, login_required
 from datetime import datetime
 import stripe
@@ -276,6 +277,7 @@ def flask_student_stories_form():
     if form.validate_on_submit():
         student = FlaskStudentStories(
             username=form.username.data,
+            email=form.email.data,
             body=form.body.data
             )
 
@@ -302,6 +304,9 @@ def flask_student_stories_form():
 
         db.session.add(student)
         db.session.commit()
+        admins = Admin.query.all()
+        for admin in admins:
+            send_flask_stories_email(admin)
         flash(
             'Your student story has been saved. '
             'You wil receive an email when it is published')
