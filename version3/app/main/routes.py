@@ -63,10 +63,6 @@ def order(product_id):
 
 @bp.route('/order/success')
 def success():
-    flash(
-        'Thank you for your order! It will be reviewed and the admin will '
-        'contact you shortly via email.',
-        )
     return render_template(
         'payment/success.html',
         title='Order Successful'

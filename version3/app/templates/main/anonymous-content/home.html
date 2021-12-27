@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
 {% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
     <div class="row hero">
         <div class="col-sm-5 hero-text">
             <p>

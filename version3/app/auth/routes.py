@@ -10,7 +10,8 @@ from app.models import Parent, Student, Teacher, Admin
 from app.auth.twilio_verify_api import check_verification_token,\
     request_verification_token
 from app.auth.email import send_password_reset_email_student,\
-    send_password_reset_email_admin
+    send_password_reset_email_admin, send_registration_details_parent,\
+    send_registration_details_student
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
@@ -175,10 +176,12 @@ def register_student():
         student.set_password(form.student_password.data)
         db.session.add(student)
         db.session.commit()
+        send_registration_details_student(student)
         flash(
-            'Student successfully registered. Pay to continue!'
+            'Student successfully registered. Check your email for '
+            'further instructions!'
             )
-        return redirect(url_for('main.checkout'))
+        return redirect(url_for('main.home'))
     return render_template(
         'auth/register_user.html',
         title='Student Registration',
@@ -202,6 +205,7 @@ def register_parent():
         parent.set_password(form.parent_password.data)
         db.session.add(parent)
         db.session.commit()
+        send_registration_details_parent(parent)
         flash(
             'Parent successfully registered. You can now register your child!'
             )

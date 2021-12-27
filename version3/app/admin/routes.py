@@ -28,7 +28,6 @@ def dashboard_admin():
     admin = Admin.query.filter_by(
         admin_full_name=current_user.admin_full_name
         ).first()
-    page = request.args.get('page', 1, type=int)
 
     students = Student.query.order_by(Student.student_last_seen.desc()).all()
     teachers = Teacher.query.order_by(Teacher.teacher_last_seen.desc()).all()
@@ -37,7 +36,9 @@ def dashboard_admin():
     all_teachers = len(Teacher.query.all())
     all_parents = len(Parent.query.all())
 
+    # ---------------------
     # Teacher Registration
+    # ---------------------
     teacher_form = TeacherRegistrationForm()
     if teacher_form.validate_on_submit():
         teacher = Teacher(
@@ -53,7 +54,9 @@ def dashboard_admin():
         send_registration_details_teacher(teacher)
         flash('Teacher successfully registered')
         return redirect(url_for('admin.dashboard_admin'))
+    # ---------------------
     # End of teacher registration
+    # ---------------------
 
     # ----------------
     # Course Offering
@@ -94,7 +97,7 @@ def dashboard_admin():
         flash('Your course has been updated. Take action now!')
         return redirect(url_for('admin.dashboard_admin', _anchor='courses'))
 
-    
+    page = request.args.get('page', 1, type=int)
     courses = Courses.query.order_by(
         Courses.timestamp.desc()
         ).paginate(
