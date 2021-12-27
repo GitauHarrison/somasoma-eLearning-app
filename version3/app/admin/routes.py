@@ -28,6 +28,8 @@ def dashboard_admin():
     admin = Admin.query.filter_by(
         admin_full_name=current_user.admin_full_name
         ).first()
+    page = request.args.get('page', 1, type=int)
+
     students = Student.query.order_by(Student.student_last_seen.desc()).all()
     teachers = Teacher.query.order_by(Teacher.teacher_last_seen.desc()).all()
     parents = Parent.query.order_by(Parent.parent_last_seen.desc()).all()
@@ -92,7 +94,7 @@ def dashboard_admin():
         flash('Your course has been updated. Take action now!')
         return redirect(url_for('admin.dashboard_admin', _anchor='courses'))
 
-    page = request.args.get('page', 1, type=int)
+    
     courses = Courses.query.order_by(
         Courses.timestamp.desc()
         ).paginate(
@@ -101,12 +103,12 @@ def dashboard_admin():
             False
             )
     next_url = url_for(
-        'admin.courses',
+        'admin.dashboard_admin',
         page=courses.next_num,
         _anchor="courses") \
         if courses.has_next else None
     prev_url = url_for(
-        'admin.courses',
+        'admin.dashboard_admin',
         page=courses.prev_num,
         _anchor="courses") \
         if courses.has_prev else None
