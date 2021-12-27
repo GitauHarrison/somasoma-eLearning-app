@@ -20,15 +20,33 @@
             <!-- Empty column -->
         </div>
     </div>
+    {% if current_user.is_authenticated %}
+        <div class="row text-center">
+            <div class="col-sm-4">
+                <!-- Empty columns -->
+            </div>
+            <div class="col-sm-4">
+                <p>
+                    <a href=" {{ url_for('student.dashboard_student') }} " class="btn btn-primary">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                            Back to Dashboard
+                    </a>
+                </p>
+            </div>
+            <div class="col-sm-4">
+                <!-- Empty columns -->
+            </div>
+        </div>
+    {% else %}
     <div class="row text-center">
         <div class="col-sm-4">
             <!-- Empty columns -->
         </div>
         <div class="col-sm-4">
             <p>
-                <a href=" {{ url_for('student.dashboard_student') }} " class="btn btn-primary">
+                <a href=" {{ url_for('auth.login_student') }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                        Back to Dashboard
+                        Student Login
                 </a>
             </p>
         </div>
@@ -36,4 +54,5 @@
             <!-- Empty columns -->
         </div>
     </div>
+    {% endif %}
 {% endblock %}
