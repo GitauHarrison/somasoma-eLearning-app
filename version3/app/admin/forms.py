@@ -51,3 +51,23 @@ class CoursesForm(FlaskForm):
         validators=[DataRequired(), Length(min=2, max=100)]
         )
     submit = SubmitField('Update')
+
+
+class BlogArticlesForm(FlaskForm):
+    article_image = FileField(
+        'Blog Image',
+        validators=[DataRequired(), FileAllowed(['jpg', 'png', 'svg'])],
+        )
+    article_name = StringField(
+        'Article Name',
+        validators=[DataRequired()]
+    )
+    body = TextAreaField(
+        'Body',
+        validators=[DataRequired()]
+        )
+    link = StringField(
+        'Article Link',
+        validators=[DataRequired()]
+    )
+    submit = SubmitField('Update')

@@ -34,6 +34,9 @@
             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'courses')">
                 Courses
             </a>
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
+                Blogs
+            </a>
         </div>   
     </div>
     <!-- End of sidebar -->
@@ -369,6 +372,33 @@
             </div>
         </div>
         <!-- END OF COURSES TAB -->
+
+        <!-- ALL ANONYMOUS USER TAB -->
+        <div id="blog" class="tabcontent">
+            <div class="row">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Blog Articles ({{ all_blog_articles }})</h1>
+                    </div>
+                </div>
+                <div class="row courses" >
+                    <div class="col-sm-6">
+                        <h2>Add Blog Article</h2>
+                        <div class="my-form">
+                            {{ wtf.quick_form(blog_articles_form) }}
+                        </div>
+                    </div>
+                    <div class="col-sm-5 text-center vertical-line">
+                        <h2>Review Blog Articles</h2>
+                        <a href="{{ url_for('admin.review_blog_articles') }}" class="btn btn-primary" target="_blank">
+                            Review Blog Articles
+                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END OF ANONYMOUS USER TAB -->
 
     </div>
     <!-- End of tab contents -->

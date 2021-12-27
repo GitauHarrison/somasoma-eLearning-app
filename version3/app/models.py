@@ -45,6 +45,11 @@ class Admin(UserMixin, db.Model):
         backref='author',
         lazy='dynamic'
         )
+    blog_articles = db.relationship(
+        'BlogArticles',
+        backref='author',
+        lazy='dynamic'
+    )
 
     def __repr__(self):
         return f'Admin: {self.admin_full_name}'
@@ -327,6 +332,7 @@ class CommunityComment(db.Model):
     def __repr__(self):
         return f'Community Comment: {self.body}'
 
+
 # ============================================================
 # WEB DEVELOPMENT
 # ============================================================
@@ -387,8 +393,21 @@ class WebDevChapter1QuizOptions(db.Model):
 
 
 # ============================================================
-# ANONYMOUS COURSE CONTENT
+# ANONYMOUS CONTENT
 # ============================================================
+
+
+class BlogArticles(db.Model):
+    __tablename__ = 'blog articles'
+    id = db.Column(db.Integer, primary_key=True)
+    article_image = db.Column(db.String(140))
+    article_name = db.Column(db.String(140))
+    body = db.Column(db.String(300))
+    link = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    allowed_status = db.Column(db.Boolean, default=False)
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
+
 
 class Courses(db.Model):
     __tablename__ = 'course'

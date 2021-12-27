@@ -137,7 +137,7 @@ a:hover {
 
 /* Vertical line */
 .vertical-line {
-  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
 }
 
 /* Hero Section */
@@ -298,4 +298,27 @@ blockquote{
   margin-top: 10px;
   margin-bottom: 10px;
   color: #b3b3b3;
+}
+
+/* ------------------------------------------ */
+/* BLOG SECTION */
+/* ------------------------------------------ */
+.blog {
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0px 0px 10px #ddd;
+}
+.blog:hover {
+  box-shadow: 0px 0px 15px #bfbfbf;
+}
+.blog a {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.blog .date-posted {
+  color: #d1d1d1;
+}
+.blog p {
+  vertical-align: middle;
 }

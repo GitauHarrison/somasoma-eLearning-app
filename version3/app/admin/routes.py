@@ -2,10 +2,10 @@ from app import db
 from app.admin import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app
-from app.admin.forms import EditProfileForm, CoursesForm
+from app.admin.forms import EditProfileForm, CoursesForm, BlogArticlesForm
 from app.auth.forms import TeacherRegistrationForm
-from app.models import CommunityComment, Admin, Student, Teacher, Parent, User,\
-    Courses
+from app.models import BlogArticles, CommunityComment, Admin, Student, Teacher,\
+    Parent, User, Courses, BlogArticles
 from flask_login import current_user, login_required
 from datetime import datetime
 from app.admin.email import send_registration_details_teacher
@@ -121,6 +121,50 @@ def dashboard_admin():
     # End of Course Offering
     # ----------------
 
+    # ----------------
+    # Blogs: anonymous user
+    # ----------------
+
+    blog_articles_form = BlogArticlesForm()
+    if blog_articles_form.validate_on_submit():
+        blog_articles = BlogArticles(
+            article_image=blog_articles_form.article_image.data,
+            article_name=blog_articles_form.article_name.data,
+            body=blog_articles_form.body.data,
+            link=blog_articles_form.link.data
+        )
+
+        # Handling file upload
+        uploaded_file = blog_articles_form.article_image.data
+        filename = secure_filename(uploaded_file.filename)
+        if not os.path.exists(current_app.config['UPLOAD_PATH']):
+            os.makedirs(current_app.config['UPLOAD_PATH'])
+        blog_image_path = os.path.join(
+            current_app.config['UPLOAD_PATH'],
+            filename
+            )
+        print('Img path:', blog_image_path)
+        uploaded_file.save(blog_image_path)
+        blog_articles.article_image = blog_image_path
+        print('Db path: ', blog_articles.article_image)
+
+        blog_image_path_list = blog_articles.article_image.split('/')[1:]
+        print('Img path list: ', blog_image_path_list)
+        new_blog_image_path = '/'.join(blog_image_path_list)
+        print('New img path: ', new_blog_image_path)
+        blog_articles.article_image = new_blog_image_path
+        print(blog_articles.article_image)
+
+        db.session.add(blog_articles)
+        db.session.commit()
+        flash('You have addeded a new blog article')
+        return redirect(url_for('admin.dashboard_admin'))
+    all_blog_articles = len(BlogArticles.query.all())
+
+    # ----------------
+    # End of Blogs: anonymous user
+    # ----------------
+
     return render_template(
         'admin/dashboard_admin.html',
         title='Admin Dashboard',
@@ -143,7 +187,11 @@ def dashboard_admin():
         courses=courses.items,
         next_url=next_url,
         prev_url=prev_url,
-        all_courses=all_courses
+        all_courses=all_courses,
+
+        # Blog
+        blog_articles_form=blog_articles_form,
+        all_blog_articles=all_blog_articles
         )
 
 
@@ -274,4 +322,69 @@ def allow_course(course_id):
 
 # ==========================================
 # END OF MANAGE COURSES
+# ==========================================
+
+# ==========================================
+# MANAGE BLOG POSTS
+# ==========================================
+
+@bp.route('/blog/articles/review')
+@login_required
+def review_blog_articles():
+    admin = Admin.query.filter_by(
+        admin_full_name=current_user.admin_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    blogs = BlogArticles.query.order_by(
+        BlogArticles.timestamp.desc()
+        ).paginate(
+            page,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+            )
+    next_url = url_for(
+        'admin.review_blog_articles',
+        page=blogs.next_num,
+        _anchor="blog") \
+        if blogs.has_next else None
+    prev_url = url_for(
+        'admin.review_blog_articles',
+        page=blogs.prev_num,
+        _anchor="blog") \
+        if blogs.has_prev else None
+    all_blogs = len(BlogArticles.query.all())
+    return render_template(
+        'admin/review_blog_article.html',
+        title='Review Blog Article',
+        blogs=blogs.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        all_blogs=all_blogs,
+        admin=admin
+    )
+
+
+@bp.route('blog/articles/<blog_article_id>/delete')
+def delete_blog_article(blog_article_id):
+    blog_article = BlogArticles.query.filter_by(
+        id=blog_article_id
+    ).first()
+    db.session.delete(blog_article)
+    db.session.commit()
+    flash(f'Blog article {blog_article_id} has been deleted')
+    return redirect(url_for('admin.admin_dashboard'))
+
+
+@bp.route('/blog/articles/<blog_article_id>/allow')
+def allow_blog_article(blog_article_id):
+    blog_article = BlogArticles.query.filter_by(
+        id=blog_article_id
+    ).first()
+    blog_article.allowed_status = True
+    db.session.commit()
+    flash(f'Blog article {blog_article_id} has been authorized')
+    return redirect(url_for('admin.dashboard_admin'))
+
+# ==========================================
+# END OF MANAGE BLOG POSTS
 # ==========================================

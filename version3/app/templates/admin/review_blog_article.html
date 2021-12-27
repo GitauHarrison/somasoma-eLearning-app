@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    {% for blog in blogs %}
+    <!-- Blog artilce -->
+        <div class="row blog">
+            <div class="col-sm-4">
+                <img class="img-fluid" style="max-width: 100%; height: auto;" src="/{{ blog.article_image }}" alt="{{ blog.article_name }}">
+            </div>
+            <div class="col-sm-8">
+                <!-- Title -->
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h2>{{ blog.article_name }}</h2>
+                    </div>
+                    <div class="col-sm-5 text-right" style="color: #d1d1d1;">
+                        <h2>{{ moment(blog.timestamp).format('LL') }}</h2>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p>{{ blog.body }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ blog.link }}" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+            <!-- Admin action -->
+            <div class="row">
+                <div class="col-sm-12">
+                    {% if not blog.allowed_status == 1 %}
+                        <a href=" {{ url_for('admin.allow_blog_article', blog_article_id=blog.id) }} " class="label label-warning">Allow</a>
+                    {% else %}
+                        <a href="#" class="label label-success">Allowed</a></a>
+                    {% endif %}
+                     | <a href=" {{ url_for('admin.delete_blog_article', blog_article_id=blog.id) }} " class="label label-danger">Delete</a>
+                </div>
+            </div>
+            <!-- End of admin action -->
+        </div>
+        <!-- End of blog article -->
+    {% endfor %}
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Pagination -->
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&#60;</span> Newer posts
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            Older posts <span aria-hidden="true">&#62;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End of pagination -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <!-- Empty column -->
+        </div>
+        <div class="col-sm-4 text-center">
+            <p><a href=" {{ url_for('admin.dashboard_admin') }} " class="btn btn-primary" >
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                Back to dashboard
+            </a>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <!-- Empty column -->
+        </div>
+    </div>
+{% endblock %}
