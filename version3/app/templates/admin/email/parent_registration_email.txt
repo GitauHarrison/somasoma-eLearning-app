@@ -1,6 +1,6 @@
 Dear {{ parent.parent_full_name }} }},
 
-These are your registraion details:
+These are your registration details:
 
 Full Name: {{ parent.parent_full_name }}
 

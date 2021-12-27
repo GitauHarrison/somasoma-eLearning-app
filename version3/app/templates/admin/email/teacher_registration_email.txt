@@ -1,6 +1,6 @@
 Dear {{ teacher.teacher_full_name }},
 
-These are your registraion details:
+These are your registration details:
 
 Full Name: {{ teacher.teacher_full_name }}
 Email: {{ teacher.teacher_email }}

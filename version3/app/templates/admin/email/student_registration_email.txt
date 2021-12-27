@@ -1,6 +1,6 @@
 Dear {{ student.student_full_name }} }},
 
-These are your registraion details:
+These are your registration details:
 
 Full Name: {{ student.student_full_name }}
 
