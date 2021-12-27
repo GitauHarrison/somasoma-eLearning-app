@@ -2,12 +2,14 @@ from app import db, products
 from app.main import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app, abort
-from app.main.forms import AnonymousCommentForm
+from app.main.forms import AnonymousCommentForm, StudentStoriesForm
 from app.models import BlogArticles, Parent, Teacher, User,\
-    AnonymousTemplateInheritanceComment, Courses
+    AnonymousTemplateInheritanceComment, Courses, FlaskStudentStories
 from flask_login import current_user, login_required
 from datetime import datetime
 import stripe
+import os
+from werkzeug.utils import secure_filename
 
 
 @bp.before_request
@@ -146,9 +148,30 @@ def courses():
 
 @bp.route('/flask-web-deveopment-course')
 def flask_web_deveopment_course():
+    page = request.args.get('page', 1, type=int)
+    allowed_students = FlaskStudentStories.query.filter_by(
+        allowed_status=True).order_by(
+        FlaskStudentStories.timestamp.desc()).paginate(
+        page,
+        current_app.config['POSTS_PER_PAGE'],
+        False
+        )
+    next_url = url_for(
+        'main.flask_web_deveopment_course',
+        _anchor='student-stories',
+        page=allowed_students.next_num) \
+        if allowed_students.has_next else None
+    prev_url = url_for(
+        'main.flask_web_deveopment_course',
+        _anchor='student-stories',
+        page=allowed_students.prev_num) \
+        if allowed_students.has_prev else None
     return render_template(
         'main/anonymous-content/courses_flask_web_development.html',
-        title='Flask Web Development Course'
+        title='Flask Web Development Course',
+        allowed_students=allowed_students.items,
+        next_url=next_url,
+        prev_url=prev_url
         )
 
 
@@ -240,6 +263,57 @@ def blog_template_inheritance():
 
 # =============================
 # END OF BLOG
+# =============================
+
+# =============================
+# STUDENT STORIES
+# =============================
+
+
+@bp.route('/flask/student-stories/form', methods=['GET', 'POST'])
+def flask_student_stories_form():
+    form = StudentStoriesForm()
+    if form.validate_on_submit():
+        student = FlaskStudentStories(
+            username=form.username.data,
+            body=form.body.data
+            )
+
+        # Handling file upload
+        uploaded_file = form.student_image.data
+        filename = secure_filename(uploaded_file.filename)
+        if not os.path.exists(current_app.config['UPLOAD_PATH']):
+            os.makedirs(current_app.config['UPLOAD_PATH'])
+        student_image_path = os.path.join(
+            current_app.config['UPLOAD_PATH'],
+            filename
+            )
+        print('Img path:', student_image_path)
+        uploaded_file.save(student_image_path)
+        student.student_image = student_image_path
+        print('Db path: ', student.student_image)
+
+        student_image_path_list = student.student_image.split('/')[1:]
+        print('Img path list: ', student_image_path_list)
+        new_student_image_path = '/'.join(student_image_path_list)
+        print('New img path: ', new_student_image_path)
+        student.student_image = new_student_image_path
+        print(student.student_image)
+
+        db.session.add(student)
+        db.session.commit()
+        flash(
+            'Your student story has been saved. '
+            'You wil receive an email when it is published')
+        return redirect(url_for('main.flask_student_stories_form'))
+    return render_template(
+        'main/anonymous-content/blog_flask_stories_form.html',
+        title='Flask Stories',
+        form=form
+        )
+
+# =============================
+# END OF STUDENT STORIES
 # =============================
 
 

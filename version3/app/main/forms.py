@@ -2,6 +2,7 @@ from app.models import Student
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
+from flask_wtf.file import FileField, FileAllowed
 
 # Comment form
 
@@ -99,4 +100,28 @@ class Chapter1QuizOptionsForm(FlaskForm):
 
 # ========================================
 # END OF QUIZZES FORM
+# ========================================
+
+# ========================================
+# STUDENT STORIES FORM
+# ========================================
+
+
+class StudentStoriesForm(FlaskForm):
+    student_image = FileField(
+        'Student Image',
+        validators=[DataRequired(), FileAllowed(['jpg', 'png'])],
+        )
+    username = StringField(
+        'Username',
+        validators=[DataRequired(), Length(min=2, max=100)]
+        )
+    body = TextAreaField(
+        'Body',
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Update')
+
+# ========================================
+# END OF STUDENT STORIES FORM
 # ========================================

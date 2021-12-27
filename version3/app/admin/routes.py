@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, flash, request,\
 from app.admin.forms import EditProfileForm, CoursesForm, BlogArticlesForm
 from app.auth.forms import TeacherRegistrationForm
 from app.models import BlogArticles, CommunityComment, Admin, Student, Teacher,\
-    Parent, User, Courses, BlogArticles
+    Parent, User, Courses, BlogArticles, FlaskStudentStories
 from flask_login import current_user, login_required
 from datetime import datetime
 from app.admin.email import send_registration_details_teacher
@@ -387,4 +387,77 @@ def allow_blog_article(blog_article_id):
 
 # ==========================================
 # END OF MANAGE BLOG POSTS
+# ==========================================
+
+# ==========================================
+# MANAGE STUDENT STORIES
+# ==========================================
+
+
+# Flask
+
+
+@bp.route('/student-stories/flask/review')
+@login_required
+def review_flask_stories():
+    admin = Admin.query.filter_by(
+        admin_full_name=current_user.admin_full_name
+        ).first()
+    flask_page = request.args.get('page', 1, type=int)
+    flask_students = FlaskStudentStories.query.order_by(
+        FlaskStudentStories.timestamp.desc()
+        ).paginate(
+            flask_page,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+            )
+    next_url = url_for(
+        'admin.student_stories_review',
+        flask_page=flask_students.next_num,
+        _anchor="student-stories") \
+        if flask_students.has_next else None
+    prev_url = url_for(
+        'admin.student_stories_review',
+        flask_page=flask_students.prev_num,
+        _anchor="student-stories") \
+        if flask_students.has_prev else None
+    all_flask_students = len(FlaskStudentStories.query.all())
+    return render_template(
+        'admin/stories/flask.html',
+        title='Flask Stories Review',
+        flask_students=flask_students.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        all_flask_students=all_flask_students,
+        admin=admin
+        )
+
+
+@bp.route('/student-stories/flask/<int:id>/delete')
+def delete_flask_stories(id):
+    student = FlaskStudentStories.query.get_or_404(id)
+    db.session.delete(student)
+    db.session.commit()
+    flash(f'Flask story {id} has been deleted.')
+    return redirect(url_for(
+        'admin.review_flask_stories',
+        _anchor="student-stories"
+        )
+    )
+
+
+@bp.route('/student-stories/flask/<int:id>/allow')
+def allow_flask_stories(id):
+    student = FlaskStudentStories.query.get_or_404(id)
+    student.allowed_status = True
+    db.session.add(student)
+    db.session.commit()
+    flash(f'Flask story {id} has been approved.')
+    return redirect(url_for(
+        'admin.review_flask_stories',
+        _anchor="student-stories"
+        )
+    )
+# ==========================================
+# MANAGE STUDENT STORIES
 # ==========================================

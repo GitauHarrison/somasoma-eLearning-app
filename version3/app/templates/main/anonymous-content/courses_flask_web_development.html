@@ -31,36 +31,51 @@
             </p>
         </div>
     </div>
-    <div class="row course-title">
+    <div class="row course-title" id="student-stories">
         <h2>Stories From Real Students</h2>
-        <div class="col-sm-4 student student-alt">
-            <img class="img-fluid img-circle" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/rahima.png')}}" alt="Rahima">
-            <h3>Rahima</h3>
-            <p>
-                "Wow, what an amazing resource you've made. The app source is amazingly concise 
-                (clearly years of experience distilled). I'm a frustrated Django developer and 
-                was just getting started with Flask, trying to figure out how best to structure 
-                my app, absorb best practices, etc.. Funny thing is, every part of the stack 
-                you've chosen is exactly what I'd want to use."
-            </p>
+        <div class="row">
+            {% for student in allowed_students %}
+            <div class="col-sm-4 student">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <img class="img-fluid" style="max-width: 100%; height: auto;" src="/{{ student.student_image }}" alt="Flask Class"><br>
+                        <p>{{ student.username }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p>"{{ student.body }}"</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        <div class="col-sm-4 student">
-            <img class="img-fluid img-circle" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/mkay.png')}}" alt="MKay">
-            <h3>MKay</h3>
-            <p>
-                "Thorough, clear and logical presentation, and great material. 
-                Thanks for putting this course together."
-            </p>
+    </div>
+    <div class="row">
+        <div  class="col-sm-12">
+            <!-- Pagination of comments -->
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&#60;</span> Less
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            More <span aria-hidden="true">&#62;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End of pagination of comments -->
         </div>
-        <div class="col-sm-4 student student-alt">
-            <img class="img-fluid img-circle" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/alex.png')}}" alt="Alex">
-            <h3>Alex</h3>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
             <p>
-                "You have a great delivery style and each video feels like he's with you stepping 
-                you through the code. Whenever a problem has occurred, even if it's not directly 
-                related to the code/course content, he has been gone above and beyond in getting 
-                it resolved. I've never known any other course author to do that. 
-                If you want to learn Flask or just about building a SAAS app, look no further."
+                Want to be featured?
+                <a href=" {{ url_for('main.flask_student_stories_form') }} ">Send us your story</a>.
             </p>
         </div>
     </div>

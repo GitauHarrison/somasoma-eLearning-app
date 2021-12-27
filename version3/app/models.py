@@ -50,6 +50,11 @@ class Admin(UserMixin, db.Model):
         backref='author',
         lazy='dynamic'
     )
+    flask_student_stories = db.relationship(
+        'FlaskStudentStories',
+        backref='author',
+        lazy='dynamic'
+        )
 
     def __repr__(self):
         return f'Admin: {self.admin_full_name}'
@@ -424,6 +429,20 @@ class Courses(db.Model):
 
     def __repr__(self):
         return f'Course: {self.title}'
+
+
+class FlaskStudentStories(db.Model):
+    __tablename__ = 'flask student stories'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True)
+    student_image = db.Column(db.String(300))
+    body = db.Column(db.String(300))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    allowed_status = db.Column(db.Boolean, default=False)
+    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
+
+    def __repr__(self):
+        return f'Flask Story: {self.body}'
 
 
 class AnonymousTemplateInheritanceComment(db.Model):
