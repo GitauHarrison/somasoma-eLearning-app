@@ -35,3 +35,6 @@ class Config(object):
     STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
     STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
     STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
+
+    # File upload
+    UPLOAD_PATH = os.environ.get('UPLOAD_PATH') or 'static/images/uploads'
