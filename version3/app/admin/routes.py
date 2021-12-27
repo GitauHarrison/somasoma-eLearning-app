@@ -2,12 +2,15 @@ from app import db
 from app.admin import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app
-from app.admin.forms import EditProfileForm
+from app.admin.forms import EditProfileForm, CoursesForm
 from app.auth.forms import TeacherRegistrationForm
-from app.models import CommunityComment, Admin, Student, Teacher, Parent, User
+from app.models import CommunityComment, Admin, Student, Teacher, Parent, User,\
+    Courses
 from flask_login import current_user, login_required
 from datetime import datetime
 from app.admin.email import send_registration_details_teacher
+import os
+from werkzeug.utils import secure_filename
 
 
 @bp.before_request
@@ -50,17 +53,92 @@ def dashboard_admin():
         return redirect(url_for('admin.dashboard_admin'))
     # End of teacher registration
 
+    # ----------------
+    # Course Offering
+    # ----------------
+    course_form = CoursesForm()
+    if course_form.validate_on_submit():
+        course = Courses(
+            title=course_form.title.data,
+            body=course_form.body.data,
+            overview=course_form.overview.data,
+            next_class_date=course_form.next_class_date.data,
+            link=course_form.link.data
+            )
+
+        # Handling file upload
+        uploaded_file = course_form.course_image.data
+        filename = secure_filename(uploaded_file.filename)
+        if not os.path.exists(current_app.config['UPLOAD_PATH']):
+            os.makedirs(current_app.config['UPLOAD_PATH'])
+        course_image_path = os.path.join(
+            current_app.config['UPLOAD_PATH'],
+            filename
+            )
+        print('Img path:', course_image_path)
+        uploaded_file.save(course_image_path)
+        course.course_image = course_image_path
+        print('Db path: ', course.course_image)
+
+        course_image_path_list = course.course_image.split('/')[1:]
+        print('Img path list: ', course_image_path_list)
+        new_course_image_path = '/'.join(course_image_path_list)
+        print('New img path: ', new_course_image_path)
+        course.course_image = new_course_image_path
+        print(course.course_image)
+
+        db.session.add(course)
+        db.session.commit()
+        flash('Your course has been updated. Take action now!')
+        return redirect(url_for('admin.dashboard_admin', _anchor='courses'))
+
+    page = request.args.get('page', 1, type=int)
+    courses = Courses.query.order_by(
+        Courses.timestamp.desc()
+        ).paginate(
+            page,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+            )
+    next_url = url_for(
+        'admin.courses',
+        page=courses.next_num,
+        _anchor="courses") \
+        if courses.has_next else None
+    prev_url = url_for(
+        'admin.courses',
+        page=courses.prev_num,
+        _anchor="courses") \
+        if courses.has_prev else None
+    all_courses = len(Courses.query.all())
+
+    # ----------------
+    # End of Course Offering
+    # ----------------
+
     return render_template(
         'admin/dashboard_admin.html',
         title='Admin Dashboard',
         admin=admin,
+
+        # All users
         students=students,
         teachers=teachers,
         parents=parents,
+
         all_students=all_students,
         all_teachers=all_teachers,
         all_parents=all_parents,
-        teacher_form=teacher_form
+
+        # Forms
+        teacher_form=teacher_form,
+        course_form=course_form,
+
+        # Courses
+        courses=courses.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        all_courses=all_courses
         )
 
 
@@ -121,8 +199,9 @@ def edit_profile_admin():
         admin=admin
     )
 
-
-# Delete account routes
+# ==========================================
+# DELETE USERS ACCOUNT
+# ==========================================
 
 
 @bp.route('/student/<student_id>/delete-account')
@@ -156,3 +235,38 @@ def delete_account_parent(parent_id):
     db.session.commit()
     flash(f'Parent {parent_id} account has been deleted!')
     return redirect(url_for('admin.dashboard_admin'))
+
+# ==========================================
+# END OF DELETE USERS ACCOUNT
+# ==========================================
+
+# ==========================================
+# MANAGE COURSES
+# ==========================================
+
+
+@bp.route('/admin/courses/<course_id>/delete')
+def delete_course(course_id):
+    course = Courses.query.filter_by(
+        id=course_id
+        ).first()
+    db.session.delete(course)
+    db.session.commit()
+    flash(f'Course {course_id} has been deleted!')
+    return redirect(url_for('admin.dashboard_admin', _anchor='courses'))
+
+
+@bp.route('/admin/courses/<course_id>/allow', methods=['GET', 'POST'])
+def allow_course(course_id):
+    course = Courses.query.filter_by(
+        id=course_id
+        ).first()
+    course.allowed_status = True
+    db.session.commit()
+    flash(f'Course {course_id} has been authorized!')
+    return redirect(url_for('admin.dashboard_admin', _anchor="courses"))
+
+
+# ==========================================
+# END OF MANAGE COURSES
+# ==========================================
