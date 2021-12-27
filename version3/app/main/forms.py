@@ -1,4 +1,4 @@
-from app.models import Student
+from app.models import Student, FlaskStudentStories
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
@@ -113,7 +113,7 @@ class StudentStoriesForm(FlaskForm):
         validators=[DataRequired(), FileAllowed(['jpg', 'png'])],
         )
     username = StringField(
-        'Username',
+        'Full Name',
         validators=[DataRequired(), Length(min=2, max=100)]
         )
     email = StringField('Email',
@@ -125,6 +125,15 @@ class StudentStoriesForm(FlaskForm):
         validators=[DataRequired()]
         )
     submit = SubmitField('Update')
+
+    def validate_email(self, email):
+        student = FlaskStudentStories.query.filter_by(
+            email=email.data
+            ).first()
+        if student:
+            raise ValidationError(
+                'Email already taken. Please choose a different one.'
+                )
 
 # ========================================
 # END OF STUDENT STORIES FORM
