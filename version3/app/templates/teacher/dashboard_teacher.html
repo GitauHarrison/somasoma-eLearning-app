@@ -44,10 +44,65 @@
         <!-- TEACHER ACCOUNT TAB -->
         <div id="account" class="tabcontent">
             <div class="row">
-                <div class="col-sm-12">
-                    <h1>Teacher Account</h1>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Teacher Account</h1>
+                    </div>
+                </div> 
+                <!-- General registration info -->
+                <div class="row profile">
+                    <div class="col-sm-12">
+                        <h2>General</h2>
+                        <p>
+                            Full Name: <span style="font-weight: 600;">{{ current_user.teacher_full_name }}</span> 
+                        </p>
+                        <p>
+                            Email: <span style="font-weight: 600;">{{ current_user.teacher_email }}</span> 
+                        </p>
+                        <p>
+                            Phone: <span style="font-weight: 600;">{{ current_user.teacher_phone }}</span> 
+                        </p>
+                        <p>
+                            Residence: <span style="font-weight: 600;">{{ current_user.teacher_residence }}</span> 
+                        </p>
+                        <p>
+                            Teaching Course: <span style="font-weight: 600;">{{ current_user.teacher_course }}</span> 
+                        </p>
+                    </div>
+                </div> 
+                <!-- End of general registration info -->
+
+                <!-- Edit profile -->
+                <div class="row profile">
+                    <div class="col-sm-12">
+                        <h2>Update Profile</h2>
+                        <p>
+                            <a href="{{ url_for('teacher.edit_profile') }}" class="btn btn-primary">Update Profile</a>
+                        </p>
+                    </div>
                 </div>
-            </div> 
+                <!-- End of edit profile -->
+
+                <!-- Two factor authentication -->
+                <div class="row two-factor-auth">
+                    <div class="col-sm-12">
+                        <h2>Two-Factor Authentication</h2>
+                        <p>
+                            Add an extra layer of security to your account by enabling two-factor authentication.
+                        </p>
+                        {% if not current_user.two_factor_teacher_enabled() %}
+                            <p>
+                                <a href=" {{ url_for('auth.enable_2fa_teacher', teacher_full_name=teacher.teacher_full_name) }} " class="btn btn-primary">Enable Two-Factor Authentication</a>
+                            </p>
+                        {% else %}
+                            <p>
+                                <a href=" {{ url_for('auth.disable_2fa_teacher', teacher_full_name=teacher.teacher_full_name) }} " class="btn btn-primary">Disable Two-Factor Authentication</a>
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- End of two factor authentication -->
+            </div>
         </div>
         <!-- END OF ENROLLED COURSE TAB -->
 

@@ -487,6 +487,84 @@ def disable_2fa_admin():
         admin=admin
         )
 
+# Teacher
+
+
+@bp.route('/teacher/enable-2fa', methods=['GET', 'POST'])
+@login_required
+def enable_2fa_teacher():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first_or_404()
+    form = Enable2faForm()
+    if form.validate_on_submit():
+        session['phone'] = form.verification_phone.data
+        request_verification_token(session['phone'])
+        return redirect(url_for('auth.verify_2fa_teacher'))
+    return render_template(
+        'auth/two-factor-auth/teacher/enable_2fa_teacher.html',
+        form=form,
+        title='Enable 2fa for Teacher',
+        teacher=teacher
+        )
+
+
+@bp.route('/teacher/verify-2fa', methods=['GET', 'POST'])
+def verify_2fa_teacher():
+    form = Confirm2faForm()
+    if form.validate_on_submit():
+        phone = session['phone']
+        if check_verification_token(phone, form.token.data):
+            del session['phone']
+            if current_user.is_authenticated:
+                current_user.teacher_phone = phone
+                db.session.commit()
+                flash('You have enabled two-factor authentication')
+                return redirect(url_for(
+                    'teacher.dashboard_teacher',
+                    _anchor='account')
+                    )
+            else:
+                teacher_email = session['teacher_email']
+                del session['teacher_email']
+                teacher = Teacher.query.filter_by(
+                    teacher_email=teacher_email
+                    ).first()
+                next_page = request.args.get('next')
+                remember = request.args.get('remember', '0') == '1'
+                login_user(teacher, remember=remember)
+                return redirect(next_page)
+        form.token.errors.append('Invalid token')
+    return render_template(
+        'auth/two-factor-auth/teacher/verify_2fa_teacher.html',
+        form=form,
+        title='Verify Token for Teacher'
+        )
+
+
+@bp.route('/teacher/disable-2fa', methods=['GET', 'POST'])
+@login_required
+def disable_2fa_teacher():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first_or_404()
+    form = Disable2faForm()
+    if form.validate_on_submit():
+        current_user.teacher_phone = None
+        db.session.commit()
+        flash('You have disabled two-factor authentication')
+        return redirect(url_for(
+            'teacher.dashboard_teacher',
+            _anchor='account'
+            )
+        )
+    return render_template(
+        'auth/two-factor-auth/teacher/disable_2fa_teacher.html',
+        form=form,
+        title='Disable 2fa for Teacher',
+        teacher=teacher
+        )
+
 # =================================================
 # TWO-FACTOR AUTHENTICATION
 # =================================================
