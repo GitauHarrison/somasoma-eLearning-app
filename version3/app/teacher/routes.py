@@ -18,15 +18,46 @@ def before_request():
 # Dashboard route
 
 
-@bp.route('/dashboard')
+@bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_teacher():
     teacher = Teacher.query.filter_by(
         teacher_full_name=current_user.teacher_full_name
         ).first()
+    page = request.args.get('page', 1, type=int)
+    comments = TeacherCommunityComment.query.order_by(
+        TeacherCommunityComment.timestamp.desc()
+        ).paginate(
+            page,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+            )
+    
+    next_url = url_for(
+                    'teacher.dashboard_teacher',
+                    page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for(
+        'teacher.dashboard_teacher',
+        page=comments.prev_num) \
+        if comments.has_prev else None
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        comment = TeacherCommunityComment(
+            body=comment_form.comment.data,
+            author=current_user
+        )
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been posted!', 'success')
+        return redirect(url_for('teacher.dashboard_teacher'))
     return render_template(
         'teacher/dashboard_teacher.html',
-        teacher=teacher
+        teacher=teacher,
+        comments=comments.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        comment_form=comment_form
         )
 
 # Profile route

@@ -33,6 +33,10 @@ followers = db.Table(
     db.Column('followed_id', db.Integer, db.ForeignKey('student.id'))
 )
 
+# ========================================
+# ADMIN MODELS
+# ========================================
+
 
 class Admin(UserMixin, db.Model):
     __tablename__ = 'admin'
@@ -96,6 +100,14 @@ class Admin(UserMixin, db.Model):
         except:
             return
         return Admin.query.get(id)
+
+# ========================================
+# END OF ADMIN MODELS
+# ========================================
+
+# ========================================
+# STUDENT MODELS
+# ========================================
 
 
 class Student(UserMixin, db.Model):
@@ -207,6 +219,25 @@ class Student(UserMixin, db.Model):
         return Student.query.get(id)
 
 
+class CommunityComment(db.Model):
+    __tablename__ = 'community_comment'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Community Comment: {self.body}'
+
+# ========================================
+# END OF STUDENT MODELS
+# ========================================
+
+# ========================================
+# PARENT MODELS
+# ========================================
+
+
 class Parent(UserMixin, db.Model):
     __tablename__ = 'parent'
     id = db.Column(db.Integer, primary_key=True)
@@ -255,6 +286,14 @@ class Parent(UserMixin, db.Model):
             return
         return Parent.query.get(id)
 
+# ========================================
+# END OF PARENT MODELS
+# ========================================
+
+# ========================================
+# TEACHER MODELS
+# ========================================
+
 
 class Teacher(UserMixin, db.Model):
     __tablename__ = 'teacher'
@@ -267,6 +306,12 @@ class Teacher(UserMixin, db.Model):
     teacher_about_me = db.Column(db.String(140))
     teacher_last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     teacher_password_hash = db.Column(db.String(128))
+
+    comments = db.relationship(
+        'TeacherCommunityComment',
+        backref='author',
+        lazy='dynamic'
+        )
 
     def __repr__(self):
         return f'Teacher {self.teacher_full_name}'
@@ -307,7 +352,24 @@ class Teacher(UserMixin, db.Model):
             return
         return Teacher.query.get(id)
 
-# Anonymous User
+
+class TeacherCommunityComment(db.Model):
+    __tablename__ = 'teacher community comment'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+
+    def __repr__(self):
+        return f'Teacher Comment: {self.body}'
+
+# ========================================
+# END OF TEACHER MODELS
+# ========================================
+
+# ========================================
+# ANONYMOUS MODELS
+# ========================================
 
 
 class User(db.Model):
@@ -330,81 +392,6 @@ class User(db.Model):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
-
-
-class CommunityComment(db.Model):
-    __tablename__ = 'community_comment'
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
-
-    def __repr__(self):
-        return f'Community Comment: {self.body}'
-
-
-# ============================================================
-# WEB DEVELOPMENT
-# ============================================================
-
-
-class WebDevChapter1Comment(db.Model):
-    __tablename__ = 'chapter1_comment'
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
-
-    def __repr__(self):
-        return f'Chapter 1 Comment: {self.body}'
-
-
-class WebDevChapter1Objectives(db.Model):
-    __tablename__ = 'web_dev_chapter1_objectives'
-    id = db.Column(db.Integer, primary_key=True)
-
-    # Objectives
-    objective_1 = db.Column(db.Boolean, default=False)
-    objective_2 = db.Column(db.Boolean, default=False)
-    objective_3 = db.Column(db.Boolean, default=False)
-    objective_4 = db.Column(db.Boolean, default=False)
-    objective_5 = db.Column(db.Boolean, default=False)
-    objective_6 = db.Column(db.Boolean, default=False)
-    objective_7 = db.Column(db.Boolean, default=False)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
-
-    def __repr__(self):
-        return f'Objectives: {self.objective_1} {self.objective_2} {self.objective_3} {self.objective_4} {self.objective_5} {self.objective_6} {self.objective_7}'
-
-
-class WebDevChapter1Quiz(db.Model):
-    __tablename__ = 'web_dev_chapter1_quiz'
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64), index=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
-
-
-class WebDevChapter1QuizOptions(db.Model):
-    __tablename__ = 'web_dev_chapter1_quiz_options'
-    id = db.Column(db.Integer, primary_key=True)
-    option_1 = db.Column(db.Boolean, default=False)
-    option_2 = db.Column(db.Boolean, default=False)
-    option_3 = db.Column(db.Boolean, default=False)
-    option_4 = db.Column(db.Boolean, default=False)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
-
-# ============================================================
-# END OF WEB DEVELOPMENT
-# ============================================================
-
-
-# ============================================================
-# ANONYMOUS CONTENT
-# ============================================================
 
 
 class BlogArticles(db.Model):
@@ -478,6 +465,64 @@ class AnonymousTemplateInheritanceComment(db.Model):
     def __repr__(self):
         return f'Template Inheritance Comment: {self.body}'
 
-# ============================================================
-# ANONYMOUS COURSE CONTENT
-# ============================================================
+# ========================================
+# ANONYMOUS MODELS
+# ========================================
+
+# ========================================
+# WEB DEVELOPMENT MODELS
+# ========================================
+
+
+class WebDevChapter1Comment(db.Model):
+    __tablename__ = 'chapter1_comment'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Chapter 1 Comment: {self.body}'
+
+
+class WebDevChapter1Objectives(db.Model):
+    __tablename__ = 'web_dev_chapter1_objectives'
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Objectives
+    objective_1 = db.Column(db.Boolean, default=False)
+    objective_2 = db.Column(db.Boolean, default=False)
+    objective_3 = db.Column(db.Boolean, default=False)
+    objective_4 = db.Column(db.Boolean, default=False)
+    objective_5 = db.Column(db.Boolean, default=False)
+    objective_6 = db.Column(db.Boolean, default=False)
+    objective_7 = db.Column(db.Boolean, default=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Objectives: {self.objective_1} {self.objective_2} {self.objective_3} {self.objective_4} {self.objective_5} {self.objective_6} {self.objective_7}'
+
+
+class WebDevChapter1Quiz(db.Model):
+    __tablename__ = 'web_dev_chapter1_quiz'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64), index=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+
+class WebDevChapter1QuizOptions(db.Model):
+    __tablename__ = 'web_dev_chapter1_quiz_options'
+    id = db.Column(db.Integer, primary_key=True)
+    option_1 = db.Column(db.Boolean, default=False)
+    option_2 = db.Column(db.Boolean, default=False)
+    option_3 = db.Column(db.Boolean, default=False)
+    option_4 = db.Column(db.Boolean, default=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+# ========================================
+# END OF WEB DEVELOPMENT MODELS
+# ========================================

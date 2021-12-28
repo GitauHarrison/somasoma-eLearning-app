@@ -28,6 +28,8 @@ def dashboard_student():
     student = Student.query.filter_by(
         student_full_name=current_user.student_full_name
         ).first()
+
+    # Student community comments
     page = request.args.get('page', 1, type=int)
     comments = CommunityComment.query.order_by(
         CommunityComment.timestamp.desc()

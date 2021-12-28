@@ -25,6 +25,9 @@
             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'students')" id="defaultOpen">
                 All Students
             </a>
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'explore-teacher-community')">
+                Explore Teacher Community
+            </a>
             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">
                 Student Community
             </a>
@@ -111,10 +114,62 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h1>All Students</h1>
+                    <a href="{{ url_for('teacher.profile_teacher', teacher_full_name=teacher.teacher_full_name) }}" class="btn btn-primary">Enroll Student</a>
                 </div>
             </div> 
         </div>
         <!-- END OF ALL STUDENTS TAB -->
+
+        <!-- EXPLORE TEACHER COMMUNITY TAB -->
+        <div id="explore-teacher-community" class="tabcontent">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Explore Teacher Community</h1>
+                </div>
+            </div>
+            <!-- Form -->
+            <div class="row">
+                <div class="col-sm-12 my-form">
+                    {{ wtf.quick_form(comment_form) }}
+                </div>
+                <div class="col-sm-6">
+                    <!-- Empty column -->
+                </div>
+            </div>
+            <!-- End of form -->
+
+            <!-- Teacher comments -->
+            <div class="row">
+                <div class="col-sm-12">
+                    {% for comment in comments %}
+                        {% include 'teacher/_comments_teachers.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- End of teacher comments -->
+
+            <!-- Pagination of teacher comments -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <nav aria-label="...">
+                        <ul class="pager">
+                            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                                <a href="{{ prev_url or '#' }}">
+                                    <span aria-hidden="true">&larr;</span> Newer posts
+                                </a>
+                            </li>
+                            <li class="next{% if not next_url %} disabled{% endif %}">
+                                <a href="{{ next_url or '#' }}">
+                                    Older posts <span aria-hidden="true">&rarr;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- End of pagination of teacher comments -->
+        </div>
+        <!-- END EXPLORE TEACHER COMMUNITY TAB -->
 
         <!-- STUDENT COMMUNITY TAB -->
         <div id="student-community" class="tabcontent">
