@@ -51,12 +51,16 @@ class EditProfileForm(FlaskForm):
 
 
 class Chapter1WebDevelopmentForm(FlaskForm):
-    objective_1 = BooleanField('You can understand what HTML is used for in a web application')
+    objective_1 = BooleanField(
+        'You can understand what HTML is used for in a web application'
+        )
     objective_2 = BooleanField('You can create an empty HTML page')
     objective_3 = BooleanField('You can add the general syntax of a HTML page')
     objective_4 = BooleanField('You can add the head section of a HTML page')
     objective_5 = BooleanField('You can add the body section of a HTML page')
-    objective_6 = BooleanField('You can understand the basic tags used in HTML')
+    objective_6 = BooleanField(
+        'You can understand the basic tags used in HTML'
+        )
     objective_7 = BooleanField('You can add comments to a HTML page')
     submit = SubmitField('Submit')
 

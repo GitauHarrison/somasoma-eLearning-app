@@ -2,7 +2,7 @@ from app import create_app, db
 from app.models import CommunityComment, WebDevChapter1Comment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, Student, Parent,\
     Teacher, WebDevChapter1QuizOptions, AnonymousTemplateInheritanceComment,\
-    User, Admin, Courses, FlaskStudentStories
+    User, Admin, Courses, FlaskStudentStories, WebDevelopmentOverview
 
 app = create_app()
 
@@ -23,5 +23,6 @@ def make_shell_context():
         User=User,
         Admin=Admin,
         Courses=Courses,
-        FlaskStudentStories=FlaskStudentStories
+        FlaskStudentStories=FlaskStudentStories,
+        WebDevelopmentOverview=WebDevelopmentOverview
         )

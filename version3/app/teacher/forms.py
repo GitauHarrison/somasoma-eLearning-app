@@ -40,3 +40,22 @@ class CommentForm(FlaskForm):
 
 class EmptyForm(FlaskForm):
     submit = SubmitField('Post')
+
+# Course overview form
+
+
+class WebDevelopmentOverviewForm(FlaskForm):
+    title = StringField(
+        'Title',
+        validators=[DataRequired()]
+        )
+    body = TextAreaField(
+        'Course Overview',
+        validators=[DataRequired()]
+        )
+    youtube_link = StringField(
+        'Youtube Link',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Youtube Embed Link"}
+        )
+    submit = SubmitField('Post')

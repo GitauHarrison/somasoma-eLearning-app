@@ -301,6 +301,20 @@
                 <div class="col-sm-12">
                     <h1>Manage Your Course</h1>
                 </div>
+            </div> 
+            <div class="row profile">
+                <div class="col-sm-6">
+                    <h2>Course Overview</h2>
+                    <div class="my-form">
+                        {{ wtf.quick_form(course_overview_form) }}
+                    </div>
+                </div>
+                <div class="col-sm-5 text-center vertical-line">
+                    <h2>Review Course Overview</h2>
+                    <a href="{{ url_for('teacher.review_course_overview') }}" class="btn btn-primary">
+                        Review Course Overview
+                    </a>
+                </div>
             </div>            
         </div>
         <!-- END OF COURSE UPDATE TAB -->

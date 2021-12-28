@@ -318,6 +318,11 @@ class Teacher(UserMixin, db.Model):
         backref='author',
         lazy='dynamic'
         )
+    course_overview = db.relationship(
+        'WebDevelopmentOverview',
+        backref='author',
+        lazy='dynamic'
+        )
 
     def __repr__(self):
         return f'Teacher {self.teacher_full_name}'
@@ -400,6 +405,20 @@ class TeacherCommunityComment(db.Model):
 
     def __repr__(self):
         return f'Teacher Comment: {self.body}'
+
+
+class WebDevelopmentOverview(db.Model):
+    __tablename__ = 'web development overview'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64), index=True)
+    overview = db.Column(db.String(140))
+    youtube_link = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    allowed_status = db.Column(db.Boolean, default=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+
+    def __repr__(self):
+        return f'Web Development Overview: {self.title}'
 
 # ========================================
 # END OF TEACHER MODELS

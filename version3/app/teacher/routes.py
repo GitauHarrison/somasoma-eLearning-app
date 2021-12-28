@@ -5,8 +5,9 @@ from flask_login import login_required, current_user
 from flask import render_template, flash, request, redirect, url_for,\
     current_app
 from app.models import Teacher, TeacherCommunityComment, Student,\
-    CommunityComment
-from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm
+    CommunityComment, WebDevelopmentOverview
+from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
+    WebDevelopmentOverviewForm
 
 
 @bp.before_request
@@ -88,6 +89,19 @@ def dashboard_teacher():
         page=comments.prev_num) \
         if comments.has_prev else None
 
+    # Manage Course Overview
+    course_overview_form = WebDevelopmentOverviewForm()
+    if course_overview_form.validate_on_submit():
+        course_overview = WebDevelopmentOverview(
+            title=course_overview_form.title.data,
+            overview=course_overview_form.body.data,
+            youtube_link=course_overview_form.youtube_link.data,
+        )
+        db.session.add(course_overview)
+        db.session.commit()
+        flash('Your course overview has been posted!', 'success')
+        return redirect(url_for('teacher.review_course_overview'))
+
     return render_template(
         'teacher/dashboard_teacher.html',
         teacher=teacher,
@@ -112,7 +126,10 @@ def dashboard_teacher():
         # Students community comments
         student_comments=student_comments.items,
         student_next_url=student_next_url,
-        student_prev_url=student_prev_url
+        student_prev_url=student_prev_url,
+
+        # Manage Course Overview
+        course_overview_form=course_overview_form
         )
 
 # Profile route
@@ -245,3 +262,70 @@ def unfollow_teacher(teacher_full_name):
         return redirect(url_for('teacher.dashboard_teacher'))
 
 # End of followership routes
+
+# ========================================
+# COURSE MANAGEMENT ROUTES
+# ========================================
+
+# Overview route
+
+
+@bp.route('/course/overview/review')
+@login_required
+def review_course_overview():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    course_overview = WebDevelopmentOverview.query.order_by(
+        WebDevelopmentOverview.timestamp.desc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    course_overview_next_url = url_for(
+                    'teacher.dashboard_teacher',
+                    page=course_overview.next_num) \
+        if course_overview.has_next else None
+    course_overview_prev_url = url_for(
+        'teacher.dashboard_teacher',
+        page=course_overview.prev_num) \
+        if course_overview.has_prev else None
+    return render_template(
+        'teacher/course/flask/flask_overview.html',
+        teacher=teacher,
+        title='Review Flask Overview',
+        course_overview=course_overview.items,
+        course_overview_next_url=course_overview_next_url,
+        course_overview_prev_url=course_overview_prev_url
+        )
+
+
+@bp.route('/course/overview/<course_title>/allow')
+def allow_course_overview(course_title):
+    course = WebDevelopmentOverview.query.filter_by(
+        title=course_title
+        ).first()
+    course.allowed_status = True
+    db.session.commit()
+    flash('Course overview has been allowed.')
+    return redirect(url_for(
+        'teacher.review_course_overview'
+        )
+    )
+
+
+@bp.route('/course/overview/<course_title>/delete')
+def delete_course_overview(course_title):
+    course = WebDevelopmentOverview.query.filter_by(
+        title=course_title
+        ).first()
+    db.session.delete(course)
+    db.session.commit()
+    flash('Course overview has been deleted.')
+    return redirect(url_for(
+        'teacher.review_course_overview'
+        )
+    )
+
+# ========================================
+# COURSE MANAGEMENT ROUTES
+# ========================================

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            {% for overview in course_overview %}
+                <h2>{{ overview.title }}</h2>   
+                <p>{{ overview.overview }}</p>
+                <div class="table-of-content">
+                    {% include 'teacher/course/flask/_table_of_contents.html' %}
+                </div>
+                <h2>Completed Project</h2>
+                <div class="col-sm-12  embed-responsive embed-responsive-16by9">
+                    <iframe class="youtube embed-responsive-item" width="560" height="315" src="{{ overview.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% if not overview.allowed_status == 1 %}
+                            <a href="{{ url_for('teacher.allow_course_overview', course_title=overview.title) }}" class="label label-warning">Allow</a>
+                        {% else %}
+                            <a href="#" class="label label-success">Allowed</a>
+                        {% endif %}
+                         | <a href="{{ url_for('teacher.delete_course_overview', course_title=overview.title) }}" class="label label-danger">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not course_overview_prev_url %} disabled{% endif %}">
+                        <a href="{{ course_overview_prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> Newer posts
+                        </a>
+                    </li>
+                    <li class="next{% if not course_overview_next_url %} disabled{% endif %}">
+                        <a href="{{ course_overview_next_url or '#' }}">
+                            Older posts <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- End of pagination -->
+    <hr>
+    <div class="row text-center">
+        <div class="col-sm-6">
+            <p>
+                <a href=" {{ url_for('teacher.dashboard_teacher') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back to Dashboard
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-6">
+            <p>
+                <a href=" # " class="btn btn-primary">
+                    Chapter 1
+                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
