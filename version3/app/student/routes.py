@@ -7,7 +7,7 @@ from app.student.forms import CommentForm, EditProfileForm,\
     EmptyForm
 from app.models import TableOfContents, WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
-    Student, WebDevelopmentOverview
+    Student, WebDevelopmentOverview, Chapter
 from flask_login import current_user, login_required
 from datetime import datetime
 
@@ -270,6 +270,31 @@ def web_development_chapter_1():
         student_full_name=current_user.student_full_name
         ).first()
     page = request.args.get('page', 1, type=int)
+
+    # Table of Contents
+    all_toc = TableOfContents.query.filter_by(
+        allowed_status=True).order_by(
+            TableOfContents.timestamp.asc()).paginate(
+                page,
+                current_app.config['POSTS_PER_PAGE'],
+                False
+                )
+    toc_next_url = url_for(
+        'student.web_development_chapter_1',
+        page=all_toc.next_num) \
+        if all_toc.has_next else None
+    toc_prev_url = url_for(
+        'student.web_development_chapter_1',
+        page=all_toc.prev_num) \
+        if all_toc.has_prev else None
+
+    # Dsiplaying the chapter
+    course_chapters = Chapter.query.filter_by(
+        allowed_status=True).order_by(
+            Chapter.timestamp.asc()).paginate(
+                page, current_app.config['POSTS_PER_PAGE'], False)
+
+    # Student comments
     comments = WebDevChapter1Comment.query.order_by(
         WebDevChapter1Comment.timestamp.desc()
         ).paginate(
@@ -330,7 +355,15 @@ def web_development_chapter_1():
         next_url=next_url,
         prev_url=prev_url,
         all_comments=all_comments,
-        student=student
+        student=student,
+
+        # Chapter
+        course_chapters=course_chapters.items,
+
+        # Table of Contents
+        all_toc=all_toc.items,
+        toc_next_url=toc_next_url,
+        toc_prev_url=toc_prev_url
         )
 
 

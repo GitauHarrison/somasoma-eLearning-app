@@ -5,9 +5,9 @@ from flask_login import login_required, current_user
 from flask import render_template, flash, request, redirect, url_for,\
     current_app
 from app.models import Teacher, TeacherCommunityComment, Student,\
-    CommunityComment, WebDevelopmentOverview,TableOfContents
+    CommunityComment, WebDevelopmentOverview, TableOfContents, Chapter
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
-    WebDevelopmentOverviewForm, TableOfContentsForm
+    WebDevelopmentOverviewForm, TableOfContentsForm, ChapterForm
 
 
 @bp.before_request
@@ -115,6 +115,27 @@ def dashboard_teacher():
         flash('Your table of contents has been updated!', 'success')
         return redirect(url_for('teacher.review_table_of_contents'))
 
+    # Chapters
+    chapter_form = ChapterForm()
+    if chapter_form.validate_on_submit():
+        chapter = Chapter(
+            course=chapter_form.course.data,
+            chapter=chapter_form.chapter.data,
+            overview=chapter_form.overview.data,
+            accomplish=chapter_form.accomplish.data,
+            youtube_link=chapter_form.youtube_link.data,
+            conclusion=chapter_form.conclusion.data,
+            objective_1=chapter_form.objective_1.data,
+            objective_2=chapter_form.objective_2.data,
+            objective_3=chapter_form.objective_3.data,
+            objective_4=chapter_form.objective_4.data,
+            objective_5=chapter_form.objective_5.data,
+        )
+        db.session.add(chapter)
+        db.session.commit()
+        flash('Your chapter has been added!', 'success')
+        return redirect(url_for('teacher.review_chapters'))
+
     return render_template(
         'teacher/dashboard_teacher.html',
         teacher=teacher,
@@ -145,7 +166,10 @@ def dashboard_teacher():
         course_overview_form=course_overview_form,
 
         # Manage Course Table of Contents
-        table_of_contents_form=table_of_contents_form
+        table_of_contents_form=table_of_contents_form,
+
+        # Chapters
+        chapter_form=chapter_form
         )
 
 # Profile route
@@ -422,6 +446,67 @@ def delete_table_of_contents(chapter):
     flash('Table of contents has been deleted.')
     return redirect(url_for(
         'teacher.review_table_of_contents'
+        )
+    )
+
+# Chapters
+
+
+@bp.route('/course/chapters/review')
+@login_required
+def review_chapters():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    course_chapters = Chapter.query.filter_by(
+        course=teacher.teacher_course
+    ).order_by(
+        Chapter.timestamp.desc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    course_chapters_next_url = url_for(
+                    'teacher.review_chapters',
+                    page=course_chapters.next_num) \
+        if course_chapters.has_next else None
+    course_chapters_prev_url = url_for(
+        'teacher.review_chapters',
+        page=course_chapters.prev_num) \
+        if course_chapters.has_prev else None
+    return render_template(
+        'teacher/course/flask/reviews/flask_chapters.html',
+        teacher=teacher,
+        title='Review Chapters',
+        course_chapters=course_chapters.items,
+        course_chapters_next_url=course_chapters_next_url,
+        course_chapters_prev_url=course_chapters_prev_url
+        )
+
+
+@bp.route('/course/chapters/<chapter>/allow')
+def allow_chapters(chapter):
+    chapter = Chapter.query.filter_by(
+        chapter=chapter
+        ).first()
+    chapter.allowed_status = True
+    db.session.commit()
+    flash('Chapter has been allowed.')
+    return redirect(url_for(
+        'teacher.review_chapters'
+        )
+    )
+
+
+@bp.route('/course/chapters/<chapter>/delete')
+def delete_chapters(chapter):
+    chapter = Chapter.query.filter_by(
+        chapter=chapter
+        ).first()
+    db.session.delete(chapter)
+    db.session.commit()
+    flash('Chapter has been deleted.')
+    return redirect(url_for(
+        'teacher.review_chapters'
         )
     )
 

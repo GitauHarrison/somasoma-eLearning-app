@@ -299,9 +299,13 @@
         <div id="update" class="tabcontent">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1>Manage Your Course</h1>
+                    <h1>
+                        Manage Your Course 
+                        <span style="color: orange;">({{ teacher.teacher_course }})</span>
+                    </h1>
                 </div>
             </div> 
+            <!-- Course Overview -->
             <div class="row profile">
                 <div class="col-sm-6">
                     <h2>Course Overview</h2>
@@ -316,6 +320,9 @@
                     </a>
                 </div>
             </div>
+            <!-- End of course overview -->
+
+            <!-- Table of contents -->
             <div class="row profile">
                 <div class="col-sm-6">
                     <h2>Table of Contents</h2>
@@ -329,7 +336,25 @@
                         Review ToC
                     </a>
                 </div>
-            </div>            
+            </div>   
+            <!-- End of table of contents -->
+
+            <!-- Course chapters -->
+            <div class="row profile">
+                <div class="col-sm-6">
+                    <h2>Course Chapters</h2>
+                    <div class="my-form">
+                        {{ wtf.quick_form(chapter_form) }}
+                    </div>
+                </div>
+                <div class="col-sm-5 text-center vertical-line">
+                    <h2>Review Course Chapters</h2>
+                    <a href="{{ url_for('teacher.review_chapters') }}" class="btn btn-primary">
+                        Review Course Chapters
+                    </a>
+                </div>
+            </div>   
+            <!-- End of course chapters -->
         </div>
         <!-- END OF COURSE UPDATE TAB -->
 
