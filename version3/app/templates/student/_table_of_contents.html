@@ -1,4 +1,4 @@
-{% if teacher.teacher_course.lower() == "flask web development" %}
+{% if student.student_course.lower() == "flask web development" %}
     {% if toc.title.lower() == "flask web development" %}
         <ul>
             <li>
@@ -8,7 +8,7 @@
             </li>
         </ul>
     {% endif %}
-{% elif teacher.teacher_course.lower() == "data science" %}
+{% elif student.student_course.lower() == "data science" %}
     {% if toc.title.lower() == "data science" %}
         <ul>
             <li>
@@ -18,7 +18,7 @@
             </li>
         </ul>
     {% endif %}
-{%  elif teacher.teacher_course.lower() == "machine learning" %}
+{%  elif student.student_course.lower() == "machine learning" %}
     {% if toc.title.lower() == "machine learning" %}
         <ul>
             <li>
@@ -28,7 +28,7 @@
             </li>
         </ul>
     {% endif %}
-{% elif teacher.teacher_course.lower() == "python dsa" %}
+{% elif student.student_course.lower() == "python dsa" %}
     {% if toc.title.lower() == "python dsa" %}
         <ul>
             <li>

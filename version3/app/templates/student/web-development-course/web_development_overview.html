@@ -3,7 +3,7 @@
 
 {% block app_content %}
     {% for overview in allowed_course_overview %}
-        {% if overview.title.lower() == "flask web development" %}
+        {% if overview.title.lower() == student.student_course.lower() %}
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <h1>{{ overview.title }}</h1>
@@ -13,7 +13,10 @@
                 <div class="col-sm-12">
                     <p>{{ overview.overview }}</p>
                     <div class="table-of-content">
-                        {% include 'teacher/course/flask/_table_of_contents.html' %}
+                        <h2>Table of Contents</h2>
+                        {% for toc in all_toc %}
+                            {% include 'student/_table_of_contents.html' %}
+                        {% endfor %}
                     </div>
                     <h2>Completed Project</h2>
                     <div class="col-sm-12  embed-responsive embed-responsive-16by9">

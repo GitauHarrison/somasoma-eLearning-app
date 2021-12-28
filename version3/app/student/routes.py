@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, flash, request,\
 from app.student.forms import CommentForm, EditProfileForm,\
     Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm,\
     EmptyForm
-from app.models import WebDevChapter1Comment, CommunityComment,\
+from app.models import TableOfContents, WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
     Student, WebDevelopmentOverview
 from flask_login import current_user, login_required
@@ -248,11 +248,16 @@ def web_development_overview():
         allowed_status=True).order_by(WebDevelopmentOverview.timestamp.desc()
                                       ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
+    all_toc = TableOfContents.query.filter_by(
+        allowed_status=True).order_by(TableOfContents.timestamp.asc()
+                                      ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
     return render_template(
         'student/web-development-course/web_development_overview.html',
         title='Web Development',
         student=student,
         allowed_course_overview=allowed_course_overview.items,
+        all_toc=all_toc.items
         )
 
 # Chapters

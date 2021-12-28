@@ -1,6 +1,6 @@
 from app.models import Teacher
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
 
 # Profile form
@@ -62,8 +62,14 @@ class WebDevelopmentOverviewForm(FlaskForm):
 
 
 class TableOfContentsForm(FlaskForm):
-    title = StringField(
+    title = SelectField(
         'Course Title',
+        choices=[
+            ('Flask Web Development', 'Flask Web Development'),
+            ('Python DSA', 'Python DSA'),
+            ('Data Science', 'Data Science'),
+            ('Machine Learning', 'Machine Learning')
+            ],
         validators=[DataRequired()]
         )
     chapter = StringField(

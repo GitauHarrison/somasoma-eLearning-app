@@ -305,13 +305,32 @@ def review_course_overview():
         'teacher.dashboard_teacher',
         page=course_overview.prev_num) \
         if course_overview.has_prev else None
+
+    # Table of contents
+    course_toc = TableOfContents.query.filter_by(
+        allowed_status=True).order_by(
+        TableOfContents.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    course_toc_next_url = url_for(
+        'teacher.review_course_overview',
+        page=course_toc.next_num) \
+        if course_toc.has_next else None
+    course_toc_prev_url = url_for(
+        'teacher.review_course_overview',
+        page=course_toc.prev_num) \
+        if course_toc.has_prev else None
+
     return render_template(
-        'teacher/course/flask/flask_overview.html',
+        'teacher/course/flask/reviews/flask_overview.html',
         teacher=teacher,
         title='Review Flask Overview',
         course_overview=course_overview.items,
         course_overview_next_url=course_overview_next_url,
-        course_overview_prev_url=course_overview_prev_url
+        course_overview_prev_url=course_overview_prev_url,
+        course_toc=course_toc.items,
+        course_toc_next_url=course_toc_next_url,
+        course_toc_prev_url=course_toc_prev_url
         )
 
 
@@ -354,19 +373,19 @@ def review_table_of_contents():
         ).first()
     page = request.args.get('page', 1, type=int)
     course_toc = TableOfContents.query.order_by(
-        TableOfContents.timestamp.desc()
+        TableOfContents.timestamp.asc()
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     course_toc_next_url = url_for(
-                    'teacher.dashboard_teacher',
+                    'teacher.review_table_of_contents',
                     page=course_toc.next_num) \
         if course_toc.has_next else None
     course_toc_prev_url = url_for(
-        'teacher.dashboard_teacher',
+        'teacher.review_table_of_contents',
         page=course_toc.prev_num) \
         if course_toc.has_prev else None
     return render_template(
-        'teacher/course/flask/flask_toc.html',
+        'teacher/course/flask/reviews/flask_toc.html',
         teacher=teacher,
         title='Review Table of Contents',
         course_toc=course_toc.items,
@@ -378,7 +397,7 @@ def review_table_of_contents():
 @bp.route('/course/toc/<chapter>/allow')
 def allow_table_of_contents(chapter):
     toc = TableOfContents.query.filter_by(
-        title=chapter
+        chapter=chapter
         ).first()
     toc.allowed_status = True
     db.session.commit()
@@ -392,7 +411,7 @@ def allow_table_of_contents(chapter):
 @bp.route('/course/toc/<chapter>/delete')
 def delete_table_of_contents(chapter):
     toc = TableOfContents.query.filter_by(
-        title=chapter
+        chapter=chapter
         ).first()
     db.session.delete(toc)
     db.session.commit()
