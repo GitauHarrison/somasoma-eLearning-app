@@ -39,27 +39,6 @@
                         </div>
                     </div>
                     <hr>
-                {% elif toc.title.lower() == teacher.teacher_course.lower() %}
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <ul>
-                                <li>
-                                    <a href="{{ toc.link }}">{{ toc.chapter }}</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            {% if not toc.allowed_status == 1 %}
-                                <a href="{{ url_for('teacher.allow_table_of_contents', chapter=toc.chapter) }}" class="label label-warning">Allow</a>
-                            {% else %}
-                                <a href="#" class="label label-success">Allowed</a>
-                            {% endif %}
-                            | <a href="{{ url_for('teacher.delete_table_of_contents', chapter=toc.chapter) }}" class="label label-danger">Delete</a>
-                        </div>
-                    </div>
-                    <hr>
                 {% endif %}
             {% endfor %}
             <!-- Pagination -->

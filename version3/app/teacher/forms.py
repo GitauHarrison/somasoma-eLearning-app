@@ -45,8 +45,14 @@ class EmptyForm(FlaskForm):
 
 
 class WebDevelopmentOverviewForm(FlaskForm):
-    title = StringField(
-        'Title',
+    title = SelectField(
+        'Course Title',
+        choices=[
+            ('Flask Web Development', 'Flask Web Development'),
+            ('Python DSA', 'Python DSA'),
+            ('Data Science', 'Data Science'),
+            ('Machine Learning', 'Machine Learning')
+            ],
         validators=[DataRequired()]
         )
     body = TextAreaField(
