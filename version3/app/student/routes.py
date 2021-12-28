@@ -7,7 +7,7 @@ from app.student.forms import CommentForm, EditProfileForm,\
     EmptyForm
 from app.models import WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
-    Student
+    Student, WebDevelopmentOverview
 from flask_login import current_user, login_required
 from datetime import datetime
 
@@ -243,10 +243,16 @@ def web_development_overview():
     student = Student.query.filter_by(
         student_full_name=current_user.student_full_name
         ).first()
+    page = request.args.get('page', 1, type=int)
+    allowed_course_overview = WebDevelopmentOverview.query.filter_by(
+        allowed_status=True).order_by(WebDevelopmentOverview.timestamp.desc()
+                                      ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
     return render_template(
         'student/web-development-course/web_development_overview.html',
         title='Web Development',
-        student=student
+        student=student,
+        allowed_course_overview=allowed_course_overview.items,
         )
 
 # Chapters

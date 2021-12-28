@@ -8,14 +8,14 @@ import jwt
 from time import time
 
 
-# @login.user_loader
-# def load_student(id):
-#     return Student.query.get(int(id))
-
-
 @login.user_loader
-def load_teacher(id):
-    return Teacher.query.get(int(id))
+def load_student(id):
+    return Student.query.get(int(id))
+
+
+# @login.user_loader
+# def load_teacher(id):
+#     return Teacher.query.get(int(id))
 
 # @login.user_loader
 # def load_admin(id):
