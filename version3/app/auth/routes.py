@@ -5,13 +5,13 @@ from flask import render_template, redirect, url_for, flash, session,\
 from app.auth.forms import LoginForm, StudentRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, Enable2faForm,\
     Disable2faForm, Confirm2faForm, ParentRegistrationForm, \
-    TeacherRegistrationForm, AdminRegistrationForm
+    AdminRegistrationForm
 from app.models import Parent, Student, Teacher, Admin
 from app.auth.twilio_verify_api import check_verification_token,\
     request_verification_token
 from app.auth.email import send_password_reset_email_student,\
     send_password_reset_email_admin, send_registration_details_parent,\
-    send_registration_details_student
+    send_registration_details_student, send_password_reset_email_teacher
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
@@ -324,6 +324,49 @@ def reset_password_admin(token):
     return render_template(
         'auth/password-reset/reset_password_admin.html',
         title='Reset Password for Admin',
+        form=form
+        )
+
+
+# Teacher
+
+
+@bp.route('/teacher/request-password-reset', methods=['GET', 'POST'])
+def request_password_reset_teacher():
+    if current_user.is_authenticated:
+        return redirect(url_for('teacher.dashboard_teacher'))
+    form = RequestPasswordResetForm()
+    if form.validate_on_submit():
+        teacher = Teacher.query.filter_by(
+            teacher_email=form.email.data
+            ).first()
+        if teacher:
+            send_password_reset_email_teacher(teacher)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('auth.login_teacher'))
+    return render_template(
+        'auth/password-reset/request_password_reset_teacher.html',
+        title='Request Password Reset for Teacher',
+        form=form
+        )
+
+
+@bp.route('/teacher/reset-password/<token>', methods=['GET', 'POST'])
+def reset_password_teacher(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('teacher.dashboard_teacher'))
+    teacher = Teacher.verify_reset_password_token(token)
+    if not teacher:
+        return redirect(url_for('teacher.dashboard_teacher'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        teacher.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('auth.login_teacher'))
+    return render_template(
+        'auth/password-reset/reset_password_teacher.html',
+        title='Reset Password for Teacher',
         form=form
         )
 

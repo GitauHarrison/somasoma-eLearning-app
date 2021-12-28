@@ -41,6 +41,24 @@ def send_password_reset_email_admin(admin):
                    )
                )
 
+
+def send_password_reset_email_teacher(teacher):
+    token = teacher.get_reset_password_token()
+    send_email('[somasoma eLearning] Reset Your Password',
+               sender=current_app.config['ADMINS'][0],
+               recipients=[teacher.teacher_email],
+               text_body=render_template(
+                   'auth/email/reset_password_teacher.txt',
+                   teacher=teacher,
+                   token=token
+                   ),
+               html_body=render_template(
+                   'auth/email/reset_password_teacher.html',
+                   teacher=teacher,
+                   token=token
+                   )
+               )
+
 # ================================
 # END OF PASSWORD RESET
 # ================================
