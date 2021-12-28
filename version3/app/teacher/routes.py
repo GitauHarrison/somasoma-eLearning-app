@@ -25,6 +25,8 @@ def dashboard_teacher():
         teacher_full_name=current_user.teacher_full_name
         ).first()
     page = request.args.get('page', 1, type=int)
+
+    # Explore teacher community comments
     comments = TeacherCommunityComment.query.order_by(
         TeacherCommunityComment.timestamp.desc()
         ).paginate(
@@ -32,7 +34,7 @@ def dashboard_teacher():
             current_app.config['POSTS_PER_PAGE'],
             False
             )
-    
+
     next_url = url_for(
                     'teacher.dashboard_teacher',
                     page=comments.next_num) \
@@ -41,6 +43,20 @@ def dashboard_teacher():
         'teacher.dashboard_teacher',
         page=comments.prev_num) \
         if comments.has_prev else None
+
+    # My teacher community comments
+    my_comments = current_user.followed_comments().paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    my_next_url = url_for(
+                    'teacher.dashboard_teacher',
+                    page=comments.next_num) \
+        if comments.has_next else None
+    my_prev_url = url_for(
+        'teacher.dashboard_teacher',
+        page=comments.prev_num) \
+        if comments.has_prev else None
+
+    # Form: Explore teacher community comments
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         comment = TeacherCommunityComment(
@@ -55,8 +71,11 @@ def dashboard_teacher():
         'teacher/dashboard_teacher.html',
         teacher=teacher,
         comments=comments.items,
+        my_comments=my_comments.items,
         next_url=next_url,
         prev_url=prev_url,
+        my_next_url=my_next_url,
+        my_prev_url=my_prev_url,
         comment_form=comment_form
         )
 
@@ -118,3 +137,75 @@ def profile_teacher(teacher_full_name):
         form=form,
         title='Teacher Profile'
         )
+
+# End of profile route
+
+# Followership routes
+
+
+@bp.route('/follow/<teacher_full_name>', methods=['POST'])
+@login_required
+def follow_teacher(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name
+        ).first()
+    form = EmptyForm()
+    if form.validate_on_submit():
+        teacher = Teacher.query.filter_by(
+            teacher_full_name=teacher_full_name
+            ).first()
+        if teacher is None:
+            flash(f'User {teacher_full_name} not found')
+            return redirect(url_for('teacher.dashboard_teacher'))
+        if teacher == current_user:
+            flash('You cannot follow yourself!')
+            return redirect(url_for(
+                'teacher.profile_teacher',
+                teacher_full_name=teacher_full_name
+                )
+            )
+        current_user.follow(teacher)
+        db.session.commit()
+        flash(f'You are following {teacher.teacher_full_name}!')
+        return redirect(url_for(
+            'teacher.profile_teacher',
+            teacher_full_name=teacher_full_name
+            )
+        )
+    else:
+        return redirect(url_for('teacher.dashboard_teacher'))
+
+
+@bp.route('/unfollow/<teacher_full_name>', methods=['POST'])
+@login_required
+def unfollow_teacher(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name
+        ).first()
+    form = EmptyForm()
+    if form.validate_on_submit():
+        teacher = Teacher.query.filter_by(
+            teacher_full_name=teacher_full_name
+            ).first()
+        if teacher is None:
+            flash(f'User {teacher_full_name} not found')
+            return redirect(url_for('teacher.dashboard_teacher'))
+        if teacher == current_user:
+            flash('You cannot unfollow yourself!')
+            return redirect(url_for(
+                'teacher.profile_teacher',
+                teacher_full_name=teacher_full_name
+                )
+            )
+        current_user.unfollow(teacher)
+        db.session.commit()
+        flash(f'You are not following {teacher.teacher_full_name}!')
+        return redirect(url_for(
+            'teacher.profile_teacher',
+            teacher_full_name=teacher_full_name
+            )
+        )
+    else:
+        return redirect(url_for('teacher.dashboard_teacher'))
+
+# End of followership routes

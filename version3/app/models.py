@@ -33,6 +33,12 @@ followers = db.Table(
     db.Column('followed_id', db.Integer, db.ForeignKey('student.id'))
 )
 
+teacher_followers = db.Table(
+    'teacher_followers',
+    db.Column('follower_id', db.Integer, db.ForeignKey('teacher.id')),
+    db.Column('followed_id', db.Integer, db.ForeignKey('teacher.id'))
+)
+
 # ========================================
 # ADMIN MODELS
 # ========================================
@@ -351,6 +357,38 @@ class Teacher(UserMixin, db.Model):
         except:
             return
         return Teacher.query.get(id)
+
+    teacher_followed = db.relationship(
+        'Teacher',
+        secondary=teacher_followers,
+        primaryjoin=(teacher_followers.c.follower_id == id),
+        secondaryjoin=(teacher_followers.c.followed_id == id),
+        backref=db.backref(
+            'teacher_followers',
+            lazy='dynamic'
+            ), lazy='dynamic')
+
+    def follow(self, teacher):
+        if not self.is_following(teacher):
+            self.teacher_followed.append(teacher)
+
+    def unfollow(self, teacher):
+        if self.is_following(teacher):
+            self.teacher_followed.remove(teacher)
+
+    def is_following(self, teacher):
+        return self.teacher_followed.filter(
+            teacher_followers.c.followed_id == teacher.id).count() > 0
+
+    def followed_comments(self):
+        teacher_followed = TeacherCommunityComment.query.join(
+            teacher_followers,
+            (teacher_followers.c.followed_id == TeacherCommunityComment.teacher_id)
+            ).filter(teacher_followers.c.follower_id == self.id)
+        own = TeacherCommunityComment.query.filter_by(teacher_id=self.id)
+        return teacher_followed.union(own).order_by(
+            TeacherCommunityComment.timestamp.desc()
+            )
 
 
 class TeacherCommunityComment(db.Model):

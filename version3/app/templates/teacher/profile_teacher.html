@@ -44,8 +44,8 @@
                 </p>
             {% endif %}
             <p>
-                <span style="font-weight: 600;">{{ teacher.followers.count() }}</span> Followers,
-                <span style="font-weight: 600;">{{ teacher.followed.count() }}</span> Following
+                <span style="font-weight: 600;">{{ teacher.teacher_followers.count() }}</span> Followers,
+                <span style="font-weight: 600;">{{ teacher.teacher_followed.count() }}</span> Following
             </p>
             {% if not current_user.is_following(teacher) %}
                 <form action="{{ url_for('teacher.follow_teacher', teacher_full_name=teacher.teacher_full_name) }}" method="post">

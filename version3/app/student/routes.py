@@ -29,12 +29,22 @@ def dashboard_student():
         student_full_name=current_user.student_full_name
         ).first()
 
-    # Student community comments
+    # Explore student community comments
     page = request.args.get('page', 1, type=int)
     comments = CommunityComment.query.order_by(
         CommunityComment.timestamp.desc()
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for(
+                    'student.dashboard_student',
+                    page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for(
+        'student.dashboard_student',
+        page=comments.prev_num) \
+        if comments.has_prev else None
+
+    # My community comments
     my_comments = current_user.followed_comments().paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
@@ -45,6 +55,8 @@ def dashboard_student():
         'student.dashboard_student',
         page=comments.prev_num) \
         if comments.has_prev else None
+
+    # Explore student community comments form
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         comment = CommunityComment(
