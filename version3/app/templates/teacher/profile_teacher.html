@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <H1>{{ title }}</H1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <img src=" {{ teacher.avatar_teacher(128) }} " class="img-circle">
+        </div>
+        <div class="col-sm-9">
+            <p>
+                Your Full Name: <span style="font-weight: 600;">{{ teacher.teacher_full_name }}</span> 
+            </p>
+            <p>
+                Email: <span style="font-weight: 600;">{{ teacher.teacher_email }}</span> 
+            </p>
+            <p>
+                Phone: <span style="font-weight: 600;">{{ teacher.teacher_phone }}</span> 
+            </p>
+            <p>
+                Residence: <span style="font-weight: 600;">{{ teacher.teacher_residence }}</span> 
+            </p>
+            <p>
+                Teacher Course: <span style="font-weight: 600;">{{ teacher.teacher_course }}</span> 
+            </p>
+            {% if teacher.teacher_about_me %}
+                <p>
+                    About me: <span style="font-weight: 600;">{{ teacher.teacher_about_me }}</span>
+                </p>
+            {% endif %}
+            {% if teacher.teacher_last_seen %}
+                <p>
+                    Last seen on: <span style="font-weight: 600;">{{ moment(teacher.teacher_last_seen).format('LLL') }}</span>
+                </p>
+            {% endif %}
+            <p>
+                <span style="font-weight: 600;">{{ teacher.followers.count() }}</span> Followers,
+                <span style="font-weight: 600;">{{ teacher.followed.count() }}</span> Following
+            </p>
+            {% if not current_user.is_following(teacher) %}
+                <form action="{{ url_for('teacher.follow_teacher', teacher_full_name=teacher.teacher_full_name) }}" method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit(value='Follow', class_='btn btn-primary') }}
+                </form>
+            {% else %}
+                <form action="{{ url_for('teacher.unfollow_teacher', teacher_full_name=teacher.teacher_full_name) }}" method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
+                </form>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <div class="row teacher">
+        <div class="col-sm-12">
+            {% for comment in comments %}
+                {% include 'teacher/_comments_teachers.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> Newer posts
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            Older posts <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <hr>
+    {% if teacher %}
+        <div class="row text-center">
+            <div class="col-sm-4">
+                <!-- Empty columns -->
+            </div>
+            <div class="col-sm-4">
+                <p>
+                    <a href=" {{ url_for('teacher.dashboard_teacher') }} " class="btn btn-primary">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                            Back to Dashboard
+                    </a>
+                </p>
+            </div>
+            <div class="col-sm-4">
+                <!-- Empty columns -->
+            </div>
+        </div>
+    {% elif student %}
+    <div class="row text-center">
+        <div class="col-sm-4">
+            <!-- Empty columns -->
+        </div>
+        <div class="col-sm-4">
+            <p>
+                <a href=" {{ url_for('student.dashboard_student') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back to Dashboard
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <!-- Empty columns -->
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

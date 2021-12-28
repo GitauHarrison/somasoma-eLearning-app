@@ -24,3 +24,19 @@ class EditProfileForm(FlaskForm):
                 teacher_email=self.email.data).first()
             if teacher is not None:
                 raise ValidationError('Please use a different email.')
+
+# Comment form
+
+
+class CommentForm(FlaskForm):
+    comment = TextAreaField('Comment',
+                            validators=[DataRequired()]
+                            )
+    submit = SubmitField('Post')
+
+
+# Follow form
+
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Post')
