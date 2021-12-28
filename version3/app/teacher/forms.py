@@ -59,3 +59,21 @@ class WebDevelopmentOverviewForm(FlaskForm):
         render_kw={"placeholder": "Youtube Embed Link"}
         )
     submit = SubmitField('Post')
+
+
+class TableOfContentsForm(FlaskForm):
+    title = StringField(
+        'Course Title',
+        validators=[DataRequired()]
+        )
+    chapter = StringField(
+        'Chapter',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Chapter 1: Introduction"}
+        )
+    link = StringField(
+        'Chapter Link',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "https://link/to/chapter"}
+        )
+    submit = SubmitField('Post')

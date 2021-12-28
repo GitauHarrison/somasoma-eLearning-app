@@ -8,14 +8,14 @@ import jwt
 from time import time
 
 
-@login.user_loader
-def load_student(id):
-    return Student.query.get(int(id))
-
-
 # @login.user_loader
-# def load_teacher(id):
-#     return Teacher.query.get(int(id))
+# def load_student(id):
+#     return Student.query.get(int(id))
+
+
+@login.user_loader
+def load_teacher(id):
+    return Teacher.query.get(int(id))
 
 # @login.user_loader
 # def load_admin(id):
@@ -323,6 +323,11 @@ class Teacher(UserMixin, db.Model):
         backref='author',
         lazy='dynamic'
         )
+    table_of_contentes = db.relationship(
+        'TableOfContents',
+        backref='author',
+        lazy='dynamic'
+        )
 
     def __repr__(self):
         return f'Teacher {self.teacher_full_name}'
@@ -419,6 +424,20 @@ class WebDevelopmentOverview(db.Model):
 
     def __repr__(self):
         return f'Web Development Overview: {self.title}'
+
+
+class TableOfContents(db.Model):
+    __tablename__ = 'table of contents'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64), index=True)
+    chapter = db.Column(db.String(140))
+    link = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    allowed_status = db.Column(db.Boolean, default=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+
+    def __repr__(self):
+        return f'Table of Contents: {self.chapter}'
 
 # ========================================
 # END OF TEACHER MODELS

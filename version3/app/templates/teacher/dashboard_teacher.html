@@ -315,6 +315,20 @@
                         Review Course Overview
                     </a>
                 </div>
+            </div>
+            <div class="row profile">
+                <div class="col-sm-6">
+                    <h2>Table of Contents</h2>
+                    <div class="my-form">
+                        {{ wtf.quick_form(table_of_contents_form) }}
+                    </div>
+                </div>
+                <div class="col-sm-5 text-center vertical-line">
+                    <h2>Review Table of Contents</h2>
+                    <a href="{{ teacher.review_table_of_contents }}" class="btn btn-primary">
+                        Review ToC
+                    </a>
+                </div>
             </div>            
         </div>
         <!-- END OF COURSE UPDATE TAB -->

@@ -5,9 +5,9 @@ from flask_login import login_required, current_user
 from flask import render_template, flash, request, redirect, url_for,\
     current_app
 from app.models import Teacher, TeacherCommunityComment, Student,\
-    CommunityComment, WebDevelopmentOverview
+    CommunityComment, WebDevelopmentOverview,TableOfContents
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
-    WebDevelopmentOverviewForm
+    WebDevelopmentOverviewForm, TableOfContentsForm
 
 
 @bp.before_request
@@ -102,6 +102,19 @@ def dashboard_teacher():
         flash('Your course overview has been posted!', 'success')
         return redirect(url_for('teacher.review_course_overview'))
 
+    # Manage Course Table of Contents
+    table_of_contents_form = TableOfContentsForm()
+    if table_of_contents_form.validate_on_submit():
+        table_of_contents = TableOfContents(
+            title=table_of_contents_form.title.data,
+            chapter=table_of_contents_form.chapter.data,
+            link=table_of_contents_form.link.data,
+        )
+        db.session.add(table_of_contents)
+        db.session.commit()
+        flash('Your table of contents has been updated!', 'success')
+        return redirect(url_for('teacher.review_table_of_contents'))
+
     return render_template(
         'teacher/dashboard_teacher.html',
         teacher=teacher,
@@ -129,7 +142,10 @@ def dashboard_teacher():
         student_prev_url=student_prev_url,
 
         # Manage Course Overview
-        course_overview_form=course_overview_form
+        course_overview_form=course_overview_form,
+
+        # Manage Course Table of Contents
+        table_of_contents_form=table_of_contents_form
         )
 
 # Profile route
@@ -323,6 +339,66 @@ def delete_course_overview(course_title):
     flash('Course overview has been deleted.')
     return redirect(url_for(
         'teacher.review_course_overview'
+        )
+    )
+
+
+# Table of contents route
+
+
+@bp.route('/course/toc/review')
+@login_required
+def review_table_of_contents():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    course_toc = TableOfContents.query.order_by(
+        TableOfContents.timestamp.desc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    course_toc_next_url = url_for(
+                    'teacher.dashboard_teacher',
+                    page=course_toc.next_num) \
+        if course_toc.has_next else None
+    course_toc_prev_url = url_for(
+        'teacher.dashboard_teacher',
+        page=course_toc.prev_num) \
+        if course_toc.has_prev else None
+    return render_template(
+        'teacher/course/flask/flask_toc.html',
+        teacher=teacher,
+        title='Review Table of Contents',
+        course_toc=course_toc.items,
+        course_toc_next_url=course_toc_next_url,
+        course_toc_prev_url=course_toc_prev_url
+        )
+
+
+@bp.route('/course/toc/<chapter>/allow')
+def allow_table_of_contents(chapter):
+    toc = TableOfContents.query.filter_by(
+        title=chapter
+        ).first()
+    toc.allowed_status = True
+    db.session.commit()
+    flash('Table of contents has been allowed.')
+    return redirect(url_for(
+        'teacher.review_table_of_contents'
+        )
+    )
+
+
+@bp.route('/course/toc/<chapter>/delete')
+def delete_table_of_contents(chapter):
+    toc = TableOfContents.query.filter_by(
+        title=chapter
+        ).first()
+    db.session.delete(toc)
+    db.session.commit()
+    flash('Table of contents has been deleted.')
+    return redirect(url_for(
+        'teacher.review_table_of_contents'
         )
     )
 
