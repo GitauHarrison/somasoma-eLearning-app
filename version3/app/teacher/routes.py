@@ -4,7 +4,7 @@ from app.teacher import bp
 from flask_login import login_required, current_user
 from flask import render_template, flash, request, redirect, url_for,\
     current_app
-from app.models import Teacher, TeacherCommunityComment
+from app.models import Teacher, TeacherCommunityComment, Student
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm
 
 
@@ -26,6 +26,11 @@ def dashboard_teacher():
         ).first()
     page = request.args.get('page', 1, type=int)
 
+    # List all students
+    students = Student.query.filter_by(
+        student_course=teacher.teacher_course).order_by(
+        Student.student_last_seen.desc()).all()
+    all_students = len(students)
     # Explore teacher community comments
     comments = TeacherCommunityComment.query.order_by(
         TeacherCommunityComment.timestamp.desc()
@@ -70,13 +75,23 @@ def dashboard_teacher():
     return render_template(
         'teacher/dashboard_teacher.html',
         teacher=teacher,
+
+        # All comments
         comments=comments.items,
-        my_comments=my_comments.items,
         next_url=next_url,
         prev_url=prev_url,
+
+        # Followed comments
+        my_comments=my_comments.items,
         my_next_url=my_next_url,
         my_prev_url=my_prev_url,
-        comment_form=comment_form
+
+        # Form: Explore teacher community comments
+        comment_form=comment_form,
+
+        # Students taking teacher's course
+        students=students,
+        all_students=all_students
         )
 
 # Profile route

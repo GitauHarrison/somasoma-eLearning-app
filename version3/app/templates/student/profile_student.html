@@ -1,107 +1,109 @@
 {% extends 'base.html' %}
 
 {% block app_content %}
-<!-- Flash message -->
-<div class="row">
-    <div class="col-sm-12">
-        {% include '_flash_message.html' %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
     </div>
-</div>
-<!-- End of flash message -->
-<div class="row">
-    <div class="col-sm-12 text-center">
-        <H1>{{ title }}</H1>
+    <!-- End of flash message -->
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <H1>{{ title }}</H1>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-sm-3">
-        <img src=" {{ student.avatar_student(128) }} " class="img-circle">
-    </div>
-    <div class="col-sm-9">
-        <p>
-            Your Full Name: <span style="font-weight: 600;">{{ student.student_full_name }}</span> 
-        </p>
-        <p>
-            Email: <span style="font-weight: 600;">{{ student.student_email }}</span> 
-        </p>
-        <p>
-            Phone: <span style="font-weight: 600;">{{ student.student_phone }}</span> 
-        </p>
-        <p>
-            Age: <span style="font-weight: 600;">{{ student.student_age }}</span> 
-        </p>
-        <p>
-            School: <span style="font-weight: 600;">{{ student.student_school }}</span> 
-        </p>
-        <p>
-            Course: <span style="font-weight: 600;">{{ student.student_course }}</span> 
-        </p>
-        {% if student.student_about_me %}
+    <div class="row">
+        <div class="col-sm-3">
+            <img src=" {{ student.avatar_student(128) }} " class="img-circle">
+        </div>
+        <div class="col-sm-9">
             <p>
-                About me: <span style="font-weight: 600;">{{ student.student_about_me }}</span>
+                Your Full Name: <span style="font-weight: 600;">{{ student.student_full_name }}</span> 
             </p>
-        {% endif %}
-        {% if student.student_last_seen %}
             <p>
-                Last seen on: <span style="font-weight: 600;">{{ moment(student.student_last_seen).format('LLL') }}</span>
+                Email: <span style="font-weight: 600;">{{ student.student_email }}</span> 
             </p>
-        {% endif %}
-        <p>
-            <span style="font-weight: 600;">{{ student.followers.count() }}</span> Followers,
-            <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
-        </p>
-        {% if not current_user.is_following(student) %}
-            <form action="{{ url_for('student.follow_student', student_full_name=student.student_full_name) }}" method="post">
-                {{ form.hidden_tag() }}
-                {{ form.submit(value='Follow', class_='btn btn-primary') }}
-            </form>
-        {% else %}
-            <form action="{{ url_for('student.unfollow_student', student_full_name=student.student_full_name) }}" method="post">
-                {{ form.hidden_tag() }}
-                {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
-            </form>
-        {% endif %}
+            <p>
+                Phone: <span style="font-weight: 600;">{{ student.student_phone }}</span> 
+            </p>
+            <p>
+                Age: <span style="font-weight: 600;">{{ student.student_age }}</span> 
+            </p>
+            <p>
+                School: <span style="font-weight: 600;">{{ student.student_school }}</span> 
+            </p>
+            <p>
+                Course: <span style="font-weight: 600;">{{ student.student_course }}</span> 
+            </p>
+            {% if student.student_about_me %}
+                <p>
+                    About me: <span style="font-weight: 600;">{{ student.student_about_me }}</span>
+                </p>
+            {% endif %}
+            {% if student.student_last_seen %}
+                <p>
+                    Last seen on: <span style="font-weight: 600;">{{ moment(student.student_last_seen).format('LLL') }}</span>
+                </p>
+            {% endif %}
+            <p>
+                <span style="font-weight: 600;">{{ student.followers.count() }}</span> Followers,
+                <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
+            </p>
+            {% if not current_user.is_following(student) %}
+                <form action="{{ url_for('student.follow_student', student_full_name=student.student_full_name) }}" method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit(value='Follow', class_='btn btn-primary') }}
+                </form>
+            {% else %}
+                <form action="{{ url_for('student.unfollow_student', student_full_name=student.student_full_name) }}" method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
+                </form>
+            {% endif %}
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        {% for comment in comments %}
-            {% include 'student/_comments_students.html' %}
-        {% endfor %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% for comment in comments %}
+                {% include 'student/_comments_students.html' %}
+            {% endfor %}
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <nav aria-label="...">
-            <ul class="pager">
-                <li class="previous{% if not prev_url %} disabled{% endif %}">
-                    <a href="{{ prev_url or '#' }}">
-                        <span aria-hidden="true">&larr;</span> Newer posts
-                    </a>
-                </li>
-                <li class="next{% if not next_url %} disabled{% endif %}">
-                    <a href="{{ next_url or '#' }}">
-                        Older posts <span aria-hidden="true">&rarr;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+    <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> Newer posts
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            Older posts <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
-</div>
-<div class="row text-center">
-    <div class="col-sm-4">
-        <!-- Empty columns -->
+    
+    <div class="row text-center">
+        <div class="col-sm-4">
+                <!-- Empty columns -->
+        </div>
+        <div class="col-sm-4">
+            <p>
+                <a href=" {{ url_for('student.dashboard_student') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back to Dashboard
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <!-- Empty columns -->
+        </div>
     </div>
-    <div class="col-sm-4">
-        <p>
-            <a href=" {{ url_for('student.dashboard_student') }} " class="btn btn-primary">
-                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                    Back to Dashboard
-            </a>
-        </p>
-    </div>
-    <div class="col-sm-4">
-        <!-- Empty columns -->
-    </div>
-</div>
+    
 {% endblock %}

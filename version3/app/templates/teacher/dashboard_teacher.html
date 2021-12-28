@@ -72,7 +72,7 @@
                             Residence: <span style="font-weight: 600;">{{ current_user.teacher_residence }}</span> 
                         </p>
                         <p>
-                            Teaching Course: <span style="font-weight: 600;">{{ current_user.teacher_course }}</span> 
+                            Teaching Course: <span style="font-weight: 600; color: orange;">{{ current_user.teacher_course }}</span> 
                         </p>
                     </div>
                 </div> 
@@ -116,7 +116,35 @@
         <div id="students" class="tabcontent">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1>All Students</h1>
+                    <h1>Your Students ({{ all_students }})</h1>
+                </div>
+            </div> 
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Age</th>
+                                <th>School</th>
+                                <th>Last Seen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                                <tr>
+                                    <td>{{ student.student_full_name }}</td>
+                                    <td>{{ student.student_email }}</td>
+                                    <td>{{ student.student_phone }}</td>
+                                    <td>{{ student.student_age }}</td>
+                                    <td>{{ student.student_school }}</td>
+                                    <td>{{ moment(student.student_last_seen).format('LLL') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div> 
         </div>
