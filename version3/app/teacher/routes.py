@@ -293,7 +293,9 @@ def review_course_overview():
         teacher_full_name=current_user.teacher_full_name
         ).first()
     page = request.args.get('page', 1, type=int)
-    course_overview = WebDevelopmentOverview.query.order_by(
+    course_overview = WebDevelopmentOverview.query.filter_by(
+        title=teacher.teacher_course
+    ).order_by(
         WebDevelopmentOverview.timestamp.desc()
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
@@ -324,7 +326,7 @@ def review_course_overview():
     return render_template(
         'teacher/course/flask/reviews/flask_overview.html',
         teacher=teacher,
-        title='Review Flask Overview',
+        title='Review Course Overview',
         course_overview=course_overview.items,
         course_overview_next_url=course_overview_next_url,
         course_overview_prev_url=course_overview_prev_url,
@@ -372,7 +374,9 @@ def review_table_of_contents():
         teacher_full_name=current_user.teacher_full_name
         ).first()
     page = request.args.get('page', 1, type=int)
-    course_toc = TableOfContents.query.order_by(
+    course_toc = TableOfContents.query.filter_by(
+        title=teacher.teacher_course
+    ).order_by(
         TableOfContents.timestamp.asc()
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
