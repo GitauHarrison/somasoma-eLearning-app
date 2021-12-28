@@ -110,7 +110,7 @@ def edit_profile():
 @login_required
 def profile_teacher(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
+        teacher_full_name=teacher_full_name
         ).first()
     page = request.args.get('page', 1, type=int)
     comments = teacher.comments.order_by(
