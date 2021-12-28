@@ -35,9 +35,10 @@ class EditProfileForm(FlaskForm):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.original_email = original_email
 
-    def validate_student_email(self, email):
-        if email.data != self.original_email:
-            student = Student.query.filter_by(student_email=self.email.data).first()
+    def validate__email(self, student_email):
+        if student_email.data != self.original_email:
+            student = Student.query.filter_by(
+                student_email=self.email.data).first()
             if student is not None:
                 raise ValidationError('Please use a different email.')
 

@@ -4,7 +4,8 @@ from app.teacher import bp
 from flask_login import login_required, current_user
 from flask import render_template, flash, request, redirect, url_for,\
     current_app
-from app.models import Teacher, TeacherCommunityComment, Student
+from app.models import Teacher, TeacherCommunityComment, Student,\
+    CommunityComment
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm
 
 
@@ -31,6 +32,7 @@ def dashboard_teacher():
         student_course=teacher.teacher_course).order_by(
         Student.student_last_seen.desc()).all()
     all_students = len(students)
+
     # Explore teacher community comments
     comments = TeacherCommunityComment.query.order_by(
         TeacherCommunityComment.timestamp.desc()
@@ -39,7 +41,6 @@ def dashboard_teacher():
             current_app.config['POSTS_PER_PAGE'],
             False
             )
-
     next_url = url_for(
                     'teacher.dashboard_teacher',
                     page=comments.next_num) \
@@ -49,7 +50,7 @@ def dashboard_teacher():
         page=comments.prev_num) \
         if comments.has_prev else None
 
-    # My teacher community comments
+    # Following: Teacher community comments
     my_comments = current_user.followed_comments().paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     my_next_url = url_for(
@@ -72,6 +73,21 @@ def dashboard_teacher():
         db.session.commit()
         flash('Your comment has been posted!', 'success')
         return redirect(url_for('teacher.dashboard_teacher'))
+
+    # Students community comments
+    student_comments = CommunityComment.query.order_by(
+        CommunityComment.timestamp.desc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    student_next_url = url_for(
+                    'teacher.dashboard_teacher',
+                    page=comments.next_num) \
+        if comments.has_next else None
+    student_prev_url = url_for(
+        'teacher.dashboard_teacher',
+        page=comments.prev_num) \
+        if comments.has_prev else None
+
     return render_template(
         'teacher/dashboard_teacher.html',
         teacher=teacher,
@@ -91,7 +107,12 @@ def dashboard_teacher():
 
         # Students taking teacher's course
         students=students,
-        all_students=all_students
+        all_students=all_students,
+
+        # Students community comments
+        student_comments=student_comments.items,
+        student_next_url=student_next_url,
+        student_prev_url=student_prev_url
         )
 
 # Profile route

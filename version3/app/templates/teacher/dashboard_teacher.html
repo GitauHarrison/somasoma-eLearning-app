@@ -38,7 +38,10 @@
                 Comment Moderation
             </a>
             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'update')">
-                Content Update
+                Manage Course
+            </a>
+            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'events')">
+                Manage Events
             </a>
         </div>   
     </div>
@@ -248,6 +251,37 @@
                     <h1>Student Community</h1>
                 </div>
             </div>
+
+            <!-- Student comments -->
+            <div class="row">
+                <div class="col-sm-12">
+                    {% for comment in student_comments %}
+                        {% include 'student/_comments_students.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- End of student comments -->
+
+            <!-- Pagination of teacher comments -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <nav aria-label="...">
+                        <ul class="pager">
+                            <li class="previous{% if not student_prev_url %} disabled{% endif %}">
+                                <a href="{{ student_prev_url or '#' }}">
+                                    <span aria-hidden="true">&larr;</span> Newer posts
+                                </a>
+                            </li>
+                            <li class="next{% if not student_next_url %} disabled{% endif %}">
+                                <a href="{{ student_next_url or '#' }}">
+                                    Older posts <span aria-hidden="true">&rarr;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- End of pagination of teacher comments -->
         </div>
         <!-- END STUDENT COMMUNITY TAB -->
 
@@ -261,15 +295,25 @@
         </div>
         <!-- END OF COMMENT MODERATION TAB -->
 
-        <!-- CONTENT UPDATE TAB -->
+        <!-- CONTENT COURSE TAB -->
         <div id="update" class="tabcontent">
             <div class="row">
                 <div class="col-sm-12">
-                    <h1>Content Update</h1>
+                    <h1>Manage Your Course</h1>
                 </div>
             </div>            
         </div>
-        <!-- END OF CONTENT UPDATE TAB -->
+        <!-- END OF COURSE UPDATE TAB -->
+
+        <!-- CONTENT EVENTS TAB -->
+        <div id="events" class="tabcontent">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Manage Events</h1>
+                </div>
+            </div>            
+        </div>
+        <!-- END OF EVENTS UPDATE TAB -->
 
     </div>
     <!-- End of tab contents -->
