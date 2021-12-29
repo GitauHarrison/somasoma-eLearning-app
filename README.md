@@ -62,14 +62,17 @@ Comimg soon...
   - [x] Creates quizzes for each chapter
   - [x] Creates overall quiz for the course
 <br>
+
 * Student management:
   - [ ] Moderation of student's comments in each course chapter
   - [ ] Assesses student's achievements in each course chapter (automatic by the application)
   - [ ] Assesses student's achievements in the overall course (automatic by the application)
 <br>
+
 * Event Management
   - [ ] Teacher can create (and delete) events for students and the general public to attend
 <br>
+
 * Blog Management
   - [ ] Teacher can only create blogs seen in the blogs page
   - [ ] Teacher can allow the blog created to be posted in the public section of the application
@@ -89,6 +92,7 @@ Comimg soon...
     - [x] Personal registration details
     - [x] Student's individual comments in the eLearning community
 <br>
+
 * Learning Analytics
   - Can view their own learning analytics:
     - [ ] Each chapter's learning objectives
