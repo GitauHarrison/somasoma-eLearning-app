@@ -26,6 +26,16 @@
                     <div class="col-sm-12">
                         <h2>Overview</h2>
                         <p>{{ chapter.overview }}</p>
+                        
+                        <!-- Table of contents -->
+                        <div class="row table-of-content">
+                            <div class="col-sm-12">
+                                <h2>Table of Contents</h2>
+                                {% for toc in toc_chapters %}
+                                    {% include 'teacher/course/flask/_table_of_contents.html' %}
+                                {% endfor %}
+                            </div>
+                        </div>
 
                         <h2>What You Will Accomplish</h2>
                         <p>{{ chapter.accomplish }}</p>

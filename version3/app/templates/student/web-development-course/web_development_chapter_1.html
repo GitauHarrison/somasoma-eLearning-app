@@ -23,26 +23,6 @@
                                     {% for toc in all_toc %}
                                         {% include 'student/_table_of_contents.html' %}
                                     {% endfor %}
-                                    <!-- Pagination -->
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <nav aria-label="...">
-                                                <ul class="pager">
-                                                    <li class="previous{% if not toc_next_url %} disabled{% endif %}">
-                                                        <a href="{{ toc_next_url or '#' }}">
-                                                            <span aria-hidden="true">&larr;</span> Newer posts
-                                                        </a>
-                                                    </li>
-                                                    <li class="next{% if not toc_prev_url %} disabled{% endif %}">
-                                                        <a href="{{ toc_prev_url or '#' }}">
-                                                            Older posts <span aria-hidden="true">&rarr;</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </div>
-                                    <!-- End of pagination -->
                                 </div>
                             </div>
 

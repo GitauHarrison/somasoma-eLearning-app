@@ -17,33 +17,18 @@
     <div class="row profile">
         <div class="col-sm-12">
             {% for overview in course_overview %}
-                <h2>{{ overview.title }}</h2>   
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <h1>{{ overview.title }}</h1>
+                    </div>
+                </div>
+                <h2>Overview</h2>
                 <p>{{ overview.overview }}</p>
                 <div class="table-of-content">
                     <h2>Table of Contents</h2>
                     {% for toc in course_toc %}
                         {% include 'teacher/course/flask/_table_of_contents.html' %}
                     {% endfor %}
-                    <!-- Pagination -->
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <nav aria-label="...">
-                                <ul class="pager">
-                                    <li class="previous{% if not course_toc_prev_url %} disabled{% endif %}">
-                                        <a href="{{ course_toc_prev_url or '#' }}">
-                                            <span aria-hidden="true">&larr;</span> Newer posts
-                                        </a>
-                                    </li>
-                                    <li class="next{% if not course_toc_next_url %} disabled{% endif %}">
-                                        <a href="{{ course_toc_next_url or '#' }}">
-                                            Older posts <span aria-hidden="true">&rarr;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    <!-- End of pagination -->
                 </div>
                 <h2>Completed Project</h2>
                 <div class="youtube  embed-responsive embed-responsive-16by9">

@@ -1,41 +1,9 @@
-{% if student.student_course.lower() == "flask web development" %}
-    {% if toc.title.lower() == "flask web development" %}
-        <ul>
-            <li>
-                <a href="{{ toc.link }}">
-                    {{ toc.chapter }}
-                </a>
-            </li>
-        </ul>
-    {% endif %}
-{% elif student.student_course.lower() == "data science" %}
-    {% if toc.title.lower() == "data science" %}
-        <ul>
-            <li>
-                <a href="{{ toc.link }}">
-                    {{ toc.chapter }}
-                </a>
-            </li>
-        </ul>
-    {% endif %}
-{%  elif student.student_course.lower() == "machine learning" %}
-    {% if toc.title.lower() == "machine learning" %}
-        <ul>
-            <li>
-                <a href="{{ toc.link }}">
-                    {{ toc.chapter }}
-                </a>
-            </li>
-        </ul>
-    {% endif %}
-{% elif student.student_course.lower() == "python dsa" %}
-    {% if toc.title.lower() == "python dsa" %}
-        <ul>
-            <li>
-                <a href="{{ toc.link }}">
-                    {{ toc.chapter }}
-                </a>
-            </li>
-        </ul>
-    {% endif %}
+{% if toc.title.lower() == student.student_course.lower() %}
+    <ul>
+        <li>
+            <a href="{{ toc.link }}">
+                {{ toc.chapter }}
+            </a>
+        </li>
+    </ul>
 {% endif %}

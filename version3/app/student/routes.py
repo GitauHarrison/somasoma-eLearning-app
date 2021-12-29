@@ -245,12 +245,16 @@ def web_development_overview():
         ).first()
     page = request.args.get('page', 1, type=int)
     allowed_course_overview = WebDevelopmentOverview.query.filter_by(
-        allowed_status=True).order_by(WebDevelopmentOverview.timestamp.desc()
-                                      ).paginate(
+        allowed_status=True).order_by(
+            WebDevelopmentOverview.timestamp.desc()
+            ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
+
+    # Table of contents
     all_toc = TableOfContents.query.filter_by(
-        allowed_status=True).order_by(TableOfContents.timestamp.asc()
-                                      ).paginate(
+        title=student.student_course).order_by(
+            TableOfContents.timestamp.asc()
+            ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     return render_template(
         'student/web-development-course/web_development_overview.html',
@@ -273,20 +277,12 @@ def web_development_chapter_1():
 
     # Table of Contents
     all_toc = TableOfContents.query.filter_by(
-        allowed_status=True).order_by(
+        title=student.student_course).order_by(
             TableOfContents.timestamp.asc()).paginate(
                 page,
                 current_app.config['POSTS_PER_PAGE'],
                 False
                 )
-    toc_next_url = url_for(
-        'student.web_development_chapter_1',
-        page=all_toc.next_num) \
-        if all_toc.has_next else None
-    toc_prev_url = url_for(
-        'student.web_development_chapter_1',
-        page=all_toc.prev_num) \
-        if all_toc.has_prev else None
 
     # Dsiplaying the chapter
     course_chapters = Chapter.query.filter_by(
@@ -361,9 +357,7 @@ def web_development_chapter_1():
         course_chapters=course_chapters.items,
 
         # Table of Contents
-        all_toc=all_toc.items,
-        toc_next_url=toc_next_url,
-        toc_prev_url=toc_prev_url
+        all_toc=all_toc.items
         )
 
 

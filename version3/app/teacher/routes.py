@@ -133,7 +133,7 @@ def dashboard_teacher():
         )
         db.session.add(chapter)
         db.session.commit()
-        flash('Your chapter has been added!', 'success')
+        flash(f'{chapter} has been added!', 'success')
         return redirect(url_for('teacher.review_chapters'))
 
     return render_template(
@@ -334,18 +334,10 @@ def review_course_overview():
 
     # Table of contents
     course_toc = TableOfContents.query.filter_by(
-        allowed_status=True).order_by(
+        title=teacher.teacher_course).order_by(
         TableOfContents.timestamp.asc()
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
-    course_toc_next_url = url_for(
-        'teacher.review_course_overview',
-        page=course_toc.next_num) \
-        if course_toc.has_next else None
-    course_toc_prev_url = url_for(
-        'teacher.review_course_overview',
-        page=course_toc.prev_num) \
-        if course_toc.has_prev else None
 
     return render_template(
         'teacher/course/flask/reviews/flask_overview.html',
@@ -354,9 +346,7 @@ def review_course_overview():
         course_overview=course_overview.items,
         course_overview_next_url=course_overview_next_url,
         course_overview_prev_url=course_overview_prev_url,
-        course_toc=course_toc.items,
-        course_toc_next_url=course_toc_next_url,
-        course_toc_prev_url=course_toc_prev_url
+        course_toc=course_toc.items
         )
 
 
@@ -429,7 +419,7 @@ def allow_table_of_contents(chapter):
         ).first()
     toc.allowed_status = True
     db.session.commit()
-    flash('Table of contents has been allowed.')
+    flash(f'{chapter} in table of contents has been allowed.')
     return redirect(url_for(
         'teacher.review_table_of_contents'
         )
@@ -443,7 +433,7 @@ def delete_table_of_contents(chapter):
         ).first()
     db.session.delete(toc)
     db.session.commit()
-    flash('Table of contents has been deleted.')
+    flash(f'{chapter} in table of contents has been deleted.')
     return redirect(url_for(
         'teacher.review_table_of_contents'
         )
@@ -459,27 +449,41 @@ def review_chapters():
         teacher_full_name=current_user.teacher_full_name
         ).first()
     page = request.args.get('page', 1, type=int)
+
+    # Chapters
     course_chapters = Chapter.query.filter_by(
         course=teacher.teacher_course
     ).order_by(
-        Chapter.timestamp.desc()
+        Chapter.timestamp.asc()
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     course_chapters_next_url = url_for(
-                    'teacher.review_chapters',
-                    page=course_chapters.next_num) \
+        'teacher.review_chapters',
+        page=course_chapters.next_num) \
         if course_chapters.has_next else None
     course_chapters_prev_url = url_for(
         'teacher.review_chapters',
         page=course_chapters.prev_num) \
         if course_chapters.has_prev else None
+
+    # Table of contents
+    toc_chapters = TableOfContents.query.filter_by(
+        title=teacher.teacher_course).order_by(
+            TableOfContents.timestamp.asc()).paginate(
+                page, current_app.config['POSTS_PER_PAGE'], False)
+
     return render_template(
         'teacher/course/flask/reviews/flask_chapters.html',
         teacher=teacher,
         title='Review Chapters',
+
+        # Chapters
         course_chapters=course_chapters.items,
         course_chapters_next_url=course_chapters_next_url,
-        course_chapters_prev_url=course_chapters_prev_url
+        course_chapters_prev_url=course_chapters_prev_url,
+
+        # Table of contents
+        toc_chapters=toc_chapters.items
         )
 
 
