@@ -163,7 +163,7 @@ This application is currently on its **second** iteration. Over the months, I ha
 
 - [Version 2 Design](https://www.figma.com/proto/AzhdESXorALZD9F0rPUeEs/somasoma_version3_student?node-id=5%3A17&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=5%3A17&show-proto-sidebar=1)
 
-Kindly note that the current application may be miles ahead of the design seen in the latest version. During development, I may have added or discard some things as the idea of the final application grows.
+Kindly note that the current application may be miles ahead of the design seen in the latest version. During development, I may have added or discarded some things as the idea of the final application grows.
 
 
 ## Contributors
@@ -172,8 +172,8 @@ Kindly note that the current application may be miles ahead of the design seen i
 
 ## Deployment
 
-- [Somasoma eLearning App on Heroku]()
-- [Somasoma eLearning App on Docker]()
+- [Somasoma eLearning App on Heroku]() (coming soon)
+- [Somasoma eLearning App on Docker]() (coming soon)
 
 ## Testing the Application Locally
 
