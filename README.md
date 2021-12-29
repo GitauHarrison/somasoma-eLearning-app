@@ -86,6 +86,7 @@ Comimg soon...
   - [ ] Can do the overall quiz for the enrolled course
   - [x] Can post comments in each course chapter
 <br>
+
 * General
   - [x] Can explore all other students in the application
   - [x] Can follow or unfollow other students
