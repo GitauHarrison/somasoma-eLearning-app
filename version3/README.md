@@ -1,3 +1,5 @@
+![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103) ![GitHub Open Issues](https://img.shields.io/github/issues/GitauHarrison/somasoma-eLearning-app) ![GitHub Closed Issues](https://img.shields.io/github/issues-closed/GitauHarrison/somasoma-eLearning-app) ![GitHub Pull Request Open](https://img.shields.io/github/issues-pr/GitauHarrison/somasoma-eLearning-app) ![GitHub Pull Request Closed](https://img.shields.io/github/issues-pr-closed/GitauHarrison/somasoma-eLearning-app) ![GitHub forks](https://img.shields.io/github/forks/GitauHarrison/somasoma-eLearning-app) ![GitHub Stars](https://img.shields.io/github/stars/GitauHarrison/somasoma-eLearning-app) ![GitHub License](https://img.shields.io/github/license/GitauHarrison/somasoma-eLearning-app)
+
 # Somasoma eLearning Application
 
 This is a sample eLearning application used to demonstrate how interactive virtual classes can take place. The application users are teacher, student and  parent. There is also an admin user who has some super powers in the application.
