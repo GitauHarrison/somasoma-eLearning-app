@@ -29,7 +29,7 @@ These are the custom roles and responsibilites of the users in the application:
 
 * Maintains the application
   - [x]  Registers teachers
-  - [x] The only one who delete teacher, parent and student accounts
+  - [x] The only one who can delete teacher, parent and student accounts
   - [x] Can see all the registration details of teachers, parents and students
 * Manages the content used by anonymous users of the application
   - [x] Update course offerings
@@ -116,11 +116,15 @@ Coming soon...
 - Teacher authentication and authorization
 - Admin authentication and authorization
 <br>
+
 - Two-factor authentication
 - Email notifications
 - Credit card payment
 - Scheduling for virtual classes
 - Comment moderation
+- Localhost testing on another device
+- Basic email validation
+- Beautiful phone number fields
 
 Comming soon:
 - Video conferencing facility
@@ -128,19 +132,23 @@ Comming soon:
 - Data visualization of student performance
 - Markdown editing in forms
 - Google reCaptcha on forms for extra security aganist spam
+- Interactive tables (sorting, searching and pagination)
 
 ## Tools Used
 
 - Python for programming
 - Flask for web development
 - SQLAlchemy for database management
-- Bootstrap for styling
+- Bootstrap for styling and cross-browser responsiveness
+- Flask moment for date and time formatting
 - Flask-WTF for form management
 - Flask-Mail for email notifications
-- Flask-Babel for internationalization
 - Flask-Login for user authentication
 - Stripe API for credit card payment (test mode)
 - Twilio Verify API for two-factor authentication
+- Ngrok for localhost testing
+- Email validator for email addresses
+- Phonenumber package for phone number formatting
 
 
 ## License
