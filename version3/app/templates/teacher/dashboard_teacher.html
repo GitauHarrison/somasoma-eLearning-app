@@ -138,7 +138,11 @@
                         <tbody>
                             {% for student in students %}
                                 <tr>
-                                    <td>{{ student.student_full_name }}</td>
+                                    <td>
+                                        <a href="{{ url_for('teacher.profile_student', student_full_name=student.student_full_name) }}">
+                                            {{ student.student_full_name }}
+                                        </a>
+                                    </td>
                                     <td>{{ student.student_email }}</td>
                                     <td>{{ student.student_phone }}</td>
                                     <td>{{ student.student_age }}</td>
@@ -256,7 +260,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     {% for comment in student_comments %}
-                        {% include 'student/_comments_students.html' %}
+                        {% include 'teacher/_comments_students.html' %}
                     {% endfor %}
                 </div>
             </div>

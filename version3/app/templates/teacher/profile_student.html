@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <H1>{{ title }}</H1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <img src=" {{ student.avatar_student(128) }} " class="img-circle">
+        </div>
+        <div class="col-sm-9">
+            <p>
+                Your Full Name: <span style="font-weight: 600;">{{ student.student_full_name }}</span> 
+            </p>
+            <p>
+                Email: <span style="font-weight: 600;">{{ student.student_email }}</span> 
+            </p>
+            <p>
+                Phone: <span style="font-weight: 600;">{{ student.student_phone }}</span> 
+            </p>
+            <p>
+                Residence: <span style="font-weight: 600;">{{ student.student_residence }}</span> 
+            </p>
+            <p>
+                student Course: <span style="font-weight: 600; color: orange;">{{ student.student_course }}</span> 
+            </p>
+            {% if student.student_about_me %}
+                <p>
+                    About me: <span style="font-weight: 600;">{{ student.student_about_me }}</span>
+                </p>
+            {% endif %}
+            {% if student.student_last_seen %}
+                <p>
+                    Last seen on: <span style="font-weight: 600;">{{ moment(student.student_last_seen).format('LLL') }}</span>
+                </p>
+            {% endif %}
+            <p>
+                <span style="font-weight: 600;">{{ student.followers.count() }}</span> Followers,
+                <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
+            </p>
+        </div>
+    </div>
+    <hr>
+    <div class="row profile">
+        <div class="col-sm-12">
+            <h2>Achievement of Lesson Objectives</h2>
+        </div>
+    </div>
+    <div class="row profile">
+        <div class="col-sm-12">
+            <h2>Achievement of Chapter Quizzes</h2>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Comments</h2>
+        </div>
+        <div class="col-sm-6 text-right">
+            <h2>{{ all_comments }} Comments</h2>
+        </div>
+    </div>
+    <div class="row student-comments">
+        <div class="col-sm-12">
+            {% for comment in comments %}
+                {% include 'teacher/_comments_students.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> Newer posts
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            Older posts <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <hr>
+    <div class="row text-center">
+        <div class="col-sm-4">
+            <!-- Empty columns -->
+        </div>
+        <div class="col-sm-4">
+            <p>
+                <a href=" {{ url_for('teacher.dashboard_teacher') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back to Dashboard
+                </a>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <!-- Empty columns -->
+        </div>
+    </div>
+{% endblock %}

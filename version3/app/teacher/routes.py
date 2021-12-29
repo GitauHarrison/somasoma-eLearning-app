@@ -231,6 +231,45 @@ def profile_teacher(teacher_full_name):
         title='Teacher Profile'
         )
 
+
+@bp.route('/profile/student/<student_full_name>')
+@login_required
+def profile_student(student_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    student = Student.query.filter_by(
+        student_full_name=student_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    comments = student.comments.order_by(
+        CommunityComment.timestamp.desc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for(
+        'teacher.profile_student', student_full_name=student_full_name,
+        _anchor="student-comments",
+        page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for(
+        'teacher.profile_student', student_full_name=student_full_name,
+        _anchor="student-comments",
+        page=comments.prev_num) \
+        if comments.has_prev else None
+    form = EmptyForm()
+    all_comments = len(student.comments.all())
+    return render_template(
+        'teacher/profile_student.html',
+        teacher=teacher,
+        student=student,
+        comments=comments.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        form=form,
+        title='Student Profile',
+        all_comments=all_comments
+        )
+
 # End of profile route
 
 # Followership routes
