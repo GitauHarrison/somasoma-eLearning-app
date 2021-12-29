@@ -3,7 +3,7 @@ from app.models import CommunityComment, WebDevChapter1Comment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, Student, Parent,\
     Teacher, WebDevChapter1QuizOptions, AnonymousTemplateInheritanceComment,\
     User, Admin, Courses, FlaskStudentStories, WebDevelopmentOverview,\
-    TableOfContents, Chapter
+    TableOfContents, Chapter, ChapterObjectives
 
 app = create_app()
 
@@ -27,5 +27,6 @@ def make_shell_context():
         FlaskStudentStories=FlaskStudentStories,
         WebDevelopmentOverview=WebDevelopmentOverview,
         TableOfContents=TableOfContents,
-        Chapter=Chapter
+        Chapter=Chapter,
+        ChapterObjectives=ChapterObjectives
         )

@@ -6,9 +6,10 @@ from flask import render_template, flash, request, redirect, url_for,\
     current_app
 from app.models import Teacher, TeacherCommunityComment, Student,\
     CommunityComment, WebDevelopmentOverview, TableOfContents, Chapter,\
-    WebDevChapter1Comment
+    WebDevChapter1Comment, ChapterObjectives
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
-    WebDevelopmentOverviewForm, TableOfContentsForm, ChapterForm
+    WebDevelopmentOverviewForm, TableOfContentsForm, ChapterForm,\
+    ChapterObjectivesForm
 from app.teacher.email import send_live_flask_chapter_1_comment_email
 
 
@@ -139,18 +140,45 @@ def dashboard_teacher():
         db.session.commit()
         flash(f'{chapter} has been added!', 'success')
         return redirect(url_for('teacher.review_chapters'))
+
+    # Chapter objectives
+    chapter_objectives_form = ChapterObjectivesForm()
+    if chapter_objectives_form.validate_on_submit():
+        chapter_objective = ChapterObjectives(
+            course=chapter_objectives_form.course.data,
+            chapter=chapter_objectives_form.chapter.data,
+            review_objectives_link=chapter_objectives_form.review_objectives_link.data,
+            objective_1=chapter_objectives_form.objective_1.data,
+            objective_2=chapter_objectives_form.objective_2.data,
+            objective_3=chapter_objectives_form.objective_3.data,
+            objective_4=chapter_objectives_form.objective_4.data,
+            objective_5=chapter_objectives_form.objective_5.data
+        )
+        db.session.add(chapter_objective)
+        db.session.commit()
+        flash('Chapter objectives have been added!', 'success')
+        return redirect(url_for('teacher.dashboard_teacher'))
+    all_objectives = ChapterObjectives.query.filter_by(
+        course=teacher.teacher_course).all()
+
+    # Length
     course_chapters = Chapter.query.filter_by(
         course=teacher.teacher_course).all()
     all_chapters = len(Chapter.query.all())
     all_toc = len(TableOfContents.query.all())
     all_course_overview = len(WebDevelopmentOverview.query.all())
+    all_chapter_objectives = len(ChapterObjectives.query.all())
 
     return render_template(
         'teacher/dashboard_teacher.html',
         teacher=teacher,
+
+        # Length
         all_chapters=all_chapters,
         all_toc=all_toc,
         all_course_overview=all_course_overview,
+        all_chapter_objectives=all_chapter_objectives,
+        all_students=all_students,
 
         # All comments
         comments=comments.items,
@@ -167,7 +195,6 @@ def dashboard_teacher():
 
         # Students taking teacher's course
         students=students,
-        all_students=all_students,
 
         # Students community comments
         student_comments=student_comments.items,
@@ -182,7 +209,11 @@ def dashboard_teacher():
 
         # Chapters
         chapter_form=chapter_form,
-        course_chapters=course_chapters
+        course_chapters=course_chapters,
+
+        # Chapter objectives
+        chapter_objectives_form=chapter_objectives_form,
+        all_objectives=all_objectives
         )
 
 # Profile route
@@ -634,6 +665,66 @@ def delete_flask_chapter_1_comments(id):
     flash(f'Flask chapter 1 comment {id} has been deleted.')
     return redirect(url_for(
         'teacher.review_flask_chapter_1_comments'
+        )
+    )
+
+
+# Flask chapter objectives
+
+@bp.route('/flask/objectives/review')
+@login_required
+def review_flask_objectives():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    flask_objectives = ChapterObjectives.query.order_by(
+        ChapterObjectives.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    flask_objectives_next_url = url_for(
+        'teacher.review_flask_objectives',
+        page=flask_objectives.next_num) \
+        if flask_objectives.has_next else None
+    flask_objectives_prev_url = url_for(
+        'teacher.review_flask_objectives',
+        page=flask_objectives.prev_num) \
+        if flask_objectives.has_prev else None
+    objectives = ChapterObjectives.query.filter_by(
+        course=teacher.teacher_course).all()
+    all_flask_objectives = len(ChapterObjectives.query.all())
+    return render_template(
+        'teacher/course/flask/reviews/flask_objectives.html',
+        teacher=teacher,
+        title='Review Chapter Objectives',
+        flask_objectives=flask_objectives.items,
+        flask_objectives_next_url=flask_objectives_next_url,
+        flask_objectives_prev_url=flask_objectives_prev_url,
+        all_flask_objectives=all_flask_objectives,
+        objectives=objectives
+        )
+
+
+@bp.route('/flask/objectives/<int:id>/allow')
+def allow_flask_objectives(id):
+    objective = ChapterObjectives.query.get_or_404(id)
+    objective.allowed_status = True
+    db.session.commit()
+    flash(f'Flask objective {id} has been allowed.')
+    return redirect(url_for(
+        'teacher.review_flask_objectives'
+        )
+    )
+
+
+@bp.route('/flask/objectives/<int:id>/delete')
+def delete_flask_objectives(id):
+    objective = ChapterObjectives.query.get_or_404(id)
+    db.session.delete(objective)
+    db.session.commit()
+    flash(f'Flask objective {id} has been deleted.')
+    return redirect(url_for(
+        'teacher.review_flask_objectives'
         )
     )
 

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1>{{ title }} ({{ all_flask_objectives }})</h1>
+        </div>
+    </div>
+    {% for objective in objectives %}
+        <div class="row profile" id="{{ objective.id }}">
+            <div class="col-sm-12">
+                <p><strong>Course:</strong> {{ objective.course }}</p>
+                <p><strong>Chapter:</strong> {{ objective.chapter }}</p>
+                <p><strong>Objective 1:</strong> {{ objective.objective_1 }}</p>
+                <p><strong>Objective 2:</strong> {{ objective.objective_2 }}</p>
+                <p><strong>Objective 3:</strong> {{ objective.objective_3 }}</p>
+                <p><strong>Objective 4:</strong> {{ objective.objective_4 }}</p>
+                <p><strong>Objective 5:</strong> {{ objective.objective_5 }}</p>
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% if not objective.allowed_status == 1 %}
+                            <a href=" {{ url_for('teacher.allow_flask_objectives', id=objective.id) }} " class="label label-warning">Allow</a>
+                        {% else %}
+                            <a href=" # " class="label label-success">Allowed</a>
+                        {% endif %}
+                         | <a href=" {{ url_for('teacher.delete_flask_objectives', id=objective.id) }} " class="label label-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not flask_objectives_prev_url %} disabled{% endif %}">
+                        <a href="{{ flask_objectives_prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> Newer objectives
+                        </a>
+                    </li>
+                    <li class="next{% if not flask_objectives_next_url %} disabled{% endif %}">
+                        <a href="{{ flask_objectives_next_url or '#' }}">
+                            Older objectives <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- End of pagination -->
+    <hr>
+    <div class="row text-center">
+        <div class="col-sm-12">
+            <p>
+                <a href=" {{ url_for('teacher.dashboard_teacher') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back to Dashboard
+                </a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

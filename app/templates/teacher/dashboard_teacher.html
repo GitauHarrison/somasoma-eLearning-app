@@ -368,6 +368,28 @@
                 </div>
             </div>   
             <!-- End of course chapters -->
+
+             <!-- Chapter objectives -->
+             <div class="row profile">
+                <div class="col-sm-6">
+                    <h2>Chapter Objectives</h2>
+                    <div class="my-form">
+                        {{ wtf.quick_form(chapter_objectives_form) }}
+                    </div>
+                </div>
+                <div class="col-sm-5 text-center vertical-line">
+                    <h2>Review Chapter Objectives ({{ all_chapter_objectives }})</h2>
+                    {% for objective in all_objectives %}
+                        <h2>{{objective.chapter}}</h2>
+                        <a href="http://127.0.0.1:5000/teacher/{{ objective.review_objectives_link }}" _anchor='{{objective.id}}' class="btn btn-primary">
+                            Review Chapter Objectives
+                        </a>
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>   
+            <!-- End of chapter objectives -->
+
         </div>
         <!-- END OF COURSE UPDATE TAB -->
 

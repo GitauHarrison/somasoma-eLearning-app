@@ -7,7 +7,7 @@ from app.student.forms import CommentForm, EditProfileForm,\
     EmptyForm
 from app.models import TableOfContents, WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
-    Student, WebDevelopmentOverview, Chapter, Teacher
+    Student, WebDevelopmentOverview, Chapter, Teacher, ChapterObjectives
 from app.student.email import send_flask_chapter_1_comment_email
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -332,7 +332,19 @@ def web_development_chapter_1():
         allowed_status=True).all()
         )
 
-    # Objectives form
+    # Objectives
+
+    objectives = ChapterObjectives.query.filter_by(
+        course=student.student_course).all()
+    objectives_list = []
+    for objective in objectives:
+        objectives_list.append(objective.objective_1)
+        objectives_list.append(objective.objective_2)
+        objectives_list.append(objective.objective_3)
+        objectives_list.append(objective.objective_4)
+        objectives_list.append(objective.objective_5)
+    print(objectives_list)
+
     objectives_form = Chapter1WebDevelopmentForm()
     if objectives_form.validate_on_submit():
         objectives = WebDevChapter1Objectives(
@@ -341,8 +353,6 @@ def web_development_chapter_1():
             objective_3=objectives_form.objective_3.data,
             objective_4=objectives_form.objective_4.data,
             objective_5=objectives_form.objective_5.data,
-            objective_6=objectives_form.objective_6.data,
-            objective_7=objectives_form.objective_7.data,
             author=current_user
         )
         db.session.add(objectives)
