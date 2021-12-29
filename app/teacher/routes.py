@@ -135,10 +135,16 @@ def dashboard_teacher():
         db.session.commit()
         flash(f'{chapter} has been added!', 'success')
         return redirect(url_for('teacher.review_chapters'))
+    all_chapters = len(Chapter.query.all())
+    all_toc = len(TableOfContents.query.all())
+    all_course_overview = len(WebDevelopmentOverview.query.all())
 
     return render_template(
         'teacher/dashboard_teacher.html',
         teacher=teacher,
+        all_chapters=all_chapters,
+        all_toc=all_toc,
+        all_course_overview=all_course_overview,
 
         # All comments
         comments=comments.items,
@@ -441,13 +447,15 @@ def review_table_of_contents():
         'teacher.review_table_of_contents',
         page=course_toc.prev_num) \
         if course_toc.has_prev else None
+    all_toc = len(TableOfContents.query.all())
     return render_template(
         'teacher/course/flask/reviews/flask_toc.html',
         teacher=teacher,
         title='Review Table of Contents',
         course_toc=course_toc.items,
         course_toc_next_url=course_toc_next_url,
-        course_toc_prev_url=course_toc_prev_url
+        course_toc_prev_url=course_toc_prev_url,
+        all_toc=all_toc
         )
 
 
@@ -504,7 +512,7 @@ def review_chapters():
         'teacher.review_chapters',
         page=course_chapters.prev_num) \
         if course_chapters.has_prev else None
-
+    all_chapters = len(Chapter.query.all())
     # Table of contents
     toc_chapters = TableOfContents.query.filter_by(
         title=teacher.teacher_course).order_by(
@@ -515,6 +523,7 @@ def review_chapters():
         'teacher/course/flask/reviews/flask_chapters.html',
         teacher=teacher,
         title='Review Chapters',
+        all_chapters=all_chapters,
 
         # Chapters
         course_chapters=course_chapters.items,
