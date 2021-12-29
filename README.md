@@ -53,6 +53,7 @@ Comimg soon...
     - [ ] Student's learning analytics
   - [x] Can only view what all students say in the eLearning community
 <br>
+
 * Manages individual lessons:
   - [x] Provides overview of course content
   - [x] Create lesson chapters for a course they registered for
