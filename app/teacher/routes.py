@@ -615,7 +615,7 @@ def review_flask_chapter_1_comments():
 def allow_flask_chapter_1_comments(id):
     student = Student.query.filter_by(
         id=id).first()
-    comment = student.webdev_chapter1_comments.query.get_or_404(id)
+    comment = WebDevChapter1Comment.query.get_or_404(id)
     comment.allowed_status = True
     db.session.commit()
     send_live_flask_chapter_1_comment_email(student)
@@ -628,9 +628,7 @@ def allow_flask_chapter_1_comments(id):
 
 @bp.route('/flask/chapter-1/comments/<int:id>/delete')
 def delete_flask_chapter_1_comments(id):
-    student = Student.query.filter_by(
-        id=id).first()
-    comment = student.webdev_chapter1_comments.query.get_or_404(id)
+    comment = WebDevChapter1Comment.query.get_or_404(id)
     db.session.delete(comment)
     db.session.commit()
     flash(f'Flask chapter 1 comment {id} has been deleted.')

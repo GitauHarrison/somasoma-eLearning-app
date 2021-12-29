@@ -8,12 +8,12 @@ def send_flask_chapter_1_comment_email(teacher):
                sender=current_app.config['ADMINS'][0],
                recipients=[teacher.teacher_email],
                text_body=render_template(
-                   'teacher/email/flask_chapter_1_comment.txt',
+                   'teacher/email/flask_chapter_1_comment_email.txt',
                    teacher=teacher,
                    token=token
                    ),
                html_body=render_template(
-                   'teacher/email/flask_chapter_1_comment.html',
+                   'teacher/email/flask_chapter_1_comment_email.html',
                    teacher=teacher,
                    token=token
                    )
