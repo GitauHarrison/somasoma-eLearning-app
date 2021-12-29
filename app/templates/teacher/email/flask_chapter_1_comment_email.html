@@ -1,10 +1,10 @@
-<p>Dear {{comment.student_full_name}}</p>
+<p>Dear {{teacher.teacher_full_name}}</p>
 <p>
-    You have received a comment in <strong>chapter 1</strong> of the course {{ comment.student_course }}.
+    You have received a comment in <strong>chapter 1</strong> of the course {{ teacher.teacher_course }}.
     Please review it by clicking the button below:<br><br>
     <button class="btn btn-primary" type="button">
-        <a href=" {{ url_for('student.web_development_chapter_1', _external=True) }} ">
-            Chapter 1: {{ comment.student_course }}
+        <a href=" {{ url_for('teacher.review_flask_chapter_1_comments', _external=True) }} ">
+            Chapter 1: {{ teacher.teacher_course }}
         </a>
     </button>
 </p>

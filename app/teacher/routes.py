@@ -124,6 +124,7 @@ def dashboard_teacher():
             course=chapter_form.course.data,
             chapter=chapter_form.chapter.data,
             chapter_link=chapter_form.chapter_link.data,
+            chapter_review_link=chapter_form.chapter_review_link.data,
             overview=chapter_form.overview.data,
             accomplish=chapter_form.accomplish.data,
             youtube_link=chapter_form.youtube_link.data,
@@ -612,10 +613,12 @@ def review_flask_chapter_1_comments():
 
 @bp.route('/flask/chapter-1/comments/<int:id>/allow')
 def allow_flask_chapter_1_comments(id):
-    comment = WebDevChapter1Comment.query.get_or_404(id)
+    student = Student.query.filter_by(
+        id=id).first()
+    comment = student.webdev_chapter1_comments.query.get_or_404(id)
     comment.allowed_status = True
     db.session.commit()
-    send_live_flask_chapter_1_comment_email(comment)
+    send_live_flask_chapter_1_comment_email(student)
     flash(f'Flask chapter 1 comment {id} has been allowed.')
     return redirect(url_for(
         'teacher.review_flask_chapter_1_comments'
@@ -625,7 +628,9 @@ def allow_flask_chapter_1_comments(id):
 
 @bp.route('/flask/chapter-1/comments/<int:id>/delete')
 def delete_flask_chapter_1_comments(id):
-    comment = WebDevChapter1Comment.query.get_or_404(id)
+    student = Student.query.filter_by(
+        id=id).first()
+    comment = student.webdev_chapter1_comments.query.get_or_404(id)
     db.session.delete(comment)
     db.session.commit()
     flash(f'Flask chapter 1 comment {id} has been deleted.')

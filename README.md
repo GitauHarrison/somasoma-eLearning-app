@@ -65,7 +65,7 @@ Comimg soon...
 <br>
 
 * Student management:
-  - [ ] Moderation of student's comments in each course chapter
+  - [x] Moderation of student's comments in each course chapter
   - [ ] Assesses student's achievements in each course chapter (automatic by the application)
   - [ ] Assesses student's achievements in the overall course (automatic by the application)
 <br>

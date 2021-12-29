@@ -1,0 +1,12 @@
+<p>Dear {{student.student_full_name}}</p>
+<p>
+    Your comment in <strong>chapter 1</strong> of the course {{ student.student_course }} is now live!
+    You can check it by clicking the button below:<br><br>
+    <button class="btn btn-primary" type="button">
+        <a href=" {{ url_for('student.web_development_chapter_1', _external=True) }} ">
+            Chapter 1: {{ student.student_course }}
+        </a>
+    </button>
+</p>
+<p>Sincerely,</p>
+<p>The somasoma eLearning Team</p>

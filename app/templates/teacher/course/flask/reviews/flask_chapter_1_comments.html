@@ -41,7 +41,7 @@
                         {% if not comment.allowed_status == 1 %}
                             <a href=" {{ url_for('teacher.allow_flask_chapter_1_comments', id=comment.id) }} " class="label label-warning">Allow</a>
                         {% else %}
-                            <a href=" # " class="label lable-success">Allowed</a>
+                            <a href=" # " class="label label-success">Allowed</a>
                         {% endif %}
                          | <a href=" {{ url_for('teacher.delete_flask_chapter_1_comments', id=comment.id) }} " class="label label-danger">Delete</a>
                     </div>

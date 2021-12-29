@@ -8,14 +8,14 @@ import jwt
 from time import time
 
 
-# @login.user_loader
-# def load_student(id):
-#     return Student.query.get(int(id))
-
-
 @login.user_loader
-def load_teacher(id):
-    return Teacher.query.get(int(id))
+def load_student(id):
+    return Student.query.get(int(id))
+
+
+# @login.user_loader
+# def load_teacher(id):
+#     return Teacher.query.get(int(id))
 
 # @login.user_loader
 # def load_admin(id):
@@ -451,6 +451,7 @@ class Chapter(db.Model):
     course = db.Column(db.String(140))
     chapter = db.Column(db.String(64), index=True)
     chapter_link = db.Column(db.String(140))
+    chapter_review_link = db.Column(db.String(140))
     overview = db.Column(db.String(140))
     accomplish = db.Column(db.String(140))
     youtube_link = db.Column(db.String(140))

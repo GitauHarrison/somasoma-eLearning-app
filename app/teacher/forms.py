@@ -108,9 +108,14 @@ class ChapterForm(FlaskForm):
         render_kw={"placeholder": "Chapter 1: Introduction"}
         )
     chapter_link = StringField(
-        'Chapter Link in App',
+        'Live Chapter Link',
         validators=[DataRequired()],
-        render_kw={"placeholder": "https://flask/chapter-1"}
+        render_kw={"placeholder": "course/flask/chapter-1"}
+        )
+    chapter_review_link = StringField(
+        'Review Link',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "course/flask/chapter-1"}
         )
     overview = TextAreaField(
         'Chapter Overview',
