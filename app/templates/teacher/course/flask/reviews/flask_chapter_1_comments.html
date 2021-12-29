@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1>{{ title }} ({{ all_flask_chapter_1_comments }})</h1>
+        </div>
+    </div>
+    {% for comment in flask_chapter_1_comments %}
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-striped">
+                    <tr valign='top'>
+                        <td width="30px">
+                            <a href=" # ">
+                                <img src=" {{ comment.author.avatar_student(30) }}  ">
+                            </a>
+                        </td>
+                        <td>
+                            <span class="comment-id label label-default"># {{ comment.id }} </span>
+                            <a href="{{ url_for('student.profile_student', student_full_name=comment.author.student_full_name) }}">
+                                <span class="label label-success"> {{ comment.author.student_full_name }} </span>  
+                            </a>
+                            said {{ moment(comment.timestamp).fromNow() }}:
+                            <br>
+                            <div class="comment-body">
+                                {{ comment.body }}
+                            </div>
+                        </td>
+                    </tr>    
+                </table>
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% if not comment.allowed_status == 1 %}
+                            <a href=" {{ url_for('teacher.allow_flask_chapter_1_comments', id=comment.id) }} " class="label label-warning">Allow</a>
+                        {% else %}
+                            <a href=" # " class="label lable-success">Allowed</a>
+                        {% endif %}
+                         | <a href=" {{ url_for('teacher.delete_flask_chapter_1_comments', id=comment.id) }} " class="label label-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not flask_chapter_1_comments_prev_url %} disabled{% endif %}">
+                        <a href="{{ flask_chapter_1_comments_prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> Newer comments
+                        </a>
+                    </li>
+                    <li class="next{% if not flask_chapter_1_comments_next_url %} disabled{% endif %}">
+                        <a href="{{ flask_chapter_1_comments_next_url or '#' }}">
+                            Older comments <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- End of pagination -->
+    <hr>
+    <div class="row text-center">
+        <div class="col-sm-12">
+            <p>
+                <a href=" {{ url_for('teacher.dashboard_teacher') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back to Dashboard
+                </a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

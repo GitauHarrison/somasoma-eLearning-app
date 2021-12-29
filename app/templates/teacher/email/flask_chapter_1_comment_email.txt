@@ -1,0 +1,11 @@
+Dear {{comment.student_full_name}}
+
+You have received a comment in chapter 1 of the course {{ comment.student_course }}.
+
+Please review it by clicking the link below:
+
+{{ url_for('student.web_development_chapter_1', _external=True) }} 
+
+Sincerely,
+
+The somasoma eLearning Team

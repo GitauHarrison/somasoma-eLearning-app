@@ -5,9 +5,11 @@ from flask_login import login_required, current_user
 from flask import render_template, flash, request, redirect, url_for,\
     current_app
 from app.models import Teacher, TeacherCommunityComment, Student,\
-    CommunityComment, WebDevelopmentOverview, TableOfContents, Chapter
+    CommunityComment, WebDevelopmentOverview, TableOfContents, Chapter,\
+    WebDevChapter1Comment
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
     WebDevelopmentOverviewForm, TableOfContentsForm, ChapterForm
+from app.teacher.email import send_live_flask_chapter_1_comment_email
 
 
 @bp.before_request
@@ -121,6 +123,7 @@ def dashboard_teacher():
         chapter = Chapter(
             course=chapter_form.course.data,
             chapter=chapter_form.chapter.data,
+            chapter_link=chapter_form.chapter_link.data,
             overview=chapter_form.overview.data,
             accomplish=chapter_form.accomplish.data,
             youtube_link=chapter_form.youtube_link.data,
@@ -135,6 +138,8 @@ def dashboard_teacher():
         db.session.commit()
         flash(f'{chapter} has been added!', 'success')
         return redirect(url_for('teacher.review_chapters'))
+    course_chapters = Chapter.query.filter_by(
+        course=teacher.teacher_course).all()
     all_chapters = len(Chapter.query.all())
     all_toc = len(TableOfContents.query.all())
     all_course_overview = len(WebDevelopmentOverview.query.all())
@@ -175,7 +180,8 @@ def dashboard_teacher():
         table_of_contents_form=table_of_contents_form,
 
         # Chapters
-        chapter_form=chapter_form
+        chapter_form=chapter_form,
+        course_chapters=course_chapters
         )
 
 # Profile route
@@ -564,4 +570,70 @@ def delete_chapters(chapter):
 
 # ========================================
 # COURSE MANAGEMENT ROUTES
+# ========================================
+
+
+# ========================================
+# COMMENTS MANAGEMENT ROUTES
+# ========================================
+
+# Flask Chapter 1
+
+@bp.route('/flask/chapter-1/comments/review')
+@login_required
+def review_flask_chapter_1_comments():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    flask_chapter_1_comments = WebDevChapter1Comment.query.order_by(
+        WebDevChapter1Comment.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    flask_chapter_1_comments_next_url = url_for(
+        'teacher.review_flask_chapter_1_comments',
+        page=flask_chapter_1_comments.next_num) \
+        if flask_chapter_1_comments.has_next else None
+    flask_chapter_1_comments_prev_url = url_for(
+        'teacher.review_flask_chapter_1_comments',
+        page=flask_chapter_1_comments.prev_num) \
+        if flask_chapter_1_comments.has_prev else None
+    all_flask_chapter_1_comments = len(WebDevChapter1Comment.query.all())
+    return render_template(
+        'teacher/course/flask/reviews/flask_chapter_1_comments.html',
+        teacher=teacher,
+        title='Review Flask Chapter 1 Comments',
+        flask_chapter_1_comments=flask_chapter_1_comments.items,
+        flask_chapter_1_comments_next_url=flask_chapter_1_comments_next_url,
+        flask_chapter_1_comments_prev_url=flask_chapter_1_comments_prev_url,
+        all_flask_chapter_1_comments=all_flask_chapter_1_comments
+        )
+
+
+@bp.route('/flask/chapter-1/comments/<int:id>/allow')
+def allow_flask_chapter_1_comments(id):
+    comment = WebDevChapter1Comment.query.get_or_404(id)
+    comment.allowed_status = True
+    db.session.commit()
+    send_live_flask_chapter_1_comment_email(comment)
+    flash(f'Flask chapter 1 comment {id} has been allowed.')
+    return redirect(url_for(
+        'teacher.review_flask_chapter_1_comments'
+        )
+    )
+
+
+@bp.route('/flask/chapter-1/comments/<int:id>/delete')
+def delete_flask_chapter_1_comments(id):
+    comment = WebDevChapter1Comment.query.get_or_404(id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash(f'Flask chapter 1 comment {id} has been deleted.')
+    return redirect(url_for(
+        'teacher.review_flask_chapter_1_comments'
+        )
+    )
+
+# ========================================
+# END OF COMMENTS MANAGEMENT ROUTES
 # ========================================

@@ -295,7 +295,16 @@
                 <div class="col-sm-12">
                     <h1>Comment Moderation</h1>
                 </div>
-            </div>            
+            </div>
+            {% for chapter in course_chapters %}            
+                <div class="row">
+                    <div class="col-sm-12">
+                         <h2>{{ chapter.chapter }}</h2>
+                        <a href="{{ url_for('teacher.review_flask_chapter_1_comments') }}" class="btn btn-primary">Review Comments</a>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
         </div>
         <!-- END OF COMMENT MODERATION TAB -->
 

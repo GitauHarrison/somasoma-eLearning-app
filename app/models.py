@@ -450,6 +450,7 @@ class Chapter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     course = db.Column(db.String(140))
     chapter = db.Column(db.String(64), index=True)
+    chapter_link = db.Column(db.String(140))
     overview = db.Column(db.String(140))
     accomplish = db.Column(db.String(140))
     youtube_link = db.Column(db.String(140))
@@ -581,6 +582,7 @@ class WebDevChapter1Comment(db.Model):
     __tablename__ = 'chapter1_comment'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
+    allowed_status = db.Column(db.Boolean, default=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 

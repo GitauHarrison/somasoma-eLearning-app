@@ -7,7 +7,8 @@ from app.student.forms import CommentForm, EditProfileForm,\
     EmptyForm
 from app.models import TableOfContents, WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
-    Student, WebDevelopmentOverview, Chapter
+    Student, WebDevelopmentOverview, Chapter, Teacher
+from app.student.email import send_flask_chapter_1_comment_email
 from flask_login import current_user, login_required
 from datetime import datetime
 
@@ -273,6 +274,7 @@ def web_development_chapter_1():
     student = Student.query.filter_by(
         student_full_name=current_user.student_full_name
         ).first()
+    teachers = Teacher.query.all()
     page = request.args.get('page', 1, type=int)
 
     # Table of Contents
@@ -290,9 +292,30 @@ def web_development_chapter_1():
             Chapter.timestamp.asc()).paginate(
                 page, current_app.config['POSTS_PER_PAGE'], False)
 
-    # Student comments
-    comments = WebDevChapter1Comment.query.order_by(
-        WebDevChapter1Comment.timestamp.desc()
+    # Chapter Comment form
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = WebDevChapter1Comment(
+            body=form.comment.data,
+            author=current_user
+        )
+        db.session.add(comment)
+        db.session.commit()
+        for teacher in teachers:
+            if teacher.teacher_course == student.student_course:
+                send_flask_chapter_1_comment_email(teacher)
+        flash('You will receive an email when your comment is approved.')
+        return redirect(url_for(
+            'student.web_development_chapter_1',
+            _anchor='comments',
+            student=student
+            )
+        )
+
+    # Display student comments
+    comments = WebDevChapter1Comment.query.filter_by(
+        allowed_status=True).order_by(
+            WebDevChapter1Comment.timestamp.desc()
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
@@ -305,22 +328,9 @@ def web_development_chapter_1():
         _anchor='comments',
         page=comments.prev_num) \
         if comments.has_prev else None
-    form = CommentForm()
-    if form.validate_on_submit():
-        comment = WebDevChapter1Comment(
-            body=form.comment.data,
-            author=current_user
+    all_comments = len(WebDevChapter1Comment.query.filter_by(
+        allowed_status=True).all()
         )
-        db.session.add(comment)
-        db.session.commit()
-        flash('Your comment has been posted!', 'success')
-        return redirect(url_for(
-            'student.web_development_chapter_1',
-            _anchor='comments',
-            student=student
-            )
-        )
-    all_comments = len(WebDevChapter1Comment.query.all())
 
     # Objectives form
     objectives_form = Chapter1WebDevelopmentForm()
