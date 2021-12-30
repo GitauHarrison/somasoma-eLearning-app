@@ -1,6 +1,6 @@
 ![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103) ![GitHub Open Issues](https://img.shields.io/github/issues/GitauHarrison/somasoma-eLearning-app) ![GitHub Closed Issues](https://img.shields.io/github/issues-closed/GitauHarrison/somasoma-eLearning-app) ![GitHub Pull Request Open](https://img.shields.io/github/issues-pr/GitauHarrison/somasoma-eLearning-app) ![GitHub Pull Request Closed](https://img.shields.io/github/issues-pr-closed/GitauHarrison/somasoma-eLearning-app) ![GitHub forks](https://img.shields.io/github/forks/GitauHarrison/somasoma-eLearning-app) ![GitHub Stars](https://img.shields.io/github/stars/GitauHarrison/somasoma-eLearning-app) ![GitHub License](https://img.shields.io/github/license/GitauHarrison/somasoma-eLearning-app)
 
-# Somasoma eLearning Application
+# somaSoma eLearning Application
 
 This is a sample eLearning application used to demonstrate how interactive virtual classes can take place. The application users are teacher, student and  parent. There is also an admin user who has some super powers in the application.
 
@@ -127,12 +127,12 @@ Coming soon...
 - Beautiful phone number fields
 
 Comming soon:
-- Video conferencing facility
-- Live language translation
-- Data visualization of student performance
-- Markdown editing in forms
-- Google reCaptcha on forms for extra security aganist spam
-- Interactive tables (sorting, searching and pagination)
+- [ ] Video conferencing facility
+- [ ] Live language translation
+- [ ] Data visualization of student performance
+- [ ] Markdown editing in forms
+- [ ] Google reCaptcha on forms for extra security aganist spam
+- [ ] Interactive tables (sorting, searching and pagination)
 
 ## Tools Used
 
@@ -172,37 +172,62 @@ Kindly note that the current application may be miles ahead of the design seen i
 
 ## Deployment
 
-- [Somasoma eLearning App on Heroku]() (coming soon)
-- [Somasoma eLearning App on Docker]() (coming soon)
+- [somaSoma eLearning App on Heroku]() (coming soon)
+- [somaSoma eLearning App on Docker]() (coming soon)
 
 ## Testing the Application Locally
 
 * Clone this repo:
-```
+```python
 $ git clone git@github.com:GitauHarrison/somasoma-eLearning-app.git
 ```
 
 * Move into the cloned directory:
 
-```
+```python
 $ cd somasoma-eLearning-app
 ```
 
 * Create and activate your virtual environment:
 
-```
+```python
 $ mkvirtualenv somasoma-elearning # I am using virtualenvwrapper
 ```
 
 * Install project dependencies within your active virtual environment:
 
-```
+```python
 (somasoma-elearning)$ pip3 install -r requirements.txt
 ```
 
+* Environment variables:
+    * Create a file called `.env` in the root directory of the project
+      ```python
+      (somasoma-elearning)$ touch .env
+      ```
+    * Add the following lines to the file as seen in `.env-template`:
+      ```python
+      SECRET_KEY=
+      TWILIO_ACCOUNT_SID=
+      TWILIO_AUTH_TOKEN=
+      TWILIO_VERIFY_SERVICE_ID=
+      MAIL_SERVER=
+      MAIL_PORT=
+      MAIL_USE_TLS=
+      MAIL_USERNAME=
+      MAIL_PASSWORD=
+      ADMINS=
+      STRIPE_SECRET_KEY=
+      STRIPE_PUBLISHABLE_KEY=
+      STRIPE_WEBHOOK_SECRET=
+      UPLOAD_PATH=
+      ```
+    * I am using Twilio Verify API and Stripe. Learn how to use them using the guides below:
+      - [Twilio Verify API](https://github.com/GitauHarrison/notes/blob/master/how_to_use_stripe_for_payment.md)
+      - [Stripe API](https://github.com/GitauHarrison/notes/blob/master/two_factor_authentication/twilio_verify_2fa.md)
 * Start the flask server:
 
-```
+```python
 (somasoma-elearning)$ flask run
 ```
 
