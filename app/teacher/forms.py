@@ -185,7 +185,7 @@ class ChapterObjectivesForm(FlaskForm):
     review_objectives_link = StringField(
         'Review Objectives Link',
         validators=[DataRequired()],
-        render_kw={"placeholder": "course/flask/chapter-1"}
+        render_kw={"placeholder": "course/flask/chapter-1/objectives/review"}
         )
     objective_1 = StringField(
         'Objective 1',
@@ -213,5 +213,54 @@ class ChapterObjectivesForm(FlaskForm):
         'Objective 5',
         validators=[DataRequired()],
         render_kw={"placeholder": "Student can start a flask server"}
+        )
+    submit = SubmitField('Post')
+
+
+class ChapterQuizForm(FlaskForm):
+    course = SelectField(
+        'Course Title',
+        choices=[
+            ('Flask Web Development', 'Flask Web Development'),
+            ('Python DSA', 'Python DSA'),
+            ('Data Science', 'Data Science'),
+            ('Machine Learning', 'Machine Learning')
+            ],
+        validators=[DataRequired()]
+        )
+    chapter = StringField(
+        'Chapter Title',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Chapter 1: Introduction"}
+        )
+    review_quiz_link = StringField(
+        'Review Quiz Link',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "course/flask/chapter-1/quiz/review"}
+        )
+    quiz_1 = StringField(
+        'Quiz 1',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "What is HTML in full"}
+        )
+    quiz_2 = StringField(
+        'Quiz 2',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "What is CSS in full"}
+        )
+    quiz_3 = StringField(
+        'Quiz 3',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "What is Python in full"}
+        )
+    quiz_4 = StringField(
+        'Quiz 4',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "What is Flask in full"}
+        )
+    quiz_5 = StringField(
+        'Quiz 5',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "What is SQL in full"}
         )
     submit = SubmitField('Post')

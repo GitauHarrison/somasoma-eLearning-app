@@ -299,7 +299,7 @@
             {% for chapter in course_chapters %}            
                 <div class="row">
                     <div class="col-sm-12">
-                         <h2>{{ chapter.chapter }}</h2>
+                         <h3>{{ chapter.chapter }}</h3>
                         <a href="http://127.0.0.1:5000/teacher/{{ chapter.chapter_review_link }}" class="btn btn-primary">Review Comments</a>
                     </div>
                 </div>
@@ -318,77 +318,98 @@
                     </h1>
                 </div>
             </div> 
-            <!-- Course Overview -->
-            <div class="row profile">
-                <div class="col-sm-6">
-                    <h2>Course Overview</h2>
-                    <div class="my-form">
-                        {{ wtf.quick_form(course_overview_form) }}
+            <div class="row">
+                <!-- Course Overview -->
+                <div class="row profile">
+                    <div class="col-sm-6">
+                        <h2>Course Overview</h2>
+                        <div class="my-form">
+                            {{ wtf.quick_form(course_overview_form) }}
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-5 text-center vertical-line">
-                    <h2>Review Course Overview ({{ all_course_overview }})</h2>
-                    <a href="{{ url_for('teacher.review_course_overview') }}" class="btn btn-primary">
-                        Review Course Overview
-                    </a>
-                </div>
-            </div>
-            <!-- End of course overview -->
-
-            <!-- Table of contents -->
-            <div class="row profile">
-                <div class="col-sm-6">
-                    <h2>Table of Contents</h2>
-                    <div class="my-form">
-                        {{ wtf.quick_form(table_of_contents_form) }}
-                    </div>
-                </div>
-                <div class="col-sm-5 text-center vertical-line">
-                    <h2>Review Table of Contents ({{ all_toc }})</h2>
-                    <a href="{{ url_for('teacher.review_table_of_contents') }}" class="btn btn-primary">
-                        Review ToC
-                    </a>
-                </div>
-            </div>   
-            <!-- End of table of contents -->
-
-            <!-- Course chapters -->
-            <div class="row profile">
-                <div class="col-sm-6">
-                    <h2>Course Chapters</h2>
-                    <div class="my-form">
-                        {{ wtf.quick_form(chapter_form) }}
-                    </div>
-                </div>
-                <div class="col-sm-5 text-center vertical-line">
-                    <h2>Review Course Chapters ({{ all_chapters }})</h2>
-                    <a href="{{ url_for('teacher.review_chapters') }}" class="btn btn-primary">
-                        Review Course Chapters
-                    </a>
-                </div>
-            </div>   
-            <!-- End of course chapters -->
-
-             <!-- Chapter objectives -->
-             <div class="row profile">
-                <div class="col-sm-6">
-                    <h2>Chapter Objectives</h2>
-                    <div class="my-form">
-                        {{ wtf.quick_form(chapter_objectives_form) }}
-                    </div>
-                </div>
-                <div class="col-sm-5 text-center vertical-line">
-                    <h2>Review Chapter Objectives ({{ all_chapter_objectives }})</h2>
-                    {% for objective in all_objectives %}
-                        <h2>{{objective.chapter}}</h2>
-                        <a href="http://127.0.0.1:5000/teacher/{{ objective.review_objectives_link }}" _anchor='{{objective.id}}' class="btn btn-primary">
-                            Review Chapter Objectives
+                    <div class="col-sm-5 text-center vertical-line">
+                        <h2>Review Course Overview ({{ all_course_overview }})</h2>
+                        <a href="{{ url_for('teacher.review_course_overview') }}" class="btn btn-primary">
+                            Review Course Overview
                         </a>
-                        <hr>
-                    {% endfor %}
+                    </div>
                 </div>
-            </div>   
-            <!-- End of chapter objectives -->
+                <!-- End of course overview -->
+
+                <!-- Table of contents -->
+                <div class="row profile">
+                    <div class="col-sm-6">
+                        <h2>Table of Contents</h2>
+                        <div class="my-form">
+                            {{ wtf.quick_form(table_of_contents_form) }}
+                        </div>
+                    </div>
+                    <div class="col-sm-5 text-center vertical-line">
+                        <h2>Review Table of Contents ({{ all_toc }})</h2>
+                        <a href="{{ url_for('teacher.review_table_of_contents') }}" class="btn btn-primary">
+                            Review ToC
+                        </a>
+                    </div>
+                </div>   
+                <!-- End of table of contents -->
+
+                <!-- Course chapters -->
+                <div class="row profile">
+                    <div class="col-sm-6">
+                        <h2>Course Chapters</h2>
+                        <div class="my-form">
+                            {{ wtf.quick_form(chapter_form) }}
+                        </div>
+                    </div>
+                    <div class="col-sm-5 text-center vertical-line">
+                        <h2>Review Course Chapters ({{ all_chapters }})</h2>
+                        <a href="{{ url_for('teacher.review_chapters') }}" class="btn btn-primary">
+                            Review Course Chapters
+                        </a>
+                    </div>
+                </div>   
+                <!-- End of course chapters -->
+
+                <!-- Chapter objectives -->
+                <div class="row profile">
+                    <div class="col-sm-6">
+                        <h2>Chapter Objectives</h2>
+                        <div class="my-form">
+                            {{ wtf.quick_form(chapter_objectives_form) }}
+                        </div>
+                    </div>
+                    <div class="col-sm-5 text-center vertical-line">
+                        <h2>Review Chapter Objectives ({{ all_chapter_objectives }})</h2>
+                        {% for objective in all_objectives %}
+                            <h3>{{objective.chapter}}</h3>
+                            <a href="http://127.0.0.1:5000/teacher/{{ objective.review_objectives_link }}" _anchor='{{objective.id}}' class="btn btn-primary">
+                                Review Chapter Objectives
+                            </a>
+                            <hr>
+                        {% endfor %}
+                    </div>
+                </div>   
+                <!-- End of chapter objectives -->
+
+                <!-- Chapter Quizes -->
+                <div class="row profile">
+                    <div class="col-sm-6">
+                        <h2>Chapter Quizzes</h2>
+                        <div class="my-form">
+                            {{ wtf.quick_form(chapter_quiz_form) }}
+                        </div>
+                    </div>
+                    <div class="col-sm-5 text-center vertical-line">
+                        <h2>Review Chapter Quizzes ({{ all_chapter_quizzes }})</h2>
+                        {% for quiz in all_quizzes %}
+                            <h3>{{ quiz.chapter }}</h3>
+                            <a href="http://127.0.0.5000/teacher/{{ quiz.review_quiz_link }}" _anchor='{{quiz.id}}' class="btn btn-primary">
+                                Review Chapter Quizzes
+                        {% endfor %}
+                    </div>
+                </div>   
+                <!-- End of chapter quizzes -->
+            </div>
 
         </div>
         <!-- END OF COURSE UPDATE TAB -->

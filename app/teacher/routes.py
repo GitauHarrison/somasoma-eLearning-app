@@ -6,10 +6,10 @@ from flask import render_template, flash, request, redirect, url_for,\
     current_app
 from app.models import Teacher, TeacherCommunityComment, Student,\
     CommunityComment, WebDevelopmentOverview, TableOfContents, Chapter,\
-    WebDevChapter1Comment, ChapterObjectives
+    WebDevChapter1Comment, ChapterObjectives, ChapterQuiz
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
     WebDevelopmentOverviewForm, TableOfContentsForm, ChapterForm,\
-    ChapterObjectivesForm
+    ChapterObjectivesForm, ChapterQuizForm
 from app.teacher.email import send_live_flask_chapter_1_comment_email
 
 
@@ -157,8 +157,28 @@ def dashboard_teacher():
         db.session.add(chapter_objective)
         db.session.commit()
         flash('Chapter objectives have been added!', 'success')
-        return redirect(url_for('teacher.dashboard_teacher'))
+        return redirect(url_for('teacher.review_flask_objectives'))
     all_objectives = ChapterObjectives.query.filter_by(
+        course=teacher.teacher_course).all()
+
+    # Chapter Quiz
+    chapter_quiz_form = ChapterQuizForm()
+    if chapter_quiz_form.validate_on_submit():
+        chapter_quiz = ChapterQuiz(
+            course=chapter_quiz_form.course.data,
+            chapter=chapter_quiz_form.chapter.data,
+            review_quiz_link=chapter_quiz_form.review_quiz_link.data,
+            quiz_1=chapter_quiz_form.quiz_1.data,
+            quiz_2=chapter_quiz_form.quiz_2.data,
+            quiz_3=chapter_quiz_form.quiz_3.data,
+            quiz_4=chapter_quiz_form.quiz_4.data,
+            quiz_5=chapter_quiz_form.quiz_5.data
+        )
+        db.session.add(chapter_quiz)
+        db.session.commit()
+        flash('Chapter quiz has been added!', 'success')
+        return redirect(url_for('teacher.review_chapter_quiz'))
+    all_quizzes = ChapterQuiz.query.filter_by(
         course=teacher.teacher_course).all()
 
     # Length
@@ -168,6 +188,7 @@ def dashboard_teacher():
     all_toc = len(TableOfContents.query.all())
     all_course_overview = len(WebDevelopmentOverview.query.all())
     all_chapter_objectives = len(ChapterObjectives.query.all())
+    all_chapter_quizzes = len(ChapterQuiz.query.all())
 
     return render_template(
         'teacher/dashboard_teacher.html',
@@ -179,6 +200,7 @@ def dashboard_teacher():
         all_course_overview=all_course_overview,
         all_chapter_objectives=all_chapter_objectives,
         all_students=all_students,
+        all_chapter_quizzes=all_chapter_quizzes,
 
         # All comments
         comments=comments.items,
@@ -213,7 +235,11 @@ def dashboard_teacher():
 
         # Chapter objectives
         chapter_objectives_form=chapter_objectives_form,
-        all_objectives=all_objectives
+        all_objectives=all_objectives,
+
+        # Chapter Quiz
+        chapter_quiz_form=chapter_quiz_form,
+        all_quizzes=all_quizzes
         )
 
 # Profile route
@@ -725,6 +751,64 @@ def delete_flask_objectives(id):
     flash(f'Flask objective {id} has been deleted.')
     return redirect(url_for(
         'teacher.review_flask_objectives'
+        )
+    )
+
+
+# Flask chapter quiz
+
+
+@bp.route('/flask/quiz/review')
+@login_required
+def review_chapter_quiz():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    flask_quiz = ChapterQuiz.query.order_by(
+        ChapterQuiz.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    flask_quiz_next_url = url_for(
+        'teacher.review_chapter_quiz',
+        page=flask_quiz.next_num) \
+        if flask_quiz.has_next else None
+    flask_quiz_prev_url = url_for(
+        'teacher.review_chapter_quiz',
+        page=flask_quiz.prev_num) \
+        if flask_quiz.has_prev else None
+    all_flask_quiz = len(ChapterQuiz.query.all())
+    return render_template(
+        'teacher/course/flask/reviews/flask_quiz.html',
+        teacher=teacher,
+        title='Review Chapter Quiz',
+        flask_quiz=flask_quiz.items,
+        flask_quiz_next_url=flask_quiz_next_url,
+        flask_quiz_prev_url=flask_quiz_prev_url,
+        all_flask_quiz=all_flask_quiz
+        )
+
+
+@bp.route('/flask/quiz/<int:id>/allow')
+def allow_flask_quiz(id):
+    quiz = ChapterQuiz.query.get_or_404(id)
+    quiz.allowed_status = True
+    db.session.commit()
+    flash(f'Flask quiz {id} has been allowed.')
+    return redirect(url_for(
+        'teacher.review_chapter_quiz'
+        )
+    )
+
+
+@bp.route('/flask/quiz/<int:id>/delete')
+def delete_flask_quiz(id):
+    quiz = ChapterQuiz.query.get_or_404(id)
+    db.session.delete(quiz)
+    db.session.commit()
+    flash(f'Flask quiz {id} has been deleted.')
+    return redirect(url_for(
+        'teacher.review_chapter_quiz'
         )
     )
 
