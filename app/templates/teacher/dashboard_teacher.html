@@ -403,8 +403,9 @@
                         <h2>Review Chapter Quizzes ({{ all_chapter_quizzes }})</h2>
                         {% for quiz in all_quizzes %}
                             <h3>{{ quiz.chapter }}</h3>
-                            <a href="http://127.0.0.5000/teacher/{{ quiz.review_quiz_link }}" _anchor='{{quiz.id}}' class="btn btn-primary">
+                            <a href="http://127.0.0.1:5000/teacher/{{ quiz.review_quiz_link }}" _anchor='{{quiz.id}}' class="btn btn-primary">
                                 Review Chapter Quizzes
+                            </a>
                         {% endfor %}
                     </div>
                 </div>   
