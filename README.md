@@ -76,8 +76,8 @@ Comimg soon...
 
 * Blog Management
   - [ ] Teacher can only create blogs seen in the blogs page
-  - [ ] Teacher can allow the blog created to be posted in the public section of the application
-  * Only the admin can delete these blogs
+  - [ ] Teacher can allow the blog created to be posted in the public blog page of the application
+  * Only the admin can delete these blogs written by teachers
 
 ### Student
 
