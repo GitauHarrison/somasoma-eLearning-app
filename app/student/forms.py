@@ -50,12 +50,12 @@ class EditProfileForm(FlaskForm):
 # Web Development Objectives
 
 
-class Chapter1WebDevelopmentForm(FlaskForm):
-    objective_1 = BooleanField('1. Understand the concept of web development',)
-    objective_2 = BooleanField('2. Understand the concept of web development',)
-    objective_3 = BooleanField('3. Understand the concept of web development',)
-    objective_4 = BooleanField('4. Understand the concept of web development',)
-    objective_5 = BooleanField('5. Understand the concept of web development',)
+class ChapterObjectivesForm(FlaskForm):
+    objective_1 = BooleanField('Student can create a flask project structure',)
+    objective_2 = BooleanField('Student can create a project\'s instance',)
+    objective_3 = BooleanField('Student can create a flask entry point',)
+    objective_4 = BooleanField('Student can display a welcome message',)
+    objective_5 = BooleanField('Student can start a flask server',)
     submit = SubmitField('Submit')
 
 # ========================================

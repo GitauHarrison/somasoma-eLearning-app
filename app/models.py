@@ -8,14 +8,14 @@ import jwt
 from time import time
 
 
-# @login.user_loader
-# def load_student(id):
-#     return Student.query.get(int(id))
-
-
 @login.user_loader
-def load_teacher(id):
-    return Teacher.query.get(int(id))
+def load_student(id):
+    return Student.query.get(int(id))
+
+
+# @login.user_loader
+# def load_teacher(id):
+#     return Teacher.query.get(int(id))
 
 # @login.user_loader
 # def load_admin(id):
@@ -649,8 +649,6 @@ class WebDevChapter1Objectives(db.Model):
     objective_3 = db.Column(db.Boolean, default=False)
     objective_4 = db.Column(db.Boolean, default=False)
     objective_5 = db.Column(db.Boolean, default=False)
-    objective_6 = db.Column(db.Boolean, default=False)
-    objective_7 = db.Column(db.Boolean, default=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 

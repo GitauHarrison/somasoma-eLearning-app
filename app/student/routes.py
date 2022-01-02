@@ -3,7 +3,7 @@ from app.student import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app
 from app.student.forms import CommentForm, EditProfileForm,\
-    Chapter1WebDevelopmentForm, QuizForm, Chapter1QuizOptionsForm,\
+    ChapterObjectivesForm, QuizForm, Chapter1QuizOptionsForm,\
     EmptyForm
 from app.models import TableOfContents, WebDevChapter1Comment, CommunityComment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
@@ -332,20 +332,7 @@ def web_development_chapter_1():
         allowed_status=True).all()
         )
 
-    # Objectives
-
-    objectives = ChapterObjectives.query.filter_by(
-        course=student.student_course).all()
-    objectives_list = []
-    for objective in objectives:
-        objectives_list.append(objective.objective_1)
-        objectives_list.append(objective.objective_2)
-        objectives_list.append(objective.objective_3)
-        objectives_list.append(objective.objective_4)
-        objectives_list.append(objective.objective_5)
-    print(objectives_list)
-
-    objectives_form = Chapter1WebDevelopmentForm()
+    objectives_form = ChapterObjectivesForm()
     if objectives_form.validate_on_submit():
         objectives = WebDevChapter1Objectives(
             objective_1=objectives_form.objective_1.data,
@@ -359,7 +346,7 @@ def web_development_chapter_1():
         db.session.commit()
         flash('Your response has been saved')
         return redirect(url_for(
-            'student.web_development_chapter_1',
+            'student.web_development_chapter_1_objectives_status',
             _anchor='objectives'
         ))
     return render_template(
@@ -405,6 +392,21 @@ def web_development_chapter_1_objectives_status():
         student_full_name=current_user.student_full_name
         ).first()
     page = request.args.get('page', 1, type=int)
+
+    # Chapter objectives
+    chapter_objectives = ChapterObjectives.query.filter_by(
+        course=student.student_course).order_by(
+            ChapterObjectives.timestamp.desc()
+            ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+
+    # Calculate percentage
+    objectives_count = len(WebDevChapter1Objectives.query.all())
+    achieved_objectives_count = len(WebDevChapter1Objectives.query.filter_by(
+        allowed_status=True).all())
+    percentage = round((achieved_objectives_count / objectives_count * 100), 2)
+    print(percentage)
+
     objectives = WebDevChapter1Objectives.query.order_by(
         WebDevChapter1Objectives.timestamp.desc()
         ).paginate(
@@ -425,7 +427,9 @@ def web_development_chapter_1_objectives_status():
         objectives=objectives.items,
         next_url=next_url,
         prev_url=prev_url,
-        student=student
+        student=student,
+        chapter_objectives=chapter_objectives.items,
+        percentage=percentage
         )
 
 
