@@ -143,12 +143,13 @@ Comming soon:
 - Flask moment for date and time formatting
 - Flask-WTF for form management
 - Flask-Mail for email notifications
-- Flask-Login for user authentication
+- Flask-Login to manage user sessions
 - Stripe API for credit card payment (test mode)
 - Twilio Verify API for two-factor authentication
 - Ngrok for localhost testing
 - Email validator for email addresses
 - Phonenumber package for phone number formatting
+- Python-dotenv to access environment variables
 
 
 ## License
