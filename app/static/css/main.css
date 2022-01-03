@@ -241,7 +241,7 @@ a:hover {
   float: left;
   padding: 0px 12px;
   /* border: 1px solid #ccc; */
-  width: 89%;
+  width: 99%;
   border-left: none;
   height: 300px;
 }
@@ -278,6 +278,26 @@ a:hover {
   padding: 0 8px;
   border-radius: 4px;
   cursor: pointer;
+}
+@media screen and (min-width: 1080px) {
+  .tab {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 1080px) {
+  .tab {
+    width: 96%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .tab {
+    width: 96%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .tab-content {
+    width: 96%;
+  }
 }
 
 /* ------------------------------------------ */

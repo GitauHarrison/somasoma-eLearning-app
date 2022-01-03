@@ -29,92 +29,167 @@
 
 <!-- Navbar Section -->
 {% block navbar %}
-<nav class="navbar navbar-default">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            {% if current_user.is_authenticated %}
-                {% if student %}
-                    <a class="navbar-brand" href=" {{ url_for('student.dashboard_student') }} ">
-                        <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                        
-                    </a>
-                {% elif parent %}
-                    <a class="navbar-brand" href=" {{ url_for('main.dashboard_parent') }} ">
-                        <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                        
-                    </a>
-                {% elif teacher %}
-                    <a class="navbar-brand" href=" {{ url_for('teacher.dashboard_teacher') }} ">
-                        <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                        
-                    </a>
-                {% elif admin %}
-                    <a class="navbar-brand" href=" {{ url_for('admin.dashboard_admin') }} ">
-                        <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                        
-                    </a>
-                {% else %}
-                    <a class="navbar-brand" href=" {{ url_for('main.home') }} ">
-                        <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                        
-                    </a>
-                {% endif %}
-            {% else %}
-                <a class="navbar-brand" href=" {{ url_for('main.home') }} ">
-                    somaSoma
-                </a>
-            {% endif %}
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">            
-            <ul class="nav navbar-nav navbar-right">  
-                {% if current_user.is_authenticated %} 
-                    {% if student %}
-                        <li><a href=" {{ url_for('auth.logout_student') }} ">Logout</a></li> 
-                    {% elif parent %}
-                        <li><a href=" {{ url_for('auth.logout_parent') }} ">Logout</a></li>
-                    {% elif teacher %}
-                        <li><a href=" {{ url_for('auth.logout_teacher') }} ">Logout</a></li> 
-                    {% elif admin %}
-                        <li><a href=" {{ url_for('auth.logout_admin') }} ">Logout</a></li>                  
-                    {% else %}
-                        <li><a href=" {{ url_for('auth.login') }} ">Logout</a></li> 
-                    {% endif %}
-                {% else %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Courses
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href=" {{ url_for('main.flask_web_deveopment_course') }} ">Web Development</a><br>
-                            <!-- <a class="dropdown-item" href=" # ">Python DSA</a><br>
-                            <hr>
-                            <a class="dropdown-item disabled" href="#">Data Science</a><br>
-                            <a class="dropdown-item disabled" href="#">Machine Learning</a> -->
-                        </div>
-                    </li>
-                    <li><a href=" {{ url_for('main.events') }} ">Events</a></li> 
-                    <li><a href=" {{ url_for('main.blog') }} ">Blog</a></li> 
-                {% endif %}
-            </ul>                       
-        </div>
-    </div>
-</nav>
+    {% if current_user.is_authenticated %}
+        <nav class="navbar navbar-default">
+            <div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                        {% if student %}
+                            <a class="navbar-brand" href=" {{ url_for('student.dashboard_student') }} ">
+                                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
+                                
+                            </a>
+                        {% elif parent %}
+                            <a class="navbar-brand" href=" {{ url_for('main.dashboard_parent') }} ">
+                                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
+                                
+                            </a>
+                        {% elif teacher %}
+                            <a class="navbar-brand" href=" {{ url_for('teacher.dashboard_teacher') }} ">
+                                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
+                                
+                            </a>
+                        {% elif admin %}
+                            <a class="navbar-brand" href=" {{ url_for('admin.dashboard_admin') }} ">
+                                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
+                                
+                            </a>
+                        {% else %}
+                            <a class="navbar-brand" href=" {{ url_for('main.home') }} ">
+                                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
+                                
+                            </a>
+                        {% endif %}
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">            
+                    <ul class="nav navbar-nav navbar-right">
+                            {% if student %}
+                                <li><a href=" {{ url_for('auth.logout_student') }} ">Logout</a></li> 
+                            {% elif parent %}
+                                <li><a href=" {{ url_for('auth.logout_parent') }} ">Logout</a></li>
+                            {% elif teacher %}
+                                <li><a href=" {{ url_for('auth.logout_teacher') }} ">Logout</a></li> 
+                            {% elif admin %}
+                                <li><a href=" {{ url_for('auth.logout_admin') }} ">Logout</a></li>
+                            {% endif %}
+                    </ul>                       
+                </div>
+            </div>
+        </nav>
+    {% else %}
+        <nav class="navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ url_for('main.home') }}">somaSoma</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">         
+                    <ul class="nav navbar-nav navbar-right">  
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Courses
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href=" {{ url_for('main.flask_web_deveopment_course') }} ">Web Development</a><br>
+                                <!-- <a class="dropdown-item" href=" # ">Python DSA</a><br>
+                                <hr>
+                                <a class="dropdown-item disabled" href="#">Data Science</a><br>
+                                <a class="dropdown-item disabled" href="#">Machine Learning</a> -->
+                            </div>
+                        </li>
+                        <li><a href=" {{ url_for('main.events') }} ">Events</a></li> 
+                        <li><a href=" {{ url_for('main.blog') }} ">Blog</a></li> 
+                    </ul>                       
+                </div>
+            </div>
+        </nav>
+    {% endif %}
 {% endblock %}
 
 <!-- Blog Content Goes Here -->
 {% block content %}
-    <div class="container">   
+    {% if current_user.is_authenticated %}
+        <div class="tab-content">   
+            {% if teacher %}
+                <div class="row">
+                    <!-- Start of sidebar -->
+                    <div class="col-sm-2 sidebar">
+                        <div class="mini-submenu">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </div>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
+                                Account
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'students')" id="defaultOpen">
+                                All Students
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'explore-teacher-community')">
+                                Explore Teacher Community
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'your-community')">
+                                Your Community
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">
+                                Student Community
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'comment-moderation')">
+                                Comment Moderation
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'update')">
+                                Manage Course
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'events')">
+                                Manage Events
+                            </a>
+                        </div>   
+                    </div>
+                    <!-- End of sidebar -->
 
-        {% block app_content %}
+                    <!-- Page content will go here -->
+                    <div class="col-sm-10 ">
+                        {% block app_content %}
 
-        {% endblock %}
-    </div>
+                        {% endblock %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if student %}
+                <!-- Student sidebar -->
+            {% endif %}
+
+            {% if parent %}
+                <!-- Parent Sidebar -->
+            {% endif %}
+
+            {% if admin %}
+                <!-- Admin sidebar -->
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="container">
+            <div class="col-sm-12">
+                {% block anonymous_app_content %}
+
+                {% endblock %}
+            </div>
+        </div>
+    {% endif %}
+
+
 
     <!-- Footer will go here -->
     

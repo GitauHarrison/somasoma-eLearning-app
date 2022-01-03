@@ -80,8 +80,6 @@ def dashboard_student():
         objectives_list.append(objective.objective_3)
         objectives_list.append(objective.objective_4)
         objectives_list.append(objective.objective_5)
-        objectives_list.append(objective.objective_6)
-        objectives_list.append(objective.objective_7)
     num_of_true_status = objectives_list.count(True)
     try:
         percentage_achieved = round(
