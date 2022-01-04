@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block student_app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row text-center">
+        <div class="col-sm-12 student-content-title">
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+    <!-- EXPLORE COMMUNITY TAB -->
+    <div id="explore-community" class="tabcontent">
+        <div class="row">
+            <div class="col-sm-12 my-form">
+                {{ wtf.quick_form(comment_form) }}
+            </div>
+            <div class="col-sm-6">
+                <!-- Empty column -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                {% for comment in comments %}
+                    {% include 'student/_comments_students.html' %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <nav aria-label="...">
+                    <ul class="pager">
+                        <li class="previous{% if not prev_url %} disabled{% endif %}">
+                            <a href="{{ prev_url or '#' }}">
+                                <span aria-hidden="true">&larr;</span> Newer posts
+                            </a>
+                        </li>
+                        <li class="next{% if not next_url %} disabled{% endif %}">
+                            <a href="{{ next_url or '#' }}">
+                                Older posts <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- END OF EXPLORE COMMUNITY TAB -->
+{% endblock %}

@@ -47,6 +47,47 @@ def dashboard_live_class():
         )
 
 
+@bp.route('/dashboard/explore-student-community')
+@login_required
+def dashboard_explore_student_community():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    # Explore student community comments form
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        comment = CommunityComment(
+            body=comment_form.comment.data,
+            author=current_user
+        )
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been posted!', 'success')
+        return redirect(url_for('student.dashboard_student'))
+    # Explore student community comments
+    page = request.args.get('page', 1, type=int)
+    comments = CommunityComment.query.order_by(
+        CommunityComment.timestamp.desc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for(
+                    'student.dashboard_explore_student_community',
+                    page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for(
+        'student.dashboard_explore_student_community',
+        page=comments.prev_num) \
+        if comments.has_prev else None        
+    return render_template(
+        'student/explore_student_community.html',
+        title='Explore Student Community',
+        student=student,
+        comment_form=comment_form,
+        comments=comments.items,
+        next_url=next_url,
+        prev_url=prev_url
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_student():
