@@ -23,6 +23,17 @@ def before_request():
 # Dashboard routes
 
 
+@bp.route('/dashboard/enrolled-courses')
+@login_required
+def dashboard_enrolled_courses():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    return render_template(
+        'student/enrolled_courses.html',
+        student=student
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_student():
