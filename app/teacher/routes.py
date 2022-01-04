@@ -95,6 +95,40 @@ def dashboard_explore_teachers():
         )
 
 
+@bp.route('/dashboard/my-teacher-community')
+@login_required
+def dashboard_my_teacher_community():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name).first()
+    page = request.args.get('page', 1, type=int)
+    comments = TeacherCommunityComment.query.order_by(
+        TeacherCommunityComment.timestamp.desc()
+        ).paginate(
+            page,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+            )
+    my_comments = current_user.followed_comments().paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    my_next_url = url_for(
+        'teacher.dashboard_my_teacher_community',
+        page=comments.next_num) \
+        if comments.has_next else None
+    my_prev_url = url_for(
+        'teacher.dashboard_my_teacher_community',
+        page=comments.prev_num) \
+        if comments.has_prev else None
+    return render_template(
+        'teacher/my_teacher_community.html',
+        title='My Community',
+        teacher=teacher,
+        comments=comments.items,
+        my_comments=my_comments.items,
+        my_next_url=my_next_url,
+        my_prev_url=my_prev_url
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_teacher():

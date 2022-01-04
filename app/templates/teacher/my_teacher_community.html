@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- YOUR COMMUNITY TAB -->
+            <div id="your-community" class="tabcontent">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Your Community</h1>
+                    </div>
+                </div>
+                <!-- Teacher comments -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% for comment in my_comments %}
+                            {% include 'teacher/_comments_teachers.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- End of teacher comments -->
+
+                <!-- Pagination of teacher comments -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <nav aria-label="...">
+                            <ul class="pager">
+                                <li class="previous{% if not my_prev_url %} disabled{% endif %}">
+                                    <a href="{{ my_prev_url or '#' }}">
+                                        <span aria-hidden="true">&larr;</span> Newer posts
+                                    </a>
+                                </li>
+                                <li class="next{% if not my_next_url %} disabled{% endif %}">
+                                    <a href="{{ my_next_url or '#' }}">
+                                        Older posts <span aria-hidden="true">&rarr;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!-- End of pagination of teacher comments -->
+            </div>
+            <!-- END OF YOUR COMMUNITY TAB -->
+        </div>
+    </div>
+{% endblock %}
