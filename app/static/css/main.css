@@ -280,23 +280,23 @@ a:hover {
   cursor: pointer;
 }
 @media screen and (min-width: 1080px) {
-  .tab {
-    width: 100%;
+  .tab-content {
+    width: 96%;
   }
 }
 @media screen and (max-width: 1080px) {
-  .tab {
+  .tab-content {
     width: 96%;
   }
 }
 @media screen and (max-width: 768px) {
-  .tab {
+  .tab-content {
     width: 96%;
   }
 }
 @media screen and (max-width: 480px) {
   .tab-content {
-    width: 96%;
+    width: 93%;
   }
 }
 

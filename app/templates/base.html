@@ -30,7 +30,7 @@
 <!-- Navbar Section -->
 {% block navbar %}
     {% if current_user.is_authenticated %}
-        <nav class="navbar navbar-default">
+        <nav class="navbar-default">
             <div>
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -82,7 +82,7 @@
             </div>
         </nav>
     {% else %}
-        <nav class="navbar-default">
+        <nav class="navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -130,7 +130,7 @@
                             <span class="icon-bar"></span>
                         </div>
                         <div class="list-group">
-                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
+                            <a href="{{  url_for('teacher.dashboard_account')}}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
                                 Account
                             </a>
                             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'students')" id="defaultOpen">
@@ -216,7 +216,7 @@
             }
 
             // Get the element with id="defaultOpen" and click on it
-            document.getElementById("defaultOpen").click();
+            // document.getElementById("defaultOpen").click();
         </script>
 
         <script>

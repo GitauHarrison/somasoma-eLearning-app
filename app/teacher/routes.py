@@ -23,6 +23,18 @@ def before_request():
 # Dashboard route
 
 
+@bp.route('/dashboard/account')
+@login_required
+def dashboard_account():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name).first()
+    return render_template(
+        'teacher/account.html',
+        title='Dashboard Account',
+        teacher=teacher
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_teacher():
