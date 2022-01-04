@@ -213,7 +213,47 @@
             {% endif %}
 
             {% if admin %}
-                <!-- Admin sidebar -->
+                <div class="row">
+                    <!-- Start of sidebar -->
+                    <div class="col-sm-2 sidebar">
+                        <div class="mini-submenu">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </div>
+                        <div class="list-group">
+                            <a href="{{ url_for('admin.dashboard_account') }}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
+                                Admin Account
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'students')">
+                                All Students
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'teachers')">
+                                All Teachers
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'parents')">
+                                All Parents
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'courses')">
+                                Courses
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
+                                Blogs
+                            </a>
+                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'stories')">
+                                Student Stories
+                            </a>
+                        </div>   
+                    </div>
+                    <!-- End of sidebar -->
+
+                    <!-- Page content will go here -->
+                    <div class="col-sm-10 scrollable-content">
+                        {% block admin_app_content %}
+
+                        {% endblock %}
+                    </div>
+                </div>
             {% endif %}
         </div>
     {% else %}

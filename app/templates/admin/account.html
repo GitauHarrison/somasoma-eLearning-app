@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block admin_app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row text-center">
+        <div class="col-sm-12 admin-content-title">
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+    <!-- ADMIN ACCOUNT TAB -->
+    <div id="account" class="tabcontent">
+        <div class="row">
+            <div class="row profile">
+                <div class="col-sm-12">
+                    <h2>Profile</h2>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img src=" {{ current_user.avatar_admin(128) }} ">
+                        </div>
+                        <div class="col-sm-9">
+                            <p>
+                                Your Full Name: <span style="font-weight: 600;">{{ current_user.admin_full_name }}</span> 
+                            </p>
+                            <p>
+                                Email: <span style="font-weight: 600;">{{ current_user.admin_email }}</span> 
+                            </p>
+                            <p>
+                                Phone: <span style="font-weight: 600;">{{ current_user.admin_phone }}</span> 
+                            </p>
+                            {% if current_user.admin_about_me %}
+                                <p>
+                                    About me: <span style="font-weight: 600;">{{ current_user.admin_about_me }}</span>
+                                </p>
+                            {% endif %}
+                            {% if current_user.admin_last_seen %}
+                                <p>
+                                    Last seen on: <span style="font-weight: 600;">{{ moment(current_user.admin_last_seen).format('LLL') }}</span>
+                                </p>
+                            {% endif %}                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row update-account">
+                <div class="col-sm-12">
+                    <h2>Update Account Details</h2>
+                    <div class="col-sm-12">
+                        <p>
+                            Update your admin bio information <br>                            
+                        </p>
+                        <p>
+                            <a href=" {{ url_for('admin.edit_profile_admin') }} " class="btn btn-primary">Update Bio</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row two-factor-auth">
+                <div class="col-sm-12">
+                    <h2>Two-Factor Authentication</h2>
+                    <p>
+                        Add an extra layer of security to your account by enabling two-factor authentication.
+                    </p>
+                    {% if not current_user.two_factor_admin_enabled() %}
+                        <p>
+                            <a href=" {{ url_for('auth.enable_2fa_admin', admin_full_name=admin.admin_full_name) }} " class="btn btn-primary">Enable Two-Factor Authentication</a>
+                        </p>
+                    {% else %}
+                        <p>
+                            <a href=" {{ url_for('auth.disable_2fa_admin', admin_full_name=admin.admin_full_name) }} " class="btn btn-primary">Disable Two-Factor Authentication</a>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END OF ADMIN ACCOUNT TAB -->
+{% endblock %}
