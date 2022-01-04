@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block admin_app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row text-center">
+        <div class="col-sm-12 admin-content-title">
+            <h1>All Students ({{ all_students }})</h1>
+        </div>
+    </div>
+    <!-- ALL STUDENTS TAB -->
+    <div id="students" class="tabcontent">
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Age</th>
+                            <th>School</th>
+                            <th>Course</th>
+                            <th>Last Seen On</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                            <tr>
+                                <td>{{ student.id }}</td>
+                                <td>{{ student.student_full_name }}</td>
+                                <td>{{ student.student_email }}</td>
+                                <td>{{ student.student_phone }}</td>
+                                <td>{{ student.student_age }}</td>
+                                <td>{{ student.student_school }}</td>
+                                <td>{{ student.student_course }}</td>
+                                <td>{{ moment(student.student_last_seen).format('LLL') }}</td>
+                                <td>
+                                    <span class="label label-danger">
+                                        <a href="{{ url_for('admin.delete_account_student', student_id=student.id) }}">Delete</a>
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- END ALL STUDENTS TAB -->
+{% endblock %}

@@ -34,6 +34,23 @@ def dashboard_account():
         admin=admin
         )
 
+
+@bp.route('/dashboard/all-students')
+@login_required
+def dashboard_all_students():
+    admin = Admin.query.filter_by(
+        admin_full_name=current_user.admin_full_name).first()
+    students = Student.query.order_by(Student.student_last_seen.desc()).all()
+    all_students = len(Student.query.all())
+    return render_template(
+        'admin/all_students.html',
+        title='All Students',
+        students=students,
+        admin=admin,
+        all_students=all_students
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_admin():

@@ -225,7 +225,7 @@
                             <a href="{{ url_for('admin.dashboard_account') }}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
                                 Admin Account
                             </a>
-                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'students')">
+                            <a href="{{ url_for('admin.dashboard_all_students') }}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
                                 All Students
                             </a>
                             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'teachers')">
