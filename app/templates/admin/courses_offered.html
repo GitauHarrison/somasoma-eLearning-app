@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block admin_app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row text-center">
+        <div class="col-sm-12 admin-content-title">
+            <h1>Courses Offered ({{ all_courses }})</h1>
+        </div>
+    </div>
+    <!-- ALL COURSES TAB -->
+    <div id="courses" class="tabcontent">
+        <div class="row">
+            <!-- Courses -->
+            <div class="row" id="courses-offerings">
+                {% for course in courses %}
+                <div class="col-sm-4">
+                    <div class="card-deck">
+                        <div class="card">
+                            <img class="img-fluid" style="max-width: 100%; height: auto;" src="/{{ course.course_image }}" alt="Flask Class">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <h2 class="card-title">{{ course.title }}</h2>
+                                    <hr>
+                                    <p class="card-text">
+                                        {{ course.body }}
+                                    </p>
+                                    <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ course.id }}">
+                                            Learn More
+                                        </button>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="{{ course.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close btn-primary" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h2 class="modal-title text-center" id="{{ course.id }}">{{ course.title }}</h2>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <img class="img-fluid" style="max-width: 100%; height: auto;" src="/{{course.course_image}}" alt="{{ course.title }}">
+                                                </div>
+                                                <h3>Overview</h3>
+                                                <p>{{ course.overview }}</p>
+                                                <h3>Next Class: {{ course.next_class_date }}</h3>
+                                                <a class="btn btn-primary" href="{{ course.link }} ">Explore</a>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End of Modal -->
+                            </div>            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {% if not course.allowed_status == 1 %}
+                                <a href=" {{ url_for('admin.allow_course', course_id=course.id) }} " class="label label-warning">Allow</a>
+                            {% else %}
+                                <a href="#" class="label label-success">Allowed</a></a>
+                            {% endif %}
+                            | <a href=" {{ url_for('admin.delete_course', course_id=course.id) }} " class="label label-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div  class="col-sm-12">
+                    <!-- Pagination of comments -->
+                    <nav aria-label="...">
+                        <ul class="pager">
+                            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                                <a href="{{ prev_url or '#' }}">
+                                    <span aria-hidden="true">&#60;</span> Less
+                                </a>
+                            </li>
+                            <li class="next{% if not next_url %} disabled{% endif %}">
+                                <a href="{{ next_url or '#' }}">
+                                    More <span aria-hidden="true">&#62;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- End of pagination of comments -->
+                </div>
+            </div>
+            <div class="row courses">
+                <div class="col-sm-6 my-form">
+                    {{ wtf.quick_form(course_form) }}
+                </div>
+                <div class="col-sm-6">
+                    <!-- Empty column -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END OF COURSES TAB -->
+{% endblock %}
