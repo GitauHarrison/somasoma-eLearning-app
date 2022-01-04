@@ -135,6 +135,18 @@ def dashboard_my_community():
         )
 
 
+@bp.route('/dashboard/account')
+@login_required
+def dashboard_account():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    return render_template(
+        'student/account.html',
+        title='Account',
+        student=student
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_student():
