@@ -86,40 +86,4 @@
             </nav>
         </div>
     </div>
-    <hr>
-    {% if teacher %}
-        <div class="row text-center">
-            <div class="col-sm-4">
-                <!-- Empty columns -->
-            </div>
-            <div class="col-sm-4">
-                <p>
-                    <a href=" {{ url_for('teacher.dashboard_teacher') }} " class="btn btn-primary">
-                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                            Back to Dashboard
-                    </a>
-                </p>
-            </div>
-            <div class="col-sm-4">
-                <!-- Empty columns -->
-            </div>
-        </div>
-    {% elif student %}
-    <div class="row text-center">
-        <div class="col-sm-4">
-            <!-- Empty columns -->
-        </div>
-        <div class="col-sm-4">
-            <p>
-                <a href=" {{ url_for('student.dashboard_student') }} " class="btn btn-primary">
-                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                        Back to Dashboard
-                </a>
-            </p>
-        </div>
-        <div class="col-sm-4">
-            <!-- Empty columns -->
-        </div>
-    </div>
-    {% endif %}
 {% endblock %}

@@ -37,7 +37,7 @@ def dashboard_account():
 
 @bp.route('/dashboard/all-students')
 @login_required
-def dashboard_all_students():
+def dashboard_your_students():
     teacher = Teacher.query.filter_by(
         teacher_full_name=current_user.teacher_full_name).first()
     students = Student.query.filter_by(
@@ -45,7 +45,7 @@ def dashboard_all_students():
         Student.student_last_seen.desc()).all()
     all_students = len(students)
     return render_template(
-        'teacher/all_students.html',
+        'teacher/your_students.html',
         title='All Students',
         teacher=teacher,
         students=students,
@@ -316,225 +316,6 @@ def dashboard_manage_events():
         )
 
 
-@bp.route('/dashboard', methods=['GET', 'POST'])
-@login_required
-def dashboard_teacher():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
-    page = request.args.get('page', 1, type=int)
-
-    # List all students
-    students = Student.query.filter_by(
-        student_course=teacher.teacher_course).order_by(
-        Student.student_last_seen.desc()).all()
-    all_students = len(students)
-
-    # Explore teacher community comments
-    comments = TeacherCommunityComment.query.order_by(
-        TeacherCommunityComment.timestamp.desc()
-        ).paginate(
-            page,
-            current_app.config['POSTS_PER_PAGE'],
-            False
-            )
-    next_url = url_for(
-                    'teacher.dashboard_teacher',
-                    page=comments.next_num) \
-        if comments.has_next else None
-    prev_url = url_for(
-        'teacher.dashboard_teacher',
-        page=comments.prev_num) \
-        if comments.has_prev else None
-
-    # Following: Teacher community comments
-    my_comments = current_user.followed_comments().paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    my_next_url = url_for(
-                    'teacher.dashboard_teacher',
-                    page=comments.next_num) \
-        if comments.has_next else None
-    my_prev_url = url_for(
-        'teacher.dashboard_teacher',
-        page=comments.prev_num) \
-        if comments.has_prev else None
-
-    # Form: Explore teacher community comments
-    comment_form = CommentForm()
-    if comment_form.validate_on_submit():
-        comment = TeacherCommunityComment(
-            body=comment_form.comment.data,
-            author=current_user
-        )
-        db.session.add(comment)
-        db.session.commit()
-        flash('Your comment has been posted!', 'success')
-        return redirect(url_for('teacher.dashboard_teacher'))
-
-    # Students community comments
-    student_comments = CommunityComment.query.order_by(
-        CommunityComment.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    student_next_url = url_for(
-                    'teacher.dashboard_teacher',
-                    page=comments.next_num) \
-        if comments.has_next else None
-    student_prev_url = url_for(
-        'teacher.dashboard_teacher',
-        page=comments.prev_num) \
-        if comments.has_prev else None
-
-    # Manage Course Overview
-    course_overview_form = WebDevelopmentOverviewForm()
-    if course_overview_form.validate_on_submit():
-        course_overview = WebDevelopmentOverview(
-            title=course_overview_form.title.data,
-            overview=course_overview_form.body.data,
-            youtube_link=course_overview_form.youtube_link.data,
-        )
-        db.session.add(course_overview)
-        db.session.commit()
-        flash('Your course overview has been posted!', 'success')
-        return redirect(url_for('teacher.review_course_overview'))
-
-    # Manage Course Table of Contents
-    table_of_contents_form = TableOfContentsForm()
-    if table_of_contents_form.validate_on_submit():
-        table_of_contents = TableOfContents(
-            title=table_of_contents_form.title.data,
-            chapter=table_of_contents_form.chapter.data,
-            link=table_of_contents_form.link.data,
-        )
-        db.session.add(table_of_contents)
-        db.session.commit()
-        flash('Your table of contents has been updated!', 'success')
-        return redirect(url_for('teacher.review_table_of_contents'))
-
-    # Chapters
-    chapter_form = ChapterForm()
-    if chapter_form.validate_on_submit():
-        chapter = Chapter(
-            course=chapter_form.course.data,
-            chapter=chapter_form.chapter.data,
-            chapter_link=chapter_form.chapter_link.data,
-            chapter_review_link=chapter_form.chapter_review_link.data,
-            overview=chapter_form.overview.data,
-            accomplish=chapter_form.accomplish.data,
-            youtube_link=chapter_form.youtube_link.data,
-            conclusion=chapter_form.conclusion.data,
-            objective_1=chapter_form.objective_1.data,
-            objective_2=chapter_form.objective_2.data,
-            objective_3=chapter_form.objective_3.data,
-            objective_4=chapter_form.objective_4.data,
-            objective_5=chapter_form.objective_5.data,
-        )
-        db.session.add(chapter)
-        db.session.commit()
-        flash(f'{chapter} has been added!', 'success')
-        return redirect(url_for('teacher.review_chapters'))
-
-    # Chapter objectives
-    chapter_objectives_form = ChapterObjectivesForm()
-    if chapter_objectives_form.validate_on_submit():
-        chapter_objective = ChapterObjectives(
-            course=chapter_objectives_form.course.data,
-            chapter=chapter_objectives_form.chapter.data,
-            review_objectives_link=chapter_objectives_form.review_objectives_link.data,
-            objective_1=chapter_objectives_form.objective_1.data,
-            objective_2=chapter_objectives_form.objective_2.data,
-            objective_3=chapter_objectives_form.objective_3.data,
-            objective_4=chapter_objectives_form.objective_4.data,
-            objective_5=chapter_objectives_form.objective_5.data
-        )
-        db.session.add(chapter_objective)
-        db.session.commit()
-        flash('Chapter objectives have been added!', 'success')
-        return redirect(url_for('teacher.review_flask_objectives'))
-    all_objectives = ChapterObjectives.query.filter_by(
-        course=teacher.teacher_course).all()
-
-    # Chapter Quiz
-    chapter_quiz_form = ChapterQuizForm()
-    if chapter_quiz_form.validate_on_submit():
-        chapter_quiz = ChapterQuiz(
-            course=chapter_quiz_form.course.data,
-            chapter=chapter_quiz_form.chapter.data,
-            review_quiz_link=chapter_quiz_form.review_quiz_link.data,
-            quiz_1=chapter_quiz_form.quiz_1.data,
-            quiz_2=chapter_quiz_form.quiz_2.data,
-            quiz_3=chapter_quiz_form.quiz_3.data,
-            quiz_4=chapter_quiz_form.quiz_4.data,
-            quiz_5=chapter_quiz_form.quiz_5.data
-        )
-        db.session.add(chapter_quiz)
-        db.session.commit()
-        flash('Chapter quiz has been added!', 'success')
-        return redirect(url_for('teacher.review_chapter_quiz'))
-    all_quizzes = ChapterQuiz.query.filter_by(
-        course=teacher.teacher_course).all()
-
-    # Length
-    course_chapters = Chapter.query.filter_by(
-        course=teacher.teacher_course).all()
-    all_chapters = len(Chapter.query.all())
-    all_toc = len(TableOfContents.query.all())
-    all_course_overview = len(WebDevelopmentOverview.query.all())
-    all_chapter_objectives = len(ChapterObjectives.query.all())
-    all_chapter_quizzes = len(ChapterQuiz.query.all())
-
-    return render_template(
-        'teacher/dashboard_teacher.html',
-        teacher=teacher,
-
-        # Length
-        all_chapters=all_chapters,
-        all_toc=all_toc,
-        all_course_overview=all_course_overview,
-        all_chapter_objectives=all_chapter_objectives,
-        all_students=all_students,
-        all_chapter_quizzes=all_chapter_quizzes,
-
-        # All comments
-        comments=comments.items,
-        next_url=next_url,
-        prev_url=prev_url,
-
-        # Followed comments
-        my_comments=my_comments.items,
-        my_next_url=my_next_url,
-        my_prev_url=my_prev_url,
-
-        # Form: Explore teacher community comments
-        comment_form=comment_form,
-
-        # Students taking teacher's course
-        students=students,
-
-        # Students community comments
-        student_comments=student_comments.items,
-        student_next_url=student_next_url,
-        student_prev_url=student_prev_url,
-
-        # Manage Course Overview
-        course_overview_form=course_overview_form,
-
-        # Manage Course Table of Contents
-        table_of_contents_form=table_of_contents_form,
-
-        # Chapters
-        chapter_form=chapter_form,
-        course_chapters=course_chapters,
-
-        # Chapter objectives
-        chapter_objectives_form=chapter_objectives_form,
-        all_objectives=all_objectives,
-
-        # Chapter Quiz
-        chapter_quiz_form=chapter_quiz_form,
-        all_quizzes=all_quizzes
-        )
-
 # Profile route
 
 
@@ -651,7 +432,7 @@ def follow_teacher(teacher_full_name):
             ).first()
         if teacher is None:
             flash(f'User {teacher_full_name} not found')
-            return redirect(url_for('teacher.dashboard_teacher'))
+            return redirect(url_for('teacher.dashboard_explore_teachers'))
         if teacher == current_user:
             flash('You cannot follow yourself!')
             return redirect(url_for(
@@ -668,7 +449,7 @@ def follow_teacher(teacher_full_name):
             )
         )
     else:
-        return redirect(url_for('teacher.dashboard_teacher'))
+        return redirect(url_for('teacher.dashboard_explore_teachers'))
 
 
 @bp.route('/unfollow/<teacher_full_name>', methods=['POST'])
@@ -684,7 +465,7 @@ def unfollow_teacher(teacher_full_name):
             ).first()
         if teacher is None:
             flash(f'User {teacher_full_name} not found')
-            return redirect(url_for('teacher.dashboard_teacher'))
+            return redirect(url_for('teacher.dashboard_explore_teachers'))
         if teacher == current_user:
             flash('You cannot unfollow yourself!')
             return redirect(url_for(
@@ -701,7 +482,7 @@ def unfollow_teacher(teacher_full_name):
             )
         )
     else:
-        return redirect(url_for('teacher.dashboard_teacher'))
+        return redirect(url_for('teacher.dashboard_explore_teachers'))
 
 # End of followership routes
 
@@ -726,11 +507,11 @@ def review_course_overview():
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     course_overview_next_url = url_for(
-                    'teacher.dashboard_teacher',
-                    page=course_overview.next_num) \
+        'teacher.review_course_overview',
+        page=course_overview.next_num) \
         if course_overview.has_next else None
     course_overview_prev_url = url_for(
-        'teacher.dashboard_teacher',
+        'teacher.review_course_overview',
         page=course_overview.prev_num) \
         if course_overview.has_prev else None
 
@@ -920,7 +701,7 @@ def delete_chapters(chapter):
     )
 
 # ========================================
-# COURSE MANAGEMENT ROUTES
+# END OF COURSE MANAGEMENT ROUTES
 # ========================================
 
 
