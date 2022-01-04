@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% block app_content %}
+{% block student_app_content %}
     <div class="row">
         <div class="col-sm-12 text-center">
             <h1>{{ title }}</h1>
@@ -26,9 +26,9 @@
         </div>
         <div class="col-sm-4">
             <p>
-                <a href=" {{ url_for('student.dashboard_student') }} " class="btn btn-primary">
+                <a href=" {{ url_for('student.dashboard_account') }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                        Back to Dashboard
+                        Back to Account
                 </a>
             </p>
         </div>

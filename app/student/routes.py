@@ -177,85 +177,6 @@ def dashboard_analytics():
         percentage_achieved=percentage_achieved
         )
 
-
-@bp.route('/dashboard', methods=['GET', 'POST'])
-@login_required
-def dashboard_student():
-    student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
-
-    # Explore student community comments
-    page = request.args.get('page', 1, type=int)
-    comments = CommunityComment.query.order_by(
-        CommunityComment.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for(
-                    'student.dashboard_student',
-                    page=comments.next_num) \
-        if comments.has_next else None
-    prev_url = url_for(
-        'student.dashboard_student',
-        page=comments.prev_num) \
-        if comments.has_prev else None
-
-    # My community comments
-    my_comments = current_user.followed_comments().paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for(
-                    'student.dashboard_student',
-                    page=comments.next_num) \
-        if comments.has_next else None
-    prev_url = url_for(
-        'student.dashboard_student',
-        page=comments.prev_num) \
-        if comments.has_prev else None
-
-    # Explore student community comments form
-    comment_form = CommentForm()
-    if comment_form.validate_on_submit():
-        comment = CommunityComment(
-            body=comment_form.comment.data,
-            author=current_user
-        )
-        db.session.add(comment)
-        db.session.commit()
-        flash('Your comment has been posted!', 'success')
-        return redirect(url_for('student.dashboard_student'))
-
-    # Calculate the number of objectives achieved
-    all_objectives = student.webdev_chapter1_objectives.order_by(
-        WebDevChapter1Objectives.timestamp.desc()).all()
-    objectives_list = []
-    num_of_true_status = 0
-    for objective in all_objectives:
-        objectives_list.append(objective.objective_1)
-        objectives_list.append(objective.objective_2)
-        objectives_list.append(objective.objective_3)
-        objectives_list.append(objective.objective_4)
-        objectives_list.append(objective.objective_5)
-    num_of_true_status = objectives_list.count(True)
-    try:
-        percentage_achieved = round(
-            (num_of_true_status / len(objectives_list)) * 100, 2
-        )
-    except ZeroDivisionError:
-        percentage_achieved = 0
-    return render_template(
-                           'student/dashboard_student.html',
-                           title='Student Dashboard',
-                           comment_form=comment_form,
-                           comments=comments.items,
-                           my_comments=my_comments.items,
-                           next_url=next_url,
-                           prev_url=prev_url,
-                           all_objectives=all_objectives,
-                           percentage_achieved=percentage_achieved,
-                           student=student
-                           )
-
-
 # Profile routes
 
 
@@ -271,11 +192,13 @@ def profile_student(student_full_name):
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-        'student.dashboard_student', student_full_name=student_full_name,
+        'student.dashboard_explore_student_community',
+        student_full_name=student_full_name,
         page=comments.next_num) \
         if comments.has_next else None
     prev_url = url_for(
-        'student.dashboard_student', student_full_name=student_full_name,
+        'student.dashboard_explore_student_community',
+        student_full_name=student_full_name,
         page=comments.prev_num) \
         if comments.has_prev else None
     form = EmptyForm()

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% block app_content %}
+{% block student_app_content %}
     {% for overview in allowed_course_overview %}
         {% if overview.title.lower() == student.student_course.lower() %}
             <div class="row">
@@ -30,9 +30,9 @@
     <div class="row text-center">
         <div class="col-sm-6">
             <p>
-                <a href=" {{ url_for('student.dashboard_student') }} " class="btn btn-primary">
+                <a href=" {{ url_for('student.dashboard_enrolled_courses') }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                        Back to Dashboard
+                        Back to Course Page
                 </a>
             </p>
         </div>
