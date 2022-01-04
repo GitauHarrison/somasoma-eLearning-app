@@ -180,7 +180,7 @@
                             <a href="{{ url_for('student.dashboard_enrolled_courses') }}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
                                 Enrolled Courses
                             </a>
-                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'students')">
+                            <a href="{{url_for('student.dashboard_live_class')}}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
                                 Live Class
                             </a>
                             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">

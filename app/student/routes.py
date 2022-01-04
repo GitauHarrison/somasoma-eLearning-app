@@ -30,6 +30,19 @@ def dashboard_enrolled_courses():
         student_full_name=current_user.student_full_name).first()
     return render_template(
         'student/enrolled_courses.html',
+        title='Enrolled Courses',
+        student=student
+        )
+
+
+@bp.route('/dashboard/live-class')
+@login_required
+def dashboard_live_class():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    return render_template(
+        'student/live_class.html',
+        title='Live Class',
         student=student
         )
 

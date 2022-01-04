@@ -9,14 +9,13 @@
     </div>
     <!-- End of flash message -->
     <div class="row">
-        <div class="col-sm-12 text-center">
+        <div class="col-sm-12 student-content-title">
             <h1>{{ title }}</h1>
         </div>
     </div>
     <!-- ENROLLED COURSE TAB -->
     <div id="enrolled-courses" class="tabcontent">
         <div class="row">
-            <h1>Your Courses</h1>
             <div class="col-sm-6">
                 <!-- Enrolled Courses Card -->
                 {% if student.student_course.lower() == 'flask web development' %}
