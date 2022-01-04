@@ -68,11 +68,15 @@
                     </p>
                     {% if not current_user.two_factor_admin_enabled() %}
                         <p>
-                            <a href=" {{ url_for('auth.enable_2fa_admin', admin_full_name=admin.admin_full_name) }} " class="btn btn-primary">Enable Two-Factor Authentication</a>
+                            <a href=" {{ url_for('auth.enable_2fa_admin', admin_full_name=admin.admin_full_name) }} " class="btn btn-primary">
+                                Enable 2FA
+                            </a>
                         </p>
                     {% else %}
                         <p>
-                            <a href=" {{ url_for('auth.disable_2fa_admin', admin_full_name=admin.admin_full_name) }} " class="btn btn-primary">Disable Two-Factor Authentication</a>
+                            <a href=" {{ url_for('auth.disable_2fa_admin', admin_full_name=admin.admin_full_name) }} " class="btn btn-primary">
+                                Disable 2FA
+                            </a>
                         </p>
                     {% endif %}
                 </div>
