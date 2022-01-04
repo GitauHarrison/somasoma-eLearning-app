@@ -51,6 +51,44 @@ def dashboard_all_students():
         )
 
 
+@bp.route('/dashboard/all-teachers')
+@login_required
+def dashboard_all_teachers():
+    admin = Admin.query.filter_by(
+        admin_full_name=current_user.admin_full_name).first()
+    # ---------------------
+    # Teacher Registration
+    # ---------------------
+    teacher_form = TeacherRegistrationForm()
+    if teacher_form.validate_on_submit():
+        teacher = Teacher(
+            teacher_full_name=teacher_form.teacher_full_name.data,
+            teacher_email=teacher_form.teacher_email.data,
+            teacher_phone=teacher_form.teacher_phone.data,
+            teacher_residence=teacher_form.teacher_residence.data,
+            teacher_course=teacher_form.teacher_course.data
+        )
+        teacher.set_password(teacher_form.teacher_password.data)
+        db.session.add(teacher)
+        db.session.commit()
+        send_registration_details_teacher(teacher)
+        flash('Teacher successfully registered')
+        return redirect(url_for('admin.dashboard_admin'))
+    # ---------------------
+    # End of teacher registration
+    # ---------------------
+    teachers = Teacher.query.order_by(Teacher.teacher_last_seen.desc()).all()
+    all_teachers = len(Teacher.query.all())
+    return render_template(
+        'admin/all_teachers.html',
+        title='All Teachers',
+        teachers=teachers,
+        admin=admin,
+        all_teachers=all_teachers,
+        teacher_form=teacher_form
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_admin():
