@@ -197,7 +197,7 @@ a:hover {
 }
 
 /* Review pages */
-.review-title h1, .student-content-title h1 {
+.review-title h1, .student-content-title h {
   padding-top: 15px;
 }
 
