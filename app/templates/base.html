@@ -133,7 +133,7 @@
                             <a href="{{  url_for('teacher.dashboard_account')}}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
                                 Account
                             </a>
-                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'students')" id="defaultOpen">
+                            <a href="{{ url_for('teacher.dashboard_all_students') }}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
                                 All Students
                             </a>
                             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'explore-teacher-community')">

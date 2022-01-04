@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+           <!-- ALL STUDENTS TAB -->
+            <div id="students" class="tabcontent">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Your Students ({{ all_students }})</h1>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Age</th>
+                                    <th>School</th>
+                                    <th>Last Seen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ url_for('teacher.profile_student', student_full_name=student.student_full_name) }}">
+                                                {{ student.student_full_name }}
+                                            </a>
+                                        </td>
+                                        <td>{{ student.student_email }}</td>
+                                        <td>{{ student.student_phone }}</td>
+                                        <td>{{ student.student_age }}</td>
+                                        <td>{{ student.student_school }}</td>
+                                        <td>{{ moment(student.student_last_seen).format('LLL') }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div> 
+            </div>
+            <!-- END OF ALL STUDENTS TAB -->
+        </div>
+    </div>
+{% endblock %}

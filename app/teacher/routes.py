@@ -30,8 +30,26 @@ def dashboard_account():
         teacher_full_name=current_user.teacher_full_name).first()
     return render_template(
         'teacher/account.html',
-        title='Dashboard Account',
+        title='Account',
         teacher=teacher
+        )
+
+
+@bp.route('/dashboard/all-students')
+@login_required
+def dashboard_all_students():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name).first()
+    students = Student.query.filter_by(
+        student_course=teacher.teacher_course).order_by(
+        Student.student_last_seen.desc()).all()
+    all_students = len(students)
+    return render_template(
+        'teacher/all_students.html',
+        title='All Students',
+        teacher=teacher,
+        students=students,
+        all_students=all_students
         )
 
 
