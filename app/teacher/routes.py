@@ -304,6 +304,18 @@ def dashboard_manage_course():
         )
 
 
+@bp.route('/dashboard/manage-events')
+@login_required
+def dashboard_manage_events():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name).first()
+    return render_template(
+        'teacher/manage_events.html',
+        title='Manage Events',
+        teacher=teacher
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_teacher():

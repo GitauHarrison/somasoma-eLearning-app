@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- EVENTS TAB -->
+            <div id="events" class="tabcontent">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Manage Events</h1>
+                    </div>
+                </div>            
+            </div>
+            <!-- END OF EVENTS UPDATE TAB -->
+        </div>
+    </div>
+{% endblock %}
