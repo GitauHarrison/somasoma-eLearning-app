@@ -134,7 +134,10 @@
                                 Account
                             </a>
                             <a href="{{ url_for('teacher.dashboard_all_students') }}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
-                                All Students
+                                Your Students
+                            </a>
+                            <a href="{{ url_for('teacher.dashboard_student_community') }}" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">
+                                Student Community
                             </a>
                             <a href="{{ url_for('teacher.dashboard_explore_teachers') }}" class="list-group-item tablinks" onclick="openCity(event, 'explore-teacher-community')">
                                 Explore Teacher Community
@@ -142,10 +145,7 @@
                             <a href="{{ url_for('teacher.dashboard_my_teacher_community') }}" class="list-group-item tablinks" onclick="openCity(event, 'your-community')">
                                 Your Community
                             </a>
-                            <a href="{{ url_for('teacher.dashboard_student_community') }}" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">
-                                Student Community
-                            </a>
-                            <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'comment-moderation')">
+                            <a href="{{ url_for('teacher.dashboard_comment_moderation') }}" class="list-group-item tablinks" onclick="openCity(event, 'comment-moderation')">
                                 Comment Moderation
                             </a>
                             <a href="#" class="list-group-item tablinks" onclick="openCity(event, 'update')">

@@ -166,6 +166,21 @@ def dashboard_student_community():
         )
 
 
+@bp.route('/dashboard/comment-moderation')
+@login_required
+def dashboard_comment_moderation():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name).first()
+    course_chapters = Chapter.query.filter_by(
+        course=teacher.teacher_course).all()
+    return render_template(
+        'teacher/comment_moderation.html',
+        title='Comment Moderation',
+        teacher=teacher,
+        course_chapters=course_chapters
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_teacher():

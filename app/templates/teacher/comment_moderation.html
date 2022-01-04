@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- COMMENT MODERATION TAB -->
+            <div id="comment-moderation" class="tabcontent">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Comment Moderation</h1>
+                    </div>
+                </div>
+                {% for chapter in course_chapters %}            
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>{{ chapter.chapter }}</h3>
+                            <a href="http://127.0.0.1:5000/teacher/{{ chapter.chapter_review_link }}" class="btn btn-primary">
+                                Review Comments
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+            <!-- END OF COMMENT MODERATION TAB -->
+        </div>
+    </div>
+{% endblock %}
