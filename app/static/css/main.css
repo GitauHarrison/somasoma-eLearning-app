@@ -213,28 +213,6 @@ a:hover {
     position: fixed;
   }
 }
-@media screen and (max-width: 1080px) {
-  /* Scrollable content */
-  .scrollable-content {
-    overflow-y: x-auto;
-    position: relative;
-    margin-left: 160px;
-  }
-  .sidebar {
-    position: fixed;
-  }
-}
-@media screen and (max-width: 768px) {
-  /* Scrollable content */
-  .scrollable-content {
-    overflow-y: x-auto;
-    position: relative;
-    margin-left: 120px;
-  }
-  .sidebar {
-    position: fixed;
-  }
-}
 
 /* ------------------------------------------ */
 /* HOMEPAGE VERTICAL TABS */
