@@ -20,7 +20,7 @@ def before_request():
         db.session.commit()
 
 
-# Dashboard route
+# Dashboard routes
 
 
 @bp.route('/dashboard/account')
@@ -50,6 +50,48 @@ def dashboard_all_students():
         teacher=teacher,
         students=students,
         all_students=all_students
+        )
+
+
+@bp.route('/dashboard/explore-teachers')
+@login_required
+def dashboard_explore_teachers():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name).first()
+    page = request.args.get('page', 1, type=int)
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        comment = TeacherCommunityComment(
+            body=comment_form.comment.data,
+            author=current_user
+        )
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been posted!', 'success')
+        return redirect(url_for('teacher.dashboard_explore_teachers'))
+    comments = TeacherCommunityComment.query.order_by(
+        TeacherCommunityComment.timestamp.desc()
+        ).paginate(
+            page,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+            )
+    next_url = url_for(
+        'teacher.dashboard_explore_teachers',
+        page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for(
+        'teacher.dashboard_explore_teachers',
+        page=comments.prev_num) \
+        if comments.has_prev else None
+    return render_template(
+        'teacher/explore_teachers.html',
+        title='Explore Teachers',
+        teacher=teacher,
+        next_url=next_url,
+        prev_url=prev_url,
+        comments=comments.items,
+        comment_form=comment_form
         )
 
 
