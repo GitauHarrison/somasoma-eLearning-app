@@ -129,6 +129,43 @@ def dashboard_my_teacher_community():
         )
 
 
+@bp.route('/dashboard/student-community')
+@login_required
+def dashboard_student_community():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name).first()
+    page = request.args.get('page', 1, type=int)
+    comments = CommunityComment.query.order_by(
+        CommunityComment.timestamp.desc()
+        ).paginate(
+            page,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+            )
+    # Students community comments
+    student_comments = CommunityComment.query.order_by(
+        CommunityComment.timestamp.desc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    student_next_url = url_for(
+        'teacher.dashboard_student_community',
+        page=comments.next_num) \
+        if comments.has_next else None
+    student_prev_url = url_for(
+        'teacher.dashboard_student_community',
+        page=comments.prev_num) \
+        if comments.has_prev else None
+    return render_template(
+        'teacher/student_community.html',
+        title='Student Community',
+        teacher=teacher,
+        comments=comments.items,
+        student_comments=student_comments.items,
+        student_next_url=student_next_url,
+        student_prev_url=student_prev_url
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_teacher():
