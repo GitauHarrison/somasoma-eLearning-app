@@ -14,7 +14,10 @@ class LoginForm(FlaskForm):
                         validators=[DataRequired(), Email()],
                         render_kw={"placeholder": "Valid Email Address"}
                         )
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField(
+        'Password',
+        validators=[DataRequired(), Length(min=8, max=20)]
+        )
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
@@ -39,11 +42,15 @@ class AdminRegistrationForm(FlaskForm):
         )
     admin_password = PasswordField(
         'Admin Password',
-        validators=[DataRequired()]
+        validators=[DataRequired(), Length(min=8, max=20)]
         )
     admin_confirm_password = PasswordField(
         'Admin Confirm Password',
-        validators=[DataRequired(), EqualTo('admin_password')]
+        validators=[
+            DataRequired(),
+            EqualTo('admin_password'),
+            Length(min=8, max=20)
+            ]
         )
     submit = SubmitField('Register')
 
@@ -99,11 +106,15 @@ class StudentRegistrationForm(FlaskForm):
         )
     student_password = PasswordField(
         'Student Password',
-        validators=[DataRequired()]
+        validators=[DataRequired(), Length(min=8, max=20)]
         )
     student_confirm_password = PasswordField(
         'Student Confirm Password',
-        validators=[DataRequired(), EqualTo('student_password')]
+        validators=[
+            DataRequired(),
+            EqualTo('student_password'),
+            Length(min=8, max=20)
+            ]
         )
     submit = SubmitField('Register')
 
@@ -149,11 +160,15 @@ class ParentRegistrationForm(FlaskForm):
         )
     parent_password = PasswordField(
         'Parent Password',
-        validators=[DataRequired()]
+        validators=[DataRequired(), Length(min=8, max=20)]
         )
     parent_confirm_password = PasswordField(
         'Parent Confirm Password',
-        validators=[DataRequired(), EqualTo('parent_password')]
+        validators=[
+            DataRequired(),
+            EqualTo('parent_password'),
+            Length(min=8, max=20)
+            ]
         )
     submit = SubmitField('Register')
 
@@ -205,12 +220,16 @@ class TeacherRegistrationForm(FlaskForm):
         )
     teacher_password = PasswordField(
         'Teacher Password',
-        validators=[DataRequired()],
+        validators=[DataRequired(), Length(min=8, max=20)],
         render_kw={"placeholder": "Temporary: 12345678"}
         )
     teacher_confirm_password = PasswordField(
         'Teacher Confirm Password',
-        validators=[DataRequired(), EqualTo('teacher_password')],
+        validators=[
+            DataRequired(),
+            EqualTo('teacher_password'),
+            Length(min=8, max=20)
+            ],
         render_kw={"placeholder": "Temporary: 12345678"}
         )
     submit = SubmitField('Register')
@@ -250,14 +269,18 @@ class RequestPasswordResetForm(FlaskForm):
 
 
 class ResetPasswordForm(FlaskForm):
-    password = PasswordField('Password',
-                             validators=[DataRequired()]
-                             )
-    confirm_password = PasswordField('Confirm Password',
-                                     validators=[DataRequired(),
-                                                 EqualTo('password')
-                                                 ]
-                                     )
+    password = PasswordField(
+        'Password',
+        validators=[DataRequired(), Length(min=8, max=20)]
+        )
+    confirm_password = PasswordField(
+        'Confirm Password',
+        validators=[
+            DataRequired(),
+            EqualTo('password'),
+            Length(min=8, max=20)
+            ]
+        )
     submit = SubmitField('Reset Password')
 
 # End of password reset form
