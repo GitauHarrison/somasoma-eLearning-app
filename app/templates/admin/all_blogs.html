@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block admin_app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row text-center">
+        <div class="col-sm-12 admin-content-title">
+            <h1>Blog Articles ({{ all_blog_articles }})</h1>
+        </div>
+    </div>
+    <!-- ALL ANONYMOUS USER TAB -->
+    <div id="blog" class="tabcontent">
+        <div class="row">
+            <div class="row courses" >
+                <div class="col-sm-6">
+                    <h2>Add Blog Article</h2>
+                    <div class="my-form">
+                        {{ wtf.quick_form(blog_articles_form) }}
+                    </div>
+                </div>
+                <div class="col-sm-5 text-center vertical-line">
+                    <h2>Review Blog Articles</h2>
+                    <a href="{{ url_for('admin.review_blog_articles') }}" class="btn btn-primary" target="_blank">
+                        Review Blog Articles
+                        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END OF ANONYMOUS USER TAB -->
+{% endblock %}

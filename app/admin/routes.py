@@ -184,6 +184,63 @@ def dashboard_courses_offered():
         )
 
 
+@bp.route('/dashboard/all-blogs')
+@login_required
+def dashboard_all_blogs():
+    admin = Admin.query.filter_by(
+        admin_full_name=current_user.admin_full_name).first()
+    # ----------------
+    # Blogs: anonymous user
+    # ----------------
+
+    blog_articles_form = BlogArticlesForm()
+    if blog_articles_form.validate_on_submit():
+        blog_articles = BlogArticles(
+            article_image=blog_articles_form.article_image.data,
+            article_name=blog_articles_form.article_name.data,
+            body=blog_articles_form.body.data,
+            link=blog_articles_form.link.data
+        )
+
+        # Handling file upload
+        uploaded_file = blog_articles_form.article_image.data
+        filename = secure_filename(uploaded_file.filename)
+        if not os.path.exists(current_app.config['UPLOAD_PATH']):
+            os.makedirs(current_app.config['UPLOAD_PATH'])
+        blog_image_path = os.path.join(
+            current_app.config['UPLOAD_PATH'],
+            filename
+            )
+        print('Img path:', blog_image_path)
+        uploaded_file.save(blog_image_path)
+        blog_articles.article_image = blog_image_path
+        print('Db path: ', blog_articles.article_image)
+
+        blog_image_path_list = blog_articles.article_image.split('/')[1:]
+        print('Img path list: ', blog_image_path_list)
+        new_blog_image_path = '/'.join(blog_image_path_list)
+        print('New img path: ', new_blog_image_path)
+        blog_articles.article_image = new_blog_image_path
+        print(blog_articles.article_image)
+
+        db.session.add(blog_articles)
+        db.session.commit()
+        flash('You have addeded a new blog article')
+        return redirect(url_for('admin.dashboard_all_blogs'))
+    all_blog_articles = len(BlogArticles.query.all())
+
+    # ----------------
+    # End of Blogs: anonymous user
+    # ----------------
+    return render_template(
+        'admin/all_blogs.html',
+        title='All Blogs',
+        all_blog_articles=all_blog_articles,
+        blog_articles_form=blog_articles_form,
+        admin=admin
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_admin():
