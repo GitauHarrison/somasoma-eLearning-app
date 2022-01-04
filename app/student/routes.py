@@ -147,6 +147,37 @@ def dashboard_account():
         )
 
 
+@bp.route('/dashboard/analytics')
+@login_required
+def dashboard_analytics():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    # Calculate the number of objectives achieved
+    all_objectives = student.webdev_chapter1_objectives.order_by(
+        WebDevChapter1Objectives.timestamp.desc()).all()
+    objectives_list = []
+    num_of_true_status = 0
+    for objective in all_objectives:
+        objectives_list.append(objective.objective_1)
+        objectives_list.append(objective.objective_2)
+        objectives_list.append(objective.objective_3)
+        objectives_list.append(objective.objective_4)
+        objectives_list.append(objective.objective_5)
+    num_of_true_status = objectives_list.count(True)
+    try:
+        percentage_achieved = round(
+            (num_of_true_status / len(objectives_list)) * 100, 2
+        )
+    except ZeroDivisionError:
+        percentage_achieved = 0
+    return render_template(
+        'student/analytics.html',
+        title='Analytics',
+        student=student,
+        percentage_achieved=percentage_achieved
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_student():

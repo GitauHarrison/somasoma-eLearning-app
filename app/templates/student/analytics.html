@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block student_app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row text-center">
+        <div class="col-sm-12 student-content-title">
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+    <!-- ANALYTICS TAB -->
+    <div id="analytics" class="tabcontent">
+        <div class="row chapter-objectives">
+            <div class="col-sm-12">
+                <h1>Web Development</h1>
+                <h2>Achievement of Lesson Objectives</h2>
+                <ul>
+                    <li>
+                        <a href=" {{ url_for('student.web_development_chapter_1_objectives_status', student_full_name=student.student_full_name) }} ">Chapter 1: </a>{{ percentage_achieved }}%
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <a href="#">Chapter 2: </a>{{ percentage_achieved }}%
+                    </li>
+                </ul>
+            </div>
+            <!-- Graph will go here -->
+        </div>
+    </div>
+    <!-- END OF ANALYTICS TAB -->
+{% endblock %}
