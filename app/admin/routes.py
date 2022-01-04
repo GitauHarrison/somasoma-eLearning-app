@@ -89,6 +89,22 @@ def dashboard_all_teachers():
         )
 
 
+@bp.route('/dashboard/all-parents')
+@login_required
+def dashboard_all_parents():
+    admin = Admin.query.filter_by(
+        admin_full_name=current_user.admin_full_name).first()
+    parents = Parent.query.order_by(Parent.parent_last_seen.desc()).all()
+    all_parents = len(Parent.query.all())
+    return render_template(
+        'admin/all_parents.html',
+        title='All Parents',
+        parents=parents,
+        admin=admin,
+        all_parents=all_parents
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_admin():
