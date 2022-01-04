@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block admin_app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row text-center">
+        <div class="col-sm-12 admin-content-title">
+            <h1>Student Stories</h1>
+        </div>
+    </div>
+    <!-- STUDENT STORIES TAB -->
+    <div id="stories" class="tabcontent">
+        <div class="row">
+            <div class="row courses" >
+                <div class="col-sm-6">
+                    <h2>Course Offerings</h2>
+                    {% for course in courses %}
+                        <li>
+                            <a href="{{ course.link }}" target="_blank">{{course.id}}. {{course.title}}</a>
+                        </li>
+                    {% endfor %}
+                    <div class="row">
+                        <div  class="col-sm-12">
+                            <!-- Pagination of comments -->
+                            <nav aria-label="...">
+                                <ul class="pager">
+                                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                                        <a href="{{ prev_url or '#' }}">
+                                            <span aria-hidden="true">&#60;</span> Less
+                                        </a>
+                                    </li>
+                                    <li class="next{% if not next_url %} disabled{% endif %}">
+                                        <a href="{{ next_url or '#' }}">
+                                            More <span aria-hidden="true">&#62;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <!-- End of pagination of comments -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Review Flask Stories -->
+                <div class="col-sm-5 text-center vertical-line">
+                    <h2>Review Student Stories</h2>
+                    <a href="{{ url_for('admin.review_flask_stories') }}" class="btn btn-primary" target="_blank">
+                        Flask Stories
+                        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    </a>
+                    <hr>
+                </div>
+                <!-- End of Flask Stories -->
+            </div>
+        </div>
+    </div>
+    <!-- END OF STUDENT STORIES TAB -->
+{% endblock %}

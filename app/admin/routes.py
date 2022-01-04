@@ -241,6 +241,42 @@ def dashboard_all_blogs():
         )
 
 
+@bp.route('/dashboard/student-stories')
+@login_required
+def dashboard_student_stories():
+    admin = Admin.query.filter_by(
+        admin_full_name=current_user.admin_full_name).first()
+    # ----------------
+    # Student Stories
+    # ----------------
+    page = request.args.get('page', 1, type=int)
+    courses = Courses.query.order_by(
+        Courses.timestamp.desc()
+        ).paginate(
+            page,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+            )
+    next_url = url_for(
+        'admin.dashboard_admin',
+        page=courses.next_num,
+        _anchor="courses") \
+        if courses.has_next else None
+    prev_url = url_for(
+        'admin.dashboard_admin',
+        page=courses.prev_num,
+        _anchor="courses") \
+        if courses.has_prev else None
+    return render_template(
+        'admin/student_stories.html',
+        title='Student Stories',
+        courses=courses.items,
+        admin=admin,
+        next_url=next_url,
+        prev_url=prev_url
+        )
+
+
 @bp.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard_admin():

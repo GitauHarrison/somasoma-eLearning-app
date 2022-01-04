@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% block app_content %}
+{% block admin_app_content %}
     <!-- Flash message -->
     <div class="row">
         <div class="col-sm-12">
@@ -10,7 +10,7 @@
     </div>
     <!-- End of flash message -->
     <div class="row">
-        <div class="col-sm-12 text-center">
+        <div class="col-sm-12 text-center admin-content-title">
             <h1>{{ title }}</h1>
         </div>
     </div>
@@ -77,9 +77,9 @@
             <!-- Empty column -->
         </div>
         <div class="col-sm-4 text-center">
-            <p><a href=" {{ url_for('admin.dashboard_admin') }} " class="btn btn-primary" >
+            <p><a href=" {{ url_for('admin.dashboard_student_stories') }} " class="btn btn-primary" >
                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                Back to Admin Dashboard
+                Back to Student Stories
             </a>
             </p>
         </div>
