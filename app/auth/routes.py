@@ -26,7 +26,7 @@ def login():
 @bp.route('/login/parent', methods=['GET', 'POST'])
 def login_parent():
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard_parent'))
+        return redirect(url_for('main.dashboard_account'))
     form = LoginForm()
     if form.validate_on_submit():
         parent = Parent.query.filter_by(parent_email=form.email.data).first()
@@ -35,7 +35,7 @@ def login_parent():
             return redirect(url_for('auth.login_parent'))
         login_user(parent, remember=form.remember_me.data)
         flash(f'Welcome {parent.parent_full_name}!')
-        return redirect(url_for('main.dashboard_parent'))
+        return redirect(url_for('main.dashboard_account'))
     return render_template(
         'auth/login_parent.html',
         title='Parent Login',
@@ -46,7 +46,7 @@ def login_parent():
 @bp.route('/login/teacher', methods=['GET', 'POST'])
 def login_teacher():
     if current_user.is_authenticated:
-        return redirect(url_for('teacher.dashboard_teacher'))
+        return redirect(url_for('teacher.dashboard_account'))
     form = LoginForm()
     if form.validate_on_submit():
         teacher = Teacher.query.filter_by(
@@ -57,7 +57,7 @@ def login_teacher():
             return redirect(url_for('auth.login_teacher'))
         login_user(teacher, remember=form.remember_me.data)
         flash(f'Welcome {teacher.teacher_full_name}!')
-        return redirect(url_for('teacher.dashboard_teacher'))
+        return redirect(url_for('teacher.dashboard_account'))
     return render_template(
         'auth/login_teacher.html',
         title='Teacher Login',
@@ -68,7 +68,7 @@ def login_teacher():
 @bp.route('/login/student', methods=['GET', 'POST'])
 def login_student():
     if current_user.is_authenticated:
-        return redirect(url_for('student.dashboard_student'))
+        return redirect(url_for('student.dashboard_enrolled_courses'))
     form = LoginForm()
     if form.validate_on_submit():
         student = Student.query.filter_by(
@@ -79,7 +79,7 @@ def login_student():
             return redirect(url_for('auth.login_student'))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('student.dashboard_student')
+            next_page = url_for('student.dashboard_enrolled_courses')
         if student.two_factor_student_enabled():
             request_verification_token(student.student_phone)
             session['student_email'] = student.student_email
@@ -103,7 +103,7 @@ def login_student():
 @bp.route('/login/admin', methods=['GET', 'POST'])
 def login_admin():
     if current_user.is_authenticated:
-        return redirect(url_for('admin.dashboard_admin'))
+        return redirect(url_for('admin.dashboard_account'))
     form = LoginForm()
     if form.validate_on_submit():
         admin = Admin.query.filter_by(
@@ -114,7 +114,7 @@ def login_admin():
             return redirect(url_for('auth.login_admin'))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('admin.dashboard_admin')
+            next_page = url_for('admin.dashboard_account')
         if admin.two_factor_admin_enabled():
             request_verification_token(admin.admin_phone)
             session['admin_email'] = admin.admin_email
@@ -162,7 +162,7 @@ def logout_admin():
 @bp.route('/register/student', methods=['GET', 'POST'])
 def register_student():
     if current_user.is_authenticated:
-        return redirect(url_for('student.dashboard_student'))
+        return redirect(url_for('student.dashboard_enrolled_courses'))
     form = StudentRegistrationForm()
     if form.validate_on_submit():
         student = Student(
@@ -192,7 +192,7 @@ def register_student():
 @bp.route('/register/parent', methods=['GET', 'POST'])
 def register_parent():
     if current_user.is_authenticated:
-        return redirect(url_for('main.dashboard_parent'))
+        return redirect(url_for('main.dashboard_account'))
     form = ParentRegistrationForm()
     if form.validate_on_submit():
         parent = Parent(
@@ -220,7 +220,7 @@ def register_parent():
 @bp.route('/register/admin', methods=['GET', 'POST'])
 def register_admin():
     if current_user.is_authenticated:
-        return redirect(url_for('admin.dashboard_admin'))
+        return redirect(url_for('admin.dashboard_account'))
     form = AdminRegistrationForm()
     if form.validate_on_submit():
         admin = Admin(
@@ -249,7 +249,7 @@ def register_admin():
 @bp.route('/request-password-reset', methods=['GET', 'POST'])
 def request_password_reset():
     if current_user.is_authenticated:
-        return redirect(url_for('student.dashboard_student'))
+        return redirect(url_for('student.dashboard_enrolled_courses'))
     form = RequestPasswordResetForm()
     if form.validate_on_submit():
         student = Student.query.filter_by(
@@ -269,10 +269,10 @@ def request_password_reset():
 @bp.route('/reset-password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
-        return redirect(url_for('student.dashboard_student'))
+        return redirect(url_for('student.dashboard_enrolled_courses'))
     student = Student.verify_reset_password_token(token)
     if not student:
-        return redirect(url_for('student.dashboard_student'))
+        return redirect(url_for('student.dashboard_enrolled_courses'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         student.set_password(form.password.data)
@@ -291,7 +291,7 @@ def reset_password(token):
 @bp.route('/admin/request-password-reset', methods=['GET', 'POST'])
 def request_password_reset_admin():
     if current_user.is_authenticated:
-        return redirect(url_for('admin.dashboard_admin'))
+        return redirect(url_for('admin.dashboard_account'))
     form = RequestPasswordResetForm()
     if form.validate_on_submit():
         admin = Admin.query.filter_by(
@@ -311,10 +311,10 @@ def request_password_reset_admin():
 @bp.route('/admin/reset-password/<token>', methods=['GET', 'POST'])
 def reset_password_admin(token):
     if current_user.is_authenticated:
-        return redirect(url_for('admin.dashboard_admin'))
+        return redirect(url_for('admin.dashboard_account'))
     admin = Admin.verify_reset_password_token(token)
     if not admin:
-        return redirect(url_for('admin.dashboard_admin'))
+        return redirect(url_for('admin.dashboard_account'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         admin.set_password(form.password.data)
@@ -334,7 +334,7 @@ def reset_password_admin(token):
 @bp.route('/teacher/request-password-reset', methods=['GET', 'POST'])
 def request_password_reset_teacher():
     if current_user.is_authenticated:
-        return redirect(url_for('teacher.dashboard_teacher'))
+        return redirect(url_for('teacher.dashboard_account'))
     form = RequestPasswordResetForm()
     if form.validate_on_submit():
         teacher = Teacher.query.filter_by(
@@ -354,10 +354,10 @@ def request_password_reset_teacher():
 @bp.route('/teacher/reset-password/<token>', methods=['GET', 'POST'])
 def reset_password_teacher(token):
     if current_user.is_authenticated:
-        return redirect(url_for('teacher.dashboard_teacher'))
+        return redirect(url_for('teacher.dashboard_account'))
     teacher = Teacher.verify_reset_password_token(token)
     if not teacher:
-        return redirect(url_for('teacher.dashboard_teacher'))
+        return redirect(url_for('teacher.dashboard_account'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         teacher.set_password(form.password.data)
@@ -412,7 +412,7 @@ def verify_2fa_student():
                 db.session.commit()
                 flash('You have enabled two-factor authentication')
                 return redirect(url_for(
-                    'student.dashboard_student',
+                    'student.dashboard_enrolled_courses',
                     _anchor='account')
                     )
             else:
@@ -445,7 +445,7 @@ def disable_2fa_student():
         db.session.commit()
         flash('You have disabled two-factor authentication')
         return redirect(url_for(
-            'student.dashboard_student',
+            'student.dashboard_enrolled_courses',
             _anchor='account'
             )
         )
@@ -490,7 +490,7 @@ def verify_2fa_admin():
                 db.session.commit()
                 flash('You have enabled two-factor authentication')
                 return redirect(url_for(
-                    'admin.dashboard_admin',
+                    'admin.dashboard_account',
                     _anchor='account')
                     )
             else:
@@ -522,7 +522,7 @@ def disable_2fa_admin():
         current_user.admin_phone = None
         db.session.commit()
         flash('You have disabled two-factor authentication')
-        return redirect(url_for('admin.dashboard_admin', _anchor='account'))
+        return redirect(url_for('admin.dashboard_account', _anchor='account'))
     return render_template(
         'auth/two-factor-auth/admin/disable_2fa_admin.html',
         form=form,
@@ -564,7 +564,7 @@ def verify_2fa_teacher():
                 db.session.commit()
                 flash('You have enabled two-factor authentication')
                 return redirect(url_for(
-                    'teacher.dashboard_teacher',
+                    'teacher.dashboard_account',
                     _anchor='account')
                     )
             else:
@@ -597,7 +597,7 @@ def disable_2fa_teacher():
         db.session.commit()
         flash('You have disabled two-factor authentication')
         return redirect(url_for(
-            'teacher.dashboard_teacher',
+            'teacher.dashboard_account',
             _anchor='account'
             )
         )
