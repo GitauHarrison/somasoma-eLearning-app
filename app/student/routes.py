@@ -76,7 +76,7 @@ def dashboard_explore_student_community():
     prev_url = url_for(
         'student.dashboard_explore_student_community',
         page=comments.prev_num) \
-        if comments.has_prev else None        
+        if comments.has_prev else None
     return render_template(
         'student/explore_student_community.html',
         title='Explore Student Community',
@@ -477,11 +477,23 @@ def web_development_chapter_1_objectives_status():
         page, current_app.config['POSTS_PER_PAGE'], False)
 
     # Calculate percentage
-    objectives_count = len(WebDevChapter1Objectives.query.all())
-    achieved_objectives_count = len(WebDevChapter1Objectives.query.filter_by(
-        allowed_status=True).all())
-    percentage = round((achieved_objectives_count / objectives_count * 100), 2)
-    print(percentage)
+    all_objectives = student.webdev_chapter1_objectives.order_by(
+        WebDevChapter1Objectives.timestamp.desc()).all()
+    objectives_list = []
+    num_of_true_status = 0
+    for objective in all_objectives:
+        objectives_list.append(objective.objective_1)
+        objectives_list.append(objective.objective_2)
+        objectives_list.append(objective.objective_3)
+        objectives_list.append(objective.objective_4)
+        objectives_list.append(objective.objective_5)
+    num_of_true_status = objectives_list.count(True)
+    try:
+        percentage_achieved = round(
+            (num_of_true_status / len(objectives_list)) * 100, 2
+        )
+    except ZeroDivisionError:
+        percentage_achieved = 0
 
     objectives = WebDevChapter1Objectives.query.order_by(
         WebDevChapter1Objectives.timestamp.desc()
@@ -505,7 +517,7 @@ def web_development_chapter_1_objectives_status():
         prev_url=prev_url,
         student=student,
         chapter_objectives=chapter_objectives.items,
-        percentage=percentage
+        percentage_achieved=percentage_achieved
         )
 
 
