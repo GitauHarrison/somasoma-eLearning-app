@@ -415,7 +415,7 @@ def verify_2fa_student():
                 db.session.commit()
                 flash('You have enabled two-factor authentication')
                 return redirect(url_for(
-                    'student.dashboard_enrolled_courses',
+                    'student.dashboard_account',
                     _anchor='account')
                     )
             else:
@@ -449,7 +449,7 @@ def disable_2fa_student():
         db.session.commit()
         flash('You have disabled two-factor authentication')
         return redirect(url_for(
-            'student.dashboard_enrolled_courses',
+            'student.dashboard_account',
             _anchor='account'
             )
         )
