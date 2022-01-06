@@ -291,7 +291,7 @@ class ResetPasswordForm(FlaskForm):
 
 class Enable2faForm(FlaskForm):
     verification_phone = StringField('Phone', validators=[DataRequired()])
-    submit = SubmitField('Enalble 2fa')
+    submit = SubmitField('Enable 2fa')
 
     def validate_verification_number(self, verification_phone):
         try:

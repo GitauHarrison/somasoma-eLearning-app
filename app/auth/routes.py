@@ -402,6 +402,9 @@ def enable_2fa_student():
 
 @bp.route('/student/verify-2fa', methods=['GET', 'POST'])
 def verify_2fa_student():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first_or_404()
     form = Confirm2faForm()
     if form.validate_on_submit():
         phone = session['phone']
@@ -429,7 +432,8 @@ def verify_2fa_student():
     return render_template(
         'auth/two-factor-auth/student/verify_2fa.html',
         form=form,
-        title='Verify Token'
+        title='Verify Token',
+        student=student
         )
 
 
