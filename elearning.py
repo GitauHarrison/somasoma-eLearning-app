@@ -1,9 +1,11 @@
 from app import create_app, db
 from app.models import CommunityComment, WebDevChapter1Comment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, Student, Parent,\
-    Teacher, WebDevChapter1QuizOptions, AnonymousTemplateInheritanceComment,\
+    Teacher, AnonymousTemplateInheritanceComment,\
     User, Admin, Courses, FlaskStudentStories, WebDevelopmentOverview,\
-    TableOfContents, Chapter, ChapterObjectives, ChapterQuiz
+    TableOfContents, Chapter, ChapterObjectives, ChapterQuiz,\
+    WebDevChapter1Quiz1Options, WebDevChapter1Quiz2Options,\
+    WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options
 
 app = create_app()
 
@@ -19,7 +21,6 @@ def make_shell_context():
         WebDevChapter1Comment=WebDevChapter1Comment,
         WebDevChapter1Objectives=WebDevChapter1Objectives,
         WebDevChapter1Quiz=WebDevChapter1Quiz,
-        WebDevChapter1QuizOptions=WebDevChapter1QuizOptions,
         AnonymousTemplateInheritanceComment=AnonymousTemplateInheritanceComment,
         User=User,
         Admin=Admin,
@@ -29,5 +30,9 @@ def make_shell_context():
         TableOfContents=TableOfContents,
         Chapter=Chapter,
         ChapterObjectives=ChapterObjectives,
-        ChapterQuiz=ChapterQuiz
+        ChapterQuiz=ChapterQuiz,
+        WebDevChapter1Quiz1Options=WebDevChapter1Quiz1Options,
+        WebDevChapter1Quiz2Options=WebDevChapter1Quiz2Options,
+        WebDevChapter1Quiz3Options=WebDevChapter1Quiz3Options,
+        WebDevChapter1Quiz4Options=WebDevChapter1Quiz4Options
         )
