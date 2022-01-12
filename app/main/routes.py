@@ -1,4 +1,4 @@
-from app import db, email, products
+from app import db, products
 from app.main import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app, abort
