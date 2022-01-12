@@ -667,10 +667,7 @@ class WebDevChapter1Quiz(db.Model):
 class WebDevChapter1Quiz1Options(db.Model):
     __tablename__ = 'web_dev_chapter_1_quiz_1_options'
     id = db.Column(db.Integer, primary_key=True)
-    option_1 = db.Column(db.Boolean, default=False)
-    option_2 = db.Column(db.Boolean, default=False)
-    option_3 = db.Column(db.Boolean, default=False)
-    option_4 = db.Column(db.Boolean, default=False)
+    answer = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
@@ -678,10 +675,7 @@ class WebDevChapter1Quiz1Options(db.Model):
 class WebDevChapter1Quiz2Options(db.Model):
     __tablename__ = 'web_dev_chapter_1_quiz_2_options'
     id = db.Column(db.Integer, primary_key=True)
-    option_1 = db.Column(db.Boolean, default=False)
-    option_2 = db.Column(db.Boolean, default=False)
-    option_3 = db.Column(db.Boolean, default=False)
-    option_4 = db.Column(db.Boolean, default=False)
+    answer = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
@@ -689,10 +683,7 @@ class WebDevChapter1Quiz2Options(db.Model):
 class WebDevChapter1Quiz3Options(db.Model):
     __tablename__ = 'web_dev_chapter_1_quiz_3_options'
     id = db.Column(db.Integer, primary_key=True)
-    option_1 = db.Column(db.Boolean, default=False)
-    option_2 = db.Column(db.Boolean, default=False)
-    option_3 = db.Column(db.Boolean, default=False)
-    option_4 = db.Column(db.Boolean, default=False)
+    answer = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
@@ -700,10 +691,7 @@ class WebDevChapter1Quiz3Options(db.Model):
 class WebDevChapter1Quiz4Options(db.Model):
     __tablename__ = 'web_dev_chapter_1_quiz_4_options'
     id = db.Column(db.Integer, primary_key=True)
-    option_1 = db.Column(db.Boolean, default=False)
-    option_2 = db.Column(db.Boolean, default=False)
-    option_3 = db.Column(db.Boolean, default=False)
-    option_4 = db.Column(db.Boolean, default=False)
+    answer = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
