@@ -408,6 +408,7 @@ def web_development_chapter_1():
         allowed_status=True).all()
         )
 
+    # Chapter Objectives
     objectives_form = ChapterObjectivesForm()
     if objectives_form.validate_on_submit():
         objectives = WebDevChapter1Objectives(
@@ -416,13 +417,14 @@ def web_development_chapter_1():
             objective_3=objectives_form.objective_3.data,
             objective_4=objectives_form.objective_4.data,
             objective_5=objectives_form.objective_5.data,
-            author=current_user
+            author=student
         )
         db.session.add(objectives)
         db.session.commit()
         flash('Your response has been saved')
         return redirect(url_for(
             'student.web_development_chapter_1_objectives_status',
+            student_full_name=student.student_full_name,
             _anchor='objectives'
         ))
     return render_template(
@@ -461,11 +463,11 @@ def web_development_chapter_2():
 # Objectives
 
 
-@bp.route('/web-development/chapter-1/objectives-status')
+@bp.route('/<student_full_name>/web-development/chapter-1/objectives-status')
 @login_required
-def web_development_chapter_1_objectives_status():
+def web_development_chapter_1_objectives_status(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
+        student_full_name=student_full_name
         ).first()
     page = request.args.get('page', 1, type=int)
 
@@ -475,8 +477,8 @@ def web_development_chapter_1_objectives_status():
             ChapterObjectives.timestamp.desc()
             ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
-
-    # Calculate percentage
+    
+    # Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.order_by(
         WebDevChapter1Objectives.timestamp.desc()).all()
     objectives_list = []
@@ -490,12 +492,14 @@ def web_development_chapter_1_objectives_status():
     num_of_true_status = objectives_list.count(True)
     try:
         percentage_achieved = round(
-            (num_of_true_status / len(objectives_list)) * 100, 2
+            (num_of_true_status / len(objectives_list)) * 100,
+            2
         )
     except ZeroDivisionError:
         percentage_achieved = 0
+    # End of percentage calculation
 
-    objectives = WebDevChapter1Objectives.query.order_by(
+    objectives = student.webdev_chapter1_objectives.order_by(
         WebDevChapter1Objectives.timestamp.desc()
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
@@ -511,7 +515,7 @@ def web_development_chapter_1_objectives_status():
         if objectives.has_prev else None
     return render_template(
         'student/web-development-course/chapter_1_objectives_status.html',
-        title='Chapter 1: Achievement Status',
+        title='Chapter 1: Objectives Status',
         objectives=objectives.items,
         next_url=next_url,
         prev_url=prev_url,
