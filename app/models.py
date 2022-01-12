@@ -8,14 +8,14 @@ import jwt
 from time import time
 
 
-@login.user_loader
-def load_student(id):
-    return Student.query.get(int(id))
-
-
 # @login.user_loader
-# def load_teacher(id):
-#     return Teacher.query.get(int(id))
+# def load_student(id):
+#     return Student.query.get(int(id))
+
+
+@login.user_loader
+def load_teacher(id):
+    return Teacher.query.get(int(id))
 
 # @login.user_loader
 # def load_admin(id):
@@ -91,7 +91,7 @@ class Admin(UserMixin, db.Model):
                 'exp': time() + expires_in},
             current_app.config['SECRET_KEY'],
             algorithm='HS256'
-        ).decode('utf-8')
+        )
 
     # Two-factor authentication
 
@@ -281,7 +281,7 @@ class Parent(UserMixin, db.Model):
             {'reset_password': self.id, 'exp': time() + expires_in},
             current_app.config['SECRET_KEY'],
             algorithm='HS256'
-        ).decode('utf-8')
+        )
 
     @staticmethod
     def verify_reset_password_token(token):
@@ -372,7 +372,7 @@ class Teacher(UserMixin, db.Model):
             {'reset_password': self.id, 'exp': time() + expires_in},
             current_app.config['SECRET_KEY'],
             algorithm='HS256'
-        ).decode('utf-8')
+        )
 
     @staticmethod
     def verify_reset_password_token(token):
@@ -589,23 +589,6 @@ class FlaskStudentStories(db.Model):
 
     def __repr__(self):
         return f'Flask Story: {self.body}'
-
-    # Password reset
-    def get_reset_password_token(self, expires_in=600):
-        return jwt.encode(
-            {'reset_password': self.id, 'exp': time() + expires_in},
-            current_app.config['SECRET_KEY'],
-            algorithm='HS256'
-        ).decode('utf-8')
-
-    @staticmethod
-    def verify_reset_password_token(token):
-        try:
-            id = jwt.decode(token, current_app.config['SECRET_KEY'],
-                            algorithms=['HS256'])['reset_password']
-        except:
-            return
-        return FlaskStudentStories.query.get(id)
 
 
 class AnonymousTemplateInheritanceComment(db.Model):
