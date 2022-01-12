@@ -3,11 +3,14 @@ from app.student import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app
 from app.student.forms import CommentForm, EditProfileForm,\
-    ChapterObjectivesForm, QuizForm, Chapter1QuizOptionsForm,\
-    EmptyForm
-from app.models import TableOfContents, WebDevChapter1Comment, CommunityComment,\
-    WebDevChapter1Objectives, WebDevChapter1Quiz, WebDevChapter1QuizOptions,\
-    Student, WebDevelopmentOverview, Chapter, Teacher, ChapterObjectives
+    ChapterObjectivesForm, QuizForm, Chapter1Quiz1OptionsForm,\
+    EmptyForm, Chapter1Quiz2OptionsForm, Chapter1Quiz3OptionsForm,\
+    Chapter1Quiz4OptionsForm
+from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
+    CommunityComment, WebDevChapter1Objectives, WebDevChapter1Quiz,\
+    WebDevChapter1Quiz1Options, Student, WebDevelopmentOverview, Chapter,\
+    Teacher, ChapterObjectives, WebDevChapter1Quiz2Options,\
+    WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options
 from app.student.email import send_flask_chapter_1_comment_email
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -592,12 +595,8 @@ def web_development_chapter_1_quiz():
         student_full_name=current_user.student_full_name
         ).first()
     page = request.args.get('page', 1, type=int)
-    options = WebDevChapter1QuizOptions.query.order_by(
-        WebDevChapter1QuizOptions.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
-    quizzes = WebDevChapter1Quiz.query.order_by(
-        WebDevChapter1Quiz.timestamp.asc()
+    quizzes = ChapterQuiz.query.order_by(
+        ChapterQuiz.timestamp.asc()
         ).paginate(
         page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
     next_url = url_for(
@@ -612,14 +611,76 @@ def web_development_chapter_1_quiz():
         _anchor='quizzes',
         page=quizzes.prev_num) \
         if quizzes.has_prev else None
-    form = Chapter1QuizOptionsForm()
+
+    # Quiz 1
+    quiz_1_form = Chapter1Quiz1OptionsForm()
+    if quiz_1_form.validate_on_submit():
+        answer = WebDevChapter1Quiz1Options(
+            answer=quiz_1_form.answer.data)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 1 answer have been added!', 'success')
+        return redirect(url_for(
+            'student.web_development_chapter_1_quiz',
+            student_full_name=student.student_full_name,
+            _anchor="quiz_1",
+        ))
+    # End of quiz 1
+
+    # Quiz 2
+    quiz_2_form = Chapter1Quiz2OptionsForm()
+    if quiz_2_form.validate_on_submit():
+        answer = WebDevChapter1Quiz2Options(
+            answer=quiz_2_form.answer.data)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 2 answers have been added!', 'success')
+        return redirect(url_for(
+            'student.web_development_chapter_1_quiz',
+            student_full_name=student.student_full_name,
+            _anchor="quiz_2",
+        ))
+    # End of quiz 2
+
+    # Quiz 3
+    quiz_3_form = Chapter1Quiz3OptionsForm()
+    if quiz_3_form.validate_on_submit():
+        answer = WebDevChapter1Quiz3Options(
+            answer=quiz_3_form.answer.data)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 3 answers have been added!', 'success')
+        return redirect(url_for(
+            'student.web_development_chapter_1_quiz',
+            student_full_name=student.student_full_name,
+            _anchor="quiz_3",
+        ))
+    # End of quiz 3
+
+    # Quiz 4
+    quiz_4_form = Chapter1Quiz4OptionsForm()
+    if quiz_4_form.validate_on_submit():
+        answer = WebDevChapter1Quiz4Options(
+            answer=quiz_4_form.answer.data)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 3 answers have been added!', 'success')
+        return redirect(url_for(
+            'student.web_development_chapter_1_quiz',
+            student_full_name=student.student_full_name,
+            _anchor="quiz_4",
+        ))
+    # End of quiz 4
+
     return render_template(
         'student/web-development-course/chapter_1_quizzes.html',
         title='Chapter 1: Quizzes',
         student=student,
         quizzes=quizzes.items,
-        options=options.items,
-        form=form,
+        quiz_1_form=quiz_1_form,
+        quiz_2_form=quiz_2_form,
+        quiz_3_form=quiz_3_form,
+        quiz_4_form=quiz_4_form,
         next_url=next_url,
         prev_url=prev_url
         )
