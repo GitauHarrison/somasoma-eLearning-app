@@ -213,7 +213,7 @@ class Student(UserMixin, db.Model):
             {'reset_password': self.id, 'exp': time() + expires_in},
             current_app.config['SECRET_KEY'],
             algorithm='HS256'
-        ).decode('utf-8')
+        )
 
     @staticmethod
     def verify_reset_password_token(token):
@@ -653,7 +653,8 @@ class WebDevChapter1Objectives(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
     def __repr__(self):
-        return f'Objectives: {self.objective_1} {self.objective_2} {self.objective_3} {self.objective_4} {self.objective_5} {self.objective_6} {self.objective_7}'
+        return f'Objectives: {self.objective_1}, {self.objective_2},\
+            {self.objective_3}, {self.objective_4}, {self.objective_5}'
 
 
 class WebDevChapter1Quiz(db.Model):

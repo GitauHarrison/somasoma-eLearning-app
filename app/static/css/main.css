@@ -213,6 +213,12 @@ a:hover {
     position: fixed;
   }
 }
+@media screen and (max-width: 767px) {
+  /* Scrollable content */
+  .scrollable-content {
+    margin-left: 25px;
+  }
+}
 
 /* ------------------------------------------ */
 /* HOMEPAGE VERTICAL TABS */
