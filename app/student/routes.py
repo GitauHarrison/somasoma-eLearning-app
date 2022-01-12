@@ -427,6 +427,27 @@ def web_development_chapter_1():
             student_full_name=student.student_full_name,
             _anchor='objectives'
         ))
+
+    # Calculate the number of objectives achieved
+    all_objectives = student.webdev_chapter1_objectives.order_by(
+        WebDevChapter1Objectives.timestamp.desc()).all()
+    objectives_list = []
+    num_of_true_status = 0
+    for objective in all_objectives:
+        objectives_list.append(objective.objective_1)
+        objectives_list.append(objective.objective_2)
+        objectives_list.append(objective.objective_3)
+        objectives_list.append(objective.objective_4)
+        objectives_list.append(objective.objective_5)
+    num_of_true_status = objectives_list.count(True)
+    try:
+        percentage_achieved = round(
+            (num_of_true_status / len(objectives_list)) * 100, 2
+        )
+    except ZeroDivisionError:
+        percentage_achieved = 0
+    # End of Calculate the number of objectives achieved
+
     return render_template(
         'student/web-development-course/web_development_chapter_1.html',
         title='Chapter 1: Introduction to Web Development',
@@ -442,7 +463,10 @@ def web_development_chapter_1():
         course_chapters=course_chapters.items,
 
         # Table of Contents
-        all_toc=all_toc.items
+        all_toc=all_toc.items,
+
+        # Objectives achieved
+        percentage_achieved=percentage_achieved,
         )
 
 
@@ -477,7 +501,7 @@ def web_development_chapter_1_objectives_status(student_full_name):
             ChapterObjectives.timestamp.desc()
             ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
-    
+
     # Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.order_by(
         WebDevChapter1Objectives.timestamp.desc()).all()

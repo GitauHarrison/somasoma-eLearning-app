@@ -143,10 +143,17 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <p>
-                                        <a href=" {{ url_for('student.web_development_chapter_2', student_full_name=student.student_full_name) }} " class="btn btn-primary">
-                                            Chapter 2
-                                            <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-                                        </a>
+                                        {% if percentage_achieved < 60 %}
+                                            <a href=" {{ url_for('student.web_development_chapter_2', student_full_name=student.student_full_name) }} " class="btn btn-primary disabled">
+                                                Chapter 2
+                                                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                            </a>
+                                        {% else %}
+                                            <a href=" {{ url_for('student.web_development_chapter_2', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+                                                Chapter 2
+                                                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                            </a>
+                                        {% endif %}
                                     </p>
                                 </div>
                             </div>
