@@ -558,12 +558,12 @@ def profile_teacher(teacher_full_name):
         ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-        'teacher.dashboard_teacher', teacher_full_name=teacher_full_name,
+        'teacher.profile_teacher', teacher_full_name=teacher_full_name,
         _anchor="teacher-comments",
         page=comments.next_num) \
         if comments.has_next else None
     prev_url = url_for(
-        'teacher.dashboard_teacher', teacher_full_name=teacher_full_name,
+        'teacher.profile_teacher', teacher_full_name=teacher_full_name,
         _anchor="teacher-comments",
         page=comments.prev_num) \
         if comments.has_prev else None
