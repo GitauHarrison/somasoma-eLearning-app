@@ -1,11 +1,25 @@
 {% extends 'base.html' %}
 
 {% block student_app_content %}
+<!-- Flash message -->
+<div class="row">
+    <div class="col-sm-12">
+        {% include '_flash_message.html' %}
+    </div>
+</div>
+<!-- End of flash message -->
 <div class="row">
     <div class="col-sm-12 student-content-title">
         <h1>{{ title }}</h1>
     </div>
 </div>
+<div class="row">
+    <div class="col-sm-12">
+        <p>Total Score: {{ total_score }}</p>
+        <p>Achievement Rate: {{ total_score_percentage }}%</p>
+    </div>
+</div>
+<hr>
 <div class="row">
     <div class="col-sm-12">
         <table class="table table-striped">
@@ -22,7 +36,7 @@
 
                         <td>{{ quiz.quiz_1 }}</td>
                         
-                        <td>{{ student.webdev_chapter1_quiz_1_options.answer }}</td>
+                        <td>{{ quiz_1_answers_list[0] }}</td>
                         <td>{{ quiz_1_score }}</td>
                     </tr>
                 {% endfor %}
@@ -31,7 +45,7 @@
 
                         <td>{{ quiz.quiz_2 }}</td>
                         
-                        <td>{{ student.webdev_chapter1_quiz_2_options.answer }}</td>
+                        <td>{{ quiz_2_answers_list[0] }}</td>
                         <td>{{ quiz_2_score }}</td>
                     </tr>
                 {% endfor %}
@@ -40,7 +54,7 @@
 
                         <td>{{ quiz.quiz_3 }}</td>
                         
-                        <td>{{ student.webdev_chapter1_quiz_3_options.answer }}</td>
+                        <td>{{ quiz_3_answers_list[0] }}</td>
                         <td>{{ quiz_3_score }}</td>
                     </tr>
                 {% endfor %}
@@ -49,7 +63,7 @@
 
                         <td>{{ quiz.quiz_4 }}</td>
                         
-                        <td>{{ student.webdev_chapter1_quiz_4_options.answer }}</td>
+                        <td>{{ quiz_4_answers_list[0] }}</td>
                         <td>{{ quiz_4_score }}</td>
                     </tr>
                 {% endfor %}
@@ -58,12 +72,6 @@
     </div>
 </div>
 <hr>
-<div class="row text-center">
-    <div class="col-sm-12">
-        <p>Total Score: {{ total_score }}</p>
-        <p>Achievemnt Rate: {{ total_score_percentage }}%</p>
-    </div>
-</div>
 <div class="row">
     <div class="col-sm-12 text-center">
         <p>

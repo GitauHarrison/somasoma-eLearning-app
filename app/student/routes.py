@@ -757,44 +757,52 @@ def web_development_chapter_1_total_score():
     quizzes = ChapterQuiz.query.order_by(
         ChapterQuiz.timestamp.asc()
         ).paginate(
-        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
+        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)  
 
     # Calculate total score
     quiz_1_score = 0
-    quiz_1_answer = WebDevChapter1Quiz1Options.query.filter_by(
-        student_id=student.id).all()
+    quiz_1_answers_list = []
+    quiz_1_answer = WebDevChapter1Quiz1Options.query.all()
     for answer in quiz_1_answer:
+        quiz_1_answers_list.append(answer.answer)
         if answer.answer.lower() == 'to display content in a webpage':
             quiz_1_score += 1
         else:
             quiz_1_score += 0
-    
+    print(quiz_1_answers_list)
+
     quiz_2_score = 0
-    quiz_2_answer = WebDevChapter1Quiz2Options.query.filter_by(
-        student_id=student.id).all()
+    quiz_2_answers_list = []
+    quiz_2_answer = WebDevChapter1Quiz2Options.query.all()
     for answer in quiz_2_answer:
+        quiz_2_answers_list.append(answer.answer)
         if answer.answer.lower() == 'to style the contents of a webpage':
             quiz_2_score += 1
         else:
             quiz_2_score += 0
+    print(quiz_2_answers_list)
 
     quiz_3_score = 0
-    quiz_3_answer = WebDevChapter1Quiz3Options.query.filter_by(
-        student_id=student.id).all()
+    quiz_3_answers_list = []
+    quiz_3_answer = WebDevChapter1Quiz3Options.query.all()
     for answer in quiz_3_answer:
-        if answer.answer.lower() == 'to query a database':
+        quiz_3_answers_list.append(answer.answer)
+        if answer.answer.lower() == 'to create a database':
             quiz_3_score += 1
         else:
             quiz_3_score += 0
+    print(quiz_3_answers_list)
 
     quiz_4_score = 0
-    quiz_4_answer = WebDevChapter1Quiz4Options.query.filter_by(
-        student_id=student.id).all()
+    quiz_4_answers_list = []
+    quiz_4_answer = WebDevChapter1Quiz4Options.query.all()
     for answer in quiz_4_answer:
+        quiz_4_answers_list.append(answer.answer)
         if answer.answer.lower() == 'to enhance the creation of an app':
             quiz_4_score += 1
         else:
             quiz_4_score += 0
+    print(quiz_4_answers_list)
 
     # Calculate percentage
     total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score
@@ -802,7 +810,6 @@ def web_development_chapter_1_total_score():
         total_score_percentage = round((total_score / 4) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage = 0
-    print(total_score_percentage)
 
     return render_template(
         'student/web-development-course/quizzes/chapter_1/total_score.html',
@@ -811,11 +818,17 @@ def web_development_chapter_1_total_score():
         quizzes=quizzes.items,
 
         quiz_1_answer=quiz_1_answer,
-        
+        quiz_3_answer=quiz_3_answer,
+        quiz_1_answers_list=quiz_1_answers_list,
+        quiz_2_answers_list=quiz_2_answers_list,
+        quiz_3_answers_list=quiz_3_answers_list,
+        quiz_4_answers_list=quiz_4_answers_list,
+
         quiz_1_score=quiz_1_score,
         quiz_2_score=quiz_2_score,
         quiz_3_score=quiz_3_score,
         quiz_4_score=quiz_4_score,
+        total_score=total_score,
         total_score_percentage=total_score_percentage
         )
 
