@@ -7,10 +7,11 @@ from flask import render_template, flash, request, redirect, url_for,\
     current_app
 from app.models import Teacher, TeacherCommunityComment, Student,\
     CommunityComment, WebDevelopmentOverview, TableOfContents, Chapter,\
-    WebDevChapter1Comment, ChapterObjectives, ChapterQuiz, BlogArticles
+    WebDevChapter1Comment, ChapterObjectives, ChapterQuiz, BlogArticles,\
+    Events
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
     WebDevelopmentOverviewForm, TableOfContentsForm, ChapterForm,\
-    ChapterObjectivesForm, ChapterQuizForm, BlogArticlesForm
+    ChapterObjectivesForm, ChapterQuizForm, BlogArticlesForm, EventsForm
 from app.teacher.email import send_live_flask_chapter_1_comment_email
 from werkzeug.utils import secure_filename
 import os
@@ -415,17 +416,108 @@ def allow_blog_article(blog_article_id):
 # ==========================================
 
 
-@bp.route('/dashboard/manage-events')
+@bp.route('/dashboard/manage-events', methods=['GET', 'POST'])
 @login_required
 def dashboard_manage_events():
     teacher = Teacher.query.filter_by(
         teacher_full_name=current_user.teacher_full_name).first()
+    event_form = EventsForm()
+    if event_form.validate_on_submit():
+        event = Events(
+            title=event_form.event_title.data,
+            body=event_form.event_body.data,
+            date=event_form.event_date.data,
+            time=event_form.event_time.data,
+            location=event_form.event_location.data,
+            link=event_form.event_link.data
+            )
+
+        # Handling file upload
+        uploaded_file = event_form.event_image.data
+        filename = secure_filename(uploaded_file.filename)
+        if not os.path.exists(current_app.config['UPLOAD_PATH']):
+            os.makedirs(current_app.config['UPLOAD_PATH'])
+        event_image_path = os.path.join(
+            current_app.config['UPLOAD_PATH'],
+            filename
+            )
+        print('Img path:', event_image_path)
+        uploaded_file.save(event_image_path)
+        event.event_image = event_image_path
+        print('Db path: ', event.event_image)
+
+        event_image_path_list = event.event_image.split('/')[1:]
+        print('Img path list: ', event_image_path_list)
+        new_event_image_path = '/'.join(event_image_path_list)
+        print('New img path: ', new_event_image_path)
+        event.event_image = new_event_image_path
+        print(event.event_image)
+
+        db.session.add(event)
+        db.session.commit()
+        flash('Your event has been updated. Take action now!')
+        return redirect(url_for(
+            'teacher.dashboard_manage_events',
+            _anchor='events')
+            )
+    page = request.args.get('page', 1, type=int)
+    events = Events.query.order_by(
+        Events.timestamp.desc()
+        ).paginate(
+            page,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+            )
+    next_url = url_for(
+        'admin.dashboard_manage_events',
+        page=events.next_num,
+        _anchor="events") \
+        if events.has_next else None
+    prev_url = url_for(
+        'admin.dashboard_manage_events',
+        page=events.prev_num,
+        _anchor="events") \
+        if events.has_prev else None
+    all_events = len(Events.query.all())
+
     return render_template(
         'teacher/manage_events.html',
         title='Manage Events',
-        teacher=teacher
+        teacher=teacher,
+        events=events.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        all_events=all_events,
+        event_form=event_form
         )
 
+
+@bp.route('/events/<event_id>/delete')
+def delete_event(event_id):
+    event = Events.query.filter_by(
+        id=event_id
+        ).first()
+    db.session.delete(event)
+    db.session.commit()
+    flash(f'Event {event_id} has been deleted!')
+    return redirect(url_for(
+        'admin.dashboard_manage_events',
+        _anchor='events')
+        )
+
+
+@bp.route('/event/<event_id>/allow', methods=['GET', 'POST'])
+def allow_event(event_id):
+    event = Events.query.filter_by(
+        id=event_id
+        ).first()
+    event.allowed_status = True
+    db.session.commit()
+    flash(f'Event {event_id} has been authorized!')
+    return redirect(url_for(
+        'teacher.dashboard_manage_events',
+        _anchor="events")
+        )
 
 # Profile route
 

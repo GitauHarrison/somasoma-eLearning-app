@@ -7,154 +7,79 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
-            <div class="card-deck text-center">
-                <div class="card">
-                    <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/flask_class.jpg')}}" alt="Flask Class">
-                    <div class="card-body">
-                        <h2 class="card-title">Demystifying Flask</h2>
-                        <h3><span style="color: red;">Friday, Dec 24, 2021,<br>6.00 pm EAT</span></h3><hr>
-                        <p class="card-text">
-                            Flask can be daunting the first time you get into it,
-                            but once you get the hang of it, you'll be able to 
-                            build web applications in minutes.
-                        </p>
-                         <!-- Button trigger modal -->
-                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#flask-call">
-                            Join Conversation
-                        </button>
+        {% for event in events %}
+            <div class="col-sm-4">
+                <div class="card-deck text-center">
+                    <div class="card">
+                        <img class="img-fluid" style="max-width: 100%; height: auto;" src="/{{ event.event_image }}" alt="Flask Class">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h2 class="card-title">{{ event.title }}</h2>
+                                <hr>
+                                <p class="card-text">
+                                    {{ event.body }}
+                                </p>
+                                <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ event.id }}">
+                                        Learn More
+                                    </button>
+                            </div>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="flask-call" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close btn-primary" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h2 class="modal-title" id="flask-call">Flask Call</h2>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/flask_con.png')}}" alt="Flask Conference">
-                                        <p>
-                                            Date: Friday, Dec 24, 2021<br>
-                                            Time: 6.00 pm - 7.00 pm EAT<br>
-                                            Location: Online
-                                        </p>
-                                        <p>
-                                            Click the link below to join the conversation:<br>
-                                            <a href="">Google Meet Link</a>
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="{{ event.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close btn-primary" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h2 class="modal-title text-center" id="{{ event.id }}">{{ event.title }}</h2>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="text-center">
+                                                <img class="img-fluid" style="max-width: 100%; height: auto;" src="/{{event.event_image}}" alt="{{ event.title }}">
+                                            </div>
+                                            <p>
+                                                Date: <strong>{{ event.date }}</strong><br>
+                                                Time: <strong>{{ event.time }}</strong><br>
+                                                Location: <strong>{{ event.location }}</strong>
+                                            </p>
+                                            <p>
+                                                Click the link below to join the conversation:<br>
+                                                <a href="{{ event.link }}">Meeting Link</a>
+                                            </p>
+                                            <a class="btn btn-primary" href="{{ event.link }} ">Explore</a>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- End of Modal -->
-                    </div>            
+                            <!-- End of Modal -->
+                        </div>            
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-sm-4">
-            <div class="card-deck text-center">
-                <div class="card">
-                    <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/career_advice.jpg')}}" alt="Career Advice">
-                    <div class="card-body">
-                        <h2 class="card-title">The Hard Truth About Development</h2>
-                        <h3><span style="color: green;" >Saturday, Jan 01, 2022,<br>11.00 am EAT</span></h3><hr>
-                        <p class="card-text">
-                            Just like any other life endevour, becoming a software developer
-                            is not easy. You have to deliberately decided to pursue it.
-                        </p>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#career-advice">
-                            Join Conversation
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="career-advice" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close btn-primary" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h2 class="modal-title" id="career-advice">Career Advice</h2>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/software_development.jpg')}}" alt="Software Development">
-                                        <p>
-                                            Date: Saturday, Jan 01, 2022<br>
-                                            Time: 11.00 am - 1.00 pm EAT<br>
-                                            Location: iHub Nairobi
-                                        </p>
-                                        <p>
-                                            The meet will be streamed live; you can catch up here:<br>
-                                            <a href="">Google Meet Link</a>
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End of Modal -->
-                    </div>            
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-4">
-            <div class="card-deck text-center">
-                <div class="card">
-                    <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/ds_intro_conf.jpg')}}" alt="Data Science Conference">
-                    <div class="card-body">
-                        <h2 class="card-title">Data Science 101</h2>
-                        <h3><span style="color: green;">Wednesday, Jan 05, 2022,<br>8.00 pm EAT</span></h3><hr>
-                        <p class="card-text">
-                            We have all heard that data is the new gold. Get yourself ready by understanding 
-                            the basics of data science.
-                        </p>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#data-science">
-                            Join Conversation
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="data-science" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close btn-primary" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h2 class="modal-title" id="data-science">Introduction to Data Science</h2>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/ds_intro.jpg')}}" alt="Data Science">
-                                        <p>
-                                            Date: Wednesday, Jan 05, 2022<br>
-                                            Time: 8.00 pm - 9.00 pm EAT<br>
-                                            Location: Online
-                                        </p>
-                                        <p>
-                                            Click the link below to join the conversation:<br>
-                                            <a href="">Google Meet Link</a>
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End of Modal -->
-                    </div>            
-                </div>
+        {% endfor %}
+        <div class="row">
+            <div  class="col-sm-12">
+                <!-- Pagination of comments -->
+                <nav aria-label="...">
+                    <ul class="pager">
+                        <li class="previous{% if not prev_url %} disabled{% endif %}">
+                            <a href="{{ prev_url or '#' }}">
+                                <span aria-hidden="true">&#60;</span> Less
+                            </a>
+                        </li>
+                        <li class="next{% if not next_url %} disabled{% endif %}">
+                            <a href="{{ next_url or '#' }}">
+                                More <span aria-hidden="true">&#62;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End of pagination of comments -->
             </div>
         </div>
     </div>

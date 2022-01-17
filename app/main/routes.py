@@ -3,8 +3,9 @@ from app.main import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app, abort
 from app.main.forms import AnonymousCommentForm, StudentStoriesForm
-from app.models import BlogArticles, Parent, Teacher, User, Admin,\
-    AnonymousTemplateInheritanceComment, Courses, FlaskStudentStories
+from app.models import BlogArticles, Parent, User, Admin,\
+    AnonymousTemplateInheritanceComment, Courses, FlaskStudentStories,\
+    Events
 from app.main.email import send_flask_stories_email
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -178,9 +179,30 @@ def flask_web_deveopment_course():
 
 @bp.route('/events')
 def events():
+    page = request.args.get('page', 1, type=int)
+    events = Events.query.filter_by(
+        allowed_status=True).order_by(
+        Events.timestamp.desc()).paginate(
+        page,
+        current_app.config['POSTS_PER_PAGE'],
+        False
+        )
+    next_url = url_for(
+        'main.events',
+        _anchor='events',
+        page=events.next_num) \
+        if events.has_next else None
+    prev_url = url_for(
+        'main.events',
+        _anchor='events',
+        page=events.prev_num) \
+        if events.has_prev else None
     return render_template(
         'main/anonymous-content/events.html',
-        title='Events'
+        title='Events',
+        events=events.items,
+        next_url=next_url,
+        prev_url=prev_url
         )
 
 # =============================

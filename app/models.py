@@ -358,6 +358,11 @@ class Teacher(UserMixin, db.Model):
         backref='author',
         lazy='dynamic'
     )
+    events = db.relationship(
+        'Events',
+        backref='author',
+        lazy='dynamic'
+        )
 
     def __repr__(self):
         return f'Teacher {self.teacher_full_name}'
@@ -530,6 +535,25 @@ class ChapterQuiz(db.Model):
 
     def __repr__(self):
         return f'Chapter Quiz: {self.chapter}'
+
+
+class Events(db.Model):
+    __tablename__ = 'events'
+    id = db.Column(db.Integer, primary_key=True)
+    event_image = db.Column(db.String(300))
+    title = db.Column(db.String(64), index=True)
+    body = db.Column(db.String(300))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    date = db.Column(db.String(300))
+    time = db.Column(db.String(300))
+    location = db.Column(db.String(300))
+    link = db.Column(db.String(300))
+    allowed_status = db.Column(db.Boolean, default=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+
+    def __repr__(self):
+        return f'Event: {self.title}'
+
 
 # ========================================
 # END OF TEACHER MODELS

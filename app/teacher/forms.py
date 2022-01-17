@@ -285,3 +285,39 @@ class BlogArticlesForm(FlaskForm):
         validators=[DataRequired()]
     )
     submit = SubmitField('Update')
+
+
+class EventsForm(FlaskForm):
+    event_image = FileField(
+        'Event Image',
+        validators=[DataRequired(), FileAllowed(['jpg', 'png'])],
+        )
+    event_title = StringField(
+        'Title',
+        validators=[DataRequired(), Length(min=2, max=100)]
+        )
+    event_body = TextAreaField(
+        'Body',
+        validators=[DataRequired()]
+        )
+    event_date = StringField(
+        'Event Date',
+        validators=[DataRequired(), Length(min=2, max=100)],
+        render_kw={'placeholder': 'December 26, 2021'}
+        )
+    event_time = StringField(
+        'Event Time',
+        validators=[DataRequired(), Length(min=2, max=100)],
+        render_kw={'placeholder': '10:00 AM - 12:00 PM'}
+        )
+    event_location = StringField(
+        'Event Location',
+        validators=[DataRequired(), Length(min=2, max=100)],
+        render_kw={'placeholder': 'Online'}
+        )
+    event_link = StringField(
+        'Link',
+        validators=[DataRequired(), Length(min=2, max=100)],
+        render_kw={'placeholder': 'https://www.meet.google.com'}
+        )
+    submit = SubmitField('Update')
