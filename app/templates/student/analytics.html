@@ -18,21 +18,18 @@
     <div id="analytics" class="tabcontent">
         <div class="row chapter-objectives">
             <div class="col-sm-12">
-                <h2>Web Development</h2>
-                <h3>Achievement of Lesson Objectives</h3>
-                <ul>
-                    <li>
-                        <a href=" {{ url_for('student.web_development_chapter_1_objectives_status', student_full_name=student.student_full_name) }} ">
-                            Chapter 1: 
-                        </a>
-                        {{ percentage_achieved }}%
-                    </li>
-                </ul>
-                <ul>
-                    <li>
-                        <a href="#">Chapter 2: </a>{{ percentage_achieved }}%
-                    </li>
-                </ul>
+                    {% for chapter in course_chapters %}
+                        <h2> {{ chapter.course }} </h2>
+                        <h3><a href="{{ chapter.link }}">{{ chapter.chapter }}</a></h3>
+                        <ul>
+                            <li>
+                                Achievement of Lesson Objectives: {{ percentage_achieved }}%
+                            </li>
+                            <li>
+                                Achievement of Lesson Quizzes: {{ quiz_total_score_percentage }}%
+                            </li>
+                        </ul>
+                    {% endfor %}
             </div>
             <!-- Graph will go here -->
         </div>
