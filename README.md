@@ -13,7 +13,7 @@ The application is built into two broad categories:
    - [x] Registration of students and their parents
    - [x] Public events
    - [x] Blog articles
-   - [ ] Anonymous user can leave comments on blog articles
+   - [x] Anonymous user can leave comments on blog articles
    <br>
  - eLearning Application
     - [x] Only accessible upon payment and full parent and student registration
@@ -33,7 +33,7 @@ These are the custom roles and responsibilites of the users in the application:
   - [x] Can see all the registration details of teachers, parents and students
 * Manages the content used by anonymous users of the application
   - [x] Update course offerings
-  - [x] Comments moderation
+  - [x] Comments moderation on student stories
   - [x] Student stories 
 
 Comimg soon...
@@ -66,17 +66,17 @@ Comimg soon...
 
 * Student management:
   - [x] Moderation of student's comments in each course chapter
-  - [ ] Assesses student's achievements in each course chapter (automatic by the application)
+  - [x] Assesses student's achievements in each course chapter (automatic by the application)
   - [ ] Assesses student's achievements in the overall course (automatic by the application)
 <br>
 
 * Event Management
-  - [ ] Teacher can create (and delete) events for students and the general public to attend
+  - [x] Teacher can create (and delete) events for students and the general public to attend
 <br>
 
 * Blog Management
-  - [ ] Teacher can only create blogs seen in the blogs page
-  - [ ] Teacher can allow the blog created to be posted in the public blog page of the application
+  - [x] Teacher can only create blogs seen in the blogs page
+  - [x] Teacher can allow the blog created to be posted in the public blog page of the application
   * Only the admin can delete these blogs written by teachers
 
 ### Student
