@@ -78,10 +78,10 @@ class Chapter1Quiz1OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('HTML', 'To display content in a webpage'),
-            ('Hack', 'To hack a browser'),
-            ('Style', 'To style the contents of a webpage'),
-            ('Server', 'To hack the server')
+            ('To display content in a webpage', 'To display content in a webpage'),
+            ('To hack a browser', 'To hack a browser'),
+            ('To style the contents of a webpage', 'To style the contents of a webpage'),
+            ('To hack the server', 'To hack the server')
             ],
         validators=[DataRequired()]
         )
@@ -92,10 +92,10 @@ class Chapter1Quiz2OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('CSS', 'To inspect a webpage'),
-            ('Hack', 'To hack an app'),
-            ('Style', 'To style the contents of a webpage'),
-            ('Database', 'To query a database')
+            ('To inspect a webpage', 'To inspect a webpage'),
+            ('To hack an app', 'To hack an app'),
+            ('To style the contents of a webpage', 'To style the contents of a webpage'),
+            ('To query a database', 'To query a database')
             ],
         validators=[DataRequired()]
         )
@@ -106,10 +106,10 @@ class Chapter1Quiz3OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('Table', 'To create tables in a webpage'),
-            ('Database', 'To create a database'),
-            ('Animations', 'To create beautiful animations'),
-            ('Python', 'To style a website')
+            ('To create tables in a webpage', 'To create tables in a webpage'),
+            ('To create a database', 'To create a database'),
+            ('To create beautiful animations', 'To create beautiful animations'),
+            ('To style a website', 'To style a website')
             ],
         validators=[DataRequired()]
         )
@@ -120,10 +120,10 @@ class Chapter1Quiz4OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('Security', 'To improve the security of an app'),
-            ('Database', 'To query a database'),
-            ('Flask', 'To enhance the creation of an app'),
-            ('Content', 'To display content in a webpage')
+            ('To improve the security of an app', 'To improve the security of an app'),
+            ('To query a database', 'To query a database'),
+            ('To enhance the creation of an app', 'To enhance the creation of an app'),
+            ('To display content in a webpage', 'To display content in a webpage')
             ],
         validators=[DataRequired()]
         )
