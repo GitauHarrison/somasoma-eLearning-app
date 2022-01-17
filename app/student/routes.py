@@ -551,8 +551,9 @@ def web_development_chapter_1_objectives_status(student_full_name):
         percentage_achieved=percentage_achieved
         )
 
-
-# Quizzes
+# ===================================
+# QUIZZES
+# ===================================
 
 
 @bp.route(
@@ -584,13 +585,15 @@ def web_development_chapter_1_quizzes_form():
         form=form
         )
 
+# Chhapter 1 quiz 1
+
 
 @bp.route(
-    '/web-development/chapter-1/quizzes',
+    '/web-development/chapter-1/quiz-1',
     methods=['GET', 'POST']
     )
 @login_required
-def web_development_chapter_1_quiz():
+def web_development_chapter_1_quiz_1():
     student = Student.query.filter_by(
         student_full_name=current_user.student_full_name
         ).first()
@@ -599,18 +602,6 @@ def web_development_chapter_1_quiz():
         ChapterQuiz.timestamp.asc()
         ).paginate(
         page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
-    next_url = url_for(
-        'student.web_development_chapter_1_quiz',
-        student_full_name=student.student_full_name,
-        _anchor="quizzes",
-        page=quizzes.next_num) \
-        if quizzes.has_next else None
-    prev_url = url_for(
-        'student.web_development_chapter_1_quiz',
-        student_full_name=student.student_full_name,
-        _anchor='quizzes',
-        page=quizzes.prev_num) \
-        if quizzes.has_prev else None
 
     # Quiz 1
     quiz_1_form = Chapter1Quiz1OptionsForm()
@@ -621,11 +612,35 @@ def web_development_chapter_1_quiz():
         db.session.commit()
         flash('Your quiz 1 answer have been added!', 'success')
         return redirect(url_for(
-            'student.web_development_chapter_1_quiz',
+            'student.web_development_chapter_1_quiz_2',
             student_full_name=student.student_full_name,
             _anchor="quiz_1",
         ))
-    # End of quiz 1
+    return render_template(
+        'student/web-development-course/quizzes/chapter_1/quiz_1.html',
+        title='Chapter 1: Quiz 1',
+        student=student,
+        quizzes=quizzes.items,
+        quiz_1_form=quiz_1_form
+        )
+
+# Chhapter 1 quiz 2
+
+
+@bp.route(
+    '/web-development/chapter-1/quiz-2',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_1_quiz_2():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    quizzes = ChapterQuiz.query.order_by(
+        ChapterQuiz.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
 
     # Quiz 2
     quiz_2_form = Chapter1Quiz2OptionsForm()
@@ -634,13 +649,37 @@ def web_development_chapter_1_quiz():
             answer=quiz_2_form.answer.data)
         db.session.add(answer)
         db.session.commit()
-        flash('Your quiz 2 answers have been added!', 'success')
+        flash('Your quiz 2 answer have been added!', 'success')
         return redirect(url_for(
-            'student.web_development_chapter_1_quiz',
+            'student.web_development_chapter_1_quiz_3',
             student_full_name=student.student_full_name,
             _anchor="quiz_2",
         ))
-    # End of quiz 2
+    return render_template(
+        'student/web-development-course/quizzes/chapter_1/quiz_2.html',
+        title='Chapter 1: Quiz 2',
+        student=student,
+        quizzes=quizzes.items,
+        quiz_2_form=quiz_2_form
+        )
+
+# Chhapter 1 quiz 3
+
+
+@bp.route(
+    '/web-development/chapter-1/quiz-3',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_1_quiz_3():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    quizzes = ChapterQuiz.query.order_by(
+        ChapterQuiz.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
 
     # Quiz 3
     quiz_3_form = Chapter1Quiz3OptionsForm()
@@ -649,13 +688,37 @@ def web_development_chapter_1_quiz():
             answer=quiz_3_form.answer.data)
         db.session.add(answer)
         db.session.commit()
-        flash('Your quiz 3 answers have been added!', 'success')
+        flash('Your quiz 3 answer have been added!', 'success')
         return redirect(url_for(
-            'student.web_development_chapter_1_quiz',
+            'student.web_development_chapter_1_quiz_4',
             student_full_name=student.student_full_name,
-            _anchor="quiz_3",
+            _anchor="quiz_2",
         ))
-    # End of quiz 3
+    return render_template(
+        'student/web-development-course/quizzes/chapter_1/quiz_3.html',
+        title='Chapter 1: Quiz 3',
+        student=student,
+        quizzes=quizzes.items,
+        quiz_3_form=quiz_3_form
+        )
+
+# Chhapter 1 quiz 4
+
+
+@bp.route(
+    '/web-development/chapter-1/quiz-4',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_1_quiz_4():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    quizzes = ChapterQuiz.query.order_by(
+        ChapterQuiz.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
 
     # Quiz 4
     quiz_4_form = Chapter1Quiz4OptionsForm()
@@ -664,25 +727,96 @@ def web_development_chapter_1_quiz():
             answer=quiz_4_form.answer.data)
         db.session.add(answer)
         db.session.commit()
-        flash('Your quiz 3 answers have been added!', 'success')
+        flash('Your quiz 4 answer have been added!',
+              'Congratulations! You have completed the chapter 1 quiz!')
         return redirect(url_for(
-            'student.web_development_chapter_1_quiz',
+            'student.web_development_chapter_1_total_score',
             student_full_name=student.student_full_name,
-            _anchor="quiz_4",
         ))
-    # End of quiz 4
-
     return render_template(
-        'student/web-development-course/chapter_1_quizzes.html',
-        title='Chapter 1: Quizzes',
+        'student/web-development-course/quizzes/chapter_1/quiz_4.html',
+        title='Chapter 1: Quiz 4',
         student=student,
         quizzes=quizzes.items,
-        quiz_1_form=quiz_1_form,
-        quiz_2_form=quiz_2_form,
-        quiz_3_form=quiz_3_form,
-        quiz_4_form=quiz_4_form,
-        next_url=next_url,
-        prev_url=prev_url
+        quiz_4_form=quiz_4_form
+        )
+
+# Chapter 1 total score
+
+
+@bp.route(
+    '/web-development/chapter-1/total-score',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_1_total_score():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    quizzes = ChapterQuiz.query.order_by(
+        ChapterQuiz.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
+
+    # Calculate total score
+    quiz_1_score = 0
+    quiz_1_answer = WebDevChapter1Quiz1Options.query.filter_by(
+        student_id=student.id).all()
+    for answer in quiz_1_answer:
+        if answer.answer.lower() == 'to display content in a webpage':
+            quiz_1_score += 1
+        else:
+            quiz_1_score += 0
+    
+    quiz_2_score = 0
+    quiz_2_answer = WebDevChapter1Quiz2Options.query.filter_by(
+        student_id=student.id).all()
+    for answer in quiz_2_answer:
+        if answer.answer.lower() == 'to style the contents of a webpage':
+            quiz_2_score += 1
+        else:
+            quiz_2_score += 0
+
+    quiz_3_score = 0
+    quiz_3_answer = WebDevChapter1Quiz3Options.query.filter_by(
+        student_id=student.id).all()
+    for answer in quiz_3_answer:
+        if answer.answer.lower() == 'to query a database':
+            quiz_3_score += 1
+        else:
+            quiz_3_score += 0
+
+    quiz_4_score = 0
+    quiz_4_answer = WebDevChapter1Quiz4Options.query.filter_by(
+        student_id=student.id).all()
+    for answer in quiz_4_answer:
+        if answer.answer.lower() == 'to enhance the creation of an app':
+            quiz_4_score += 1
+        else:
+            quiz_4_score += 0
+
+    # Calculate percentage
+    total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score
+    try:
+        total_score_percentage = round((total_score / 4) * 100, 2)
+    except ZeroDivisionError:
+        total_score_percentage = 0
+    print(total_score_percentage)
+
+    return render_template(
+        'student/web-development-course/quizzes/chapter_1/total_score.html',
+        title='Chapter 1: Total Score',
+        student=student,
+        quizzes=quizzes.items,
+
+        quiz_1_answer=quiz_1_answer,
+        
+        quiz_1_score=quiz_1_score,
+        quiz_2_score=quiz_2_score,
+        quiz_3_score=quiz_3_score,
+        quiz_4_score=quiz_4_score,
+        total_score_percentage=total_score_percentage
         )
 
 # ========================================
