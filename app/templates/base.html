@@ -151,6 +151,9 @@
                             <a href="{{ url_for('teacher.dashboard_manage_course') }}" class="list-group-item tablinks" onclick="openCity(event, 'update')">
                                 Manage Course
                             </a>
+                            <a href="{{ url_for('teacher.dashboard_manage_blog') }}" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
+                                Manage Blog
+                            </a>
                             <a href="{{ url_for('teacher.dashboard_manage_events') }}" class="list-group-item tablinks" onclick="openCity(event, 'events')">
                                 Manage Events
                             </a>
@@ -237,7 +240,7 @@
                             <a href="{{ url_for('admin.dashboard_courses_offered') }}" class="list-group-item tablinks" onclick="openCity(event, 'courses')">
                                 Courses
                             </a>
-                            <a href="{{ url_for('admin.dashboard_all_blogs') }}" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
+                            <a href="{{ url_for('admin.review_blog_articles') }}" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
                                 Blogs
                             </a>
                             <a href="{{ url_for('admin.dashboard_student_stories') }}" class="list-group-item tablinks" onclick="openCity(event, 'stories')">

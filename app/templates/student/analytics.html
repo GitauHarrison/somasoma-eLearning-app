@@ -20,7 +20,7 @@
             <div class="col-sm-12">
                     {% for chapter in course_chapters %}
                         <h2> {{ chapter.course }} </h2>
-                        <h3><a href="{{ chapter.link }}">{{ chapter.chapter }}</a></h3>
+                        <h3><a href="{{ chapter.chapter_link }}">{{ chapter.chapter }}</a></h3>
                         <ul>
                             <li>
                                 Achievement of Lesson Objectives: {{ percentage_achieved }}%

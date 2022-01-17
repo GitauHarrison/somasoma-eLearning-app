@@ -180,9 +180,7 @@ def dashboard_analytics():
     except ZeroDivisionError:
         percentage_achieved = 0
     
-    
-
-    # Calculate total score
+    # Calculate quiz score
     quiz_1_score = 0
     quiz_1_answers_list = []
     quiz_1_answer = WebDevChapter1Quiz1Options.query.all()

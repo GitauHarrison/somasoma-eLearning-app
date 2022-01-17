@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 
-{% block anonymous_app_content %}
+{% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div id="blog" class="tabcontent">
         <div class="row">
             <div class="col-sm-12 text-center">
-                <h1>{{ title }}</h1>
+                <h1>{{ title }} ({{ all_blogs }})</h1>
             </div>
         </div>
-        {% for blog in allowed_blogs %}
-            <!-- Blog artilce -->
+        {% for blog in blogs %}
+        <!-- Blog artilce -->
             <div class="row blog">
                 <div class="col-sm-4">
                     <img class="img-fluid" style="max-width: 100%; height: auto;" src="/{{ blog.article_image }}" alt="{{ blog.article_name }}">
@@ -19,7 +27,7 @@
                             <h2>{{ blog.article_name }}</h2>
                         </div>
                         <div class="col-sm-5 text-right" style="color: #d1d1d1;">
-                            <h2>{{ moment(blog.timestamp).format('LL') }}</h2>
+                            <h2>{{ moment(blog.timestamp).format('LLL') }}</h2>
                         </div>
                     </div>
                     <!-- Body -->
@@ -31,9 +39,24 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <a href="http://127.0.0.1:5000/{{ blog.link }}" class="btn btn-primary">Learn More</a>
+                        <a href="{{ blog.link }}" class="btn btn-primary">Learn More</a>
                     </div>
                 </div>
+                <!-- Admin action -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% if not blog.allowed_status == 1 %}
+                        <a href=" {{ url_for('teacher.allow_blog_article', blog_article_id=blog.id) }} " class="label label-warning">Allow</a>
+                        {% else %}
+                            <a href="#" class="label label-success">Allowed</a></a>
+                        {% endif %}
+
+                        {% if current_user == admin %}
+                            | <a href=" {{ url_for('admin.delete_blog_article', blog_article_id=blog.id) }} " class="label label-danger">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- End of admin action -->
             </div>
             <!-- End of blog article -->
         {% endfor %}
@@ -57,4 +80,21 @@
                 <!-- End of pagination -->
             </div>
         </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- Empty column -->
+            </div>
+            <div class="col-sm-4 text-center">
+                <p><a href=" {{ url_for('teacher.dashboard_manage_blog') }} " class="btn btn-primary" >
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    Back to Manage Blogs
+                </a>
+                </p>
+            </div>
+            <div class="col-sm-4">
+                <!-- Empty column -->
+            </div>
+        </div>
+    </div>    
 {% endblock %}

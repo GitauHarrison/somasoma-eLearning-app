@@ -8,14 +8,14 @@ import jwt
 from time import time
 
 
-@login.user_loader
-def load_student(id):
-    return Student.query.get(int(id))
-
-
 # @login.user_loader
-# def load_teacher(id):
-#     return Teacher.query.get(int(id))
+# def load_student(id):
+#     return Student.query.get(int(id))
+
+
+@login.user_loader
+def load_teacher(id):
+    return Teacher.query.get(int(id))
 
 # @login.user_loader
 # def load_admin(id):
@@ -59,11 +59,6 @@ class Admin(UserMixin, db.Model):
         backref='author',
         lazy='dynamic'
         )
-    blog_articles = db.relationship(
-        'BlogArticles',
-        backref='author',
-        lazy='dynamic'
-    )
     flask_student_stories = db.relationship(
         'FlaskStudentStories',
         backref='author',
@@ -358,6 +353,11 @@ class Teacher(UserMixin, db.Model):
         backref='author',
         lazy='dynamic'
         )
+    blog_articles = db.relationship(
+        'BlogArticles',
+        backref='author',
+        lazy='dynamic'
+    )
 
     def __repr__(self):
         return f'Teacher {self.teacher_full_name}'
@@ -563,7 +563,6 @@ class User(db.Model):
 
 
 class BlogArticles(db.Model):
-    __tablename__ = 'blog articles'
     id = db.Column(db.Integer, primary_key=True)
     article_image = db.Column(db.String(140))
     article_name = db.Column(db.String(140))
@@ -571,7 +570,7 @@ class BlogArticles(db.Model):
     link = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     allowed_status = db.Column(db.Boolean, default=False)
-    admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
 
 
 class Courses(db.Model):

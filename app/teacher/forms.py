@@ -2,6 +2,7 @@ from app.models import Teacher
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
+from flask_wtf.file import FileField, FileAllowed
 
 # Profile form
 
@@ -264,3 +265,23 @@ class ChapterQuizForm(FlaskForm):
         render_kw={"placeholder": "What is SQL in full"}
         )
     submit = SubmitField('Post')
+
+
+class BlogArticlesForm(FlaskForm):
+    article_image = FileField(
+        'Blog Image',
+        validators=[DataRequired(), FileAllowed(['jpg', 'png', 'svg'])],
+        )
+    article_name = StringField(
+        'Article Name',
+        validators=[DataRequired()]
+    )
+    body = TextAreaField(
+        'Body',
+        validators=[DataRequired()]
+        )
+    link = StringField(
+        'Article Link',
+        validators=[DataRequired()]
+    )
+    submit = SubmitField('Update')

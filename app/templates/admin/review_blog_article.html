@@ -26,7 +26,7 @@
                         <h2>{{ blog.article_name }}</h2>
                     </div>
                     <div class="col-sm-5 text-right" style="color: #d1d1d1;">
-                        <h2>{{ moment(blog.timestamp).format('LL') }}</h2>
+                        <h2>{{ moment(blog.timestamp).format('LLL') }}</h2>
                     </div>
                 </div>
                 <!-- Body -->
@@ -38,18 +38,20 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{{ blog.link }}" class="btn btn-primary">Learn More</a>
+                    <a href="http://127.0.0.1:5000/{{ blog.link }}" class="btn btn-primary">Learn More</a>
                 </div>
             </div>
             <!-- Admin action -->
             <div class="row">
                 <div class="col-sm-12">
                     {% if not blog.allowed_status == 1 %}
-                        <a href=" {{ url_for('admin.allow_blog_article', blog_article_id=blog.id) }} " class="label label-warning">Allow</a>
+                        <a href=" {{ url_for('teacher.allow_blog_article', blog_article_id=blog.id) }} " class="label label-warning">Allow</a>
                     {% else %}
                         <a href="#" class="label label-success">Allowed</a></a>
                     {% endif %}
-                     | <a href=" {{ url_for('admin.delete_blog_article', blog_article_id=blog.id) }} " class="label label-danger">Delete</a>
+                    {% if current_user == admin %}
+                    | <a href=" {{ url_for('admin.delete_blog_article', blog_article_id=blog.id) }} " class="label label-danger">Delete</a>
+                    {% endif %}
                 </div>
             </div>
             <!-- End of admin action -->
