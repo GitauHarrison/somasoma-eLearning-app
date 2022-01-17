@@ -5,7 +5,8 @@ from app.models import CommunityComment, WebDevChapter1Comment,\
     User, Admin, Courses, FlaskStudentStories, WebDevelopmentOverview,\
     TableOfContents, Chapter, ChapterObjectives, ChapterQuiz,\
     WebDevChapter1Quiz1Options, WebDevChapter1Quiz2Options,\
-    WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, BlogArticles
+    WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, BlogArticles,\
+    Events
 
 app = create_app()
 
@@ -35,5 +36,6 @@ def make_shell_context():
         WebDevChapter1Quiz1Options=WebDevChapter1Quiz1Options,
         WebDevChapter1Quiz2Options=WebDevChapter1Quiz2Options,
         WebDevChapter1Quiz3Options=WebDevChapter1Quiz3Options,
-        WebDevChapter1Quiz4Options=WebDevChapter1Quiz4Options
+        WebDevChapter1Quiz4Options=WebDevChapter1Quiz4Options,
+        Events=Events
         )
