@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-sm-4">
+        <img src=" {{ student.avatar_student(64) }} " ><br>
+        <p>
+            <a href="{{ url_for('student.profile_student', student_full_name=student.student_full_name) }}">{{student.student_full_name }}</a>
+        </p>
+    </div>
+    <div class="col-sm-8">
+        <small>
+            <p style="padding-top: 0px; margin-top: 0px;">
+                Name: <span style="font-weight: 600;">{{ student.student_course }}</span>
+            </p>
+            <p>
+                Age: <span style="font-weight: 600;">{{ student.student_age }}</span>
+            </p>
+            {% if student.student_about_me %}
+                <p>
+                    About me: <span style="font-weight: 600;">{{ student.student_about_me }}</span>
+                </p>
+            {% endif %}
+            {% if student.student_last_seen %}
+                <p>
+                    Last seen on: <span style="font-weight: 600;">{{ moment(student.student_last_seen).format('LLL') }}</span>
+                </p>
+            {% endif %}
+                <p>
+                    <span style="font-weight: 600;">{{ student.followers.count() }}</span> Followers,
+                    <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
+                </p>
+        </small>
+    </div>
+</div>

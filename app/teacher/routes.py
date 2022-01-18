@@ -592,7 +592,7 @@ def teacher_profile_popup(teacher_full_name):
         ).first_or_404()
     form = EmptyForm()
     return render_template(
-        'teacher/profile_popup.html',
+        'teacher/profile_teacher_popup.html',
         teacher=teacher,
         title='Teacher Profile',
         form=form
@@ -635,6 +635,23 @@ def profile_student(student_full_name):
         form=form,
         title='Student Profile',
         all_comments=all_comments
+        )
+
+
+@bp.route('/profile/student/<student_full_name>/popup/')
+@login_required
+def student_profile_popup(student_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    student = Student.query.filter_by(
+        student_full_name=student_full_name
+        ).first()
+    return render_template(
+        'teacher/profile_student_popup.html',
+        student=student,
+        teacher=teacher,
+        title='Student Profile'
         )
 
 # End of profile route

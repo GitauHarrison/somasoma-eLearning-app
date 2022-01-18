@@ -5,9 +5,9 @@
             <a href="{{ url_for('teacher.profile_teacher', teacher_full_name=teacher.teacher_full_name) }}">{{teacher.teacher_full_name }}</a>
         </p>
     </div>
-    <div class="col-sm-8" valign="top">
+    <div class="col-sm-8">
         <small>
-            <p>
+            <p style="padding-top: 0px; margin-top: 0px;">
                 I teach: <span style="font-weight: 600;">{{ teacher.teacher_course }}</span>
             </p>        
             {% if teacher.teacher_about_me %}
