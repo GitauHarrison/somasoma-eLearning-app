@@ -277,6 +277,21 @@ def profile_student(student_full_name):
     )
 
 
+@bp.route('/profile/<student_full_name>/popup/')
+@login_required
+def student_profile_popup(student_full_name):
+    student = Student.query.filter_by(
+        student_full_name=student_full_name
+        ).first()
+    form = EmptyForm()
+    return render_template(
+        'student/profile_popup.html',
+        student=student,
+        title='Student Profile',
+        form=form
+        )
+
+
 @bp.route('/edit-profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile_student():

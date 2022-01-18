@@ -7,9 +7,11 @@
         </td>
         <td>
             <span class="comment-id label label-default"># {{ comment.id }} </span>
-            <a href="{{ url_for('student.profile_student', student_full_name=comment.author.student_full_name) }}">
-                <span class="label label-success"> {{ comment.author.student_full_name }} </span>  
-            </a>
+            <span id="student_popup">
+                <a href="{{ url_for('student.profile_student', student_full_name=comment.author.student_full_name) }}">
+                    <span class="label label-success"> {{ comment.author.student_full_name }} </span>  
+                </a>
+            </span>
             said {{ moment(comment.timestamp).fromNow() }}:
             <br>
             <div class="comment-body">

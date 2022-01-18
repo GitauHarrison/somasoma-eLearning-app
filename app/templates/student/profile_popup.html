@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-sm-4">
+        <img src=" {{ student.avatar_student(100) }} " ><br>
+        <p>
+            <a href="{{ url_for('student.profile_student', student_full_name=student.student_full_name) }}">{{student.student_full_name }}</a>
+        </p>
+    </div>
+    <div class="col-sm-8">
+        <small>
+            <p style="padding-top: 0px; margin-top: 0px;">
+                Name: <span style="font-weight: 600;">{{ student.student_course }}</span>
+            </p>
+            <p>
+                Age: <span style="font-weight: 600;">{{ student.student_age }}</span>
+            </p>
+            {% if student.student_about_me %}
+                <p>
+                    About me: <span style="font-weight: 600;">{{ student.student_about_me }}</span>
+                </p>
+            {% endif %}
+            {% if student.student_last_seen %}
+                <p>
+                    Last seen on: <span style="font-weight: 600;">{{ moment(student.student_last_seen).format('LLL') }}</span>
+                </p>
+            {% endif %}
+                <p>
+                    <span style="font-weight: 600;">{{ student.followers.count() }}</span> Followers,
+                    <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
+                </p>
+                {% if not current_user.is_following(student) %}
+                    <form action="{{ url_for('student.follow_student', student_full_name=student.student_full_name) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Follow', class_='btn btn-primary') }}
+                    </form>
+                {% else %}
+                    <form action="{{ url_for('student.unfollow_student', student_full_name=student.student_full_name) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
+                    </form>
+                {% endif %}
+        </small>
+    </div>
+</div>
