@@ -57,7 +57,7 @@ def dashboard_your_students():
         )
 
 
-@bp.route('/dashboard/explore-teachers')
+@bp.route('/dashboard/explore-teachers', methods=['GET', 'POST'])
 @login_required
 def dashboard_explore_teachers():
     teacher = Teacher.query.filter_by(
