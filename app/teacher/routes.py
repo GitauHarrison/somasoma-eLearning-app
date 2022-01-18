@@ -534,7 +534,10 @@ def edit_profile():
         current_user.teacher_about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('teacher.dashboard_teacher'))
+        return redirect(url_for(
+            'teacher.dashboard_account'
+            )
+        )
     elif request.method == 'GET':
         form.email.data = current_user.teacher_email
         form.about_me.data = current_user.teacher_about_me
@@ -576,6 +579,23 @@ def profile_teacher(teacher_full_name):
         prev_url=prev_url,
         form=form,
         title='Teacher Profile'
+        )
+
+# Profile Popup
+
+
+@bp.route('/profile/<teacher_full_name>/popup/', methods=['GET', 'POST'])
+@login_required
+def teacher_profile_popup(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name
+        ).first()
+    form = EmptyForm()
+    return render_template(
+        'teacher/profile_popup.html',
+        teacher=teacher,
+        title='Teacher Profile',
+        form=form
         )
 
 

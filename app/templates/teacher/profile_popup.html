@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-sm-3">
+        <img src=" {{ teacher.avatar_teacher(64) }} " >
+    </div>
+    <div class="col-sm-9" valign="top">
+        <p>
+            <a href="{{ url_for('teacher.profile_teacher', teacher_full_name=teacher.teacher_full_name) }}">{{teacher.teacher_full_name }}</a>
+        </p>
+        <p>
+            I teach: <span style="font-weight: 600;">{{ teacher.teacher_course }}</span>
+        </p>
+        <small>
+            {% if teacher.teacher_about_me %}
+                <p>
+                    About me: <span style="font-weight: 600;">{{ teacher.teacher_about_me }}</span>
+                </p>
+            {% endif %}
+            {% if teacher.teacher_last_seen %}
+                <p>
+                    Last seen on: <span style="font-weight: 600;">{{ moment(teacher.teacher_last_seen).format('LLL') }}</span>
+                </p>
+            {% endif %}
+                <p>
+                    <span style="font-weight: 600;">{{ teacher.teacher_followers.count() }}</span> Followers,
+                    <span style="font-weight: 600;">{{ teacher.teacher_followed.count() }}</span> Following
+                </p>
+            {% if not current_user.is_following(teacher) %}
+                <form action="{{ url_for('teacher.follow_teacher', teacher_full_name=teacher.teacher_full_name) }}" method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit(value='Follow', class_='btn btn-primary') }}
+                </form>
+            {% else %}
+                <form action="{{ url_for('teacher.unfollow_teacher', teacher_full_name=teacher.teacher_full_name) }}" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
+                </form>
+            {% endif %}
+        </small>
+    </div>
+</div>
