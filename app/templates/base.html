@@ -404,7 +404,7 @@
                     timer = setTimeout(function() {
                         timer = null;
                         xhr = $.ajax(
-                            '{{ url_for('teacher.teacher_profile_popup', teacher_full_name=teacher.teacher_full_name) }}').done(
+                            '/teacher/profile/' + elem.first().text().trim() + '/popup').done(
                                 function(data) {
                                     xhr = null;
                                     elem.popover({

@@ -589,7 +589,7 @@ def profile_teacher(teacher_full_name):
 def teacher_profile_popup(teacher_full_name):
     teacher = Teacher.query.filter_by(
         teacher_full_name=teacher_full_name
-        ).first()
+        ).first_or_404()
     form = EmptyForm()
     return render_template(
         'teacher/profile_popup.html',

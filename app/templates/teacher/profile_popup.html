@@ -1,15 +1,15 @@
 <div class="row">
-    <div class="col-sm-3">
-        <img src=" {{ teacher.avatar_teacher(64) }} " >
-    </div>
-    <div class="col-sm-9" valign="top">
+    <div class="col-sm-4">
+        <img src=" {{ teacher.avatar_teacher(64) }} " ><br>
         <p>
             <a href="{{ url_for('teacher.profile_teacher', teacher_full_name=teacher.teacher_full_name) }}">{{teacher.teacher_full_name }}</a>
         </p>
-        <p>
-            I teach: <span style="font-weight: 600;">{{ teacher.teacher_course }}</span>
-        </p>
+    </div>
+    <div class="col-sm-8" valign="top">
         <small>
+            <p>
+                I teach: <span style="font-weight: 600;">{{ teacher.teacher_course }}</span>
+            </p>        
             {% if teacher.teacher_about_me %}
                 <p>
                     About me: <span style="font-weight: 600;">{{ teacher.teacher_about_me }}</span>
