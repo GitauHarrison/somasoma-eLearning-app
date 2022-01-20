@@ -1,5 +1,5 @@
 from app.models import Student, FlaskStudentStories
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
 from flask_wtf.file import FileField, FileAllowed
@@ -8,9 +8,10 @@ from flask_wtf.file import FileField, FileAllowed
 
 
 class CommentForm(FlaskForm):
-    comment = TextAreaField('Comment',
-                            validators=[DataRequired()]
-                            )
+    comment = TextAreaField(
+        'Comment',
+        validators=[DataRequired()]
+        )
     submit = SubmitField('Post')
 
 
@@ -27,6 +28,7 @@ class AnonymousCommentForm(FlaskForm):
     comment = TextAreaField('Comment',
                             validators=[DataRequired()]
                             )
+    recaptcha = RecaptchaField()
     submit = SubmitField('Post')
 
 
@@ -124,6 +126,7 @@ class StudentStoriesForm(FlaskForm):
         'Your Story',
         validators=[DataRequired()]
         )
+    recaptcha = RecaptchaField()
     submit = SubmitField('Update')
 
     def validate_email(self, email):
