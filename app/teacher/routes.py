@@ -584,7 +584,7 @@ def profile_teacher(teacher_full_name):
 # Profile Popup
 
 
-@bp.route('/profile/<teacher_full_name>/popup/', methods=['GET', 'POST'])
+@bp.route('/profile/<teacher_full_name>/popup/')
 @login_required
 def teacher_profile_popup(teacher_full_name):
     teacher = Teacher.query.filter_by(

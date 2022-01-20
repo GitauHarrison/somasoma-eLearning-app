@@ -8,7 +8,7 @@
         <td>
             <span class="comment-id label label-default"># {{ comment.id }} </span>
             
-            <span id="teacher_popup">
+            <span class="teacher_popup">
                 <a href="{{ url_for('teacher.profile_teacher', teacher_full_name=comment.author.teacher_full_name) }}">
                     <span class="label label-success"> {{ comment.author.teacher_full_name }} </span>  
                 </a>
