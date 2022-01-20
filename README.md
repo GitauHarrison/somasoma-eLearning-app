@@ -131,9 +131,9 @@ Comming soon:
 - [ ] Video conferencing facility
 - [ ] Live language translation
 - [ ] Data visualization of student performance
-- [ ] Markdown editing in forms
+- [x] Markdown editing in forms
 - [x] Google reCaptcha on forms for extra security aganist spam
-- [ ] Interactive tables (sorting, searching and pagination)
+- [x] Interactive tables (sorting, searching and pagination)
 
 ## Tools Used
 
