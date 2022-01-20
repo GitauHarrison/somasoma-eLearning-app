@@ -33,7 +33,13 @@
                     <!-- Body -->
                     <div class="row">
                         <div class="col-sm-12">
-                            <p>{{ blog.body }}</p>
+                            <p>
+                                {% if blog.body_html %}
+                                    {{ blog.body_html | safe }}
+                                {% else %}
+                                    {{ blog.body }}
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                 </div>

@@ -125,13 +125,14 @@ Coming soon...
 - Localhost testing on another device
 - Basic email validation
 - Beautiful phone number fields
+- Profile popup on username:hover
 
 Comming soon:
 - [ ] Video conferencing facility
 - [ ] Live language translation
 - [ ] Data visualization of student performance
 - [ ] Markdown editing in forms
-- [ ] Google reCaptcha on forms for extra security aganist spam
+- [x] Google reCaptcha on forms for extra security aganist spam
 - [ ] Interactive tables (sorting, searching and pagination)
 
 ## Tools Used

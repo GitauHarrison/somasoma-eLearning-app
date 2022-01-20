@@ -6,6 +6,8 @@ from hashlib import md5
 from flask import current_app
 import jwt
 from time import time
+from markdown import markdown
+import bleach
 
 
 # @login.user_loader
@@ -239,11 +241,29 @@ class CommunityComment(db.Model):
     __tablename__ = 'community_comment'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
+    body_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
     def __repr__(self):
         return f'Community Comment: {self.body}'
+
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(
+    CommunityComment.body,
+    'set',
+    CommunityComment.on_changed_body
+    )
+
 
 # ========================================
 # END OF STUDENT MODELS
@@ -440,11 +460,28 @@ class TeacherCommunityComment(db.Model):
     __tablename__ = 'teacher community comment'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
+    body_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
 
     def __repr__(self):
         return f'Teacher Comment: {self.body}'
+
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(
+    TeacherCommunityComment.body,
+    'set',
+    TeacherCommunityComment.on_changed_body
+    )
 
 
 class WebDevelopmentOverview(db.Model):
@@ -452,6 +489,7 @@ class WebDevelopmentOverview(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64), index=True)
     overview = db.Column(db.String(140))
+    overview_html = db.Column(db.Text)
     youtube_link = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     allowed_status = db.Column(db.Boolean, default=False)
@@ -459,6 +497,22 @@ class WebDevelopmentOverview(db.Model):
 
     def __repr__(self):
         return f'Web Development Overview: {self.title}'
+
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.overview_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(
+    WebDevelopmentOverview.overview,
+    'set',
+    WebDevelopmentOverview.on_changed_body
+    )
 
 
 class TableOfContents(db.Model):
@@ -483,6 +537,7 @@ class Chapter(db.Model):
     chapter_link = db.Column(db.String(140))
     chapter_review_link = db.Column(db.String(140))
     overview = db.Column(db.String(140))
+    overview_html = db.Column(db.Text)
     accomplish = db.Column(db.String(140))
     youtube_link = db.Column(db.String(140))
     conclusion = db.Column(db.String(140))
@@ -497,6 +552,18 @@ class Chapter(db.Model):
 
     def __repr__(self):
         return f'Chapter: {self.chapter}'
+
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.overview_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(Chapter.overview, 'set', Chapter.on_changed_body)
 
 
 class ChapterObjectives(db.Model):
@@ -543,6 +610,7 @@ class Events(db.Model):
     event_image = db.Column(db.String(300))
     title = db.Column(db.String(64), index=True)
     body = db.Column(db.String(300))
+    body_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     date = db.Column(db.String(300))
     time = db.Column(db.String(300))
@@ -553,6 +621,19 @@ class Events(db.Model):
 
     def __repr__(self):
         return f'Event: {self.title}'
+
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(
+    Events.body, 'set', Events.on_changed_body)
 
 
 # ========================================
@@ -570,6 +651,7 @@ class User(db.Model):
     name = db.Column(db.String(64), index=True)
     email = db.Column(db.String(120), index=True)
     comment = db.Column(db.String(140))
+    comment_html = db.Column(db.Text)
 
     comments = db.relationship(
         'AnonymousTemplateInheritanceComment',
@@ -585,16 +667,44 @@ class User(db.Model):
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
 
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.comment_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(User.comment, 'set', User.on_changed_body)
+
 
 class BlogArticles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     article_image = db.Column(db.String(140))
     article_name = db.Column(db.String(140))
     body = db.Column(db.String(300))
+    body_html = db.Column(db.Text)
     link = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     allowed_status = db.Column(db.Boolean, default=False)
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+
+    def __repr__(self):
+        return f'Article: {self.article_name}'
+
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(BlogArticles.body, 'set', BlogArticles.on_changed_body)
 
 
 class Courses(db.Model):
@@ -603,6 +713,7 @@ class Courses(db.Model):
     course_image = db.Column(db.String(300))
     title = db.Column(db.String(64), index=True)
     body = db.Column(db.String(300))
+    body_html = db.Column(db.Text)
     overview = db.Column(db.String(300))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     next_class_date = db.Column(db.String(300))
@@ -613,6 +724,18 @@ class Courses(db.Model):
     def __repr__(self):
         return f'Course: {self.title}'
 
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(Courses.body, 'set', Courses.on_changed_body)  
+
 
 class FlaskStudentStories(db.Model):
     __tablename__ = 'flask student stories'
@@ -621,6 +744,7 @@ class FlaskStudentStories(db.Model):
     student_image = db.Column(db.String(300))
     email = db.Column(db.String(64), unique=True)
     body = db.Column(db.String(300))
+    body_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     allowed_status = db.Column(db.Boolean, default=False)
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
@@ -628,16 +752,47 @@ class FlaskStudentStories(db.Model):
     def __repr__(self):
         return f'Flask Story: {self.body}'
 
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(FlaskStudentStories.body,
+                'set',
+                FlaskStudentStories.on_changed_body
+                )
+
 
 class AnonymousTemplateInheritanceComment(db.Model):
     __tablename__ = 'template inheritance comment'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
+    body_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return f'Template Inheritance Comment: {self.body}'
+
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(AnonymousTemplateInheritanceComment.body,
+                'set',
+                AnonymousTemplateInheritanceComment.on_changed_body
+                )
 
 # ========================================
 # ANONYMOUS MODELS
@@ -652,12 +807,28 @@ class WebDevChapter1Comment(db.Model):
     __tablename__ = 'chapter1_comment'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
+    body_html = db.Column(db.Text)
     allowed_status = db.Column(db.Boolean, default=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
     def __repr__(self):
         return f'Chapter 1 Comment: {self.body}'
+
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(WebDevChapter1Comment.body,
+                'set',
+                WebDevChapter1Comment.on_changed_body
+                )
 
 
 class WebDevChapter1Objectives(db.Model):

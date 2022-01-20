@@ -1,6 +1,7 @@
 from app.models import Teacher
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, SelectField
+from flask_pagedown.fields import PageDownField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
 from flask_wtf.file import FileField, FileAllowed
 
@@ -30,9 +31,11 @@ class EditProfileForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    comment = TextAreaField('Comment',
-                            validators=[DataRequired()]
-                            )
+    comment = PageDownField(
+        'Comment',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
+        )
     submit = SubmitField('Post')
 
 
@@ -56,9 +59,10 @@ class WebDevelopmentOverviewForm(FlaskForm):
             ],
         validators=[DataRequired()]
         )
-    body = TextAreaField(
+    body = PageDownField(
         'Course Overview',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
         )
     youtube_link = StringField(
         'Youtube Link',
@@ -118,9 +122,10 @@ class ChapterForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"placeholder": "course/flask/chapter-1"}
         )
-    overview = TextAreaField(
+    overview = PageDownField(
         'Chapter Overview',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
         )
     accomplish = TextAreaField(
         'What You Will Accomplish',
@@ -276,9 +281,10 @@ class BlogArticlesForm(FlaskForm):
         'Article Name',
         validators=[DataRequired()]
     )
-    body = TextAreaField(
+    body = PageDownField(
         'Body',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
         )
     link = StringField(
         'Article Link',
@@ -296,9 +302,10 @@ class EventsForm(FlaskForm):
         'Title',
         validators=[DataRequired(), Length(min=2, max=100)]
         )
-    event_body = TextAreaField(
+    event_body = PageDownField(
         'Body',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
         )
     event_date = StringField(
         'Event Date',

@@ -38,7 +38,10 @@
             </p>
             {% if student.student_about_me %}
                 <p>
-                    About me: <span style="font-weight: 600;">{{ student.student_about_me }}</span>
+                    About me: 
+                    <span style="font-weight: 600;">
+                        {{ student.student_about_me }}
+                    </span>
                 </p>
             {% endif %}
             {% if student.student_last_seen %}

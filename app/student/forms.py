@@ -1,5 +1,6 @@
 from app.models import Student
 from flask_wtf import FlaskForm
+from flask_pagedown.fields import PageDownField
 from wtforms import StringField, SubmitField, BooleanField, TextAreaField,\
     SelectField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
@@ -8,9 +9,11 @@ from wtforms.validators import DataRequired, Length, Email, ValidationError
 
 
 class CommentForm(FlaskForm):
-    comment = TextAreaField('Comment',
-                            validators=[DataRequired()]
-                            )
+    comment = PageDownField(
+        'Comment',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
+        )
     submit = SubmitField('Post')
 
 
@@ -70,7 +73,11 @@ class ChapterObjectivesForm(FlaskForm):
 
 class QuizForm(FlaskForm):
     title = StringField('Question', validators=[DataRequired()])
-    body = TextAreaField('Description', validators=[DataRequired()])
+    body = PageDownField(
+        'Description',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
+        )
     submit = SubmitField('Submit')
 
 

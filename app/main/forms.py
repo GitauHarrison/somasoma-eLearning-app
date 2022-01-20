@@ -1,5 +1,6 @@
 from app.models import Student, FlaskStudentStories
 from flask_wtf import FlaskForm, RecaptchaField
+from flask_pagedown.fields import PageDownField
 from wtforms import StringField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
 from flask_wtf.file import FileField, FileAllowed
@@ -8,9 +9,10 @@ from flask_wtf.file import FileField, FileAllowed
 
 
 class CommentForm(FlaskForm):
-    comment = TextAreaField(
+    comment = PageDownField(
         'Comment',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
         )
     submit = SubmitField('Post')
 
@@ -22,12 +24,16 @@ class AnonymousCommentForm(FlaskForm):
     name = StringField('Name',
                        validators=[DataRequired(), Length(min=2, max=20)]
                        )
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()]
-                        )
-    comment = TextAreaField('Comment',
-                            validators=[DataRequired()]
-                            )
+    email = StringField(
+        'Email',
+        validators=[DataRequired(), Email()],
+        render_kw={"placeholder": "Valid Email Address"}
+        )
+    comment = PageDownField(
+        'Comment',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
+        )
     recaptcha = RecaptchaField()
     submit = SubmitField('Post')
 
@@ -47,7 +53,10 @@ class EditProfileForm(FlaskForm):
                         validators=[DataRequired(), Email()],
                         render_kw={"placeholder": "Valid Email Address"}
                         )
-    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    about_me = StringField(
+        'About me',
+        validators=[Length(min=0, max=140)]
+        )
     submit = SubmitField('Submit')
 
     def __init__(self, original_email, *args, **kwargs):
@@ -89,7 +98,11 @@ class Chapter1WebDevelopmentForm(FlaskForm):
 
 class QuizForm(FlaskForm):
     title = StringField('Question', validators=[DataRequired()])
-    body = TextAreaField('Description', validators=[DataRequired()])
+    body = PageDownField(
+        'Description',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
+        )
     submit = SubmitField('Submit')
 
 
@@ -122,9 +135,10 @@ class StudentStoriesForm(FlaskForm):
                         validators=[DataRequired(), Email()],
                         render_kw={"placeholder": "Valid Email Address"}
                         )
-    body = TextAreaField(
+    body = PageDownField(
         'Your Story',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
         )
     recaptcha = RecaptchaField()
     submit = SubmitField('Update')

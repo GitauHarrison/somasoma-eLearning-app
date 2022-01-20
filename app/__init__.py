@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_moment import Moment
 from flask_mail import Mail
+from flask_pagedown import PageDown
 from config import Config
 from sqlalchemy import MetaData
 import logging
@@ -30,6 +31,7 @@ login.login_view = 'auth.login_teacher'
 login.login_view = 'auth.login_admin'
 moment = Moment()
 mail = Mail()
+pagedown = PageDown()
 
 products = {
         'flask': {
@@ -71,6 +73,7 @@ def create_app(config_class=Config):
     login.init_app(app)
     moment.init_app(app)
     mail.init_app(app)
+    pagedown.init_app(app)
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)

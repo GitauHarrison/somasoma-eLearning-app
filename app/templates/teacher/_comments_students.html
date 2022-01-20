@@ -15,7 +15,11 @@
             said {{ moment(comment.timestamp).fromNow() }}:
             <br>
             <div class="comment-body">
-                {{ comment.body }}
+                {% if comment.body_html %}
+                    {{ comment.body_html | safe }}
+                {% else %}
+                    {{ comment.body }}
+                {% endif %}
             </div>
         </td>
     </tr>    
