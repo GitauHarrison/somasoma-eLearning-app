@@ -18,7 +18,7 @@
     <div id="parents" class="tabcontent">
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-hover">
+                <table id="data" class="table table-hover">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -54,4 +54,12 @@
         </div>
     </div>
     <!-- END OF ALL PARENTS TAB -->
+{% endblock %}
+
+{% block datatable_scripts %}
+    <script>
+        $(document).ready(function() {
+            $('#data').DataTable();
+        });
+    </script>
 {% endblock %}

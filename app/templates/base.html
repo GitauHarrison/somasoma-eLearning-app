@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
 
 {% endblock %}
 
@@ -280,6 +281,16 @@
 {% block scripts %}
         {{ super() }}
         {{ moment.include_moment() }}
+
+        <!-- Interactive tables -->
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+        {% block datatable_scripts %}
+
+        {% endblock %}
+        <!-- End of interactive tables -->
+
         <!-- Tabs -->
         <script>
             function openCity(evt, cityName) {
