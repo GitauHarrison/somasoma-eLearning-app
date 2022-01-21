@@ -8,6 +8,7 @@ import jwt
 from time import time
 from markdown import markdown
 import bleach
+import json
 
 
 # @login.user_loader
@@ -396,11 +397,27 @@ class Teacher(UserMixin, db.Model):
         lazy='dynamic'
         )
     last_message_read_time = db.Column(db.DateTime)
+    notifications = db.relationship(
+        'TeacherNotifications',
+        backref='teacher',
+        lazy='dynamic'
+        )
 
     def new_messages(self):
         last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
         return TeacherMessage.query.filter_by(recipient=self).filter(
             TeacherMessage.timestamp > last_read_time).count()
+
+    def add_notification(self, teacher_full_name, data):
+        self.notifications.filter_by(
+            teacher_full_name=teacher_full_name).delete()
+        n = TeacherNotifications(
+            teacher_full_name=teacher_full_name,
+            payload_json=json.dumps(data),
+            teacher=self
+            )
+        db.session.add(n)
+        return n
 
     def __repr__(self):
         return f'Teacher {self.teacher_full_name}'
@@ -501,6 +518,18 @@ db.event.listen(
     'set',
     TeacherMessage.on_changed_body
     )
+
+
+class TeacherNotifications(db.Model):
+    __tablename__ = 'notifications'
+    id = db.Column(db.Integer, primary_key=True)
+    teacher_full_name = db.Column(db.String(128), index=True)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+    timestamp = db.Column(db.Float, index=True, default=time)
+    payload_json = db.Column(db.Text)
+
+    def get_data(self):
+        return json.loads(str(self.payload_json))
 
 
 class TeacherCommunityComment(db.Model):

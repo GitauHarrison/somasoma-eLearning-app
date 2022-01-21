@@ -6,7 +6,7 @@ from app.models import CommunityComment, WebDevChapter1Comment,\
     TableOfContents, Chapter, ChapterObjectives, ChapterQuiz,\
     WebDevChapter1Quiz1Options, WebDevChapter1Quiz2Options,\
     WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, BlogArticles,\
-    Events
+    Events, TeacherMessage, TeacherNotifications
 
 app = create_app()
 
@@ -37,5 +37,7 @@ def make_shell_context():
         WebDevChapter1Quiz2Options=WebDevChapter1Quiz2Options,
         WebDevChapter1Quiz3Options=WebDevChapter1Quiz3Options,
         WebDevChapter1Quiz4Options=WebDevChapter1Quiz4Options,
-        Events=Events
+        Events=Events,
+        TeacherMessage=TeacherMessage,
+        TeacherNotifications=TeacherNotifications
         )

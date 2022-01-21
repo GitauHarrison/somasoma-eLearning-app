@@ -4,11 +4,11 @@ from datetime import datetime
 from app.teacher import bp
 from flask_login import login_required, current_user
 from flask import render_template, flash, request, redirect, url_for,\
-    current_app
+    current_app, jsonify
 from app.models import Teacher, TeacherCommunityComment, Student,\
     CommunityComment, WebDevelopmentOverview, TableOfContents, Chapter,\
     WebDevChapter1Comment, ChapterObjectives, ChapterQuiz, BlogArticles,\
-    Events, TeacherMessage
+    Events, TeacherMessage, TeacherNotifications
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
     WebDevelopmentOverviewForm, TableOfContentsForm, ChapterForm,\
     ChapterObjectivesForm, ChapterQuizForm, BlogArticlesForm, EventsForm,\
@@ -616,6 +616,9 @@ def send_messages(recipient):
             body=form.message.data
             )
         db.session.add(private_message)
+        teacher.add_notification(
+            'unread_message_count', teacher.new_messages()
+            )
         db.session.commit()
         flash('Your message has been sent!')
         return redirect(url_for(
@@ -639,6 +642,7 @@ def view_messages():
         teacher_full_name=current_user.teacher_full_name
         ).first()
     current_user.last_message_read_time = datetime.utcnow()
+    current_user.add_notification('unread_message_count', 0)
     db.session.commit()
     page = request.args.get('page', 1, type=int)
     messages = current_user.messages_received.order_by(
@@ -662,6 +666,25 @@ def view_messages():
         prev_url=prev_url,
         teacher=teacher
         )
+
+# Teacher notificatons route
+
+
+@bp.route('/notifications')
+@login_required
+def teacher_notifications():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    since = request.args.get('since', 0.0, type=float)
+    notifications = teacher.notifications.filter(
+        TeacherNotifications.timestamp > since).order_by(
+            TeacherNotifications.timestamp.asc())
+    return jsonify([{
+        'teacher_full_name': n.teacher_full_name,
+        'data': n.get_data(),
+        'timestamp': n.timestamp
+        } for n in notifications])
 
 
 @bp.route('/profile/student/<student_full_name>')
