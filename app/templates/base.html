@@ -135,6 +135,14 @@
                             <a href="{{  url_for('teacher.dashboard_account')}}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
                                 Account
                             </a>
+                            <a href="{{ url_for('teacher.view_messages') }}" class="list-group-item tablinks" onclick="openCity(event, 'private_messages')">
+                                Private Messages
+                                {% set new_messages = current_user.new_messages() %}
+                                <!-- Make the badge visible if the message count is non-zero; else hide it -->
+                                <span id="message_count" class="badge" style="visibility: {% if new_messages %} visible {% else %} hidden {% endif %};">
+                                    {{ new_messages }}
+                                </span>
+                            </a>
                             <a href="{{ url_for('teacher.dashboard_your_students') }}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
                                 Your Students
                             </a>
@@ -536,5 +544,14 @@
     <!-- Recaptcha -->
     <script src='https://www.google.com/recaptcha/api.js' async defer></script>
     <!-- End of Recaptcha -->
+
+    <!-- Static message count badge in sidebar -->
+    <script>
+        function set_message_count(n) {
+            $('#message_count').text(n);
+            $('#message_count').css('visibility', n ? 'visible' : 'hidden');
+        }
+    </script>
+    <!-- End of static message count badge in sidebar -->
         
 {% endblock %}

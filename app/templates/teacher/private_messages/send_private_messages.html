@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <!-- SEND PRIVATE MESSAGES TAB -->
+    <div id="private-messages" class="tabcontent">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="row" >
+                <div class="col-sm-6 my-form">
+                    {{ wtf.quick_form(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END OF SEND PRIVATE MESSAGES TAB --> 
+{% endblock %}

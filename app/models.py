@@ -15,13 +15,13 @@ import bleach
 #     return Student.query.get(int(id))
 
 
-# @login.user_loader
-# def load_teacher(id):
-#     return Teacher.query.get(int(id))
-
 @login.user_loader
-def load_admin(id):
-    return Admin.query.get(int(id))
+def load_teacher(id):
+    return Teacher.query.get(int(id))
+
+# @login.user_loader
+# def load_admin(id):
+#     return Admin.query.get(int(id))
 
 
 # @login.user_loader
@@ -383,6 +383,24 @@ class Teacher(UserMixin, db.Model):
         backref='author',
         lazy='dynamic'
         )
+    messages_sent = db.relationship(
+        'TeacherMessage',
+        foreign_keys='TeacherMessage.sender_id',
+        backref='author',
+        lazy='dynamic'
+        )
+    messages_received = db.relationship(
+        'TeacherMessage',
+        foreign_keys='TeacherMessage.recipient_id',
+        backref='recipient',
+        lazy='dynamic'
+        )
+    last_message_read_time = db.Column(db.DateTime)
+
+    def new_messages(self):
+        last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
+        return TeacherMessage.query.filter_by(recipient=self).filter(
+            TeacherMessage.timestamp > last_read_time).count()
 
     def __repr__(self):
         return f'Teacher {self.teacher_full_name}'
@@ -454,6 +472,35 @@ class Teacher(UserMixin, db.Model):
         return teacher_followed.union(own).order_by(
             TeacherCommunityComment.timestamp.desc()
             )
+
+
+class TeacherMessage(db.Model):
+    __tablename__ = 'teacher_message'
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+    body = db.Column(db.String(140))
+    body_html = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'Message {self.body}'
+
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(
+    TeacherMessage.body,
+    'set',
+    TeacherMessage.on_changed_body
+    )
 
 
 class TeacherCommunityComment(db.Model):

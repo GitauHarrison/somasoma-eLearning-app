@@ -27,6 +27,17 @@ class EditProfileForm(FlaskForm):
             if teacher is not None:
                 raise ValidationError('Please use a different email.')
 
+# Private messages form
+
+
+class PrivateMessageForm(FlaskForm):
+    message = PageDownField(
+        'Message',
+        validators=[DataRequired(), Length(min=0, max=140)],
+        render_kw={"placeholder": "Message: Markdown supported"}
+        )
+    submit = SubmitField('Send')
+
 # Comment form
 
 

@@ -8,10 +8,11 @@ from flask import render_template, flash, request, redirect, url_for,\
 from app.models import Teacher, TeacherCommunityComment, Student,\
     CommunityComment, WebDevelopmentOverview, TableOfContents, Chapter,\
     WebDevChapter1Comment, ChapterObjectives, ChapterQuiz, BlogArticles,\
-    Events
+    Events, TeacherMessage
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
     WebDevelopmentOverviewForm, TableOfContentsForm, ChapterForm,\
-    ChapterObjectivesForm, ChapterQuizForm, BlogArticlesForm, EventsForm
+    ChapterObjectivesForm, ChapterQuizForm, BlogArticlesForm, EventsForm,\
+    PrivateMessageForm
 from app.teacher.email import send_live_flask_chapter_1_comment_email
 from werkzeug.utils import secure_filename
 import os
@@ -596,6 +597,70 @@ def teacher_profile_popup(teacher_full_name):
         teacher=teacher,
         title='Teacher Profile',
         form=form
+        )
+
+
+# Send private messages route
+
+@bp.route('/send-messages/<recipient>', methods=['GET', 'POST'])
+@login_required
+def send_messages(recipient):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=recipient
+        ).first()
+    form = PrivateMessageForm()
+    if form.validate_on_submit():
+        private_message = TeacherMessage(
+            author=current_user,
+            recipient=teacher,
+            body=form.message.data
+            )
+        db.session.add(private_message)
+        db.session.commit()
+        flash('Your message has been sent!')
+        return redirect(url_for(
+            'teacher.send_messages',
+            recipient=recipient)
+            )
+    return render_template(
+        'teacher/private_messages/send_private_messages.html',
+        teacher=teacher,
+        title='Send Private Messages',
+        form=form
+        )
+
+# View private messages route
+
+
+@bp.route('/messages')
+@login_required
+def view_messages():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    current_user.last_message_read_time = datetime.utcnow()
+    db.session.commit()
+    page = request.args.get('page', 1, type=int)
+    messages = current_user.messages_received.order_by(
+            TeacherMessage.timestamp.desc()).paginate(
+                page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for(
+        'teacher.view_messages',
+        page=messages.next_num,
+        _anchor="messages") \
+        if messages.has_next else None
+    prev_url = url_for(
+        'teacher.view_messages',
+        page=messages.prev_num,
+        _anchor="messages") \
+        if messages.has_prev else None
+    return render_template(
+        'teacher/private_messages/view_private_messages.html',
+        messages=messages.items,
+        title='View Private Messages',
+        next_url=next_url,
+        prev_url=prev_url,
+        teacher=teacher
         )
 
 
