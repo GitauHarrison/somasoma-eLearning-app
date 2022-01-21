@@ -126,6 +126,8 @@ Coming soon...
 - Basic email validation
 - Beautiful phone number fields
 - Profile popup on username:hover
+- Sending and receiving private messages
+- User notifications when they receive private messages
 
 Comming soon:
 - [ ] Video conferencing facility
@@ -151,6 +153,8 @@ Comming soon:
 - Email validator for email addresses
 - Phonenumber package for phone number formatting
 - Python-dotenv to access environment variables
+- DatatableJS for interactive tables
+- Flask Pagedown for markdown editing
 
 
 ## License
