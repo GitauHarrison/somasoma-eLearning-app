@@ -155,6 +155,7 @@ Comming soon:
 - Python-dotenv to access environment variables
 - DatatableJS for interactive tables
 - Flask Pagedown for markdown editing
+- Jquery for profile popup, private message and notification
 
 
 ## License
