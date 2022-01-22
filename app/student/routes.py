@@ -1,16 +1,18 @@
 from app import db
 from app.student import bp
 from flask import render_template, redirect, url_for, flash, request,\
-    current_app
+    current_app, jsonify
 from app.student.forms import CommentForm, EditProfileForm,\
     ChapterObjectivesForm, QuizForm, Chapter1Quiz1OptionsForm,\
     EmptyForm, Chapter1Quiz2OptionsForm, Chapter1Quiz3OptionsForm,\
     Chapter1Quiz4OptionsForm
+from app.teacher.forms import PrivateMessageForm
 from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
     CommunityComment, WebDevChapter1Objectives, WebDevChapter1Quiz,\
     WebDevChapter1Quiz1Options, Student, WebDevelopmentOverview, Chapter,\
     Teacher, ChapterObjectives, WebDevChapter1Quiz2Options,\
-    WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options
+    WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, StudentMessage,\
+    StudentNotification
 from app.student.email import send_flask_chapter_1_comment_email
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -179,7 +181,7 @@ def dashboard_analytics():
         )
     except ZeroDivisionError:
         percentage_achieved = 0
-    
+
     # Calculate quiz score
     quiz_1_score = 0
     quiz_1_answers_list = []
@@ -315,6 +317,86 @@ def edit_profile_student():
         student=student
     )
 
+
+@bp.route('/send-message/<recipient>', methods=['GET', 'POST'])
+@login_required
+def send_message(recipient):
+    student = Student.query.filter_by(
+        student_full_name=recipient).first_or_404()
+    form = PrivateMessageForm()
+    if form.validate_on_submit():
+        msg = StudentMessage(
+            author=current_user,
+            recipient=student,
+            body=form.message.data
+        )
+        db.session.add(msg)
+        student.add_notification(
+            'unread_message_count', student.new_messages())
+        db.session.commit()
+        flash('Your message has been sent.')
+        return redirect(url_for(
+            'student.send_message',
+            recipient=recipient)
+        )
+    return render_template(
+        'student/private_messages/send_messages.html',
+        title='Send Private Message',
+        form=form,
+        student=student,
+        recipient=recipient
+    )
+
+
+@bp.route('/view-messages')
+@login_required
+def view_messages():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first_or_404()
+    current_user.last_message_read_time = datetime.utcnow()
+    current_user.add_notification('unread_message_count', 0)
+    db.session.commit()
+    page = request.args.get('page', 1, type=int)
+    messages = current_user.messages_received.order_by(
+        StudentMessage.timestamp.desc()
+        ).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for(
+        'student.view_messages',
+        page=messages.next_num) \
+        if messages.has_next else None
+    prev_url = url_for(
+        'student.view_messages',
+        page=messages.prev_num) \
+        if messages.has_prev else None
+    form = EmptyForm()
+    return render_template(
+        'student/private_messages/view_messages.html',
+        title='View Private Messages',
+        messages=messages.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        form=form,
+        student=student
+    )
+
+
+@bp.route('/student-notications')
+@login_required
+def student_notifications():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first_or_404()
+    since = request.args.get('since', 0.0, type=float)
+    notifications = student.notifications.filter(
+        StudentNotification.timestamp > since).order_by(
+        StudentNotification.timestamp.asc())
+    return jsonify([{
+        'student_full_name': n.student_full_name,
+        'data': n.get_data(),
+        'timestamp': n.timestamp
+    } for n in notifications])
 
 # Followership routes
 
