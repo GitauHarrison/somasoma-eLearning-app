@@ -11,14 +11,14 @@ import bleach
 import json
 
 
-# @login.user_loader
-# def load_student(id):
-#     return Student.query.get(int(id))
-
-
 @login.user_loader
-def load_teacher(id):
-    return Teacher.query.get(int(id))
+def load_student(id):
+    return Student.query.get(int(id))
+
+
+# @login.user_loader
+# def load_teacher(id):
+#     return Teacher.query.get(int(id))
 
 # @login.user_loader
 # def load_admin(id):
@@ -128,6 +128,25 @@ class Student(UserMixin, db.Model):
     student_last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     parent_id = db.Column(db.Integer, db.ForeignKey('parent.id'))
 
+    messages_sent = db.relationship(
+        'StudentMessage',
+        foreign_keys='StudentMessage.sender_id',
+        backref='author',
+        lazy='dynamic'
+        )
+    messages_received = db.relationship(
+        'StudentMessage',
+        foreign_keys='StudentMessage.recipient_id',
+        backref='recipient',
+        lazy='dynamic'
+        )
+    last_message_read_time = db.Column(db.DateTime)
+    notifications = db.relationship(
+        'StudentNotification',
+        backref='student',
+        lazy='dynamic'
+        )
+
     comments = db.relationship(
                                'CommunityComment',
                                backref='author',
@@ -171,6 +190,22 @@ class Student(UserMixin, db.Model):
 
     def __repr__(self):
         return f'Student {self.student_full_name}'
+
+    def new_messages(self):
+        last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
+        return StudentMessage.query.filter_by(recipient=self).filter(
+            StudentMessage.timestamp > last_read_time).count()
+
+    def add_notification(self, student_full_name, data):
+        self.notifications.filter_by(
+            student_full_name=student_full_name).delete()
+        n = StudentNotification(
+            student_full_name=student_full_name,
+            payload_json=json.dumps(data),
+            student=self
+            )
+        db.session.add(n)
+        return n
 
     def set_password(self, student_password):
         self.student_password_hash = generate_password_hash(student_password)
@@ -236,6 +271,28 @@ class Student(UserMixin, db.Model):
         except:
             return
         return Student.query.get(id)
+
+
+class StudentMessage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f'Message {self.body}'
+
+
+class StudentNotification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_full_name = db.Column(db.String(128), index=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+    timestamp = db.Column(db.Float, index=True, default=time)
+    payload_json = db.Column(db.Text)
+
+    def get_data(self):
+        return json.loads(str(self.payload_json))
 
 
 class CommunityComment(db.Model):
