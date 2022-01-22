@@ -30,6 +30,13 @@
                     <span style="font-weight: 600;">{{ student.followers.count() }}</span> Followers,
                     <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
                 </p>
+                {% if student != current_user %}
+                    <p>
+                        <a href="{{ url_for('student.send_message', recipient=student.student_full_name) }}">
+                            Send private message
+                        </a>
+                    </p>
+                {% endif %}
                 {% if not current_user.is_following(student) %}
                     <form action="{{ url_for('student.follow_student', student_full_name=student.student_full_name) }}" method="post">
                         {{ form.hidden_tag() }}
