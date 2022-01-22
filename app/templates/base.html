@@ -205,6 +205,14 @@
                             <a href="{{ url_for('student.dashboard_account') }}" class="list-group-item tablinks" onclick="openCity(event, 'account')">
                                 Account
                             </a>
+                            <a href="{{ url_for('student.view_messages') }}" class="list-group-item tablinks" onclick="openCity(event, 'private_messages')">
+                                Private Messages
+                                {% set new_messages = current_user.new_messages() %}
+                                <!-- Make the badge visible if the message count is non-zero; else hide it -->
+                                <span id="message_count" class="badge" style="visibility: {% if new_messages %} visible {% else %} hidden {% endif %};">
+                                    {{ new_messages }}
+                                </span>
+                            </a>
                             <a href="{{ url_for('student.dashboard_analytics') }}" class="list-group-item tablinks" onclick="openCity(event, 'analytics')">
                                 Analytics
                             </a>
@@ -552,20 +560,42 @@
             $('#message_count').css('visibility', n ? 'visible' : 'hidden');
         }
         {% if current_user.is_authenticated %}
-            $(function() {
-                var since = 0;
-                setInterval(function() {
-                    $.ajax('{{ url_for('teacher.teacher_notifications') }}?since=' + since).done(
-                        function(notifications) {
-                            for (var i = 0; i < notifications.length; i++) {
-                                if (notifications[i].teacher_full_name == 'unread_message_count')
-                                    set_message_count(notifications[i].data);
-                                since = notifications[i].timestamp;
+            // Poll teacher for new messages
+            {% if teacher %}
+                $(function() {
+                    var since = 0;
+                    setInterval(function() {
+                        $.ajax('{{ url_for('teacher.teacher_notifications') }}?since=' + since).done(
+                            function(notifications) {
+                                for (var i = 0; i < notifications.length; i++) {
+                                    if (notifications[i].teacher_full_name == 'unread_message_count')
+                                        set_message_count(notifications[i].data);
+                                    since = notifications[i].timestamp;
+                                }
                             }
-                        }
-                    );
-                }, 5000);
-            });
+                        );
+                    }, 5000);
+                });
+            {% endif %}
+            // End polling teacher for new messages
+
+            // Poll student for new messages
+            {% if student %}
+                $(function() {
+                    var since = 0;
+                    setInterval(function() {
+                        $.ajax('{{ url_for('student.student_notifications') }}?since=' + since).done(
+                            function(notifications) {
+                                for (var i = 0; i < notifications.length; i++) {
+                                    if (notifications[i].student_full_name == 'unread_message_count')
+                                        set_message_count(notifications[i].data);
+                                    since = notifications[i].timestamp;
+                                }
+                            }
+                        );
+                    }, 5000);
+                });
+            {% endif %}
         {% endif %}
     </script>
     <!-- End of static message count badge in sidebar -->
