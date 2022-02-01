@@ -16,23 +16,47 @@
     </div>
     <!-- ANALYTICS TAB -->
     <div id="analytics" class="tabcontent">
-        <div class="row chapter-objectives">
-            <div class="col-sm-12">
-                    {% for chapter in course_chapters %}
-                        <h2> {{ chapter.course }} </h2>
-                        <h3><a href="{{ chapter.chapter_link }}">{{ chapter.chapter }}</a></h3>
-                        <ul>
-                            <li>
-                                Achievement of Lesson Objectives: {{ percentage_achieved }}%
-                            </li>
-                            <li>
-                                Achievement of Lesson Quizzes: {{ quiz_total_score_percentage }}%
-                            </li>
-                        </ul>
-                    {% endfor %}
+        {% for chapter in course_chapters %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="text-center">
+                        <h2>{{ chapter.course }}</h2>
+                    </div>
+                    <div class="row analytics">
+                        <div class="col-sm-5">
+                            {% if chapter.chapter.lower() == "chapter 1: starting a flask server" %}
+                                <!-- Chapter 1 Analytics -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h3>{{ chapter.chapter }}</h3>
+                                        <ul>
+                                            <li>
+                                                Achievement of Lesson Objectives: {{ percentage_achieved }}% - 
+                                                <small>
+                                                    <a href="{{ url_for('student.web_development_chapter_1', _anchor='objectives') }}">Improve</a>
+                                                </small>
+                                            </li>
+                                            <li>
+                                                Achievement of Lesson Quizzes: {{ quiz_total_score_percentage }}% - 
+                                                <small>
+                                                    <a href="{{ url_for('student.web_development_chapter_1_quiz_1') }}">Improve</a>
+                                                </small>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><hr> 
+                                <!-- End of chapter 1 analytics -->
+                            {% endif %}
+                        </div>
+                        <!-- Analytics Graph -->
+                        <div class="col-sm-7 text-center">
+                            <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/demo_graph.png')}}" alt="Demo Graph">
+                        </div>
+                        <!-- End of Analytics Graph -->
+                    </div>
+                </div>
             </div>
-            <!-- Graph will go here -->
-        </div>
+        {% endfor %}
     </div>
     <!-- END OF ANALYTICS TAB -->
 {% endblock %}

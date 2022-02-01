@@ -194,50 +194,50 @@ def dashboard_analytics():
     except ZeroDivisionError:
         percentage_achieved = 0
 
-    # Calculate quiz score
+    # Calculate total score
     quiz_1_score = 0
     quiz_1_answers_list = []
     quiz_1_answer = WebDevChapter1Quiz1Options.query.all()
     for answer in quiz_1_answer:
         quiz_1_answers_list.append(answer.answer)
-        if answer.answer.lower() == 'to display content in a webpage':
-            quiz_1_score += 1
-        else:
-            quiz_1_score += 0
-    print(quiz_1_answers_list)
+    student_latest_answer_quiz_1 = len(quiz_1_answers_list) - 1
+    if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == "to display content in a webpage":
+        quiz_1_score += 1
+    else:
+        quiz_1_score += 0
 
     quiz_2_score = 0
     quiz_2_answers_list = []
     quiz_2_answer = WebDevChapter1Quiz2Options.query.all()
     for answer in quiz_2_answer:
         quiz_2_answers_list.append(answer.answer)
-        if answer.answer.lower() == 'to style the contents of a webpage':
-            quiz_2_score += 1
-        else:
-            quiz_2_score += 0
-    print(quiz_2_answers_list)
+    student_latest_answer_quiz_2 = len(quiz_2_answers_list) - 1
+    if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == "to style the contents of a webpage":
+        quiz_2_score += 1
+    else:
+        quiz_2_score += 0
 
     quiz_3_score = 0
     quiz_3_answers_list = []
     quiz_3_answer = WebDevChapter1Quiz3Options.query.all()
     for answer in quiz_3_answer:
         quiz_3_answers_list.append(answer.answer)
-        if answer.answer.lower() == 'to create a database':
-            quiz_3_score += 1
-        else:
-            quiz_3_score += 0
-    print(quiz_3_answers_list)
+    student_latest_answer_quiz_3 = len(quiz_3_answers_list) - 1
+    if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == "to create a database":
+        quiz_3_score += 1
+    else:
+        quiz_3_score += 0
 
     quiz_4_score = 0
     quiz_4_answers_list = []
     quiz_4_answer = WebDevChapter1Quiz4Options.query.all()
     for answer in quiz_4_answer:
         quiz_4_answers_list.append(answer.answer)
-        if answer.answer.lower() == 'to enhance the creation of an app':
-            quiz_4_score += 1
-        else:
-            quiz_4_score += 0
-    print(quiz_4_answers_list)
+    student_latest_answer_quiz_4 = len(quiz_4_answers_list) - 1
+    if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == "to enhance the creation of an app":
+        quiz_4_score += 1
+    else:
+        quiz_4_score += 0
 
     # Calculate percentage
     total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score
