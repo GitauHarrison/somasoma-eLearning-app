@@ -652,10 +652,26 @@ def web_development_chapter_2():
     form = CommentForm()
     return render_template(
         'student/web-development-course/web_development_chapter_2.html',
-        title='Chapter 2: What is HTML?',
+        title='Chapter 2: Working With Flask Templates',
         form=form,
         student=student
         )
+
+
+@bp.route('/web-development/chapter-3', methods=['GET', 'POST'])
+@login_required
+def web_development_chapter_3():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
+    form = CommentForm()
+    return render_template(
+        'student/web-development-course/web_development_chapter_3.html',
+        title='Chapter 3: Introduction to Web Forms',
+        form=form,
+        student=student
+        )
+
 
 # Objectives
 

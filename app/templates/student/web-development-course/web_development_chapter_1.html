@@ -266,7 +266,7 @@ $ flask <span class="hljs-keyword">run</span><span class="bash"> <span class="hl
                         <div class="col-sm-12">
                             <!-- Chapter navigation -->
                             <div class="row text-center">
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <p>
                                         <a href=" {{ url_for('student.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                                             <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
@@ -274,7 +274,14 @@ $ flask <span class="hljs-keyword">run</span><span class="bash"> <span class="hl
                                         </a>
                                     </p>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
+                                    <p>
+                                        <a href=" {{ url_for('student.web_development_chapter_1_quiz_1') }} " class="btn btn-primary">
+                                                Quiz
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="col-sm-4">
                                     <p>
                                         {% if percentage_achieved < 60 %}
                                             <a href=" {{ url_for('student.web_development_chapter_2', student_full_name=student.student_full_name) }} " class="btn btn-primary disabled">
