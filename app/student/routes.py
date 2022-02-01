@@ -596,7 +596,7 @@ def web_development_chapter_1():
         db.session.commit()
         flash('Your response has been saved')
         return redirect(url_for(
-            'student.web_development_chapter_1_objectives_status',
+            'student.web_development_chapter_1',
             student_full_name=student.student_full_name,
             _anchor='objectives'
         ))
@@ -670,71 +670,6 @@ def web_development_chapter_3():
         title='Chapter 3: Introduction to Web Forms',
         form=form,
         student=student
-        )
-
-
-# Objectives
-
-
-@bp.route('/<student_full_name>/web-development/chapter-1/objectives-status')
-@login_required
-def web_development_chapter_1_objectives_status(student_full_name):
-    student = Student.query.filter_by(
-        student_full_name=student_full_name
-        ).first()
-    page = request.args.get('page', 1, type=int)
-
-    # Chapter objectives
-    chapter_objectives = ChapterObjectives.query.filter_by(
-        course=student.student_course).order_by(
-            ChapterObjectives.timestamp.desc()
-            ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-
-    # Calculate the number of objectives achieved
-    all_objectives = student.webdev_chapter1_objectives.order_by(
-        WebDevChapter1Objectives.timestamp.desc()).all()
-    objectives_list = []
-    num_of_true_status = 0
-    for objective in all_objectives:
-        objectives_list.append(str(objective.objective_1))
-        objectives_list.append(str(objective.objective_2))
-        objectives_list.append(str(objective.objective_3))
-        objectives_list.append(str(objective.objective_4))
-        objectives_list.append(str(objective.objective_5))
-    num_of_true_status = objectives_list[-5:].count("True")
-    try:
-        percentage_achieved = round(
-            (num_of_true_status / len(objectives_list)) * 100,
-            2
-        )
-    except ZeroDivisionError:
-        percentage_achieved = 0
-    # End of percentage calculation
-
-    objectives = student.webdev_chapter1_objectives.order_by(
-        WebDevChapter1Objectives.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for(
-        'student.web_development_chapter_1_objectives_status',
-        _anchor="objectives",
-        page=objectives.next_num) \
-        if objectives.has_next else None
-    prev_url = url_for(
-        'student.web_development_chapter_1_objectives_status',
-        _anchor='objectives',
-        page=objectives.prev_num) \
-        if objectives.has_prev else None
-    return render_template(
-        'student/web-development-course/chapter_1_objectives_status.html',
-        title='Chapter 1: Objectives Status',
-        objectives=objectives.items,
-        next_url=next_url,
-        prev_url=prev_url,
-        student=student,
-        chapter_objectives=chapter_objectives.items,
-        percentage_achieved=percentage_achieved
         )
 
 # ===================================
