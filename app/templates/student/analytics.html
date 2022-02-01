@@ -24,7 +24,53 @@
                     </div>
                     <div class="row analytics">
                         <div class="col-sm-5">
-                            {% if chapter.chapter.lower() == "chapter 1: starting a flask server" %}
+                            {% if chapter.chapter.lower() == "chapter 1: hello world" %}
+                                <!-- Chapter 1 Analytics -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h3>{{ chapter.chapter }}</h3>
+                                        <ul>
+                                            <li>
+                                                Achievement of Lesson Objectives: {{ percentage_achieved }}% - 
+                                                <small>
+                                                    <a href="{{ url_for('student.web_development_chapter_1', _anchor='objectives') }}">Improve</a>
+                                                </small>
+                                            </li>
+                                            <li>
+                                                Achievement of Lesson Quizzes: {{ quiz_total_score_percentage }}% - 
+                                                <small>
+                                                    <a href="{{ url_for('student.web_development_chapter_1_quiz_1') }}">Improve</a>
+                                                </small>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><hr> 
+                                <!-- End of chapter 1 analytics -->
+                            {% endif %}
+                            {% if chapter.chapter.lower() == "chapter 2: working with flask templates" %}
+                                <!-- Chapter 1 Analytics -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h3>{{ chapter.chapter }}</h3>
+                                        <ul>
+                                            <li>
+                                                Achievement of Lesson Objectives: {{ percentage_achieved }}% - 
+                                                <small>
+                                                    <a href="{{ url_for('student.web_development_chapter_1', _anchor='objectives') }}">Improve</a>
+                                                </small>
+                                            </li>
+                                            <li>
+                                                Achievement of Lesson Quizzes: {{ quiz_total_score_percentage }}% - 
+                                                <small>
+                                                    <a href="{{ url_for('student.web_development_chapter_1_quiz_1') }}">Improve</a>
+                                                </small>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><hr> 
+                                <!-- End of chapter 1 analytics -->
+                            {% endif %}
+                            {% if chapter.chapter.lower() == "chapter 3: introduction to web forms" %}
                                 <!-- Chapter 1 Analytics -->
                                 <div class="row">
                                     <div class="col-sm-12">
