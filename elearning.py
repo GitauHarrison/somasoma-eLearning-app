@@ -3,7 +3,7 @@ from app.models import CommunityComment, WebDevChapter1Comment,\
     WebDevChapter1Objectives, WebDevChapter1Quiz, Student, Parent,\
     Teacher, AnonymousTemplateInheritanceComment,\
     User, Admin, Courses, FlaskStudentStories, WebDevelopmentOverview,\
-    TableOfContents, Chapter, ChapterObjectives, ChapterQuiz,\
+    TableOfContents, Chapter, ChapterQuiz,\
     WebDevChapter1Quiz1Options, WebDevChapter1Quiz2Options,\
     WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, BlogArticles,\
     Events, TeacherMessage, TeacherNotifications, StudentMessage,\
@@ -31,7 +31,6 @@ def make_shell_context():
         WebDevelopmentOverview=WebDevelopmentOverview,
         TableOfContents=TableOfContents,
         Chapter=Chapter,
-        ChapterObjectives=ChapterObjectives,
         ChapterQuiz=ChapterQuiz,
         BlogArticles=BlogArticles,
         WebDevChapter1Quiz1Options=WebDevChapter1Quiz1Options,
