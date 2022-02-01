@@ -55,11 +55,11 @@ class EditProfileForm(FlaskForm):
 
 
 class ChapterObjectivesForm(FlaskForm):
-    objective_1 = BooleanField('Student can create a flask project structure',)
-    objective_2 = BooleanField('Student can create a project\'s instance',)
-    objective_3 = BooleanField('Student can create a flask entry point',)
-    objective_4 = BooleanField('Student can display a welcome message',)
-    objective_5 = BooleanField('Student can start a flask server',)
+    objective_1 = BooleanField('You can install flask into your application',)
+    objective_2 = BooleanField('You can create a simple flask application structure',)
+    objective_3 = BooleanField('You can start the flask server',)
+    objective_4 = BooleanField('You can display some text on your browser',)
+    objective_5 = BooleanField('You can exit your flask server',)
     submit = SubmitField('Submit')
 
 # ========================================
@@ -85,10 +85,10 @@ class Chapter1Quiz1OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('To display content in a webpage', 'To display content in a webpage'),
-            ('To hack a browser', 'To hack a browser'),
-            ('To style the contents of a webpage', 'To style the contents of a webpage'),
-            ('To hack the server', 'To hack the server')
+            ('pip3 flask', 'pip3 flask'),
+            ('install flask', 'install flask'),
+            ('pip3 install flask', 'pip3 install flask'),
+            ('python3 -m flask', 'python3 -m flask'),
             ],
         validators=[DataRequired()]
         )
@@ -99,10 +99,10 @@ class Chapter1Quiz2OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('To inspect a webpage', 'To inspect a webpage'),
-            ('To hack an app', 'To hack an app'),
-            ('To style the contents of a webpage', 'To style the contents of a webpage'),
-            ('To query a database', 'To query a database')
+            ('Flask', 'Flask'),
+            ('Java', 'Java'),
+            ('Python', 'Python'),
+            ('HTML', 'HTML')
             ],
         validators=[DataRequired()]
         )
@@ -113,10 +113,10 @@ class Chapter1Quiz3OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('To create tables in a webpage', 'To create tables in a webpage'),
-            ('To create a database', 'To create a database'),
-            ('To create beautiful animations', 'To create beautiful animations'),
-            ('To style a website', 'To style a website')
+            ('Small capacity', 'Small in capacity'),
+            ('Incapable of doing much', 'Incapable of doing much'),
+            ('A living organism', 'A living organism'),
+            ('Keeping the core simple but extensible', 'Keeping the core simple but extensible')
             ],
         validators=[DataRequired()]
         )
@@ -127,10 +127,10 @@ class Chapter1Quiz4OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('To improve the security of an app', 'To improve the security of an app'),
-            ('To query a database', 'To query a database'),
-            ('To enhance the creation of an app', 'To enhance the creation of an app'),
-            ('To display content in a webpage', 'To display content in a webpage')
+            ('By clicking the run button', 'By clicking the run button'),
+            ('Using the command flask run', 'Using the command flask run'),
+            ('Praying to God', 'Praying to God'),
+            ('Typing the word "python" in the terminal', 'Typing the word "python" in the terminal')
             ],
         validators=[DataRequired()]
         )

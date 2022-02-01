@@ -27,6 +27,7 @@
                 <tr>
                     <th>Quiz</th>
                     <th>Your Answer</th>
+                    <th>Correct Answer</th>
                     <th>Score</th>
                 </tr>
             </thead>
@@ -37,6 +38,7 @@
                         <td>{{ quiz.quiz_1 }}</td>
                         
                         <td>{{ quiz_1_answers_list[student_latest_answer_quiz_1] }}</td>
+                        <td>pip3 install flask</td>
                         <td>{{ quiz_1_score }}</td>
                     </tr>
                 {% endfor %}
@@ -44,8 +46,8 @@
                     <tr>
 
                         <td>{{ quiz.quiz_2 }}</td>
-                        
                         <td>{{ quiz_2_answers_list[student_latest_answer_quiz_2] }}</td>
+                        <td>Python</td>
                         <td>{{ quiz_2_score }}</td>
                     </tr>
                 {% endfor %}
@@ -53,8 +55,8 @@
                     <tr>
 
                         <td>{{ quiz.quiz_3 }}</td>
-                        
                         <td>{{ quiz_3_answers_list[student_latest_answer_quiz_3] }}</td>
+                        <td>Keeping the core simple but extensible</td>
                         <td>{{ quiz_3_score }}</td>
                     </tr>
                 {% endfor %}
@@ -62,8 +64,8 @@
                     <tr>
 
                         <td>{{ quiz.quiz_4 }}</td>
-                        
                         <td>{{ quiz_4_answers_list[student_latest_answer_quiz_4] }}</td>
+                        <td>Using the command flask run</td>
                         <td>{{ quiz_4_score }}</td>
                     </tr>
                 {% endfor %}
@@ -77,7 +79,7 @@
         <p>
             <a href=" {{ url_for('student.dashboard_quizzes', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                Back to Quiz Dashboard
+                More Quiz
             </a>
         </p>
     </div>
