@@ -36,7 +36,7 @@
 
                         <td>{{ quiz.quiz_1 }}</td>
                         
-                        <td>{{ quiz_1_answers_list[0] }}</td>
+                        <td>{{ quiz_1_answers_list[student_latest_answer_quiz_1] }}</td>
                         <td>{{ quiz_1_score }}</td>
                     </tr>
                 {% endfor %}
@@ -45,7 +45,7 @@
 
                         <td>{{ quiz.quiz_2 }}</td>
                         
-                        <td>{{ quiz_2_answers_list[0] }}</td>
+                        <td>{{ quiz_2_answers_list[student_latest_answer_quiz_2] }}</td>
                         <td>{{ quiz_2_score }}</td>
                     </tr>
                 {% endfor %}
@@ -54,7 +54,7 @@
 
                         <td>{{ quiz.quiz_3 }}</td>
                         
-                        <td>{{ quiz_3_answers_list[0] }}</td>
+                        <td>{{ quiz_3_answers_list[student_latest_answer_quiz_3] }}</td>
                         <td>{{ quiz_3_score }}</td>
                     </tr>
                 {% endfor %}
@@ -63,7 +63,7 @@
 
                         <td>{{ quiz.quiz_4 }}</td>
                         
-                        <td>{{ quiz_4_answers_list[0] }}</td>
+                        <td>{{ quiz_4_answers_list[student_latest_answer_quiz_4] }}</td>
                         <td>{{ quiz_4_score }}</td>
                     </tr>
                 {% endfor %}
@@ -75,9 +75,9 @@
 <div class="row">
     <div class="col-sm-12 text-center">
         <p>
-            <a href=" {{ url_for('student.web_development_chapter_2', student_full_name=student.student_full_name) }} " class="btn btn-primary">
-                Chapter 2
-                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            <a href=" {{ url_for('student.dashboard_quizzes', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                Back to Quiz Dashboard
             </a>
         </p>
     </div>
