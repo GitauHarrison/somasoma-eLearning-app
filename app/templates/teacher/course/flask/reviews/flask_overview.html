@@ -14,39 +14,39 @@
             <h1>{{ title }}</h1>
         </div>
     </div>
-    <div class="row profile">
-        <div class="col-sm-12">
-            {% for overview in course_overview %}
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <h1>{{ overview.title }}</h1>
+    {% for overview in course_overview %}
+        <div class="row profile">
+            <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h1>{{ overview.title }}</h1>
+                        </div>
                     </div>
-                </div>
-                <h2>Overview</h2>
-                <p>{{ overview.overview }}</p>
-                <div class="table-of-content">
-                    <h2>Table of Contents</h2>
-                    {% for toc in course_toc %}
-                        {% include 'teacher/course/flask/_table_of_contents.html' %}
-                    {% endfor %}
-                </div>
-                <h2>Completed Project</h2>
-                <div class="youtube  embed-responsive embed-responsive-16by9">
-                    <iframe class="youtube embed-responsive-item" width="560" height="315" src="{{ overview.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        {% if not overview.allowed_status == 1 %}
-                            <a href="{{ url_for('teacher.allow_course_overview', course_title=overview.title) }}" class="label label-warning">Allow</a>
-                        {% else %}
-                            <a href="#" class="label label-success">Allowed</a>
-                        {% endif %}
-                         | <a href="{{ url_for('teacher.delete_course_overview', course_title=overview.title) }}" class="label label-danger">Delete</a>
+                    <h2>Overview</h2>
+                    <p>{{ overview.overview }}</p>
+                    <div class="table-of-content">
+                        <h2>Table of Contents</h2>
+                        {% for toc in course_toc %}
+                            {% include 'teacher/course/flask/_table_of_contents.html' %}
+                        {% endfor %}
                     </div>
-                </div>
-            {% endfor %}
+                    <h2>Completed Project</h2>
+                    <div class="youtube  embed-responsive embed-responsive-16by9">
+                        <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/{{ overview.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {% if not overview.allowed_status == 1 %}
+                                <a href="{{ url_for('teacher.allow_course_overview', course_title=overview.title) }}" class="label label-warning">Allow</a>
+                            {% else %}
+                                <a href="#" class="label label-success">Allowed</a>
+                            {% endif %}
+                            | <a href="{{ url_for('teacher.delete_course_overview', course_title=overview.title) }}" class="label label-danger">Delete</a>
+                        </div>
+                    </div>
+            </div>
         </div>
-    </div>
+    {% endfor %}
     <!-- Pagination -->
     <div class="row">
         <div class="col-sm-12">

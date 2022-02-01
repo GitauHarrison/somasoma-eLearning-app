@@ -10,7 +10,7 @@ from app.teacher.forms import PrivateMessageForm
 from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
     CommunityComment, WebDevChapter1Objectives, WebDevChapter1Quiz,\
     WebDevChapter1Quiz1Options, Student, WebDevelopmentOverview, Chapter,\
-    Teacher, ChapterObjectives, WebDevChapter1Quiz2Options,\
+    Teacher, WebDevChapter1Quiz2Options,\
     WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, StudentMessage,\
     StudentNotification
 from app.student.email import send_flask_chapter_1_comment_email

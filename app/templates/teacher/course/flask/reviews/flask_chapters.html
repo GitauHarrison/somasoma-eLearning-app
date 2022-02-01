@@ -40,7 +40,7 @@
                         <h2>What You Will Accomplish</h2>
                         <p>{{ chapter.accomplish }}</p>
                         <div class="youtube embed-responsive embed-responsive-16by9">
-                            <iframe class="youtube embed-responsive-item" width="560" height="315" src="{{ chapter.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/{{ chapter.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
 
                         <h2>Lesson Objectives</h2>
@@ -113,7 +113,13 @@
                             </div>
                             <div class="col-sm-6 my-form">
                                 <!-- Objectives form will go here -->
-                                <p>Objectives form will go here</p>
+                                <ul>
+                                    <li>{{ chapter.objective_1 }}</li>
+                                    <li>{{ chapter.objective_2 }}</li>
+                                    <li>{{ chapter.objective_3 }}</li>
+                                    <li>{{ chapter.objective_4 }}</li>
+                                    <li>{{ chapter.objective_5 }}</li>
+                                </ul>
                             </div>
                             <div class="col-sm-3">
                                 <!-- Empty column -->
