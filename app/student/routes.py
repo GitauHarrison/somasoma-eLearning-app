@@ -697,12 +697,12 @@ def web_development_chapter_1_objectives_status(student_full_name):
     objectives_list = []
     num_of_true_status = 0
     for objective in all_objectives:
-        objectives_list.append(objective.objective_1)
-        objectives_list.append(objective.objective_2)
-        objectives_list.append(objective.objective_3)
-        objectives_list.append(objective.objective_4)
-        objectives_list.append(objective.objective_5)
-    num_of_true_status = objectives_list.count(True)
+        objectives_list.append(str(objective.objective_1))
+        objectives_list.append(str(objective.objective_2))
+        objectives_list.append(str(objective.objective_3))
+        objectives_list.append(str(objective.objective_4))
+        objectives_list.append(str(objective.objective_5))
+    num_of_true_status = objectives_list[-5:].count("True")
     try:
         percentage_achieved = round(
             (num_of_true_status / len(objectives_list)) * 100,
