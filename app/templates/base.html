@@ -193,6 +193,9 @@
                             <a href="{{ url_for('student.dashboard_enrolled_courses') }}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
                                 Enrolled Courses
                             </a>
+                            <a href="{{ url_for('student.dashboard_quizzes') }}" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
+                                Quizzes
+                            </a>
                             <a href="{{url_for('student.dashboard_live_class')}}" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
                                 Live Class
                             </a>
@@ -574,13 +577,12 @@
                                 }
                             }
                         );
-                    }, 5000);
+                    }, 500);
                 });
-            {% endif %}
             // End polling teacher for new messages
 
             // Poll student for new messages
-            {% if student %}
+            {% elif student %}
                 $(function() {
                     var since = 0;
                     setInterval(function() {
@@ -593,7 +595,7 @@
                                 }
                             }
                         );
-                    }, 5000);
+                    }, 500);
                 });
             {% endif %}
         {% endif %}
