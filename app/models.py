@@ -990,6 +990,9 @@ class WebDevChapter1Quiz(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
+    def __repr__(self):
+        return f'Quiz: {self.title}'
+
 
 class WebDevChapter1Quiz1Options(db.Model):
     __tablename__ = 'web_dev_chapter_1_quiz_1_options'
@@ -997,6 +1000,9 @@ class WebDevChapter1Quiz1Options(db.Model):
     answer = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Quiz 1 Options: {self.answer}'
 
 
 class WebDevChapter1Quiz2Options(db.Model):
@@ -1006,6 +1012,9 @@ class WebDevChapter1Quiz2Options(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
+    def __repr__(self):
+        return f'Quiz 2 Options: {self.answer}'
+
 
 class WebDevChapter1Quiz3Options(db.Model):
     __tablename__ = 'web_dev_chapter_1_quiz_3_options'
@@ -1014,6 +1023,9 @@ class WebDevChapter1Quiz3Options(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
+    def __repr__(self):
+        return f'Quiz 3 Options: {self.answer}'
+
 
 class WebDevChapter1Quiz4Options(db.Model):
     __tablename__ = 'web_dev_chapter_1_quiz_4_options'
@@ -1021,6 +1033,9 @@ class WebDevChapter1Quiz4Options(db.Model):
     answer = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Quiz 4 Options: {self.answer}'
 
 # ========================================
 # END OF WEB DEVELOPMENT MODELS
