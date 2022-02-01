@@ -41,48 +41,195 @@
                                 <li>{{ chapter.objective_5 }}</li>
                             </ul>
 
-                            <h2>Getting Started</h2>
-                            <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting 
-                                industry. Lorem Ipsum has been the industry's standard dummy text 
-                                ever since the 1500s, when an unknown printer took a galley of 
-                                type and scrambled it to make a type specimen book. It has survived 
-                                not only five centuries, but also the leap into electronic typesetting, 
-                                remaining essentially unchanged.
-                            </p>
-                            <p>
-                                It was popularised in the 1960s with the release of Letraset sheets 
-                                containing Lorem Ipsum passages, and more recently with desktop 
-                                publishing software like Aldus PageMaker including versions of Lorem
-                                Ipsum.
-                            </p>
+                            <p>The completed project used in this article can be referenced <a href="https://github.com/GitauHarrison/personal-blog-tutorial-project/commit/5b3f2b4c0348b933f4f07755457efc2fe3218c7a">here</a>. </p>
+<h3 id="install-python">Install Python</h3>
+<p>You will learn how to use Python and the Flask web Framework to build a personal blog. For this reason, you need to ensure you have Python installed. How do you know whether you have Python installed in your computer? Open your terminal and type</p>
+<pre><code class="lang-python">$ <span class="hljs-built_in">which</span> python3
+</code></pre>
+<p>If you do not get any output displayed on your terminal, that means that you do not have Python installed in your system. You need to install it. Visit the <a href="https://www.python.org/downloads/">Python Official Site</a> and install the latest release according to your system. The three major systems include Windows, Linux and Mac OS X.</p>
+<p>However, if you get something like:</p>
+<pre><code class="lang-python">$ which python3
 
-                            <h2>Creation</h2>
-                            <p>
-                                Contrary to popular belief, Lorem Ipsum is not simply random text. 
-                                It has roots in a piece of classical Latin literature from 45 BC, making 
-                                it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney 
-                                College in Virginia, looked up one of the more obscure Latin words, consectetur, 
-                                from a Lorem Ipsum passage, and going through the cites of the word in classical 
-                                literature, discovered the undoubtable source.             
-                            </p>
-                            <p>
-                                Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" 
-                                (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise 
-                                on the theory of ethics, very popular during the Renaissance.
-                            </p>
-                            <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                                when an unknown printer took a galley of type and scrambled it to make a 
-                                type specimen book. It has survived not only five centuries, but also the 
-                                leap into electronic typesetting, remaining essentially unchanged.             
-                            </p>
-                            <p>
-                                It was popularised in the 1960s with the release of Letraset sheets containing 
-                                Lorem Ipsum passages, and more recently with desktop publishing software like 
-                                Aldus PageMaker including versions of Lorem Ipsum.
-                            </p>
+<span class="hljs-comment"># Output</span>
+<span class="hljs-regexp">/usr/</span>bin<span class="hljs-regexp">/python3</span>
+</code></pre>
+<p>This means you have Python3 in your system. To make sure your Python installation is functional, run <code>python3</code> in your terminal as below:</p>
+<pre><code class="lang-python">$ python3
+
+<span class="hljs-comment"># Output</span>
+Python <span class="hljs-number">3.8</span>.<span class="hljs-number">5</span> (default, Jul <span class="hljs-number">28</span> <span class="hljs-number">2020</span>, <span class="hljs-number">12</span><span class="hljs-symbol">:</span><span class="hljs-number">59</span><span class="hljs-symbol">:</span><span class="hljs-number">40</span>) 
+[GCC <span class="hljs-number">9.3</span>.<span class="hljs-number">0</span>] on linux
+Type <span class="hljs-string">"help"</span>, <span class="hljs-string">"copyright"</span>, <span class="hljs-string">"credits"</span> <span class="hljs-keyword">or</span> <span class="hljs-string">"license"</span> <span class="hljs-keyword">for</span> more information.
+<span class="hljs-meta">&gt;&gt;</span>&gt;
+</code></pre>
+<p>The Python interpreter is in an interactive prompt where you can type in Python statements. But for now, we won&#39;t type in anything. We wanted to make sure that the interpreter is working well. </p>
+<p>Type in <code>exit()</code> and press <code>Enter</code> to exit the interpreter. Alternatively, press <code>ctrl + Z</code>.</p>
+<p>I recommend that you have Ubuntu as your main Operating System as you start this Web Development journey. Ubuntu, a distribution of Linux, is optimized for development and it takes a creator approach rather having you as a consumer of the Operating System. It comes preinstalled with Python. That means you do not need to install it again.</p>
+<blockquote>
+<p>To install Ubuntu, you will need to create an Ubuntu Bootable USB stick. Learn how to create a bootable USB stick <a href="https://ubuntu.com/tutorials/create-a-usb-stick-on-windows#1-overview">on Windows</a> or <a href="https://ubuntu.com/tutorials/create-a-usb-stick-on-ubuntu#1-overview">on Ubuntu</a>. With this Bootable USB stick, you can:</p>
+<ul>
+<li>Install or upgrade Ubuntu</li>
+<li>Test out the Ubuntu desktop experience without touching your PC configuration</li>
+<li>Boot into Ubuntu on a borrowed machine or from an internet cafe</li>
+<li>Use tools installed by default on the USB stick to repair or fix a broken configuration</li>
+</ul>
+</blockquote>
+<h3 id="install-flask">Install Flask</h3>
+<p>Python3 comes with a tool called <code>pip3</code> which does all the installation of Python packages. Python has an official and public Python Package repository called <a href="https://pypi.org/">PyPI</a>(Python Package Index) from where anybody can install Python packages.</p>
+<p>To install a package on your machine, all you need to do is:</p>
+<pre><code class="lang-python">$ pip3 <span class="hljs-keyword">install</span> &lt;<span class="hljs-keyword">package</span>-<span class="hljs-keyword">name</span>&gt;
+</code></pre>
+<p>Note that if your Python interpreter is installed globally in your machine for all users, chances are your regular user account will not have the permission to make modifications to it. The only way to overcome this is to run the installation as an administrator using the <code>sudo</code> command. From there onwards, the installed packege will be available to everyone.</p>
+<p>Whenever you are working on a project, chances are your project will have multiple versions. Think about this, you have just finished a project using <code>flask</code>&#39;s version 0.1. By the time you want to start another project, another version of <code>flask</code>, say version 0.2 is released. Obviously, you will install version 0.2 of <code>flask</code> to keep your project current. </p>
+<p>This may go on and on, not just with <code>flask</code> but maybe with another package. What you will end up with is your computer will have mutliple versions of packages. To keep your computer system clean, it is recommended that you create something called <em>virtual environments</em>. A virtual environment is a complete copy of the Python interpreter. The envrionments help isolate your development needs from that of your machine, and, therefore, helps to keep your system very clean and uncluttered.</p>
+<h3 id="getting-started">Getting Started</h3>
+<p>Let us start by creating a directory that will host all our project files. I will call this directory _personal<em>blog</em>.</p>
+<pre><code class="lang-python">$ <span class="hljs-built_in">mkdir</span> personal_blog # <span class="hljs-built_in">mkdir</span> (short <span class="hljs-keyword">for</span> <span class="hljs-keyword">make</span> directory) <span class="hljs-keyword">command</span> <span class="hljs-keyword">is</span> used <span class="hljs-keyword">to</span> create <span class="hljs-keyword">an</span> <span class="hljs-built_in">empty</span> directory
+</code></pre>
+<p>With an empty project directory created, we need to move into it:</p>
+<pre><code class="lang-python">$ <span class="hljs-keyword">cd</span> personal_blog # <span class="hljs-keyword">cd</span> (<span class="hljs-keyword">change</span> directory)<span class="hljs-keyword">command</span> <span class="hljs-keyword">is</span> used <span class="hljs-keyword">to</span> <span class="hljs-keyword">change</span> one directory from another
+</code></pre>
+<br>
+<h3 id="creating-a-virtual-environment">Creating a Virtual Environment</h3>
+<p>There are two ways you can use to create a virtual environment:</p>
+<ol>
+<li>Manual way</li>
+<li>Using virtualenv wrapper</li>
+</ol>
+<h4 id="manual-way">Manual way</h4>
+<pre><code class="lang-python"><span class="hljs-variable">$ </span>python3 -m venv venv
+</code></pre>
+<p>Here, we are asking Python to run the <code>venv</code> package which creates virtual environment called <code>venv</code>. </p>
+<p>
+    <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/python_virtual_env.png')}}" alt="Python Virtual Environment">
+</p>
+<p>After the command completes, you are going to have a directory called <em>venv</em> where all your virtual environment will be saved. With your virtual environment created, you have to tell your system that you want to use it. This is done by <em>activating</em> it. To activate your new virtual environment, run:</p>
+<pre><code class="lang-python"><span class="hljs-variable">$ </span>source venv/bin/activate
+
+<span class="hljs-comment"># your terminal will change to something like:</span>
+(venv) <span class="hljs-variable">$ </span>...
+</code></pre>
+<br>
+<h4 id="using-virtual-environment-wrappers">Using Virtual Environment Wrappers</h4>
+<p><a href="https://virtualenvwrapper.readthedocs.io/en/latest/"><code>virtualenvwrapper</code></a> is a set of extensions to <code>virtualenv</code> tool. The extensions include wrappers for creating and deleting virtual environments and otherwise managing our development workflow, making it easier to work on more than one project at a time without introducing conflicts in their dependencies.</p>
+<p>I personally prefer using <code>virtualenvwrapper</code> due to how easy it is to use. During creation of virtual environments, it not only creates it but it also activates it automatically. For example, to create a virtual environment called <em>venv</em>, all I need to do is run the <code>mkvirtualenv</code> command to create and activate the new environment:</p>
+<pre><code class="lang-python"><span class="hljs-variable">$ </span>mkvirtualenv venv
+
+<span class="hljs-comment"># Seen on the terminal:</span>
+(venv) <span class="hljs-variable">$ </span>...
+</code></pre>
+<p>If you would like to use <code>virtualenvwrapper</code>, learn how to install and use it <a href="/virtualenvwrapper_setup.md">here</a>.</p>
+<h3 id="install-flask">Install Flask</h3>
+<p>We will use <code>pip3</code> to install <code>flask</code>:</p>
+<pre><code class="lang-python">$ pip3 <span class="hljs-keyword">install</span> flask
+</code></pre>
+<p>If you get a soft warning in your terminal informing you that there is an available update, do not panick. All you need to do is read the warning message carefully to understand what it is telling you. Typically, all warning and error messages provide suggestions on what you can do about them. In our case here, all we need to do is run:</p>
+<pre><code class="lang-python">python -m pip <span class="hljs-keyword">install</span> <span class="hljs-comment">--upgrade pip</span>
+</code></pre>
+<p>This will make the update and get rid of the warning message. This warning message tends to only come when you install a new virtual environment. Confirm that your virtual environment has <code>flask</code> installed by running your Python interpreter and importing it:</p>
+<pre><code class="lang-python">$ python3 <span class="hljs-comment"># run your Python interpreter</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; import flask
+<span class="hljs-meta">&gt;&gt;</span>&gt;
+</code></pre>
+<p>If you do not get any error, it means your flask extension was installed well. You can also check the version of <code>flask</code> installed. Run:</p>
+<pre><code class="lang-python">$ flask --<span class="hljs-keyword">version</span> <span class="hljs-comment"># ensure you exited the Python interpreter above by pressing ctrl + Z</span>
+</code></pre>
+<br>
+<h3 id="hello-world-application">Hello World Application</h3>
+<p>The <a href="https://flask.palletsprojects.com/en/1.1.x/">Flask Documentation</a> is a great resource to help you get started with Python and Flask. Occassionally, you can refer to it to learn more. Below, I am going to show you how you will create the structure of your project. Your application will exist as a package, with files and sub-folders in it.</p>
+<p>
+    <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/project_structure.png')}}" alt="Project Structure">
+</p>
+<p>Let us go ahead and create a sub directory called <em>app</em>:</p>
+<pre><code class="lang-python">(venv) <span class="hljs-keyword">mkdir</span> app <span class="hljs-comment"># remember you are in the personal blog project folder already</span>
+</code></pre>
+<p>This folder will contain:</p>
+<ul>
+<li>__init__.py : it is used to define our app</li>
+<li>routes.py : it will bear all the view functions and URLs that will help redirect us</li>
+<li>templates sub-folder : all HTML files will be here</li>
+<li>static subfolder : it will contain css and js subfolders that will host our styles files and our JS file</li>
+</ul>
+<p>In Python, a sub-directory that includes a __init__.py file is considered a package, and can be imported. When you import a package, the __init__.py executes and defines what symbols the package exposes to the outside world.</p>
+<p>Let us add all the other files and sub-folders:</p>
+<pre><code class="lang-python">(venv) <span class="hljs-variable">$ </span>cd app <span class="hljs-comment"># move into the app folder</span>
+(venv) <span class="hljs-variable">$ </span>touch routes.py <span class="hljs-comment"># touch command creates an empty file</span>
+(venv) <span class="hljs-variable">$ </span>mkdir templates static <span class="hljs-comment"># I have combined both templates in one command</span>
+(venv) <span class="hljs-variable">$ </span>touch templates/base.html templates/index.html <span class="hljs-comment"># this creates two empty files in the templates sub-folder</span>
+(venv) <span class="hljs-variable">$ </span>mkdir static/css static/images static/js <span class="hljs-comment"># three sub-folders are created inside the static folder</span>
+(venv) <span class="hljs-variable">$ </span>touch static/css/styles.css
+(venv) <span class="hljs-variable">$ </span>touch static/js/main.js
+</code></pre>
+<p>Everything is now created and well set up. Over the other articles, we will use the images, css and js sub-folders, but for now, we will not need them. So, we will disregard them for a while.</p>
+<p>The __init__.py file is going to contain the following code:</p>
+<p class="code-title">__init__.py: Register your flask extension in the application</p>
+<pre><code class="lang-python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask
+
+app = Flask(__name__)
+
+<span class="hljs-keyword">from</span> app <span class="hljs-keyword">import</span> routes
+</code></pre>
+<p>Above, we have created the application object as an instance of the flask package. The <code>__name__</code> variable passed to the Flask class is a Python pre-defined variable, which is set to the name of the module in which it is used. Flask uses the location of this module as a starting point when it needs to load certain resources such as template files. </p>
+<p>The application also imports the <code>routes</code> module from the application instance. It might be confusing at first that there are two instance of <code>app</code>. The <code>app</code> variable in <code>app = Flask(__name__)</code>  is an instance of the class <code>Flask</code> which makes it a member of the <code>app</code> package. The second <code>app</code> is the <em>app</em> directory name, from which we are importing the <code>routes</code> module.</p>
+<p>Another strange thing is that <code>routes</code> is imported at the bottom rather than at the top of the script. The bottom import is a walkaround to <em>circular imports</em>, a common problem with Flask applications.</p>
+<p>As earlier mentioned, routes are the different URLs that the application implements. In Flask, Python functions are responsible for handling application routes, hence their name <em>view functions</em>. These view functions can be mapped to one or more URLS.</p>
+<p>We will create our very first view function as seen below:</p>
+<p class="code-title">routes.py: Home page route</p>
+<pre><code class="lang-python">from app import app
+
+@app.route(<span class="hljs-string">'/'</span>)
+@app.route(<span class="hljs-string">'/home'</span>)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">home</span><span class="hljs-params">()</span></span>:
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'Hello, world!'</span>
+</code></pre>
+<p>The name of our view function is called <code>home</code>. It handles two URLs which are associated with it, that is <code>/</code> and <code>/home</code>. To implement these two URLs, we have utilized the <code>@app.route</code> decorator. A decorator is primarily used to associate a URL with a given view function. What this means is that when a web browser requests for either of the two URLs, Flask is going to invoke the <code>home</code> function and pass the return value back to the browser as a response.</p>
+<p>We then need to import the application instance in the top-level file <code>personal_blog.py</code> as seen below:</p>
+<pre><code class="lang-python">$ <span class="hljs-keyword">from</span> app <span class="hljs-keyword">import</span> app
+</code></pre>
+<p>Again, we see that two <code>app</code>s have been used together. The statement above simply imports the <code>app</code> variable from the <code>app</code> package (this is the folder that contains __init__.py). And that is pretty much it! You have just completed making your first Flask web application! To see it work, run these commands in your terminal:</p>
+<pre><code class="lang-python">$ export FLASK_APP=personal_blog.py <span class="hljs-comment"># our application is registered here</span>
+$ flask <span class="hljs-keyword">run</span><span class="bash"> <span class="hljs-comment"># this runs the flask server</span></span>
+</code></pre>
+<p>You will see a URL generated in the terminal. The <code>flask run</code> command indicates that the server is running on IP address 127.0.0.1, which is always the address of your computer. A simpler name to this IP Address is <em>localhost</em>.</p>
+<p>Applications deployed to production web servers typically listen on port 443, or sometimes port 80 if they do not implement encryption, whose access (to these ports) require administration rights. But in development, Flask uses the freely available port 5000.</p>
+<p>Now, open your browser and enter the following URL in the address bar:</p>
+<pre><code class="lang-python"><span class="hljs-symbol">http:</span><span class="hljs-comment">//localhost:5000/</span>
+
+<span class="hljs-meta"># Alternatively, you can use:</span>
+<span class="hljs-meta"># http:<span class="hljs-comment">//localhost:5000/home</span></span>
+</code></pre>
+<p>
+    <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/hello_world.png')}}" alt="Hello World">
+</p>
+<p>You can see from above that the browser requesting for one of the two URLs which are mapped to the <code>home</code> view function, returning the string <code>Hello, world!</code>. If you try to enter any other URL, you will get an error since these are the only two URLs recognized by the application.</p>
+<p>You have probably noted that the moment you ran <code>flask run</code> command, you saw:</p>
+<pre><code class="lang-python">(venv) $ flask run
+
+<span class="hljs-comment"># Output</span>
+* Tip: There are .env <span class="hljs-keyword">or</span> .flaskenv <span class="hljs-built_in">files</span> present. Do <span class="hljs-string">"pip install python-dotenv"</span> <span class="hljs-built_in">to</span> use them.
+* Serving Flask app <span class="hljs-string">"personal_blog.py"</span>
+* Environment: production
+   WARNING: This is <span class="hljs-keyword">a</span> development server. Do <span class="hljs-keyword">not</span> use <span class="hljs-keyword">it</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">a</span> production deployment.
+   Use <span class="hljs-keyword">a</span> production WSGI server instead.
+* Debug mode: off
+* Running <span class="hljs-keyword">on</span> <span class="hljs-title">http</span>://<span class="hljs-title">127</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-title">5000</span>/ (<span class="hljs-title">Press</span> <span class="hljs-title">CTRL</span>+<span class="hljs-title">C</span> <span class="hljs-title">to</span> <span class="hljs-title">quit</span>)
+</code></pre>
+<p>Every time you need to see your application, you will need to run both of these commands:</p>
+<pre><code class="lang-python">(venv) $ <span class="hljs-keyword">export</span> FLASK_APP=personal_blog.py
+(venv) $ flask <span class="hljs-built_in">run</span>
+</code></pre>
+<p>FLASK_APP is an environment variable. If you close your terminal, and re-open it, your Flask application will not remember any environment variable. That means you will have to type in the above commands all over again. And this is not the only environment variable you will use. So, imagine how many you need to remember in order to run your application.</p>
+<p>Thankfully, there is a way around it. Starting from Flask 1.0, we are able to register all our environment variables in a file and have it automatically imported when we run <code>flask run</code> command. To use this option, as you can see from the output above, we need to install the <code>python-dotenv</code> package:</p>
+<pre><code class="lang-python">(venv) $ pip3 <span class="hljs-keyword">install</span> python-dotenv
+</code></pre>
+<p>Create a <code>.flaskenv</code> file in the application&#39;s root directory (personal_blog folder) to hold all our environment variables:</p>
+<pre><code class="lang-python">(venv) <span class="hljs-variable">$ </span>touch .flaskenv
+</code></pre><br>
+<p class="code-title">.flaskenv: Add all environement variables</p>
+<pre><code class="lang-python"><span class="hljs-attr">FLASK_APP</span>=practice_blog.py
+</code></pre>
+<p>Now, whenever you start your application, all you need to do is run <code>flask run</code> command. Doing this is optional. If you will prefer to set environment variables manually, it is perfectly okay. Just remember them.</p>
+
 
                             <h2>Conclusion</h2>
                             <p>{{ chapter.conclusion }}</p>
