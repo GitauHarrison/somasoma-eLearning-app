@@ -11,14 +11,14 @@ import bleach
 import json
 
 
-@login.user_loader
-def load_student(id):
-    return Student.query.get(int(id))
-
-
 # @login.user_loader
-# def load_teacher(id):
-#     return Teacher.query.get(int(id))
+# def load_student(id):
+#     return Student.query.get(int(id))
+
+
+@login.user_loader
+def load_teacher(id):
+    return Teacher.query.get(int(id))
 
 # @login.user_loader
 # def load_admin(id):
@@ -421,11 +421,6 @@ class Teacher(UserMixin, db.Model):
         backref='author',
         lazy='dynamic'
         )
-    chapter_objectives = db.relationship(
-        'ChapterObjectives',
-        backref='author',
-        lazy='dynamic'
-        )
     chapter_quizzes = db.relationship(
         'ChapterQuiz',
         backref='author',
@@ -699,25 +694,6 @@ class Chapter(db.Model):
 db.event.listen(Chapter.overview, 'set', Chapter.on_changed_body)
 
 
-class ChapterObjectives(db.Model):
-    __tablename__ = 'chapter objectives'
-    id = db.Column(db.Integer, primary_key=True)
-    course = db.Column(db.String(140))
-    chapter = db.Column(db.String(64), index=True)
-    review_objectives_link = db.Column(db.String(140))
-    objective_1 = db.Column(db.String(140))
-    objective_2 = db.Column(db.String(140))
-    objective_3 = db.Column(db.String(140))
-    objective_4 = db.Column(db.String(140))
-    objective_5 = db.Column(db.String(140))
-    allowed_status = db.Column(db.Boolean, default=False)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
-
-    def __repr__(self):
-        return f'Chapter Objective: {self.objective_1}'
-
-
 class ChapterQuiz(db.Model):
     __tablename__ = 'chapter quiz'
     id = db.Column(db.Integer, primary_key=True)
@@ -979,7 +955,7 @@ class WebDevChapter1Objectives(db.Model):
 
     def __repr__(self):
         return f'Objectives: {self.objective_1}, {self.objective_2},\
-            {self.objective_3}, {self.objective_4}, {self.objective_5}'
+            {self.objective_3}, {self.objective_4}, {self.objective_5}\n\n'
 
 
 class WebDevChapter1Quiz(db.Model):
