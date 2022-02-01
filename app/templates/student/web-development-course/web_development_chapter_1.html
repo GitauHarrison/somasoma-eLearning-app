@@ -119,7 +119,7 @@
                         <div class="col-sm-12">
                             <!-- Chapter navigation -->
                             <div class="row text-center">
-                                <div class="col-sm-3">
+                                <div class="col-sm-6">
                                     <p>
                                         <a href=" {{ url_for('student.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                                             <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
@@ -127,21 +127,7 @@
                                         </a>
                                     </p>
                                 </div>
-                                <div class="col-sm-3">
-                                    <p>
-                                        <a href=" {{ url_for('student.web_development_chapter_1_quiz_1', student_full_name=student.student_full_name) }} " target="_blank" class="btn btn-primary">
-                                            Quizzes
-                                        </a>
-                                    </p>
-                                </div>
-                                <div class="col-sm-3">
-                                    <p>
-                                        <a href=" {{ url_for('student.web_development_chapter_1_objectives_status', student_full_name=student.student_full_name) }} " target="_blank" class="btn btn-primary">
-                                            Objectives Achieved
-                                        </a>
-                                    </p>
-                                </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-6">
                                     <p>
                                         {% if percentage_achieved < 60 %}
                                             <a href=" {{ url_for('student.web_development_chapter_2', student_full_name=student.student_full_name) }} " class="btn btn-primary disabled">
