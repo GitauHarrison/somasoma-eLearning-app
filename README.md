@@ -67,7 +67,7 @@ Comimg soon...
 * Student management:
   - [x] Moderation of student's comments in each course chapter
   - [x] Assesses student's achievements in each course chapter (automatic by the application)
-  - [ ] Assesses student's achievements in the overall course (automatic by the application)
+  - [x] Assesses student's achievements in the overall course (automatic by the application)
 <br>
 
 * Event Management
@@ -83,7 +83,7 @@ Comimg soon...
 
 * Course (resitricted to the course they registered for)
   - [x] Can enrol for only one course at a time
-  - [ ] Can do the overall quiz for the enrolled course
+  - [x] Can do the overall quiz for the enrolled course
   - [x] Can post comments in each course chapter
 <br>
 
@@ -155,12 +155,14 @@ Comming soon:
 - Python-dotenv to access environment variables
 - DatatableJS for interactive tables
 - Flask Pagedown for markdown editing
-- Jquery for profile popup, private message and notification
+- Jquery and Ajax for profile popup and new message notification
+- Google reCaptcha for extra security aganist spam
+- Calendly for scheduling virtual classes
 
 
 ## License
 
-- MIT License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## Application Design
 
