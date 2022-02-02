@@ -176,8 +176,7 @@ def dashboard_analytics():
             Chapter.timestamp.asc())
 
     # Calculate the number of objectives achieved
-    all_objectives = student.webdev_chapter1_objectives.order_by(
-        WebDevChapter1Objectives.timestamp.desc()).all()
+    all_objectives = student.webdev_chapter1_objectives.all()
     objectives_list = []
     num_of_true_status = 0
     for objective in all_objectives:
@@ -189,9 +188,11 @@ def dashboard_analytics():
     num_of_true_status = objectives_list[-5:].count("True")
     try:
         percentage_achieved = round(
-            (num_of_true_status / len(objectives_list)) * 100, 2)
+            (num_of_true_status / len(objectives_list[-5:])) * 100, 2
+        )
     except ZeroDivisionError:
         percentage_achieved = 0
+    # End of Calculate the number of objectives achieved
 
     # Calculate total score
     quiz_1_score = 0
@@ -199,10 +200,13 @@ def dashboard_analytics():
     quiz_1_answer = WebDevChapter1Quiz1Options.query.all()
     for answer in quiz_1_answer:
         quiz_1_answers_list.append(answer.answer)
-    student_latest_answer_quiz_1 = len(quiz_1_answers_list) - 1
-    if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == "to display content in a webpage":
-        quiz_1_score += 1
-    else:
+    try:
+        student_latest_answer_quiz_1 = len(quiz_1_answers_list) - 1
+        if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == "pip3 install flask":
+            quiz_1_score += 1
+        else:
+            quiz_1_score += 0
+    except IndexError:
         quiz_1_score += 0
 
     quiz_2_score = 0
@@ -210,10 +214,13 @@ def dashboard_analytics():
     quiz_2_answer = WebDevChapter1Quiz2Options.query.all()
     for answer in quiz_2_answer:
         quiz_2_answers_list.append(answer.answer)
-    student_latest_answer_quiz_2 = len(quiz_2_answers_list) - 1
-    if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == "to style the contents of a webpage":
-        quiz_2_score += 1
-    else:
+    try:
+        student_latest_answer_quiz_2 = len(quiz_2_answers_list) - 1
+        if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == "python":
+            quiz_2_score += 1
+        else:
+            quiz_2_score += 0
+    except IndexError:
         quiz_2_score += 0
 
     quiz_3_score = 0
@@ -221,10 +228,13 @@ def dashboard_analytics():
     quiz_3_answer = WebDevChapter1Quiz3Options.query.all()
     for answer in quiz_3_answer:
         quiz_3_answers_list.append(answer.answer)
-    student_latest_answer_quiz_3 = len(quiz_3_answers_list) - 1
-    if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == "to create a database":
-        quiz_3_score += 1
-    else:
+    try:
+        student_latest_answer_quiz_3 = len(quiz_3_answers_list) - 1
+        if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == "keeping the core simple but extensible":
+            quiz_3_score += 1
+        else:
+            quiz_3_score += 0
+    except IndexError:
         quiz_3_score += 0
 
     quiz_4_score = 0
@@ -232,18 +242,21 @@ def dashboard_analytics():
     quiz_4_answer = WebDevChapter1Quiz4Options.query.all()
     for answer in quiz_4_answer:
         quiz_4_answers_list.append(answer.answer)
-    student_latest_answer_quiz_4 = len(quiz_4_answers_list) - 1
-    if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == "to enhance the creation of an app":
-        quiz_4_score += 1
-    else:
+    try:
+        student_latest_answer_quiz_4 = len(quiz_4_answers_list) - 1
+        if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == "using the command flask run":
+            quiz_4_score += 1
+        else:
+            quiz_4_score += 0
+    except IndexError:
         quiz_4_score += 0
 
     # Calculate percentage
     total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score
     try:
-        quiz_total_score_percentage = round((total_score / 4) * 100, 2)
+        total_score_percentage = round((total_score / 4) * 100, 2)
     except ZeroDivisionError:
-        quiz_total_score_percentage = 0
+        total_score_percentage = 0
 
     return render_template(
         'student/analytics.html',
@@ -251,7 +264,7 @@ def dashboard_analytics():
         student=student,
         percentage_achieved=percentage_achieved,
         course_chapters=course_chapters,
-        quiz_total_score_percentage=quiz_total_score_percentage
+        total_score_percentage=total_score_percentage
         )
 
 # Profile routes
@@ -602,20 +615,19 @@ def web_development_chapter_1():
         ))
 
     # Calculate the number of objectives achieved
-    all_objectives = student.webdev_chapter1_objectives.order_by(
-        WebDevChapter1Objectives.timestamp.desc()).all()
+    all_objectives = student.webdev_chapter1_objectives.all()
     objectives_list = []
     num_of_true_status = 0
     for objective in all_objectives:
-        objectives_list.append(objective.objective_1)
-        objectives_list.append(objective.objective_2)
-        objectives_list.append(objective.objective_3)
-        objectives_list.append(objective.objective_4)
-        objectives_list.append(objective.objective_5)
-    num_of_true_status = objectives_list.count(True)
+        objectives_list.append(str(objective.objective_1))
+        objectives_list.append(str(objective.objective_2))
+        objectives_list.append(str(objective.objective_3))
+        objectives_list.append(str(objective.objective_4))
+        objectives_list.append(str(objective.objective_5))
+    num_of_true_status = objectives_list[-5:].count("True")
     try:
         percentage_achieved = round(
-            (num_of_true_status / len(objectives_list)) * 100, 2
+            (num_of_true_status / len(objectives_list[-5:])) * 100, 2
         )
     except ZeroDivisionError:
         percentage_achieved = 0
