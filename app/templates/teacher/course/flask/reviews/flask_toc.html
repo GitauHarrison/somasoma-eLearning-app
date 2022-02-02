@@ -16,51 +16,36 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            {% for toc in course_toc %}
-                {% if toc.title.lower() == teacher.teacher_course.lower() %}
-                    <div class="profile">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <ul>
-                                    <li>
-                                        <a href="{{ toc.link }}">{{ toc.chapter }}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                {% if not toc.allowed_status == 1 %}
-                                    <a href="{{ url_for('teacher.allow_table_of_contents', chapter=toc.chapter) }}" class="label label-warning">Allow</a>
-                                {% else %}
-                                    <a href="#" class="label label-success">Allowed</a>
-                                {% endif %}
-                                | <a href="{{ url_for('teacher.delete_table_of_contents', chapter=toc.chapter) }}" class="label label-danger">Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-            <!-- Pagination -->
-            <div class="row">
-                <div class="col-sm-12">
-                    <nav aria-label="...">
-                        <ul class="pager">
-                            <li class="previous{% if not course_toc_prev_url %} disabled{% endif %}">
-                                <a href="{{ course_toc_prev_url or '#' }}">
-                                    <span aria-hidden="true">&larr;</span> Newer posts
-                                </a>
-                            </li>
-                            <li class="next{% if not course_toc_next_url %} disabled{% endif %}">
-                                <a href="{{ course_toc_next_url or '#' }}">
-                                    Older posts <span aria-hidden="true">&rarr;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <!-- End of pagination -->
+            <table id="data" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Chapter</th>
+                        <th>Course</th>
+                        <th>Allowed</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for toc in course_toc %}
+                        {% if toc.title.lower() == teacher.teacher_course.lower() %}
+                            <tr>
+                                <td>{{ toc.chapter }}</td>
+                                <td>{{ toc.title }}</td>
+                                <td>
+                                    {% if not toc.allowed_status == 1 %}
+                                        <a href="{{ url_for('teacher.allow_table_of_contents', chapter=toc.chapter) }}" class="label label-warning">Allow</a>
+                                    {% else %}
+                                        <a href="#" class="label label-success">Allowed</a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('teacher.delete_table_of_contents', chapter=toc.chapter) }}" class="label label-danger">Delete</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     <hr>
@@ -82,4 +67,12 @@
             </p>
         </div>
     </div>
+{% endblock %}
+
+{% block datatable_scripts %}
+    <script>
+        $(document).ready(function() {
+            $('#data').DataTable();
+        });
+    </script>
 {% endblock %}
