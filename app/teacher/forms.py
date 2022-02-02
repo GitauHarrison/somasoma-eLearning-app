@@ -128,11 +128,6 @@ class ChapterForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"placeholder": "chapter-1"}
         )
-    chapter_review_link = StringField(
-        'Review Link',
-        validators=[DataRequired()],
-        render_kw={"placeholder": "course/chapters/review"}
-        )
     overview = PageDownField(
         'Chapter Overview',
         validators=[DataRequired()],

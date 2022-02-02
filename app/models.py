@@ -663,7 +663,6 @@ class Chapter(db.Model):
     course = db.Column(db.String(140))
     chapter = db.Column(db.String(64), index=True)
     chapter_link = db.Column(db.String(140))
-    chapter_review_link = db.Column(db.String(140))
     overview = db.Column(db.String(140))
     overview_html = db.Column(db.Text)
     accomplish = db.Column(db.String(140))
