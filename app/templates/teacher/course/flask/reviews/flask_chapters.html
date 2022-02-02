@@ -14,134 +14,134 @@
             <h1>{{ title }} ({{ all_chapters }})</h1>
         </div>
     </div>
-    <div class="row blog">
-        <div class="col-sm-12">
-            {% for chapter in course_chapters %}
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <h1>{{ chapter.chapter }}</h1>
+    {% for chapter in course_chapters %}
+        <div class="row blog">
+            <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h1>{{ chapter.chapter }}</h1>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h2>Overview</h2>
-                        <p>{{ chapter.overview }}</p>
-                        
-                        <!-- Table of contents -->
-                        <div class="row table-of-content">
-                            <div class="col-sm-12">
-                                <h2>Table of Contents</h2>
-                                {% for toc in toc_chapters %}
-                                    {% include 'teacher/course/flask/_table_of_contents.html' %}
-                                {% endfor %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h2>Overview</h2>
+                            <p>{{ chapter.overview }}</p>
+                            
+                            <!-- Table of contents -->
+                            <div class="row table-of-content">
+                                <div class="col-sm-12">
+                                    <h2>Table of Contents</h2>
+                                    {% for toc in toc_chapters %}
+                                        {% include 'teacher/course/flask/_table_of_contents.html' %}
+                                    {% endfor %}
+                                </div>
                             </div>
+
+                            <h2>What You Will Accomplish</h2>
+                            <p>{{ chapter.accomplish }}</p>
+                            <div class="youtube embed-responsive embed-responsive-16by9">
+                                <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/{{ chapter.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+
+                            <h2>Lesson Objectives</h2>
+                            <ul>
+                                <li>{{ chapter.objective_1 }}</li>
+                                <li>{{ chapter.objective_2 }}</li>
+                                <li>{{ chapter.objective_3 }}</li>
+                                <li>{{ chapter.objective_4 }}</li>
+                                <li>{{ chapter.objective_5 }}</li>
+                            </ul>
+
+                            <h2>Getting Started</h2>
+                            <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting 
+                                industry. Lorem Ipsum has been the industry's standard dummy text 
+                                ever since the 1500s, when an unknown printer took a galley of 
+                                type and scrambled it to make a type specimen book. It has survived 
+                                not only five centuries, but also the leap into electronic typesetting, 
+                                remaining essentially unchanged.
+                            </p>
+                            <p>
+                                It was popularised in the 1960s with the release of Letraset sheets 
+                                containing Lorem Ipsum passages, and more recently with desktop 
+                                publishing software like Aldus PageMaker including versions of Lorem
+                                Ipsum.
+                            </p>
+
+                            <h2>Creation</h2>
+                            <p>
+                                Contrary to popular belief, Lorem Ipsum is not simply random text. 
+                                It has roots in a piece of classical Latin literature from 45 BC, making 
+                                it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney 
+                                College in Virginia, looked up one of the more obscure Latin words, consectetur, 
+                                from a Lorem Ipsum passage, and going through the cites of the word in classical 
+                                literature, discovered the undoubtable source.             
+                            </p>
+                            <p>
+                                Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" 
+                                (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise 
+                                on the theory of ethics, very popular during the Renaissance.
+                            </p>
+                            <p>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                                when an unknown printer took a galley of type and scrambled it to make a 
+                                type specimen book. It has survived not only five centuries, but also the 
+                                leap into electronic typesetting, remaining essentially unchanged.             
+                            </p>
+                            <p>
+                                It was popularised in the 1960s with the release of Letraset sheets containing 
+                                Lorem Ipsum passages, and more recently with desktop publishing software like 
+                                Aldus PageMaker including versions of Lorem Ipsum.
+                            </p>
+
+                            <h2>Conclusion</h2>
+                            <p>{{ chapter.conclusion }}</p>
                         </div>
-
-                        <h2>What You Will Accomplish</h2>
-                        <p>{{ chapter.accomplish }}</p>
-                        <div class="youtube embed-responsive embed-responsive-16by9">
-                            <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/{{ chapter.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-
-                        <h2>Lesson Objectives</h2>
-                        <ul>
-                            <li>{{ chapter.objective_1 }}</li>
-                            <li>{{ chapter.objective_2 }}</li>
-                            <li>{{ chapter.objective_3 }}</li>
-                            <li>{{ chapter.objective_4 }}</li>
-                            <li>{{ chapter.objective_5 }}</li>
-                        </ul>
-
-                        <h2>Getting Started</h2>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting 
-                            industry. Lorem Ipsum has been the industry's standard dummy text 
-                            ever since the 1500s, when an unknown printer took a galley of 
-                            type and scrambled it to make a type specimen book. It has survived 
-                            not only five centuries, but also the leap into electronic typesetting, 
-                            remaining essentially unchanged.
-                        </p>
-                        <p>
-                            It was popularised in the 1960s with the release of Letraset sheets 
-                            containing Lorem Ipsum passages, and more recently with desktop 
-                            publishing software like Aldus PageMaker including versions of Lorem
-                            Ipsum.
-                        </p>
-
-                        <h2>Creation</h2>
-                        <p>
-                            Contrary to popular belief, Lorem Ipsum is not simply random text. 
-                            It has roots in a piece of classical Latin literature from 45 BC, making 
-                            it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney 
-                            College in Virginia, looked up one of the more obscure Latin words, consectetur, 
-                            from a Lorem Ipsum passage, and going through the cites of the word in classical 
-                            literature, discovered the undoubtable source.             
-                        </p>
-                        <p>
-                            Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" 
-                            (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise 
-                            on the theory of ethics, very popular during the Renaissance.
-                        </p>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                            when an unknown printer took a galley of type and scrambled it to make a 
-                            type specimen book. It has survived not only five centuries, but also the 
-                            leap into electronic typesetting, remaining essentially unchanged.             
-                        </p>
-                        <p>
-                            It was popularised in the 1960s with the release of Letraset sheets containing 
-                            Lorem Ipsum passages, and more recently with desktop publishing software like 
-                            Aldus PageMaker including versions of Lorem Ipsum.
-                        </p>
-
-                        <h2>Conclusion</h2>
-                        <p>{{ chapter.conclusion }}</p>
-                    </div>
-                    <hr>
-                    <div class="student_feedback" id="objectives">
-            
-                        <!-- Lesson objectives form -->
-                        <div class="row text-center">
-                            <div class="col-sm-12">
-                                <h2>Achievement of Lesson Goals</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <!-- Empty column -->
-                            </div>
-                            <div class="col-sm-6 my-form">
-                                <!-- Objectives form will go here -->
-                                <ul>
-                                    <li>{{ chapter.objective_1 }}</li>
-                                    <li>{{ chapter.objective_2 }}</li>
-                                    <li>{{ chapter.objective_3 }}</li>
-                                    <li>{{ chapter.objective_4 }}</li>
-                                    <li>{{ chapter.objective_5 }}</li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-3">
-                                <!-- Empty column -->
-                            </div>
-                        </div>
-                        <!-- End of lesson objectives form -->
                         <hr>
+                        <div class="student_feedback" id="objectives">
+                
+                            <!-- Lesson objectives form -->
+                            <div class="row text-center">
+                                <div class="col-sm-12">
+                                    <h2>Achievement of Lesson Goals</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <!-- Empty column -->
+                                </div>
+                                <div class="col-sm-6 my-form">
+                                    <!-- Objectives form will go here -->
+                                    <ul>
+                                        <li>{{ chapter.objective_1 }}</li>
+                                        <li>{{ chapter.objective_2 }}</li>
+                                        <li>{{ chapter.objective_3 }}</li>
+                                        <li>{{ chapter.objective_4 }}</li>
+                                        <li>{{ chapter.objective_5 }}</li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-3">
+                                    <!-- Empty column -->
+                                </div>
+                            </div>
+                            <!-- End of lesson objectives form -->
+                            <hr>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        {% if not chapter.allowed_status == 1 %}
-                            <a href="{{ url_for('teacher.allow_chapters', chapter=chapter.chapter) }}" class="label label-warning">Allow</a>
-                        {% else %}
-                            <a href="#" class="label label-success">Allowed</a>
-                        {% endif %}
-                         | <a href="{{ url_for('teacher.delete_chapters', chapter=chapter.chapter) }}" class="label label-danger">Delete</a>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {% if not chapter.allowed_status == 1 %}
+                                <a href="{{ url_for('teacher.allow_chapters', chapter=chapter.chapter) }}" class="label label-warning">Allow</a>
+                            {% else %}
+                                <a href="#" class="label label-success">Allowed</a>
+                            {% endif %}
+                            | <a href="{{ url_for('teacher.delete_chapters', chapter=chapter.chapter) }}" class="label label-danger">Delete</a>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+            </div>
         </div>
-    </div>
+    {% endfor %}
     <!-- Pagination -->
     <div class="row">
         <div class="col-sm-12">
