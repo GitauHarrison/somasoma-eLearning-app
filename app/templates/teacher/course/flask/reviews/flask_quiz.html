@@ -16,13 +16,20 @@
     {% for quiz in flask_quiz %}
         <div class="row profile" id="{{ quiz.id }}">
             <div class="col-sm-12">
-                <p><strong>Course:</strong> {{ quiz.course }}</p>
-                <p><strong>Chapter:</strong> {{ quiz.chapter }}</p>
-                <p><strong>Quiz 1:</strong> {{ quiz.quiz_1 }}</p>
-                <p><strong>Quiz 2:</strong> {{ quiz.quiz_2 }}</p>
-                <p><strong>Quiz 3:</strong> {{ quiz.quiz_3 }}</p>
-                <p><strong>Quiz 4:</strong> {{ quiz.quiz_4 }}</p>
-                <p><strong>Quiz 5:</strong> {{ quiz.quiz_5 }}</p>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>({{ quiz.course }}) {{ quiz.chapter }}</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p><strong>Quiz 1:</strong> {{ quiz.quiz_1 }}</p>
+                        <p><strong>Quiz 2:</strong> {{ quiz.quiz_2 }}</p>
+                        <p><strong>Quiz 3:</strong> {{ quiz.quiz_3 }}</p>
+                        <p><strong>Quiz 4:</strong> {{ quiz.quiz_4 }}</p>
+                        <p><strong>Quiz 5:</strong> {{ quiz.quiz_5 }}</p>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         {% if not quiz.allowed_status == 1 %}
