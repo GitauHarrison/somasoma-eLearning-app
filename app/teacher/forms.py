@@ -199,11 +199,6 @@ class ChapterQuizForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"placeholder": "Chapter 1: Introduction"}
         )
-    review_quiz_link = StringField(
-        'Review Quiz Link',
-        validators=[DataRequired()],
-        render_kw={"placeholder": "course/flask/chapter-1/quiz/review"}
-        )
     quiz_1 = StringField(
         'Quiz 1',
         validators=[DataRequired()],

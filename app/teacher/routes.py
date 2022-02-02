@@ -247,7 +247,6 @@ def dashboard_manage_course():
         chapter_quiz = ChapterQuiz(
             course=chapter_quiz_form.course.data,
             chapter=chapter_quiz_form.chapter.data,
-            review_quiz_link=chapter_quiz_form.review_quiz_link.data,
             quiz_1=chapter_quiz_form.quiz_1.data,
             quiz_2=chapter_quiz_form.quiz_2.data,
             quiz_3=chapter_quiz_form.quiz_3.data,

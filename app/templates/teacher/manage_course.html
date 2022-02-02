@@ -80,14 +80,14 @@
                                 {{ wtf.quick_form(chapter_quiz_form) }}
                             </div>
                         </div>
-                        <div class="col-sm-5 text-center vertical-line">
+                        <div class="col-sm-5 vertical-line">
                             <h2>Review Chapter Quizzes ({{ all_chapter_quizzes }})</h2>
                             {% for quiz in all_quizzes %}
                                 <h3>{{ quiz.chapter }}</h3>
-                                <a href="http://127.0.0.1:5000/teacher/{{ quiz.review_quiz_link }}" _anchor='{{quiz.id}}' class="btn btn-primary">
-                                    Review Chapter Quizzes
-                                </a>
                             {% endfor %}
+                            <a href="http://127.0.0.1:5000/teacher/flask/quiz/review" class="btn btn-primary">
+                                Review Chapter Quizzes
+                            </a>
                         </div>
                     </div>   
                     <!-- End of chapter quizzes -->
