@@ -126,12 +126,12 @@ class ChapterForm(FlaskForm):
     chapter_link = StringField(
         'Live Chapter Link',
         validators=[DataRequired()],
-        render_kw={"placeholder": "course/flask/chapter-1"}
+        render_kw={"placeholder": "chapter-1"}
         )
     chapter_review_link = StringField(
         'Review Link',
         validators=[DataRequired()],
-        render_kw={"placeholder": "course/flask/chapter-1"}
+        render_kw={"placeholder": "course/chapters/review"}
         )
     overview = PageDownField(
         'Chapter Overview',
