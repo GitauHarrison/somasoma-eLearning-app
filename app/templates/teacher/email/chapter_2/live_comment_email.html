@@ -1,0 +1,13 @@
+<p>Dear {{teacher.teacher_full_name}}</p>
+<p>
+    Congratulations! Your comment in <strong>Chapter 2 (Flask Templates)</strong>
+    of the course {{ student.student_course }} is now live.
+    You can view your live comment by clicking the button below:<br><br>
+    <button class="btn btn-primary" type="button">
+        <a href=" {{ url_for('student.web_development_chapter_2', _external=True, _anchor='comments') }} ">
+            Your comment (Chapter 2: Flask Templates)
+        </a>
+    </button>
+</p>
+<p>Sincerely,</p>
+<p>The somasoma eLearning Team</p>

@@ -1,0 +1,10 @@
+Dear {{teacher.teacher_full_name}}
+
+Congratulations! Your comment in Chapter 1 (Hello World)
+of the course {{ student.student_course }} is now live.
+You can view your live comment by clicking the link below:
+
+{{ url_for('student.web_development_chapter_1', _external=True, _anchor='comments') }}
+
+Sincerely,
+The somasoma eLearning Team

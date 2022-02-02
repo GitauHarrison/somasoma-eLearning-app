@@ -157,16 +157,22 @@ class Student(UserMixin, db.Model):
                                         backref='author',
                                         lazy='dynamic'
                                         )
+    webdev_chapter2_comments = db.relationship(
+        'WebDevChapter2Comment',
+        backref='author',
+        lazy='dynamic')
     webdev_chapter1_objectives = db.relationship(
-                                        'WebDevChapter1Objectives',
-                                        backref='author',
-                                        lazy='dynamic'
-                                        )
+        'WebDevChapter1Objectives',
+        backref='author',
+        lazy='dynamic')
+    webdev_chapter2_objectives = db.relationship(
+        'WebDevChapter2Objectives',
+        backref='author',
+        lazy='dynamic')
     webdev_chapter1_quiz = db.relationship(
-                                        'WebDevChapter1Quiz',
-                                        backref='author',
-                                        lazy='dynamic'
-                                        )
+        'WebDevChapter1Quiz',
+        backref='author',
+        lazy='dynamic')
     webdev_chapter1_quiz_1_options = db.relationship(
         'WebDevChapter1Quiz1Options',
         backref='author',
@@ -910,6 +916,9 @@ db.event.listen(AnonymousTemplateInheritanceComment.body,
 # ========================================
 
 
+# Comments
+
+
 class WebDevChapter1Comment(db.Model):
     __tablename__ = 'chapter1_comment'
     id = db.Column(db.Integer, primary_key=True)
@@ -938,8 +947,56 @@ db.event.listen(WebDevChapter1Comment.body,
                 )
 
 
+class WebDevChapter2Comment(db.Model):
+    __tablename__ = 'chapter 2 comment'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    body_html = db.Column(db.Text)
+    allowed_status = db.Column(db.Boolean, default=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Chapter 2 Comment: {self.body}'
+
+    def on_changed_body(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p', 'br', 'li'
+                        ]
+        target.body_html = bleach.linkify(bleach.clean(
+            markdown(value, output_format='html'),
+            tags=allowed_tags, strip=True))
+
+
+db.event.listen(WebDevChapter2Comment.body,
+                'set',
+                WebDevChapter2Comment.on_changed_body
+                )
+
+# Objectives
+
+
 class WebDevChapter1Objectives(db.Model):
     __tablename__ = 'web_dev_chapter1_objectives'
+    id = db.Column(db.Integer, primary_key=True)
+
+    # Objectives
+    objective_1 = db.Column(db.Boolean, default=False)
+    objective_2 = db.Column(db.Boolean, default=False)
+    objective_3 = db.Column(db.Boolean, default=False)
+    objective_4 = db.Column(db.Boolean, default=False)
+    objective_5 = db.Column(db.Boolean, default=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Objectives: {self.objective_1}, {self.objective_2},\
+            {self.objective_3}, {self.objective_4}, {self.objective_5}\n\n'
+
+
+class WebDevChapter2Objectives(db.Model):
+    __tablename__ = 'web_dev_chapter2_objectives'
     id = db.Column(db.Integer, primary_key=True)
 
     # Objectives

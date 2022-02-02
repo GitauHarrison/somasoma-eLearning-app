@@ -8,26 +8,51 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <!-- COMMENT MODERATION TAB -->
-            <div id="comment-moderation" class="tabcontent">
+            <!-- chapter MODERATION TAB -->
+            <div id="chapter-moderation" class="tabcontent">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1>Comment Moderation</h1>
+                        <h1>Comment Moderation Links</h1>
                     </div>
                 </div>
-                {% for chapter in course_chapters %}            
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>{{ chapter.chapter }}</h3>
-                            <a href="http://127.0.0.1:5000/teacher/{{ chapter.chapter_review_link }}" class="btn btn-primary">
-                                Review Comments
-                            </a>
-                        </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="data" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Chapter</th>
+                                    <th>Date Posted</th>
+                                    <th>Moderate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for chapter in course_chapters %}
+                                    <tr>
+                                        <td>{{ chapter.course }}</td>
+                                        <td>{{ chapter.chapter }}</td>
+                                        <td>{{ moment(chapter.timestamp).format('LLL') }}</td>
+                                        <td>
+                                            <a href="#">
+                                                Moderate
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
-                    <hr>
-                {% endfor %}
+                </div>
             </div>
-            <!-- END OF COMMENT MODERATION TAB -->
+            <!-- END OF chapter MODERATION TAB -->
         </div>
     </div>
+{% endblock %}
+
+{% block datatable_scripts %}
+    <script>
+        $(document).ready(function() {
+            $('#data').DataTable();
+        });
+    </script>
 {% endblock %}

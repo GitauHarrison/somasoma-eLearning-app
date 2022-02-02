@@ -8,12 +8,13 @@ from flask import render_template, flash, request, redirect, url_for,\
 from app.models import Teacher, TeacherCommunityComment, Student,\
     CommunityComment, WebDevelopmentOverview, TableOfContents, Chapter,\
     WebDevChapter1Comment, ChapterQuiz, BlogArticles,\
-    Events, TeacherMessage, TeacherNotifications
+    Events, TeacherMessage, TeacherNotifications, WebDevChapter2Comment
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
     WebDevelopmentOverviewForm, TableOfContentsForm, ChapterForm,\
     ChapterQuizForm, BlogArticlesForm, EventsForm,\
     PrivateMessageForm
-from app.teacher.email import send_live_flask_chapter_1_comment_email
+from app.teacher.email import send_live_flask_chapter_1_comment_email, \
+    send_live_flask_chapter_2_comment_email
 from werkzeug.utils import secure_filename
 import os
 
@@ -171,7 +172,7 @@ def dashboard_student_community():
         )
 
 
-@bp.route('/dashboard/comment-moderation')
+@bp.route('/dashboard/comment-moderation-links')
 @login_required
 def dashboard_comment_moderation():
     teacher = Teacher.query.filter_by(
@@ -1069,6 +1070,67 @@ def delete_flask_chapter_1_comments(id):
         'teacher.review_flask_chapter_1_comments'
         )
     )
+
+
+# Flask Chapter 2
+
+@bp.route('/flask/chapter-2/comments/review')
+@login_required
+def review_flask_chapter_2_comments():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    comments = WebDevChapter2Comment.query.order_by(
+        WebDevChapter2Comment.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for(
+        'teacher.review_flask_chapter_2_comments',
+        page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for(
+        'teacher.review_flask_chapter_2_comments',
+        page=comments.prev_num) \
+        if comments.has_prev else None
+    all_comments = len(WebDevChapter2Comment.query.all())
+    return render_template(
+        'teacher/course/flask/reviews/flask_chapter_2_comments.html',
+        teacher=teacher,
+        title='Review Flask Chapter 2 Comments',
+        comments=comments.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        all_comments=all_comments
+        )
+
+
+@bp.route('/flask/chapter-2/comments/<int:id>/allow')
+def allow_flask_chapter_2_comments(id):
+    student = Student.query.filter_by(
+        id=id).first()
+    comment = WebDevChapter2Comment.query.get_or_404(id)
+    comment.allowed_status = True
+    db.session.commit()
+    send_live_flask_chapter_2_comment_email(student)
+    flash(f'Flask chapter 2 comment {id} has been allowed.')
+    return redirect(url_for(
+        'teacher.review_flask_chapter_2_comments'
+        )
+    )
+
+
+@bp.route('/flask/chapter-2/comments/<int:id>/delete')
+def delete_flask_chapter_2_comments(id):
+    comment = WebDevChapter2Comment.query.get_or_404(id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash(f'Flask chapter 1 comment {id} has been deleted.')
+    return redirect(url_for(
+        'teacher.review_flask_chapter_2_comments'
+        )
+    )
+
 
 # Flask chapter quiz
 

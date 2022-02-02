@@ -12,8 +12,9 @@ from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
     WebDevChapter1Quiz1Options, Student, WebDevelopmentOverview, Chapter,\
     Teacher, WebDevChapter1Quiz2Options,\
     WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, StudentMessage,\
-    StudentNotification
-from app.student.email import send_flask_chapter_1_comment_email
+    StudentNotification, WebDevChapter2Comment, WebDevChapter2Objectives
+from app.student.email import send_flask_chapter_1_comment_email, \
+    send_flask_chapter_2_comment_email
 from flask_login import current_user, login_required
 from datetime import datetime
 
@@ -175,7 +176,7 @@ def dashboard_analytics():
         allowed_status=True).order_by(
             Chapter.timestamp.asc())
 
-    # Calculate the number of objectives achieved
+    # Chapter 1: Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.all()
     objectives_list = []
     num_of_true_status = 0
@@ -192,6 +193,25 @@ def dashboard_analytics():
         )
     except ZeroDivisionError:
         percentage_achieved = 0
+    # End of Calculate the number of objectives achieved
+
+    # Chapter 2: Calculate the number of objectives achieved
+    all_objectives_chapter_2 = student.webdev_chapter2_objectives.all()
+    objectives_list_chapter_2 = []
+    num_of_true_status = 0
+    for objective in all_objectives_chapter_2:
+        objectives_list_chapter_2.append(str(objective.objective_1))
+        objectives_list_chapter_2.append(str(objective.objective_2))
+        objectives_list_chapter_2.append(str(objective.objective_3))
+        objectives_list_chapter_2.append(str(objective.objective_4))
+        objectives_list_chapter_2.append(str(objective.objective_5))
+    num_of_true_status_chapter_2 = objectives_list_chapter_2[-5:].count("True")
+    try:
+        percentage_achieved_chapter_2 = round(
+            (num_of_true_status_chapter_2 /
+                len(objectives_list_chapter_2[-5:])) * 100, 2)
+    except ZeroDivisionError:
+        percentage_achieved_chapter_2 = 0
     # End of Calculate the number of objectives achieved
 
     # Calculate total score
@@ -262,9 +282,14 @@ def dashboard_analytics():
         'student/analytics.html',
         title='Analytics',
         student=student,
-        percentage_achieved=percentage_achieved,
         course_chapters=course_chapters,
-        total_score_percentage=total_score_percentage
+
+        # Chapter 1
+        percentage_achieved=percentage_achieved,
+        total_score_percentage=total_score_percentage,
+
+        # Chapter 2
+        percentage_achieved_chapter_2=percentage_achieved_chapter_2
         )
 
 # Profile routes
@@ -548,10 +573,7 @@ def web_development_chapter_1():
                 )
 
     # Dsiplaying the chapter
-    course_chapters = Chapter.query.filter_by(
-        allowed_status=True).order_by(
-            Chapter.timestamp.asc()).paginate(
-                page, current_app.config['POSTS_PER_PAGE'], False)
+    course_chapters = Chapter.query.filter_by(allowed_status=True).all()
 
     # Chapter Comment form
     form = CommentForm()
@@ -644,8 +666,8 @@ def web_development_chapter_1():
         all_comments=all_comments,
         student=student,
 
-        # Chapter
-        course_chapters=course_chapters.items,
+        # Chapters
+        course_chapters=course_chapters,
 
         # Table of Contents
         all_toc=all_toc.items,
@@ -659,14 +681,118 @@ def web_development_chapter_1():
 @login_required
 def web_development_chapter_2():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
+        student_full_name=current_user.student_full_name).first()
+    teachers = Teacher.query.all()
+    page = request.args.get('page', 1, type=int)
+
+    # Table of Contents
+    all_toc = TableOfContents.query.filter_by(
+        title=student.student_course).order_by(
+            TableOfContents.timestamp.asc()).paginate(
+                page,
+                current_app.config['POSTS_PER_PAGE'],
+                False)
+
+    # Dsiplaying the chapter
+    course_chapters = Chapter.query.filter_by(allowed_status=True).all()
+
+    # Chapter Comment form
     form = CommentForm()
+    if form.validate_on_submit():
+        comment = WebDevChapter2Comment(
+            body=form.comment.data,
+            author=current_user)
+        db.session.add(comment)
+        db.session.commit()
+        for teacher in teachers:
+            if teacher.teacher_course == student.student_course:
+                send_flask_chapter_2_comment_email(teacher)
+        flash('You will receive an email when your comment is approved.')
+        return redirect(url_for(
+            'student.web_development_chapter_2',
+            _anchor='comments',
+            student=student,
+            title='Hello World',
+            )
+        )
+
+    # Display student comments
+    comments = WebDevChapter2Comment.query.filter_by(
+        allowed_status=True).order_by(
+            WebDevChapter2Comment.timestamp.desc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for(
+        'student.web_development_chapter_2',
+        _anchor="comments",
+        page=comments.next_num) \
+        if comments.has_next else None
+    prev_url = url_for(
+        'student.web_development_chapter_2',
+        _anchor='comments',
+        page=comments.prev_num) \
+        if comments.has_prev else None
+    all_comments = len(WebDevChapter2Comment.query.filter_by(
+        allowed_status=True).all()
+        )
+
+    # Chapter Objectives
+    objectives_form = ChapterObjectivesForm()
+    if objectives_form.validate_on_submit():
+        objectives = WebDevChapter2Objectives(
+            objective_1=objectives_form.objective_1.data,
+            objective_2=objectives_form.objective_2.data,
+            objective_3=objectives_form.objective_3.data,
+            objective_4=objectives_form.objective_4.data,
+            objective_5=objectives_form.objective_5.data,
+            author=student
+        )
+        db.session.add(objectives)
+        db.session.commit()
+        flash('Your response has been saved')
+        return redirect(url_for(
+            'student.web_development_chapter_2',
+            student_full_name=student.student_full_name,
+            _anchor='objectives'
+        ))
+
+    # Calculate the number of objectives achieved
+    all_objectives = student.webdev_chapter2_objectives.all()
+    objectives_list = []
+    num_of_true_status = 0
+    for objective in all_objectives:
+        objectives_list.append(str(objective.objective_1))
+        objectives_list.append(str(objective.objective_2))
+        objectives_list.append(str(objective.objective_3))
+        objectives_list.append(str(objective.objective_4))
+        objectives_list.append(str(objective.objective_5))
+    num_of_true_status = objectives_list[-5:].count("True")
+    try:
+        percentage_achieved = round(
+            (num_of_true_status / len(objectives_list[-5:])) * 100, 2
+        )
+    except ZeroDivisionError:
+        percentage_achieved = 0
+    # End of Calculate the number of objectives achieved
     return render_template(
         'student/web-development-course/web_development_chapter_2.html',
-        title='Chapter 2: Working With Flask Templates',
+        title='Chapter 2: Flask Templates',
         form=form,
-        student=student
+        student=student,
+        objectives_form=objectives_form,
+        comments=comments.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        all_comments=all_comments,
+
+        # Chapters
+        course_chapters=course_chapters,
+
+        # Table of Contents
+        all_toc=all_toc.items,
+
+        # Objectives achieved
+        percentage_achieved=percentage_achieved
         )
 
 

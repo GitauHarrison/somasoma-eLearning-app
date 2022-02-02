@@ -1,6 +1,6 @@
 Dear {{teacher.teacher_full_name}}
 
-You have received a comment in chapter 1 of the course {{ teacher.teacher_course }}.
+You have received a comment in Chapter 1 (Hello World) of the course {{ teacher.teacher_course }}.
 
 Please review it by clicking the link below:
 
