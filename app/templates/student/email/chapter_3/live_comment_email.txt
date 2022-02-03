@@ -1,0 +1,10 @@
+Dear {{student.student_full_name}}
+
+Congratulations! Your comment in Chapter 3 (Introduction to Web Forms)
+of the course {{ student.student_course }} is now live.
+You can view your live comment by clicking the link below:
+
+{{ url_for('student.web_development_chapter_3', _external=True, _anchor='comments') }}
+
+Sincerely,
+The somasoma eLearning Team

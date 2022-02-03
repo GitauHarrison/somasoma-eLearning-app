@@ -1,0 +1,13 @@
+<p>Dear {{teacher.teacher_full_name}}</p>
+<p>
+    You have received a comment in <strong>Chapter 2 (Introduction to Web Forms)</strong> 
+    of the course {{ teacher.teacher_course }}.
+    Please review it by clicking the button below:<br><br>
+    <button class="btn btn-primary" type="button">
+        <a href=" {{ url_for('teacher.review_flask_chapter_3_comments', _external=True) }} ">
+            Student comment (Chapter 3: Introduction to Web Forms)
+        </a>
+    </button>
+</p>
+<p>Sincerely,</p>
+<p>The somasoma eLearning Team</p>

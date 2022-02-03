@@ -112,6 +112,20 @@ class Chapter2Quiz1OptionsForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class Chapter3Quiz1OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('To make a page look beautiful', 'To make a page look beautiful'),
+            ('It has no purpose', 'It has no purpose'),
+            ('It makes it easier to work with flask', 'It makes it easier to work with flask'),
+            ('To collect user data', 'To collect user data'),
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
 # Quiz 2
 
 
@@ -137,6 +151,20 @@ class Chapter2Quiz2OptionsForm(FlaskForm):
             ('Java', 'Java'),
             ('Python', 'Python'),
             ('HTML', 'HTML')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class Chapter3Quiz2OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Flask-wtf', 'Flask-wtf'),
+            ('SECRET_KEY', 'SECRET_KEY'),
+            ('Flask-bootstrap', 'Flask-bootstrap')
             ],
         validators=[DataRequired()]
         )
@@ -174,6 +202,19 @@ class Chapter2Quiz3OptionsForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class Chapter3Quiz3OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('StringField', 'StringField'),
+            ('ValidationError', 'ValidationError'),
+            ('PasswordField', 'PasswordField'),
+            ('FlaskForm', 'FlaskForm')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
 # Quiz 4
 
 
@@ -205,6 +246,20 @@ class Chapter2Quiz4OptionsForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class Chapter3Quiz4OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('routes.py', 'routes.py'),
+            ('index.html', 'index.html'),
+            ('.env', '.env'),
+            ('forms.py', 'forms.py')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
 # Quiz 5
 
 
@@ -230,6 +285,20 @@ class Chapter2Quiz5OptionsForm(FlaskForm):
             ('Click', 'Click'),
             ('Python', 'Python'),
             ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class Chapter3Quiz5OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Jinja', 'Jinja'),
+            ('Flask bootsrap', 'Flask bootsrap'),
+            ('SECRET_KEY', 'SECRET_KEY'),
+            ('Python-dotenv', 'Python-dotenv')
             ],
         validators=[DataRequired()]
         )

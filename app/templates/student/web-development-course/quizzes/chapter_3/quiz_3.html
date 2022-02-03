@@ -13,21 +13,20 @@
     <div class="col-sm-12 student-content-title">
         <h1>{{ title }}</h1>
         <p>
-            There are a total of 5 questions. You can only take this quiz once.
-            You will be redirected to <strong>the second quiz</strong> after you
-            submit your answer.
+            You can only take this quiz once.
+            You will be redirected to <strong>the forth quiz</strong>.
         </p>
     </div>
 </div>
 <div class="row" id="quizzes">
     <div class="col-sm-12">
         {% for quiz in quizzes %}
-            {% if quiz.chapter.lower() == 'chapter 2: flask templates' %}
-            <div class="row my-form quiz-form" id="{{ quiz_1 }}">
+            {% if quiz.chapter.lower() == 'chapter 3: introduction to web forms' %}
+            <div class="row my-form quiz-form" id="quiz_{{ quiz.id }}">
                 <div class="col-sm-6 col-sm-6">
-                    <p>{{ quiz.quiz_1 }}</p>
+                    <p>{{ quiz.quiz_3 }}</p>
                     <p>
-                    {{  wtf.quick_form(quiz_1_form) }}
+                    {{  wtf.quick_form(quiz_3_form) }}
                     </p>
                 </div>
             </div>

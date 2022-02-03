@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block student_app_content %}
+<!-- Flash message -->
+<div class="row">
+    <div class="col-sm-12">
+        {% include '_flash_message.html' %}
+    </div>
+</div>
+<!-- End of flash message -->
+<div class="row">
+    <div class="col-sm-12 student-content-title">
+        <h1>{{ title }}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <p>Total Score: {{ total_score }}</p>
+        <p>Achievement Rate: {{ total_score_percentage }}%</p>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Quiz</th>
+                    <th>Your Answer</th>
+                    <th>Correct Answer</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quizzes %}           
+                    {% if quiz.chapter.lower()  == 'chapter 3: introduction to web forms' %}
+                        <tr>
+                            <td>{{ quiz.quiz_1 }}</td>
+                            <td>{{ quiz_1_answers_list[student_latest_answer_quiz_1] }}</td>
+                            <td>To collect user data</td>
+                            <td>{{ quiz_1_score }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ quiz.quiz_2 }}</td>
+                            <td>{{ quiz_2_answers_list[student_latest_answer_quiz_2] }}</td>
+                            <td>Flask-wtf</td>
+                            <td>{{ quiz_2_score }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ quiz.quiz_3 }}</td>
+                            <td>{{ quiz_3_answers_list[student_latest_answer_quiz_3] }}</td>
+                            <td>ValidationError</td>
+                            <td>{{ quiz_3_score }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ quiz.quiz_4 }}</td>
+                            <td>{{ quiz_4_answers_list[student_latest_answer_quiz_4] }}</td>
+                            <td>.env</td>
+                            <td>{{ quiz_4_score }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ quiz.quiz_5 }}</td>
+                            <td>{{ quiz_5_answers_list[student_latest_answer_quiz_5] }}</td>
+                            <td>Flask bootsrap</td>
+                            <td>{{ quiz_5_score }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <p>
+            <a href=" {{ url_for('student.dashboard_quizzes', student_full_name=student.student_full_name) }} " class="btn btn-primary">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                More Quiz
+            </a>
+        </p>
+    </div>
+</div>
+{% endblock %}

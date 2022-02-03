@@ -11,7 +11,7 @@ from app.models import CommunityComment, WebDevChapter1Comment,\
     WebDevChapter2Quiz, WebDevChapter2Quiz1Options,\
     WebDevChapter2Quiz2Options, WebDevChapter2Quiz3Options,\
     WebDevChapter2Quiz4Options, WebDevChapter1Quiz5Options, \
-    WebDevChapter2Quiz5Options
+    WebDevChapter2Quiz5Options, WebDevChapter3Comment, WebDevChapter3Objectives
 
 app = create_app()
 
@@ -54,5 +54,7 @@ def make_shell_context():
         WebDevChapter2Quiz3Options=WebDevChapter2Quiz3Options,
         WebDevChapter2Quiz4Options=WebDevChapter2Quiz4Options,
         WebDevChapter1Quiz5Options=WebDevChapter1Quiz5Options,
-        WebDevChapter2Quiz5Options=WebDevChapter2Quiz5Options
+        WebDevChapter2Quiz5Options=WebDevChapter2Quiz5Options,
+        WebDevChapter3Comment=WebDevChapter3Comment,
+        WebDevChapter3Objectives=WebDevChapter3Objectives
         )

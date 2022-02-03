@@ -36,3 +36,20 @@ def send_live_flask_chapter_2_comment_email(student):
                    token=token
                    )
                )
+
+
+def send_live_flask_chapter_3_comment_email(student):
+    token = student.get_reset_password_token()
+    send_email(
+        '[somasoma eLearning] Your Chapter 3 (Introduction to Web Forms) comment is Live!',
+        sender=current_app.config['ADMINS'][0],
+        recipients=[student.student_email],
+        text_body=render_template(
+            'student/email/chapter_2/live_comment_email.txt',
+            student=student,
+            token=token),
+        html_body=render_template(
+            'student/email/chapter_2/live_comment_email.html',
+            student=student,
+            token=token)
+    )
