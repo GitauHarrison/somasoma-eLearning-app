@@ -258,12 +258,13 @@ def dashboard_manage_course():
         db.session.commit()
         flash('Chapter quiz has been added!', 'success')
         return redirect(url_for('teacher.review_chapter_quiz'))
+
     all_quizzes = ChapterQuiz.query.filter_by(
+        course=teacher.teacher_course).all()
+    course_chapters = Chapter.query.filter_by(
         course=teacher.teacher_course).all()
 
     # Length
-    course_chapters = Chapter.query.filter_by(
-        course=teacher.teacher_course).all()
     all_chapters = len(Chapter.query.all())
     all_toc = len(TableOfContents.query.all())
     all_course_overview = len(WebDevelopmentOverview.query.all())
