@@ -128,6 +128,11 @@ class ChapterForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"placeholder": "chapter-1"}
         )
+    comment_moderation_link = StringField(
+        'Comment Moderation Link',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "flask/chapter-1/comments/review"}
+        )
     overview = PageDownField(
         'Chapter Overview',
         validators=[DataRequired()],

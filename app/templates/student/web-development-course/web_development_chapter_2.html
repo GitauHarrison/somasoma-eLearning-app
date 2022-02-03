@@ -14,40 +14,40 @@
             {% for chapter in course_chapters %}
                 {% if chapter.course.lower() ==  student.student_course.lower() %}
                     {% if chapter.chapter.lower() == "chapter 2: flask templates" %}
-                    <div class="row">
-                        <div class="col-sm-12 text-center student-content-title">
-                            <h1>{{ chapter.chapter }}</h1>
+                        <div class="row">
+                            <div class="col-sm-12 text-center student-content-title">
+                                <h1>{{ chapter.chapter }}</h1>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h2>Overview</h2>
-                            <p>{{ chapter.overview }}</p>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h2>Overview</h2>
+                                <p>{{ chapter.overview }}</p>
 
-                            <!-- Table of contents -->
-                            <div class="row table-of-content">
-                                <div class="col-sm-12">
-                                    <h2>Table of Contents</h2>
-                                    {% for toc in all_toc %}
-                                        {% include 'student/_table_of_contents.html' %}
-                                    {% endfor %}
+                                <!-- Table of contents -->
+                                <div class="row table-of-content">
+                                    <div class="col-sm-12">
+                                        <h2>Table of Contents</h2>
+                                        {% for toc in all_toc %}
+                                            {% include 'student/_table_of_contents.html' %}
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <h2>What You Will Accomplish</h2>
-                            <p>{{ chapter.accomplish }}</p>
-                            <div class="youtube embed-responsive embed-responsive-16by9">
-                                <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/{{ chapter.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
+                                <h2>What You Will Accomplish</h2>
+                                <p>{{ chapter.accomplish }}</p>
+                                <div class="youtube embed-responsive embed-responsive-16by9">
+                                    <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/{{ chapter.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
 
-                            <h2>Lesson Objectives</h2>
-                            <ul>
-                                <li>{{ chapter.objective_1 }}</li>
-                                <li>{{ chapter.objective_2 }}</li>
-                                <li>{{ chapter.objective_3 }}</li>
-                                <li>{{ chapter.objective_4 }}</li>
-                                <li>{{ chapter.objective_5 }}</li>
-                            </ul>
+                                <h2>Lesson Objectives</h2>
+                                <ul>
+                                    <li>{{ chapter.objective_1 }}</li>
+                                    <li>{{ chapter.objective_2 }}</li>
+                                    <li>{{ chapter.objective_3 }}</li>
+                                    <li>{{ chapter.objective_4 }}</li>
+                                    <li>{{ chapter.objective_5 }}</li>
+                                </ul>
 
 <p>The completed project used in this article can be referenced <a href="https://github.com/GitauHarrison/personal-blog-tutorial-project/commit/b388b9099738c53b44650ef8e99a4364a923964a">here</a>. </p>
 <p>In the previous chapter, you learnt how to display a string on the web browser. During this chapter, I will show you how to work with HTML templates that help create a more elaborate and dynamic web application.</p>

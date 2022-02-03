@@ -13,40 +13,41 @@
         <div class="col-sm-12">
             {% for chapter in course_chapters %}
                 {% if chapter.course.lower() ==  student.student_course.lower() %}
-                    <div class="row">
-                        <div class="col-sm-12 text-center student-content-title">
-                            <h1>{{ chapter.chapter }}</h1>
+                    {% if chapter.chapter.lower() == 'chapter 1: hello world' %}
+                        <div class="row">
+                            <div class="col-sm-12 text-center student-content-title">
+                                <h1>{{ chapter.chapter }}</h1>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h2>Overview</h2>
-                            <p>{{ chapter.overview }}</p>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h2>Overview</h2>
+                                <p>{{ chapter.overview }}</p>
 
-                            <!-- Table of contents -->
-                            <div class="row table-of-content">
-                                <div class="col-sm-12">
-                                    <h2>Table of Contents</h2>
-                                    {% for toc in all_toc %}
-                                        {% include 'student/_table_of_contents.html' %}
-                                    {% endfor %}
+                                <!-- Table of contents -->
+                                <div class="row table-of-content">
+                                    <div class="col-sm-12">
+                                        <h2>Table of Contents</h2>
+                                        {% for toc in all_toc %}
+                                            {% include 'student/_table_of_contents.html' %}
+                                        {% endfor %}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <h2>What You Will Accomplish</h2>
-                            <p>{{ chapter.accomplish }}</p>
-                            <div class="youtube embed-responsive embed-responsive-16by9">
-                                <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/{{ chapter.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
+                                <h2>What You Will Accomplish</h2>
+                                <p>{{ chapter.accomplish }}</p>
+                                <div class="youtube embed-responsive embed-responsive-16by9">
+                                    <iframe class="youtube embed-responsive-item" width="560" height="315" src="https://www.youtube.com/embed/{{ chapter.youtube_link }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
 
-                            <h2>Lesson Objectives</h2>
-                            <ul>
-                                <li>{{ chapter.objective_1 }}</li>
-                                <li>{{ chapter.objective_2 }}</li>
-                                <li>{{ chapter.objective_3 }}</li>
-                                <li>{{ chapter.objective_4 }}</li>
-                                <li>{{ chapter.objective_5 }}</li>
-                            </ul>
+                                <h2>Lesson Objectives</h2>
+                                <ul>
+                                    <li>{{ chapter.objective_1 }}</li>
+                                    <li>{{ chapter.objective_2 }}</li>
+                                    <li>{{ chapter.objective_3 }}</li>
+                                    <li>{{ chapter.objective_4 }}</li>
+                                    <li>{{ chapter.objective_5 }}</li>
+                                </ul>
 
 <p>The completed project used in this article can be referenced <a href="https://github.com/GitauHarrison/personal-blog-tutorial-project/commit/5b3f2b4c0348b933f4f07755457efc2fe3218c7a">here</a>. </p>
 <h3 id="install-python">Install Python</h3>
@@ -352,6 +353,7 @@ $ flask <span class="hljs-keyword">run</span><span class="bash"> <span class="hl
                         </div>
                     </div>
                     <!-- END OF COMMENTS SECTIONS -->
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>
