@@ -7,7 +7,8 @@ from app.student.forms import CommentForm, EditProfileForm,\
     EmptyForm, Chapter1Quiz2OptionsForm, Chapter1Quiz3OptionsForm,\
     Chapter1Quiz4OptionsForm, Chapter2Quiz1OptionsForm,\
     Chapter2Quiz2OptionsForm, Chapter2Quiz3OptionsForm,\
-    Chapter2Quiz4OptionsForm
+    Chapter2Quiz4OptionsForm, Chapter2Quiz5OptionsForm,\
+    Chapter1Quiz5OptionsForm
 from app.teacher.forms import PrivateMessageForm
 from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
     CommunityComment, WebDevChapter1Objectives, WebDevChapter1Quiz,\
@@ -16,7 +17,8 @@ from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
     WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, StudentMessage,\
     StudentNotification, WebDevChapter2Comment, WebDevChapter2Objectives,\
     WebDevChapter2Quiz1Options, WebDevChapter2Quiz2Options,\
-    WebDevChapter2Quiz3Options, WebDevChapter2Quiz4Options
+    WebDevChapter2Quiz3Options, WebDevChapter2Quiz4Options, \
+    WebDevChapter1Quiz5Options, WebDevChapter2Quiz5Options
 from app.student.email import send_flask_chapter_1_comment_email, \
     send_flask_chapter_2_comment_email
 from flask_login import current_user, login_required
@@ -275,8 +277,24 @@ def dashboard_analytics():
     except IndexError:
         quiz_4_score += 0
 
+    quiz_5_score = 0
+    quiz_5_answers_list = []
+    quiz_5_answer = WebDevChapter1Quiz5Options.query.all()
+    for answer in quiz_5_answer:
+        quiz_5_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_5 = len(quiz_5_answers_list) - 1
+        if quiz_5_answers_list[student_latest_answer_quiz_5].lower() == \
+                "view functions":
+            quiz_5_score += 1
+        else:
+            quiz_5_score += 0
+    except IndexError:
+        quiz_5_score += 0
+
     # CHAPTER 1: Calculate percentage
-    total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score
+    total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score + \
+        quiz_5_score
     try:
         total_score_percentage = round((total_score / 4) * 100, 2)
     except ZeroDivisionError:
@@ -339,8 +357,23 @@ def dashboard_analytics():
     except IndexError:
         quiz_4_score_chapter_2 += 0
 
+    quiz_5_score_chapter_2 = 0
+    quiz_5_answers_list_chapter_2 = []
+    quiz_5_answer_chapter_2 = WebDevChapter2Quiz5Options.query.all()
+    for answer in quiz_5_answer_chapter_2:
+        quiz_5_answers_list_chapter_2.append(answer.answer)
+    try:
+        student_latest_answer_quiz_5_chapter_2 = len(quiz_5_answers_list_chapter_2) - 1
+        if quiz_5_answers_list_chapter_2[student_latest_answer_quiz_5_chapter_2].lower() == "view functions":
+            quiz_5_score_chapter_2 += 1
+        else:
+            quiz_5_score_chapter_2 += 0
+    except IndexError:
+        quiz_5_score_chapter_2 += 0
+
     # CHAPTER 2: Calculate percentage
-    total_score_chapter_2 = quiz_1_score_chapter_2 + quiz_2_score_chapter_2 + quiz_3_score_chapter_2 + quiz_4_score_chapter_2
+    total_score_chapter_2 = quiz_1_score_chapter_2 + quiz_2_score_chapter_2 + \
+        quiz_3_score_chapter_2 + quiz_4_score_chapter_2 + quiz_5_score_chapter_2
     try:
         total_score_percentage_chapter_2 = round((total_score_chapter_2 / 4) * 100, 2)
     except ZeroDivisionError:
@@ -1058,7 +1091,7 @@ def web_development_chapter_1_quiz_4():
         flash('Your quiz 4 answer have been added!',
               'Congratulations! You have completed the chapter 1 quiz!')
         return redirect(url_for(
-            'student.web_development_chapter_1_total_score',
+            'student.web_development_chapter_1_quiz_5',
             student_full_name=student.student_full_name,
         ))
     return render_template(
@@ -1067,6 +1100,46 @@ def web_development_chapter_1_quiz_4():
         student=student,
         quizzes=quizzes.items,
         quiz_4_form=quiz_4_form
+        )
+
+
+# Chhapter 1 quiz 5
+
+
+@bp.route(
+    '/web-development/chapter-1/quiz-5',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_1_quiz_5():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    quizzes = ChapterQuiz.query.order_by(
+        ChapterQuiz.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
+
+    # Quiz 5
+    quiz_5_form = Chapter1Quiz5OptionsForm()
+    if quiz_5_form.validate_on_submit():
+        answer = WebDevChapter1Quiz5Options(
+            answer=quiz_5_form.answer.data)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 4 answer have been added!',
+              'Congratulations! You have completed the chapter 1 quiz!')
+        return redirect(url_for(
+            'student.web_development_chapter_1_total_score',
+            student_full_name=student.student_full_name,
+        ))
+    return render_template(
+        'student/web-development-course/quizzes/chapter_1/quiz_5.html',
+        title='Chapter 1: Quiz 5',
+        student=student,
+        quizzes=quizzes.items,
+        quiz_5_form=quiz_5_form
         )
 
 
@@ -1195,7 +1268,7 @@ def web_development_chapter_2_quiz_4():
         flash('Your quiz 4 answer have been added!',
               'Congratulations! You have completed the chapter 1 quiz!')
         return redirect(url_for(
-            'student.web_development_chapter_2_total_score',
+            'student.web_development_chapter_2_quiz_5',
             student_full_name=student.student_full_name,
         ))
     return render_template(
@@ -1204,6 +1277,41 @@ def web_development_chapter_2_quiz_4():
         student=student,
         quizzes=quizzes,
         quiz_4_form=quiz_4_form
+        )
+
+
+# Chapter 2 quiz 5
+
+
+@bp.route(
+    '/web-development/chapter-2/quiz-5',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_2_quiz_5():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
+
+    # Quiz 4
+    quiz_5_form = Chapter2Quiz5OptionsForm()
+    if quiz_5_form.validate_on_submit():
+        answer = WebDevChapter2Quiz5Options(
+            answer=quiz_5_form.answer.data)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 4 answer have been added!',
+              'Congratulations! You have completed the chapter 1 quiz!')
+        return redirect(url_for(
+            'student.web_development_chapter_2_total_score',
+            student_full_name=student.student_full_name,
+        ))
+    return render_template(
+        'student/web-development-course/quizzes/chapter_2/quiz_5.html',
+        title='Chapter 2: Quiz 5',
+        student=student,
+        quizzes=quizzes,
+        quiz_5_form=quiz_5_form
         )
 
 
@@ -1228,7 +1336,8 @@ def web_development_chapter_1_total_score():
         quiz_1_answers_list.append(answer.answer)
     try:
         student_latest_answer_quiz_1 = len(quiz_1_answers_list) - 1
-        if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == "pip3 install flask":
+        if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == \
+                "pip3 install flask":
             quiz_1_score += 1
         else:
             quiz_1_score += 0
@@ -1242,7 +1351,8 @@ def web_development_chapter_1_total_score():
         quiz_2_answers_list.append(answer.answer)
     try:
         student_latest_answer_quiz_2 = len(quiz_2_answers_list) - 1
-        if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == "python":
+        if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == \
+                "python":
             quiz_2_score += 1
         else:
             quiz_2_score += 0
@@ -1256,7 +1366,8 @@ def web_development_chapter_1_total_score():
         quiz_3_answers_list.append(answer.answer)
     try:
         student_latest_answer_quiz_3 = len(quiz_3_answers_list) - 1
-        if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == "keeping the core simple but extensible":
+        if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == \
+                "keeping the core simple but extensible":
             quiz_3_score += 1
         else:
             quiz_3_score += 0
@@ -1270,15 +1381,32 @@ def web_development_chapter_1_total_score():
         quiz_4_answers_list.append(answer.answer)
     try:
         student_latest_answer_quiz_4 = len(quiz_4_answers_list) - 1
-        if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == "using the command flask run":
+        if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == \
+                "using the command flask run":
             quiz_4_score += 1
         else:
             quiz_4_score += 0
     except IndexError:
         quiz_4_score += 0
+    
+    quiz_5_score = 0
+    quiz_5_answers_list = []
+    quiz_5_answer = WebDevChapter1Quiz5Options.query.all()
+    for answer in quiz_5_answer:
+        quiz_5_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_5 = len(quiz_5_answers_list) - 1
+        if quiz_5_answers_list[student_latest_answer_quiz_5].lower() == \
+                "view functions":
+            quiz_5_score += 1
+        else:
+            quiz_5_score += 0
+    except IndexError:
+        quiz_5_score += 0
 
     # Calculate percentage
-    total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score
+    total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score + \
+        quiz_5_score
     try:
         total_score_percentage = round((total_score / 4) * 100, 2)
     except ZeroDivisionError:
@@ -1294,16 +1422,19 @@ def web_development_chapter_1_total_score():
         quiz_2_answers_list=quiz_2_answers_list,
         quiz_3_answers_list=quiz_3_answers_list,
         quiz_4_answers_list=quiz_4_answers_list,
+        quiz_5_answers_list=quiz_5_answers_list,
 
         student_latest_answer_quiz_1=student_latest_answer_quiz_1,
         student_latest_answer_quiz_2=student_latest_answer_quiz_2,
         student_latest_answer_quiz_3=student_latest_answer_quiz_3,
         student_latest_answer_quiz_4=student_latest_answer_quiz_4,
+        student_latest_answer_quiz_5=student_latest_answer_quiz_5,
 
         quiz_1_score=quiz_1_score,
         quiz_2_score=quiz_2_score,
         quiz_3_score=quiz_3_score,
         quiz_4_score=quiz_4_score,
+        quiz_5_score=quiz_5_score,
         total_score=total_score,
         total_score_percentage=total_score_percentage
         )
@@ -1330,7 +1461,8 @@ def web_development_chapter_2_total_score():
         quiz_1_answers_list.append(answer.answer)
     try:
         student_latest_answer_quiz_1 = len(quiz_1_answers_list) - 1
-        if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == "to display content":
+        if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == \
+                "to display content":
             quiz_1_score += 1
         else:
             quiz_1_score += 0
@@ -1344,7 +1476,8 @@ def web_development_chapter_2_total_score():
         quiz_2_answers_list.append(answer.answer)
     try:
         student_latest_answer_quiz_2 = len(quiz_2_answers_list) - 1
-        if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == "html":
+        if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == \
+                "html":
             quiz_2_score += 1
         else:
             quiz_2_score += 0
@@ -1358,7 +1491,8 @@ def web_development_chapter_2_total_score():
         quiz_3_answers_list.append(answer.answer)
     try:
         student_latest_answer_quiz_3 = len(quiz_3_answers_list) - 1
-        if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == "jinja":
+        if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == \
+                "jinja":
             quiz_3_score += 1
         else:
             quiz_3_score += 0
@@ -1372,15 +1506,32 @@ def web_development_chapter_2_total_score():
         quiz_4_answers_list.append(answer.answer)
     try:
         student_latest_answer_quiz_4 = len(quiz_4_answers_list) - 1
-        if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == "view functions":
+        if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == \
+                "view functions":
             quiz_4_score += 1
         else:
             quiz_4_score += 0
     except IndexError:
         quiz_4_score += 0
 
+    quiz_5_score = 0
+    quiz_5_answers_list = []
+    quiz_5_answer = WebDevChapter2Quiz5Options.query.all()
+    for answer in quiz_5_answer:
+        quiz_5_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_5 = len(quiz_5_answers_list) - 1
+        if quiz_5_answers_list[student_latest_answer_quiz_5].lower() == \
+                "css":
+            quiz_5_score += 1
+        else:
+            quiz_5_score += 0
+    except IndexError:
+        quiz_5_score += 0
+
     # Calculate percentage
-    total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score
+    total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score + \
+        quiz_5_score
     try:
         total_score_percentage = round((total_score / 4) * 100, 2)
     except ZeroDivisionError:
@@ -1396,16 +1547,19 @@ def web_development_chapter_2_total_score():
         quiz_2_answers_list=quiz_2_answers_list,
         quiz_3_answers_list=quiz_3_answers_list,
         quiz_4_answers_list=quiz_4_answers_list,
+        quiz_5_answers_list=quiz_5_answers_list,
 
         student_latest_answer_quiz_1=student_latest_answer_quiz_1,
         student_latest_answer_quiz_2=student_latest_answer_quiz_2,
         student_latest_answer_quiz_3=student_latest_answer_quiz_3,
         student_latest_answer_quiz_4=student_latest_answer_quiz_4,
+        student_latest_answer_quiz_5=student_latest_answer_quiz_5,
 
         quiz_1_score=quiz_1_score,
         quiz_2_score=quiz_2_score,
         quiz_3_score=quiz_3_score,
         quiz_4_score=quiz_4_score,
+        quiz_5_score=quiz_5_score,
         total_score=total_score,
         total_score_percentage=total_score_percentage
         )

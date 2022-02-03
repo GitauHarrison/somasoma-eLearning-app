@@ -13,8 +13,8 @@
     <div class="col-sm-12 student-content-title">
         <h1>{{ title }}</h1>
         <p>
-            You can only take this quiz once.
-            You will be redirected to <strong>the third quiz</strong>.
+            You can only take this quiz once.            
+            You will be redirected to your <span style="color: green;">total score</span>.
         </p>
     </div>
 </div>
@@ -22,11 +22,11 @@
     <div class="col-sm-12">
         {% for quiz in quizzes %}
             {% if quiz.chapter.lower() == 'chapter 2: flask templates' %}
-            <div class="row my-form quiz-form" id="{{ quiz_1 }}">
+            <div class="row my-form quiz-form" id="{{ quiz.id }}">
                 <div class="col-sm-6 col-sm-6">
-                    <p>{{ quiz.quiz_2 }}</p>
+                    <p>{{ quiz.quiz_5 }}</p>
                     <p>
-                    {{  wtf.quick_form(quiz_2_form) }}
+                    {{  wtf.quick_form(quiz_5_form) }}
                     </p>
                 </div>
             </div>

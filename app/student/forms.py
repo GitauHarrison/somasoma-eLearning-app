@@ -81,6 +81,9 @@ class QuizForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+# Quiz 1
+
+
 class Chapter1Quiz1OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
@@ -107,6 +110,9 @@ class Chapter2Quiz1OptionsForm(FlaskForm):
         validators=[DataRequired()]
         )
     submit = SubmitField('Submit')
+
+
+# Quiz 2
 
 
 class Chapter1Quiz2OptionsForm(FlaskForm):
@@ -137,6 +143,9 @@ class Chapter2Quiz2OptionsForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+# Quiz 3
+
+
 class Chapter1Quiz3OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
@@ -163,6 +172,9 @@ class Chapter2Quiz3OptionsForm(FlaskForm):
         validators=[DataRequired()]
         )
     submit = SubmitField('Submit')
+
+
+# Quiz 4
 
 
 class Chapter1Quiz4OptionsForm(FlaskForm):
@@ -192,6 +204,36 @@ class Chapter2Quiz4OptionsForm(FlaskForm):
         )
     submit = SubmitField('Submit')
 
+
+# Quiz 5
+
+
+class Chapter1Quiz5OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('View functions', 'View functions'),
+            ('Database', 'Database'),
+            ('Python', 'Database')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class Chapter2Quiz5OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
 
 # ========================================
 # END OF QUIZZES FORM

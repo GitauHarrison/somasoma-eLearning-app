@@ -209,6 +209,14 @@ class Student(UserMixin, db.Model):
         'WebDevChapter2Quiz4Options',
         backref='author',
         lazy='dynamic')
+    webdev_chapter1_quiz_5_options = db.relationship(
+        'WebDevChapter1Quiz5Options',
+        backref='author',
+        lazy='dynamic')
+    webdev_chapter2_quiz_5_options = db.relationship(
+        'WebDevChapter2Quiz5Options',
+        backref='author',
+        lazy='dynamic')
 
     def __repr__(self):
         return f'Student {self.student_full_name}'
@@ -1141,6 +1149,28 @@ class WebDevChapter2Quiz4Options(db.Model):
 
     def __repr__(self):
         return f'Quiz 4 Options: {self.answer}'
+
+
+class WebDevChapter1Quiz5Options(db.Model):
+    __tablename__ = 'web_dev_chapter_1_quiz_5_options'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Quiz 5 Options: {self.answer}'
+
+
+class WebDevChapter2Quiz5Options(db.Model):
+    __tablename__ = 'web_dev_chapter_2_quiz_5_options'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Quiz 5 Options: {self.answer}'
 
 # ========================================
 # END OF WEB DEVELOPMENT MODELS
