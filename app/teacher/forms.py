@@ -143,9 +143,10 @@ class ChapterForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"placeholder": "Markdown enabled"}
         )
-    accomplish = TextAreaField(
+    accomplish = PageDownField(
         'What You Will Accomplish',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown preview only"}
         )
     youtube_link = StringField(
         'YouTube Link',
@@ -154,9 +155,10 @@ class ChapterForm(FlaskForm):
             "placeholder": "Embed Code: YwBxwB8u9uY"
             }
         )
-    conclusion = TextAreaField(
+    conclusion = PageDownField(
         'Conclusion',
-        validators=[DataRequired()]
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown preview only"}
         )
     objective_1 = StringField(
         'Objective 1',
