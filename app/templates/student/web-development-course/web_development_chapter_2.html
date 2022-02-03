@@ -204,14 +204,14 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
-                                        <a href=" {{ url_for('student.web_development_chapter_1_quiz_1') }} " class="btn btn-primary">
+                                        <a href=" {{ url_for('student.web_development_chapter_2_quiz_1') }} " class="btn btn-primary">
                                                 Quiz
                                         </a>
                                     </p>
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
-                                        {% if percentage_achieved < 60 %}
+                                        {% if percentage_achieved < 80 %}
                                             <a href=" {{ url_for('student.web_development_chapter_3', student_full_name=student.student_full_name) }} " class="btn btn-primary disabled">
                                                 Chapter 3
                                                 <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>

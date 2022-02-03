@@ -11,14 +11,14 @@ import bleach
 import json
 
 
-# @login.user_loader
-# def load_student(id):
-#     return Student.query.get(int(id))
-
-
 @login.user_loader
-def load_teacher(id):
-    return Teacher.query.get(int(id))
+def load_student(id):
+    return Student.query.get(int(id))
+
+
+# @login.user_loader
+# def load_teacher(id):
+#     return Teacher.query.get(int(id))
 
 # @login.user_loader
 # def load_admin(id):
@@ -173,26 +173,42 @@ class Student(UserMixin, db.Model):
         'WebDevChapter1Quiz',
         backref='author',
         lazy='dynamic')
+    webdev_chapter2_quiz = db.relationship(
+        'WebDevChapter2Quiz',
+        backref='author',
+        lazy='dynamic')
     webdev_chapter1_quiz_1_options = db.relationship(
         'WebDevChapter1Quiz1Options',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
+    webdev_chapter2_quiz_1_options = db.relationship(
+        'WebDevChapter2Quiz1Options',
+        backref='author',
+        lazy='dynamic')
     webdev_chapter1_quiz_2_options = db.relationship(
         'WebDevChapter1Quiz2Options',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
+    webdev_chapter2_quiz_2_options = db.relationship(
+        'WebDevChapter2Quiz2Options',
+        backref='author',
+        lazy='dynamic')
     webdev_chapter1_quiz_3_options = db.relationship(
         'WebDevChapter1Quiz3Options',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
+    webdev_chapter2_quiz_3_options = db.relationship(
+        'WebDevChapter2Quiz3Options',
+        backref='author',
+        lazy='dynamic')
     webdev_chapter1_quiz_4_options = db.relationship(
         'WebDevChapter1Quiz4Options',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
+    webdev_chapter2_quiz_4_options = db.relationship(
+        'WebDevChapter2Quiz4Options',
+        backref='author',
+        lazy='dynamic')
 
     def __repr__(self):
         return f'Student {self.student_full_name}'
@@ -670,6 +686,7 @@ class Chapter(db.Model):
     chapter = db.Column(db.String(64), index=True)
     chapter_link = db.Column(db.String(140))
     comment_moderation_link = db.Column(db.String(140))
+    chapter_1_quiz_link = db.Column(db.String(140))
     overview = db.Column(db.String(140))
     overview_html = db.Column(db.Text)
     accomplish = db.Column(db.String(140))
@@ -1026,8 +1043,31 @@ class WebDevChapter1Quiz(db.Model):
         return f'Quiz: {self.title}'
 
 
+class WebDevChapter2Quiz(db.Model):
+    __tablename__ = 'web_dev_chapter2_quiz'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64), index=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Quiz: {self.title}'
+
+
 class WebDevChapter1Quiz1Options(db.Model):
     __tablename__ = 'web_dev_chapter_1_quiz_1_options'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Quiz 1 Options: {self.answer}'
+
+
+class WebDevChapter2Quiz1Options(db.Model):
+    __tablename__ = 'web_dev_chapter_2_quiz_1_options'
     id = db.Column(db.Integer, primary_key=True)
     answer = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -1048,6 +1088,17 @@ class WebDevChapter1Quiz2Options(db.Model):
         return f'Quiz 2 Options: {self.answer}'
 
 
+class WebDevChapter2Quiz2Options(db.Model):
+    __tablename__ = 'web_dev_chapter_2_quiz_2_options'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Quiz 2 Options: {self.answer}'
+
+
 class WebDevChapter1Quiz3Options(db.Model):
     __tablename__ = 'web_dev_chapter_1_quiz_3_options'
     id = db.Column(db.Integer, primary_key=True)
@@ -1059,8 +1110,30 @@ class WebDevChapter1Quiz3Options(db.Model):
         return f'Quiz 3 Options: {self.answer}'
 
 
+class WebDevChapter2Quiz3Options(db.Model):
+    __tablename__ = 'web_dev_chapter_2_quiz_3_options'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Quiz 3 Options: {self.answer}'
+
+
 class WebDevChapter1Quiz4Options(db.Model):
     __tablename__ = 'web_dev_chapter_1_quiz_4_options'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Quiz 4 Options: {self.answer}'
+
+
+class WebDevChapter2Quiz4Options(db.Model):
+    __tablename__ = 'web_dev_chapter_2_quiz_4_options'
     id = db.Column(db.Integer, primary_key=True)
     answer = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)

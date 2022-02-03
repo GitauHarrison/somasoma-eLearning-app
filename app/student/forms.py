@@ -95,7 +95,35 @@ class Chapter1Quiz1OptionsForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class Chapter2Quiz1OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('To display content', 'To display content'),
+            ('It has no purpose', 'It has no purpose'),
+            ('To query a database', 'To query a database'),
+            ('To style page content', 'To style page content'),
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
 class Chapter1Quiz2OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Java', 'Java'),
+            ('Python', 'Python'),
+            ('HTML', 'HTML')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class Chapter2Quiz2OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
@@ -123,6 +151,20 @@ class Chapter1Quiz3OptionsForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class Chapter2Quiz3OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('Jinja', 'Jinja')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
 class Chapter1Quiz4OptionsForm(FlaskForm):
     answer = SelectField(
         'Choose an answer',
@@ -131,6 +173,20 @@ class Chapter1Quiz4OptionsForm(FlaskForm):
             ('Using the command flask run', 'Using the command flask run'),
             ('Praying to God', 'Praying to God'),
             ('Typing the word "python" in the terminal', 'Typing the word "python" in the terminal')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class Chapter2Quiz4OptionsForm(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('View functions', 'View functions'),
+            ('Database', 'Database'),
+            ('Python', 'Database')
             ],
         validators=[DataRequired()]
         )

@@ -30,13 +30,13 @@
                                             <li>
                                                 Achievement of Lesson Objectives: {{ percentage_achieved }}% - 
                                                 <small>
-                                                    <a href="{{ url_for('student.web_development_chapter_1', _anchor='objectives') }}">Improve</a>
+                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_link }}#objectives">Improve</a>
                                                 </small>
                                             </li>
                                             <li>
                                                 Achievement of Lesson Quizzes: {{ total_score_percentage }}% - 
                                                 <small>
-                                                    <a href="{{ url_for('student.web_development_chapter_1_quiz_1') }}">Improve</a>
+                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_1_quiz_link }}">Improve</a>
                                                 </small>
                                             </li>
                                         </ul>
@@ -51,15 +51,15 @@
                                         <h3>{{ chapter.chapter }}</h3>
                                         <ul>
                                             <li>
-                                                Achievement of Lesson Objectives: {{ percentage_achieved_chapter_2 }}% - 
+                                                Achievement of Lesson Objectives: {{ percentage_achieved }}% - 
                                                 <small>
-                                                    <a href="{{ url_for('student.web_development_chapter_1', _anchor='objectives') }}">Improve</a>
+                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_link }}#objectives">Improve</a>
                                                 </small>
                                             </li>
                                             <li>
-                                                Achievement of Lesson Quizzes: {{ quiz_total_score_percentage }}% - 
+                                                Achievement of Lesson Quizzes: {{ total_score_percentage }}% - 
                                                 <small>
-                                                    <a href="{{ url_for('student.web_development_chapter_1_quiz_1') }}">Improve</a>
+                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_1_quiz_link }}">Improve</a>
                                                 </small>
                                             </li>
                                         </ul>
@@ -76,13 +76,13 @@
                                             <li>
                                                 Achievement of Lesson Objectives: {{ percentage_achieved }}% - 
                                                 <small>
-                                                    <a href="{{ url_for('student.web_development_chapter_1', _anchor='objectives') }}">Improve</a>
+                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_link }}#objectives">Improve</a>
                                                 </small>
                                             </li>
                                             <li>
-                                                Achievement of Lesson Quizzes: {{ quiz_total_score_percentage }}% - 
+                                                Achievement of Lesson Quizzes: {{ total_score_percentage }}% - 
                                                 <small>
-                                                    <a href="{{ url_for('student.web_development_chapter_1_quiz_1') }}">Improve</a>
+                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_1_quiz_link }}">Improve</a>
                                                 </small>
                                             </li>
                                         </ul>

@@ -5,14 +5,18 @@ from flask import render_template, redirect, url_for, flash, request,\
 from app.student.forms import CommentForm, EditProfileForm,\
     ChapterObjectivesForm, QuizForm, Chapter1Quiz1OptionsForm,\
     EmptyForm, Chapter1Quiz2OptionsForm, Chapter1Quiz3OptionsForm,\
-    Chapter1Quiz4OptionsForm
+    Chapter1Quiz4OptionsForm, Chapter2Quiz1OptionsForm,\
+    Chapter2Quiz2OptionsForm, Chapter2Quiz3OptionsForm,\
+    Chapter2Quiz4OptionsForm
 from app.teacher.forms import PrivateMessageForm
 from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
     CommunityComment, WebDevChapter1Objectives, WebDevChapter1Quiz,\
     WebDevChapter1Quiz1Options, Student, WebDevelopmentOverview, Chapter,\
     Teacher, WebDevChapter1Quiz2Options,\
     WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, StudentMessage,\
-    StudentNotification, WebDevChapter2Comment, WebDevChapter2Objectives
+    StudentNotification, WebDevChapter2Comment, WebDevChapter2Objectives,\
+    WebDevChapter2Quiz1Options, WebDevChapter2Quiz2Options,\
+    WebDevChapter2Quiz3Options, WebDevChapter2Quiz4Options
 from app.student.email import send_flask_chapter_1_comment_email, \
     send_flask_chapter_2_comment_email
 from flask_login import current_user, login_required
@@ -176,7 +180,7 @@ def dashboard_analytics():
         allowed_status=True).order_by(
             Chapter.timestamp.asc())
 
-    # Chapter 1: Calculate the number of objectives achieved
+    # CHAPTER 1: Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.all()
     objectives_list = []
     num_of_true_status = 0
@@ -195,7 +199,7 @@ def dashboard_analytics():
         percentage_achieved = 0
     # End of Calculate the number of objectives achieved
 
-    # Chapter 2: Calculate the number of objectives achieved
+    # CHAPTER 2: Calculate the number of objectives achieved
     all_objectives_chapter_2 = student.webdev_chapter2_objectives.all()
     objectives_list_chapter_2 = []
     num_of_true_status = 0
@@ -214,7 +218,7 @@ def dashboard_analytics():
         percentage_achieved_chapter_2 = 0
     # End of Calculate the number of objectives achieved
 
-    # Calculate total score
+    # CHAPTER 1: Calculate total score
     quiz_1_score = 0
     quiz_1_answers_list = []
     quiz_1_answer = WebDevChapter1Quiz1Options.query.all()
@@ -271,12 +275,76 @@ def dashboard_analytics():
     except IndexError:
         quiz_4_score += 0
 
-    # Calculate percentage
+    # CHAPTER 1: Calculate percentage
     total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score
     try:
         total_score_percentage = round((total_score / 4) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage = 0
+
+    # CHAPTER 2: Calculate total score
+    quiz_1_score_chapter_2 = 0
+    quiz_1_answers_list_chapter_2 = []
+    quiz_1_answer_chapter_2 = WebDevChapter2Quiz1Options.query.all()
+    for answer in quiz_1_answer_chapter_2:
+        quiz_1_answers_list_chapter_2.append(answer.answer)
+    try:
+        student_latest_answer_quiz_1_chapter_2 = len(quiz_1_answers_list_chapter_2) - 1
+        if quiz_1_answers_list_chapter_2[student_latest_answer_quiz_1_chapter_2].lower() == "to display content":
+            quiz_1_score_chapter_2 += 1
+        else:
+            quiz_1_score_chapter_2 += 0
+    except IndexError:
+        quiz_1_score_chapter_2 += 0
+
+    quiz_2_score_chapter_2 = 0
+    quiz_2_answers_list_chapter_2 = []
+    quiz_2_answer_chapter_2 = WebDevChapter2Quiz2Options.query.all()
+    for answer in quiz_2_answer_chapter_2:
+        quiz_2_answers_list_chapter_2.append(answer.answer)
+    try:
+        student_latest_answer_quiz_2_chapter_2 = len(quiz_2_answers_list_chapter_2) - 1
+        if quiz_2_answers_list_chapter_2[student_latest_answer_quiz_2_chapter_2].lower() == "html":
+            quiz_2_score_chapter_2 += 1
+        else:
+            quiz_2_score_chapter_2 += 0
+    except IndexError:
+        quiz_2_score_chapter_2 += 0
+
+    quiz_3_score_chapter_2 = 0
+    quiz_3_answers_list_chapter_2 = []
+    quiz_3_answer_chapter_2 = WebDevChapter2Quiz3Options.query.all()
+    for answer in quiz_3_answer_chapter_2:
+        quiz_3_answers_list_chapter_2.append(answer.answer)
+    try:
+        student_latest_answer_quiz_3_chapter_2 = len(quiz_3_answers_list_chapter_2) - 1
+        if quiz_3_answers_list_chapter_2[student_latest_answer_quiz_3_chapter_2].lower() == "jinja":
+            quiz_3_score_chapter_2 += 1
+        else:
+            quiz_3_score_chapter_2 += 0
+    except IndexError:
+        quiz_3_score_chapter_2 += 0
+
+    quiz_4_score_chapter_2 = 0
+    quiz_4_answers_list_chapter_2 = []
+    quiz_4_answer_chapter_2 = WebDevChapter2Quiz4Options.query.all()
+    for answer in quiz_4_answer_chapter_2:
+        quiz_4_answers_list_chapter_2.append(answer.answer)
+    try:
+        student_latest_answer_quiz_4_chapter_2 = len(quiz_4_answers_list_chapter_2) - 1
+        if quiz_4_answers_list_chapter_2[student_latest_answer_quiz_4_chapter_2].lower() == "view functions":
+            quiz_4_score_chapter_2 += 1
+        else:
+            quiz_4_score_chapter_2 += 0
+    except IndexError:
+        quiz_4_score_chapter_2 += 0
+
+    # CHAPTER 2: Calculate percentage
+    total_score_chapter_2 = quiz_1_score_chapter_2 + quiz_2_score_chapter_2 + quiz_3_score_chapter_2 + quiz_4_score_chapter_2
+    try:
+        total_score_percentage_chapter_2 = round((total_score_chapter_2 / 4) * 100, 2)
+    except ZeroDivisionError:
+        total_score_percentage_chapter_2 = 0
 
     return render_template(
         'student/analytics.html',
@@ -289,7 +357,8 @@ def dashboard_analytics():
         total_score_percentage=total_score_percentage,
 
         # Chapter 2
-        percentage_achieved_chapter_2=percentage_achieved_chapter_2
+        percentage_achieved_chapter_2=percentage_achieved_chapter_2,
+        total_score_percentage_chapter_2=total_score_percentage_chapter_2,
         )
 
 # Profile routes
@@ -844,7 +913,7 @@ def web_development_chapter_1_quizzes_form():
         form=form
         )
 
-# Chhapter 1 quiz 1
+# Chapter 1 quiz 1
 
 
 @bp.route(
@@ -1000,6 +1069,144 @@ def web_development_chapter_1_quiz_4():
         quiz_4_form=quiz_4_form
         )
 
+
+# Chapter 2 quiz 1
+
+
+@bp.route(
+    '/web-development/chapter-2/quiz-1',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_2_quiz_1():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
+
+    # Quiz 1
+    quiz_1_form = Chapter2Quiz1OptionsForm()
+    if quiz_1_form.validate_on_submit():
+        answer = WebDevChapter2Quiz1Options(
+            answer=quiz_1_form.answer.data)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 1 answer have been added!', 'success')
+        return redirect(url_for(
+            'student.web_development_chapter_2_quiz_2',
+            student_full_name=student.student_full_name,
+            _anchor="quiz_1",
+        ))
+    return render_template(
+        'student/web-development-course/quizzes/chapter_2/quiz_1.html',
+        title='Chapter 2: Quiz 1',
+        student=student,
+        quizzes=quizzes,
+        quiz_1_form=quiz_1_form
+        )
+
+# Chapter 2 quiz 2
+
+
+@bp.route(
+    '/web-development/chapter-2/quiz-2',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_2_quiz_2():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
+
+    # Quiz 2
+    quiz_2_form = Chapter2Quiz2OptionsForm()
+    if quiz_2_form.validate_on_submit():
+        answer = WebDevChapter2Quiz2Options(
+            answer=quiz_2_form.answer.data)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 2 answer have been added!', 'success')
+        return redirect(url_for(
+            'student.web_development_chapter_2_quiz_3',
+            student_full_name=student.student_full_name,
+            _anchor="quiz_2",
+        ))
+    return render_template(
+        'student/web-development-course/quizzes/chapter_2/quiz_2.html',
+        title='Chapter 2: Quiz 2',
+        student=student,
+        quizzes=quizzes,
+        quiz_2_form=quiz_2_form
+        )
+
+# Chapter 2 quiz 3
+
+
+@bp.route(
+    '/web-development/chapter-2/quiz-3',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_2_quiz_3():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
+
+    # Quiz 3
+    quiz_3_form = Chapter2Quiz3OptionsForm()
+    if quiz_3_form.validate_on_submit():
+        answer = WebDevChapter2Quiz3Options(
+            answer=quiz_3_form.answer.data)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 3 answer have been added!', 'success')
+        return redirect(url_for(
+            'student.web_development_chapter_2_quiz_4',
+            student_full_name=student.student_full_name,
+            _anchor="quiz_2",
+        ))
+    return render_template(
+        'student/web-development-course/quizzes/chapter_2/quiz_3.html',
+        title='Chapter 2: Quiz 3',
+        student=student,
+        quizzes=quizzes,
+        quiz_3_form=quiz_3_form
+        )
+
+# Chapter 2 quiz 4
+
+
+@bp.route(
+    '/web-development/chapter-2/quiz-4',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_2_quiz_4():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
+
+    # Quiz 4
+    quiz_4_form = Chapter2Quiz4OptionsForm()
+    if quiz_4_form.validate_on_submit():
+        answer = WebDevChapter2Quiz4Options(
+            answer=quiz_4_form.answer.data)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 4 answer have been added!',
+              'Congratulations! You have completed the chapter 1 quiz!')
+        return redirect(url_for(
+            'student.web_development_chapter_2_total_score',
+            student_full_name=student.student_full_name,
+        ))
+    return render_template(
+        'student/web-development-course/quizzes/chapter_2/quiz_4.html',
+        title='Chapter 2: Quiz 4',
+        student=student,
+        quizzes=quizzes,
+        quiz_4_form=quiz_4_form
+        )
+
+
 # Chapter 1 total score
 
 
@@ -1010,13 +1217,8 @@ def web_development_chapter_1_quiz_4():
 @login_required
 def web_development_chapter_1_total_score():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
-    page = request.args.get('page', 1, type=int)
-    quizzes = ChapterQuiz.query.order_by(
-        ChapterQuiz.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Calculate total score
     quiz_1_score = 0
@@ -1086,7 +1288,7 @@ def web_development_chapter_1_total_score():
         'student/web-development-course/quizzes/chapter_1/total_score.html',
         title='Chapter 1: Total Score',
         student=student,
-        quizzes=quizzes.items,
+        quizzes=quizzes,
 
         quiz_1_answers_list=quiz_1_answers_list,
         quiz_2_answers_list=quiz_2_answers_list,
@@ -1105,6 +1307,109 @@ def web_development_chapter_1_total_score():
         total_score=total_score,
         total_score_percentage=total_score_percentage
         )
+
+
+# Chapter 2 total score
+
+
+@bp.route(
+    '/web-development/chapter-2/total-score',
+    methods=['GET', 'POST']
+    )
+@login_required
+def web_development_chapter_2_total_score():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
+
+    # Calculate total score
+    quiz_1_score = 0
+    quiz_1_answers_list = []
+    quiz_1_answer = WebDevChapter2Quiz1Options.query.all()
+    for answer in quiz_1_answer:
+        quiz_1_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_1 = len(quiz_1_answers_list) - 1
+        if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == "to display content":
+            quiz_1_score += 1
+        else:
+            quiz_1_score += 0
+    except IndexError:
+        quiz_1_score += 0
+
+    quiz_2_score = 0
+    quiz_2_answers_list = []
+    quiz_2_answer = WebDevChapter2Quiz2Options.query.all()
+    for answer in quiz_2_answer:
+        quiz_2_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_2 = len(quiz_2_answers_list) - 1
+        if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == "html":
+            quiz_2_score += 1
+        else:
+            quiz_2_score += 0
+    except IndexError:
+        quiz_2_score += 0
+
+    quiz_3_score = 0
+    quiz_3_answers_list = []
+    quiz_3_answer = WebDevChapter2Quiz3Options.query.all()
+    for answer in quiz_3_answer:
+        quiz_3_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_3 = len(quiz_3_answers_list) - 1
+        if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == "jinja":
+            quiz_3_score += 1
+        else:
+            quiz_3_score += 0
+    except IndexError:
+        quiz_3_score += 0
+
+    quiz_4_score = 0
+    quiz_4_answers_list = []
+    quiz_4_answer = WebDevChapter2Quiz4Options.query.all()
+    for answer in quiz_4_answer:
+        quiz_4_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_4 = len(quiz_4_answers_list) - 1
+        if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == "view functions":
+            quiz_4_score += 1
+        else:
+            quiz_4_score += 0
+    except IndexError:
+        quiz_4_score += 0
+
+    # Calculate percentage
+    total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score
+    try:
+        total_score_percentage = round((total_score / 4) * 100, 2)
+    except ZeroDivisionError:
+        total_score_percentage = 0
+
+    return render_template(
+        'student/web-development-course/quizzes/chapter_2/total_score.html',
+        title='Chapter 2: Total Score',
+        student=student,
+        quizzes=quizzes,
+
+        quiz_1_answers_list=quiz_1_answers_list,
+        quiz_2_answers_list=quiz_2_answers_list,
+        quiz_3_answers_list=quiz_3_answers_list,
+        quiz_4_answers_list=quiz_4_answers_list,
+
+        student_latest_answer_quiz_1=student_latest_answer_quiz_1,
+        student_latest_answer_quiz_2=student_latest_answer_quiz_2,
+        student_latest_answer_quiz_3=student_latest_answer_quiz_3,
+        student_latest_answer_quiz_4=student_latest_answer_quiz_4,
+
+        quiz_1_score=quiz_1_score,
+        quiz_2_score=quiz_2_score,
+        quiz_3_score=quiz_3_score,
+        quiz_4_score=quiz_4_score,
+        total_score=total_score,
+        total_score_percentage=total_score_percentage
+        )
+
 
 # ========================================
 # END OF WEB DEVELOPMENT COURSE ROUTES
