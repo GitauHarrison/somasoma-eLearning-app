@@ -185,8 +185,7 @@ def dashboard_analytics():
 
     # Dsiplaying the chapter
     course_chapters = Chapter.query.filter_by(
-        allowed_status=True).order_by(
-            Chapter.timestamp.asc())
+        allowed_status=True).all()
 
     # CHAPTER 1: Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.all()
@@ -325,7 +324,7 @@ def dashboard_analytics():
     total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score + \
         quiz_5_score
     try:
-        total_score_percentage = round((total_score / 4) * 100, 2)
+        total_score_percentage = round((total_score / 5) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage = 0
 
@@ -404,7 +403,7 @@ def dashboard_analytics():
     total_score_chapter_2 = quiz_1_score_chapter_2 + quiz_2_score_chapter_2 + \
         quiz_3_score_chapter_2 + quiz_4_score_chapter_2 + quiz_5_score_chapter_2
     try:
-        total_score_percentage_chapter_2 = round((total_score_chapter_2 / 4) * 100, 2)
+        total_score_percentage_chapter_2 = round((total_score_chapter_2 / 5) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage_chapter_2 = 0
 
@@ -416,7 +415,7 @@ def dashboard_analytics():
         quiz_1_answers_list_chapter_3.append(answer.answer)
     try:
         student_latest_answer_quiz_1_chapter_3 = len(quiz_1_answers_list_chapter_3) - 1
-        if quiz_1_answers_list_chapter_3[student_latest_answer_quiz_1_chapter_3].lower() == "to display content":
+        if quiz_1_answers_list_chapter_3[student_latest_answer_quiz_1_chapter_3].lower() == "to collect user data":
             quiz_1_score_chapter_3 += 1
         else:
             quiz_1_score_chapter_3 += 0
@@ -430,7 +429,7 @@ def dashboard_analytics():
         quiz_2_answers_list_chapter_3.append(answer.answer)
     try:
         student_latest_answer_quiz_2_chapter_3 = len(quiz_2_answers_list_chapter_3) - 1
-        if quiz_2_answers_list_chapter_3[student_latest_answer_quiz_2_chapter_3].lower() == "html":
+        if quiz_2_answers_list_chapter_3[student_latest_answer_quiz_2_chapter_3].lower() == "flask-wtf":
             quiz_2_score_chapter_3 += 1
         else:
             quiz_2_score_chapter_3 += 0
@@ -444,7 +443,7 @@ def dashboard_analytics():
         quiz_3_answers_list_chapter_3.append(answer.answer)
     try:
         student_latest_answer_quiz_3_chapter_3 = len(quiz_3_answers_list_chapter_3) - 1
-        if quiz_3_answers_list_chapter_3[student_latest_answer_quiz_3_chapter_3].lower() == "jinja":
+        if quiz_3_answers_list_chapter_3[student_latest_answer_quiz_3_chapter_3].lower() == "validationerror":
             quiz_3_score_chapter_3 += 1
         else:
             quiz_3_score_chapter_3 += 0
@@ -458,7 +457,7 @@ def dashboard_analytics():
         quiz_4_answers_list_chapter_3.append(answer.answer)
     try:
         student_latest_answer_quiz_4_chapter_3 = len(quiz_4_answers_list_chapter_3) - 1
-        if quiz_4_answers_list_chapter_3[student_latest_answer_quiz_4_chapter_3].lower() == "view functions":
+        if quiz_4_answers_list_chapter_3[student_latest_answer_quiz_4_chapter_3].lower() == ".env":
             quiz_4_score_chapter_3 += 1
         else:
             quiz_4_score_chapter_3 += 0
@@ -472,19 +471,19 @@ def dashboard_analytics():
         quiz_5_answers_list_chapter_3.append(answer.answer)
     try:
         student_latest_answer_quiz_5_chapter_3 = len(quiz_5_answers_list_chapter_3) - 1
-        if quiz_5_answers_list_chapter_3[student_latest_answer_quiz_5_chapter_3].lower() == "view functions":
+        if quiz_5_answers_list_chapter_3[student_latest_answer_quiz_5_chapter_3].lower() == "flask bootsrap":
             quiz_5_score_chapter_3 += 1
         else:
             quiz_5_score_chapter_3 += 0
     except IndexError:
         quiz_5_score_chapter_3 += 0
 
-    # CHAPTER 2: Calculate percentage
+    # CHAPTER 3: Calculate percentage
     total_score_chapter_3 = quiz_1_score_chapter_3 + quiz_2_score_chapter_3 + \
         quiz_3_score_chapter_3 + quiz_4_score_chapter_3 + \
         quiz_5_score_chapter_3
     try:
-        total_score_percentage_chapter_3 = round((total_score_chapter_3 / 4) * 100, 2)
+        total_score_percentage_chapter_3 = round((total_score_chapter_3 / 5) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage_chapter_3 = 0
 
@@ -1798,7 +1797,7 @@ def web_development_chapter_1_total_score():
     total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score + \
         quiz_5_score
     try:
-        total_score_percentage = round((total_score / 4) * 100, 2)
+        total_score_percentage = round((total_score / 5) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage = 0
 
@@ -1923,7 +1922,7 @@ def web_development_chapter_2_total_score():
     total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score + \
         quiz_5_score
     try:
-        total_score_percentage = round((total_score / 4) * 100, 2)
+        total_score_percentage = round((total_score / 5) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage = 0
 
@@ -2016,7 +2015,7 @@ def web_development_chapter_3_total_score():
 
     quiz_4_score = 0
     quiz_4_answers_list = []
-    quiz_4_answer = WebDevChapter2Quiz4Options.query.all()
+    quiz_4_answer = WebDevChapter3Quiz4Options.query.all()
     for answer in quiz_4_answer:
         quiz_4_answers_list.append(answer.answer)
     try:
@@ -2031,7 +2030,7 @@ def web_development_chapter_3_total_score():
 
     quiz_5_score = 0
     quiz_5_answers_list = []
-    quiz_5_answer = WebDevChapter2Quiz5Options.query.all()
+    quiz_5_answer = WebDevChapter3Quiz5Options.query.all()
     for answer in quiz_5_answer:
         quiz_5_answers_list.append(answer.answer)
     try:
@@ -2048,7 +2047,7 @@ def web_development_chapter_3_total_score():
     total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score + \
         quiz_5_score
     try:
-        total_score_percentage = round((total_score / 4) * 100, 2)
+        total_score_percentage = round((total_score / 5) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage = 0
 
