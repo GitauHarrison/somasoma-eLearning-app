@@ -9,6 +9,33 @@
         </div>
     </div>
     <!-- End of flash message -->
+    {% if percentage_achieved < 80 %}
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- Empty columcn -->
+            </div>
+            <div class="col-sm-4">
+                <div class="alert alert-danger">
+                    <p>
+                        You have not achieved 
+                        <strong>80% of the objectives for chapter 1</strong> of this course. 
+                        Please improve your performance first before you can access this page.
+                    </p>
+                    <div class="text-center">
+                        <a href="{{ url_for('student.web_development_chapter_1') }}">
+                            <button type="button" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                                Chapter 1
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!-- Empty column -->
+            </div>
+        </div>
+    {% else %}
     <div class="row">
         <div class="col-sm-12">
             {% for chapter in course_chapters %}
@@ -288,4 +315,5 @@
             {% endfor %}
         </div>
     </div>
+    {% endif %}
 {% endblock %}
