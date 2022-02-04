@@ -100,6 +100,33 @@
                 </div>
             </div>
         {% endfor %}
+        <!-- General Analyis of course results -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row analytics">
+                    <div class="col-sm-5">
+                        <h3>General Quiz</h3>
+                        <ul>
+                            <li>
+                                Achievement of Multi-choice Questions: {{ multi_choice_total_score_percentage }}% - 
+                                <small>
+                                    <a href="http://127.0.0.1:5000/student/web-development/general-multichoice-questions/quiz-1">Improve</a>
+                                </small>
+                            </li>
+                            <li>
+                                Achievement of Blank-based Questions: % - 
+                                <small>
+                                    <a href="#" class="overview-link-disabled">Improve</a>
+                                </small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-7">
+                        <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/demo_graph.png')}}" alt="Demo Graph">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- END OF ANALYTICS TAB -->
 {% endblock %}

@@ -66,21 +66,6 @@ class ChapterObjectivesForm(FlaskForm):
 # END OF OBJECTIVES FORM
 # ========================================
 
-# ========================================
-# QUIZZES FORM
-# ========================================
-
-
-class QuizForm(FlaskForm):
-    title = StringField('Question', validators=[DataRequired()])
-    body = PageDownField(
-        'Description',
-        validators=[DataRequired()],
-        render_kw={"placeholder": "Markdown enabled"}
-        )
-    submit = SubmitField('Submit')
-
-
 # Quiz 1
 
 
@@ -305,5 +290,172 @@ class Chapter3Quiz5OptionsForm(FlaskForm):
     submit = SubmitField('Submit')
 
 # ========================================
-# END OF QUIZZES FORM
+# END OF QUIZZES
+# ========================================
+
+# ========================================
+# GENERAL MULTIPLE CHOICE QUIZZES
+# ========================================
+
+
+class GeneralQuiz1Form(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class GeneralQuiz2Form(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class GeneralQuiz3Form(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class GeneralQuiz4Form(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class GeneralQuiz5Form(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class GeneralQuiz6Form(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class GeneralQuiz7Form(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class GeneralQuiz8Form(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class GeneralQuiz9Form(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+
+class GeneralQuiz10Form(FlaskForm):
+    answer = SelectField(
+        'Choose an answer',
+        choices=[
+            ('Flask', 'Flask'),
+            ('Click', 'Click'),
+            ('Python', 'Python'),
+            ('CSS', 'CSS')
+            ],
+        validators=[DataRequired()]
+        )
+    submit = SubmitField('Submit')
+
+# ========================================
+# END OF GENERAL MULTIPLE CHOICE QUIZZES
+# ========================================
+
+
+# ========================================
+# OWN CHOICE QUIZZES
+# ========================================
+
+
+class GeneralOwnChoiceQuiz1Form(FlaskForm):
+    title = StringField('Question', validators=[DataRequired()])
+    body = PageDownField(
+        'Description',
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Markdown enabled"}
+        )
+    submit = SubmitField('Submit')
+
+# ========================================
+# END OF OWN CHOICE QUIZZES
 # ========================================

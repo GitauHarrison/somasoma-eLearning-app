@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row">
+        <div class="col-sm-12 text-center review-title">
+            <h1>{{ title }} ({{ all_flask_quiz }})</h1>
+        </div>
+    </div>
+    {% for quiz in flask_quiz %}
+        <div class="row profile" id="{{ quiz.id }}">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>({{ quiz.course }}) {{ quiz.chapter }}</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p><strong>Quiz 1:</strong> {{ quiz.quiz_1 }}</p>
+                        <p><strong>Quiz 2:</strong> {{ quiz.quiz_2 }}</p>
+                        <p><strong>Quiz 3:</strong> {{ quiz.quiz_3 }}</p>
+                        <p><strong>Quiz 4:</strong> {{ quiz.quiz_4 }}</p>
+                        <p><strong>Quiz 5:</strong> {{ quiz.quiz_5 }}</p>
+                        <p><strong>Quiz 6:</strong> {{ quiz.quiz_6 }}</p>
+                        <p><strong>Quiz 7:</strong> {{ quiz.quiz_7 }}</p>
+                        <p><strong>Quiz 8:</strong> {{ quiz.quiz_8 }}</p>
+                        <p><strong>Quiz 9:</strong> {{ quiz.quiz_9 }}</p>
+                        <p><strong>Quiz 10:</strong> {{ quiz.quiz_10 }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% if not quiz.allowed_status == 1 %}
+                            <a href=" {{ url_for('teacher.allow_review_general_mulitiple_choices_quiz', id=quiz.id) }} " class="label label-warning">Allow</a>
+                        {% else %}
+                            <a href=" # " class="label label-success">Allowed</a>
+                        {% endif %}
+                         | <a href=" {{ url_for('teacher.delete_review_general_mulitiple_choices_quiz', id=quiz.id) }} " class="label label-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-sm-12">
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous{% if not prev_url %} disabled{% endif %}">
+                        <a href="{{ prev_url or '#' }}">
+                            <span aria-hidden="true">&larr;</span> Newer quizzes
+                        </a>
+                    </li>
+                    <li class="next{% if not next_url %} disabled{% endif %}">
+                        <a href="{{ next_url or '#' }}">
+                            Older quizzes <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- End of pagination -->
+    <hr>
+    <div class="row text-center">
+        <div class="col-sm-12">
+            <p>
+                <a href=" {{ url_for('teacher.dashboard_manage_course', _anchor='mulitple-choice') }} " class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back to Course Management
+                </a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

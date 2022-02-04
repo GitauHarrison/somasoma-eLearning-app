@@ -9,11 +9,11 @@ from app.models import Teacher, TeacherCommunityComment, Student,\
     CommunityComment, WebDevelopmentOverview, TableOfContents, Chapter,\
     WebDevChapter1Comment, ChapterQuiz, BlogArticles,\
     Events, TeacherMessage, TeacherNotifications, WebDevChapter2Comment,\
-    WebDevChapter3Comment
+    WebDevChapter3Comment, GeneralMultipleChoicesQuiz
 from app.teacher.forms import EditProfileForm, CommentForm, EmptyForm,\
     WebDevelopmentOverviewForm, TableOfContentsForm, ChapterForm,\
     ChapterQuizForm, BlogArticlesForm, EventsForm,\
-    PrivateMessageForm
+    PrivateMessageForm, GeneralOwnChoiceQuizForm
 from app.teacher.email import send_live_flask_chapter_1_comment_email, \
     send_live_flask_chapter_2_comment_email,\
     send_live_flask_chapter_3_comment_email
@@ -261,7 +261,32 @@ def dashboard_manage_course():
         flash('Chapter quiz has been added!', 'success')
         return redirect(url_for('teacher.review_chapter_quiz'))
 
+    # General mulitple choices quiz
+    mulitple_choice_quiz_form = GeneralOwnChoiceQuizForm()
+    if mulitple_choice_quiz_form.validate_on_submit():
+        chapter_quiz = GeneralMultipleChoicesQuiz(
+            course=mulitple_choice_quiz_form.course.data,
+            chapter=mulitple_choice_quiz_form.chapter.data,
+            quiz_1=mulitple_choice_quiz_form.quiz_1.data,
+            quiz_2=mulitple_choice_quiz_form.quiz_2.data,
+            quiz_3=mulitple_choice_quiz_form.quiz_3.data,
+            quiz_4=mulitple_choice_quiz_form.quiz_4.data,
+            quiz_5=mulitple_choice_quiz_form.quiz_5.data,
+            quiz_6=mulitple_choice_quiz_form.quiz_6.data,
+            quiz_7=mulitple_choice_quiz_form.quiz_7.data,
+            quiz_8=mulitple_choice_quiz_form.quiz_8.data,
+            quiz_9=mulitple_choice_quiz_form.quiz_9.data,
+            quiz_10=mulitple_choice_quiz_form.quiz_10.data
+        )
+        db.session.add(chapter_quiz)
+        db.session.commit()
+        flash('Chapter quiz has been added!', 'success')
+        return redirect(url_for(
+            'teacher.review_general_mulitiple_choices_quiz'))
+
     all_quizzes = ChapterQuiz.query.filter_by(
+        course=teacher.teacher_course).all()
+    all_multiple_quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         course=teacher.teacher_course).all()
     course_chapters = Chapter.query.filter_by(
         course=teacher.teacher_course).all()
@@ -271,20 +296,35 @@ def dashboard_manage_course():
     all_toc = len(TableOfContents.query.all())
     all_course_overview = len(WebDevelopmentOverview.query.all())
     all_chapter_quizzes = len(ChapterQuiz.query.all())
+    all_general_multiple_choice_quizzes = len(
+        GeneralMultipleChoicesQuiz.query.all())
     return render_template(
         'teacher/manage_course.html',
         title='Manage Your Course',
         teacher=teacher,
+
+        # Course Overview
+        course_overview_form=course_overview_form,
+        all_course_overview=all_course_overview,
+
+        # Table of Contents
+        table_of_contents_form=table_of_contents_form,
+        all_toc=all_toc,
+
+        # Chapters
+        chapter_form=chapter_form,
         course_chapters=course_chapters,
         all_chapters=all_chapters,
-        all_toc=all_toc,
-        all_course_overview=all_course_overview,
-        all_chapter_quizzes=all_chapter_quizzes,
-        course_overview_form=course_overview_form,
-        table_of_contents_form=table_of_contents_form,
-        chapter_form=chapter_form,
+
+        # Chapter Quiz
         chapter_quiz_form=chapter_quiz_form,
-        all_quizzes=all_quizzes
+        all_quizzes=all_quizzes,
+        all_chapter_quizzes=all_chapter_quizzes,
+
+        # Multiple Choice Quiz
+        mulitple_choice_quiz_form=mulitple_choice_quiz_form,
+        all_multiple_quizzes=all_multiple_quizzes,
+        all_general_multiple_choice_quizzes=all_general_multiple_choice_quizzes
         )
 
 # ==========================================
@@ -1256,3 +1296,66 @@ def delete_flask_quiz(id):
 # ========================================
 # END OF COMMENTS MANAGEMENT ROUTES
 # ========================================
+
+# ========================================
+# REVIEW GENERAL MULTIPLE CHOICE QUESTIONS
+# ========================================
+
+
+@bp.route('/flask/general-mulitple-choices-quiz/review')
+@login_required
+def review_general_mulitiple_choices_quiz():
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=current_user.teacher_full_name
+        ).first()
+    page = request.args.get('page', 1, type=int)
+    flask_quiz = GeneralMultipleChoicesQuiz.query.order_by(
+        GeneralMultipleChoicesQuiz.timestamp.asc()
+        ).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for(
+        'teacher.review_general_mulitiple_choices_quiz',
+        page=flask_quiz.next_num) \
+        if flask_quiz.has_next else None
+    prev_url = url_for(
+        'teacher.review_general_mulitiple_choices_quiz',
+        page=flask_quiz.prev_num) \
+        if flask_quiz.has_prev else None
+    all_flask_quiz = len(GeneralMultipleChoicesQuiz.query.all())
+    return render_template(
+        'teacher/course/flask/reviews/general_multiple_choices_quiz.html',
+        teacher=teacher,
+        title='Review General Multiple Choices Quizzes',
+        flask_quiz=flask_quiz.items,
+        next_url=next_url,
+        prev_url=prev_url,
+        all_flask_quiz=all_flask_quiz
+        )
+
+
+@bp.route('/flask/general-mulitple-choices-quiz/<int:id>/allow')
+def allow_review_general_mulitiple_choices_quiz(id):
+    quiz = GeneralMultipleChoicesQuiz.query.get_or_404(id)
+    quiz.allowed_status = True
+    db.session.commit()
+    flash(f'General flask quiz {id} has been allowed.')
+    return redirect(url_for(
+        'teacher.review_general_mulitiple_choices_quiz'
+        )
+    )
+
+
+@bp.route('/flask/general-mulitple-choices-quiz/<int:id>/delete')
+def delete_review_general_mulitiple_choices_quiz(id):
+    quiz = GeneralMultipleChoicesQuiz.query.get_or_404(id)
+    db.session.delete(quiz)
+    db.session.commit()
+    flash(f'General flask quiz {id} has been deleted.')
+    return redirect(url_for(
+        'teacher.review_general_mulitiple_choices_quiz'
+        )
+    )
+
+# ===============================================
+# END OF REVIEW GENERAL MULTIPLE CHOICE QUESTIONS
+# ===============================================

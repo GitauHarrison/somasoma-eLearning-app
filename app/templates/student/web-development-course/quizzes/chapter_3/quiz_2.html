@@ -21,15 +21,17 @@
 <div class="row" id="quizzes">
     <div class="col-sm-12">
         {% for quiz in quizzes %}
-            {% if quiz.chapter.lower() == 'chapter 3: introduction to web forms' %}
-            <div class="row my-form quiz-form" id="quiz_{{ quiz.id }}">
-                <div class="col-sm-6 col-sm-6">
-                    <p>{{ quiz.quiz_2 }}</p>
-                    <p>
-                    {{  wtf.quick_form(quiz_2_form) }}
-                    </p>
+            {% if quiz.course == student.student_course %}
+                {% if quiz.chapter.lower() == 'chapter 3: introduction to web forms' %}
+                <div class="row my-form quiz-form" id="quiz_{{ quiz.id }}">
+                    <div class="col-sm-6 col-sm-6">
+                        <p>{{ quiz.quiz_2 }}</p>
+                        <p>
+                        {{  wtf.quick_form(quiz_2_form) }}
+                        </p>
+                    </div>
                 </div>
-            </div>
+                {% endif %}
             {% endif %}
         {% endfor %}
     </div>

@@ -183,6 +183,8 @@ class Student(UserMixin, db.Model):
         'WebDevChapter2Quiz',
         backref='author',
         lazy='dynamic')
+
+    # --- Quiz 1 Answers: chapter 1/2/3 ---
     webdev_chapter1_quiz_1_options = db.relationship(
         'WebDevChapter1Quiz1Options',
         backref='author',
@@ -195,6 +197,8 @@ class Student(UserMixin, db.Model):
         'WebDevChapter3Quiz1Options',
         backref='author',
         lazy='dynamic')
+
+    # --- Quiz 2 Answers: chapter 1/2/3 ---
     webdev_chapter1_quiz_2_options = db.relationship(
         'WebDevChapter1Quiz2Options',
         backref='author',
@@ -207,6 +211,8 @@ class Student(UserMixin, db.Model):
         'WebDevChapter3Quiz2Options',
         backref='author',
         lazy='dynamic')
+
+    # --- Quiz 3 Answers: chapter 1/2/3 ---
     webdev_chapter1_quiz_3_options = db.relationship(
         'WebDevChapter1Quiz3Options',
         backref='author',
@@ -219,6 +225,8 @@ class Student(UserMixin, db.Model):
         'WebDevChapter3Quiz3Options',
         backref='author',
         lazy='dynamic')
+
+    # --- Quiz 4 Answers: chapter 1/2/3 ---
     webdev_chapter1_quiz_4_options = db.relationship(
         'WebDevChapter1Quiz4Options',
         backref='author',
@@ -231,6 +239,8 @@ class Student(UserMixin, db.Model):
         'WebDevChapter3Quiz4Options',
         backref='author',
         lazy='dynamic')
+
+    # --- Quiz 5 Answers: chapter 1/2/3 ---
     webdev_chapter1_quiz_5_options = db.relationship(
         'WebDevChapter1Quiz5Options',
         backref='author',
@@ -241,6 +251,48 @@ class Student(UserMixin, db.Model):
         lazy='dynamic')
     webdev_chapter3_quiz_5_options = db.relationship(
         'WebDevChapter3Quiz5Options',
+        backref='author',
+        lazy='dynamic')
+
+    # --- Multiple Choice Quizzes Answers ---
+    general_multi_choice_answer_1 = db.relationship(
+        'GeneralMultipleChoicesAnswer1',
+        backref='author',
+        lazy='dynamic')
+    general_multi_choice_answer_2 = db.relationship(
+        'GeneralMultipleChoicesAnswer2',
+        backref='author',
+        lazy='dynamic')
+    general_multi_choice_answer_3 = db.relationship(
+        'GeneralMultipleChoicesAnswer3',
+        backref='author',
+        lazy='dynamic')
+    general_multi_choice_answer_4 = db.relationship(
+        'GeneralMultipleChoicesAnswer4',
+        backref='author',
+        lazy='dynamic')
+    general_multi_choice_answer_5 = db.relationship(
+        'GeneralMultipleChoicesAnswer5',
+        backref='author',
+        lazy='dynamic')
+    general_multi_choice_answer_6 = db.relationship(
+        'GeneralMultipleChoicesAnswer6',
+        backref='author',
+        lazy='dynamic')
+    general_multi_choice_answer_7 = db.relationship(
+        'GeneralMultipleChoicesAnswer7',
+        backref='author',
+        lazy='dynamic')
+    general_multi_choice_answer_8 = db.relationship(
+        'GeneralMultipleChoicesAnswer8',
+        backref='author',
+        lazy='dynamic')
+    general_multi_choice_answer_9 = db.relationship(
+        'GeneralMultipleChoicesAnswer9',
+        backref='author',
+        lazy='dynamic')
+    general_multi_choice_answer_10 = db.relationship(
+        'GeneralMultipleChoicesAnswer10',
         backref='author',
         lazy='dynamic')
 
@@ -479,6 +531,11 @@ class Teacher(UserMixin, db.Model):
         )
     chapter_quizzes = db.relationship(
         'ChapterQuiz',
+        backref='author',
+        lazy='dynamic'
+        )
+    general_multiple_choices_quiz = db.relationship(
+        'GeneralMultipleChoicesQuiz',
         backref='author',
         lazy='dynamic'
         )
@@ -769,6 +826,29 @@ class ChapterQuiz(db.Model):
         return f'Chapter Quiz: {self.chapter}'
 
 
+class GeneralMultipleChoicesQuiz(db.Model):
+    __tablename__ = 'general mulitple choices quiz'
+    id = db.Column(db.Integer, primary_key=True)
+    course = db.Column(db.String(140))
+    chapter = db.Column(db.String(64), index=True)
+    quiz_1 = db.Column(db.String(140))
+    quiz_2 = db.Column(db.String(140))
+    quiz_3 = db.Column(db.String(140))
+    quiz_4 = db.Column(db.String(140))
+    quiz_5 = db.Column(db.String(140))
+    quiz_6 = db.Column(db.String(140))
+    quiz_7 = db.Column(db.String(140))
+    quiz_8 = db.Column(db.String(140))
+    quiz_9 = db.Column(db.String(140))
+    quiz_10 = db.Column(db.String(140))
+    allowed_status = db.Column(db.Boolean, default=False)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+
+    def __repr__(self):
+        return f'Chapter Quiz: {self.chapter}'
+
+
 class Events(db.Model):
     __tablename__ = 'events'
     id = db.Column(db.Integer, primary_key=True)
@@ -899,7 +979,7 @@ class Courses(db.Model):
             tags=allowed_tags, strip=True))
 
 
-db.event.listen(Courses.body, 'set', Courses.on_changed_body)  
+db.event.listen(Courses.body, 'set', Courses.on_changed_body)
 
 
 class FlaskStudentStories(db.Model):
@@ -1112,6 +1192,7 @@ class WebDevChapter3Objectives(db.Model):
             {self.objective_3}, {self.objective_4}, {self.objective_5}\n\n'
 
 
+# Unused table
 class WebDevChapter1Quiz(db.Model):
     __tablename__ = 'web_dev_chapter1_quiz'
     id = db.Column(db.Integer, primary_key=True)
@@ -1122,6 +1203,7 @@ class WebDevChapter1Quiz(db.Model):
 
     def __repr__(self):
         return f'Quiz: {self.title}'
+# End of unused table
 
 
 class WebDevChapter2Quiz(db.Model):
@@ -1299,6 +1381,119 @@ class WebDevChapter3Quiz5Options(db.Model):
 
     def __repr__(self):
         return f'Quiz 5 Options: {self.answer}'
+
+
+# --- General mutli choice questions --- #
+
+
+class GeneralMultipleChoicesAnswer1(db.Model):
+    __tablename__ = 'general_multiple_choices_answer_1'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'General Quiz 1 Answer: {self.answer}'
+
+
+class GeneralMultipleChoicesAnswer2(db.Model):
+    __tablename__ = 'general_multiple_choices_answer_2'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'General Quiz 2 Answer: {self.answer}'
+
+
+class GeneralMultipleChoicesAnswer3(db.Model):
+    __tablename__ = 'general_multiple_choices_answer_3'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'General Quiz 3 Answer: {self.answer}'
+
+
+class GeneralMultipleChoicesAnswer4(db.Model):
+    __tablename__ = 'general_multiple_choices_answer_4'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'General Quiz 4 Answer: {self.answer}'
+
+
+class GeneralMultipleChoicesAnswer5(db.Model):
+    __tablename__ = 'general_multiple_choices_answer_5'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'General Quiz 5 Answer: {self.answer}'
+
+
+class GeneralMultipleChoicesAnswer6(db.Model):
+    __tablename__ = 'general_multiple_choices_answer_6'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'General Quiz 6 Answer: {self.answer}'
+
+
+class GeneralMultipleChoicesAnswer7(db.Model):
+    __tablename__ = 'general_multiple_choices_answer_7'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'General Quiz 7 Answer: {self.answer}'
+
+
+class GeneralMultipleChoicesAnswer8(db.Model):
+    __tablename__ = 'general_multiple_choices_answer_8'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'General Quiz 8 Answer: {self.answer}'
+
+
+class GeneralMultipleChoicesAnswer9(db.Model):
+    __tablename__ = 'general_multiple_choices_answer_9'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'General Quiz 9 Answer: {self.answer}'
+
+
+class GeneralMultipleChoicesAnswer10(db.Model):
+    __tablename__ = 'general_multiple_choices_answer_10'
+    id = db.Column(db.Integer, primary_key=True)
+    answer = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'General Quiz 10 Answer: {self.answer}'
 
 # ========================================
 # END OF WEB DEVELOPMENT MODELS

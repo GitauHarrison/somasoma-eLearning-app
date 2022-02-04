@@ -33,8 +33,7 @@
             </thead>
             <tbody>
                 {% for quiz in quizzes %} 
-                    {% if quiz.course == student.student_course %}          
-                        {% if quiz.chapter.lower()  == 'chapter 3: introduction to web forms' %}
+                    {% if quiz.course == student.student_course %}
                             <tr>
                                 <td>{{ quiz.quiz_1 }}</td>
                                 <td>{{ quiz_1_answers_list[student_latest_answer_quiz_1] }}</td>
@@ -65,7 +64,36 @@
                                 <td>Flask bootsrap</td>
                                 <td>{{ quiz_5_score }}</td>
                             </tr>
-                        {% endif %}
+                            <tr>
+                                <td>{{ quiz.quiz_6 }}</td>
+                                <td>{{ quiz_6_answers_list[student_latest_answer_quiz_6] }}</td>
+                                <td>Flask bootsrap</td>
+                                <td>{{ quiz_6_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_7 }}</td>
+                                <td>{{ quiz_7_answers_list[student_latest_answer_quiz_7] }}</td>
+                                <td>Flask bootsrap</td>
+                                <td>{{ quiz_7_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_8 }}</td>
+                                <td>{{ quiz_8_answers_list[student_latest_answer_quiz_8] }}</td>
+                                <td>Flask bootsrap</td>
+                                <td>{{ quiz_8_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_9 }}</td>
+                                <td>{{ quiz_9_answers_list[student_latest_answer_quiz_9] }}</td>
+                                <td>Flask bootsrap</td>
+                                <td>{{ quiz_9_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_10 }}</td>
+                                <td>{{ quiz_10_answers_list[student_latest_answer_quiz_10] }}</td>
+                                <td>Flask bootsrap</td>
+                                <td>{{ quiz_10_score }}</td>
+                            </tr>
                     {% endif %}
                 {% endfor %}
             </tbody>

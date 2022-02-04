@@ -32,38 +32,40 @@
                 </tr>
             </thead>
             <tbody>
-                {% for quiz in quizzes %}                
-                    {% if quiz.chapter.lower()  == 'chapter 1: hello world' %}
-                        <tr>
-                            <td>{{ quiz.quiz_1 }}</td>
-                            <td>{{ quiz_1_answers_list[student_latest_answer_quiz_1] }}</td>
-                            <td>pip3 install flask</td>
-                            <td>{{ quiz_1_score }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ quiz.quiz_2 }}</td>
-                            <td>{{ quiz_2_answers_list[student_latest_answer_quiz_2] }}</td>
-                            <td>Python</td>
-                            <td>{{ quiz_2_score }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ quiz.quiz_3 }}</td>
-                            <td>{{ quiz_3_answers_list[student_latest_answer_quiz_3] }}</td>
-                            <td>Keeping the core simple but extensible</td>
-                            <td>{{ quiz_3_score }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ quiz.quiz_4 }}</td>
-                            <td>{{ quiz_4_answers_list[student_latest_answer_quiz_4] }}</td>
-                            <td>Using the command flask run</td>
-                            <td>{{ quiz_4_score }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ quiz.quiz_5 }}</td>
-                            <td>{{ quiz_5_answers_list[student_latest_answer_quiz_5] }}</td>
-                            <td>View functions</td>
-                            <td>{{ quiz_5_score }}</td>
-                        </tr>
+                {% for quiz in quizzes %}     
+                    {% if quiz.course == student.student_course %}           
+                        {% if quiz.chapter.lower()  == 'chapter 1: hello world' %}
+                            <tr>
+                                <td>{{ quiz.quiz_1 }}</td>
+                                <td>{{ quiz_1_answers_list[student_latest_answer_quiz_1] }}</td>
+                                <td>pip3 install flask</td>
+                                <td>{{ quiz_1_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_2 }}</td>
+                                <td>{{ quiz_2_answers_list[student_latest_answer_quiz_2] }}</td>
+                                <td>Python</td>
+                                <td>{{ quiz_2_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_3 }}</td>
+                                <td>{{ quiz_3_answers_list[student_latest_answer_quiz_3] }}</td>
+                                <td>Keeping the core simple but extensible</td>
+                                <td>{{ quiz_3_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_4 }}</td>
+                                <td>{{ quiz_4_answers_list[student_latest_answer_quiz_4] }}</td>
+                                <td>Using the command flask run</td>
+                                <td>{{ quiz_4_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_5 }}</td>
+                                <td>{{ quiz_5_answers_list[student_latest_answer_quiz_5] }}</td>
+                                <td>View functions</td>
+                                <td>{{ quiz_5_score }}</td>
+                            </tr>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </tbody>

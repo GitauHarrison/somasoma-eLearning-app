@@ -32,38 +32,40 @@
                 </tr>
             </thead>
             <tbody>
-                {% for quiz in quizzes %}           
-                    {% if quiz.chapter.lower()  == 'chapter 2: flask templates' %}
-                        <tr>
-                            <td>{{ quiz.quiz_1 }}</td>
-                            <td>{{ quiz_1_answers_list[student_latest_answer_quiz_1] }}</td>
-                            <td>To display content</td>
-                            <td>{{ quiz_1_score }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ quiz.quiz_2 }}</td>
-                            <td>{{ quiz_2_answers_list[student_latest_answer_quiz_2] }}</td>
-                            <td>HTML</td>
-                            <td>{{ quiz_2_score }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ quiz.quiz_3 }}</td>
-                            <td>{{ quiz_3_answers_list[student_latest_answer_quiz_3] }}</td>
-                            <td>Jinja</td>
-                            <td>{{ quiz_3_score }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ quiz.quiz_4 }}</td>
-                            <td>{{ quiz_4_answers_list[student_latest_answer_quiz_4] }}</td>
-                            <td>View functions</td>
-                            <td>{{ quiz_4_score }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ quiz.quiz_5 }}</td>
-                            <td>{{ quiz_5_answers_list[student_latest_answer_quiz_5] }}</td>
-                            <td>CSS</td>
-                            <td>{{ quiz_5_score }}</td>
-                        </tr>
+                {% for quiz in quizzes %}  
+                    {% if quiz.course == student.student_course %}         
+                        {% if quiz.chapter.lower()  == 'chapter 2: flask templates' %}
+                            <tr>
+                                <td>{{ quiz.quiz_1 }}</td>
+                                <td>{{ quiz_1_answers_list[student_latest_answer_quiz_1] }}</td>
+                                <td>To display content</td>
+                                <td>{{ quiz_1_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_2 }}</td>
+                                <td>{{ quiz_2_answers_list[student_latest_answer_quiz_2] }}</td>
+                                <td>HTML</td>
+                                <td>{{ quiz_2_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_3 }}</td>
+                                <td>{{ quiz_3_answers_list[student_latest_answer_quiz_3] }}</td>
+                                <td>Jinja</td>
+                                <td>{{ quiz_3_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_4 }}</td>
+                                <td>{{ quiz_4_answers_list[student_latest_answer_quiz_4] }}</td>
+                                <td>View functions</td>
+                                <td>{{ quiz_4_score }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ quiz.quiz_5 }}</td>
+                                <td>{{ quiz_5_answers_list[student_latest_answer_quiz_5] }}</td>
+                                <td>CSS</td>
+                                <td>{{ quiz_5_score }}</td>
+                            </tr>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </tbody>

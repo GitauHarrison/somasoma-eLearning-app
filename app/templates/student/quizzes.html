@@ -17,55 +17,41 @@
     <div id="live-class" class="tabcontent">
         <div class="row text-center">
             <div class="col-sm-4">
+                <!-- Multiple choice questions -->
                 <!-- Chapter 1 Card -->
                 <div class="card-deck text-center">
                     <div class="card">
                         <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/quiz.svg')}}" alt="Quiz">
                         <div class="card-body">
-                            <h2 class="card-title">Chapter 1 Quiz</h2><hr>
+                            <h2 class="card-title">Multiple Choice Questions</h2><hr>
                             <p class="card-text">
-                                Gauge your understanding of Chapter 1.
+                                You can select your answers by choosing one from the dropdown menu.
                             </p>
-                            <a href=" {{ url_for('student.web_development_chapter_1') }} " class="btn btn-primary">Review Lesson</a>
-                            <a href=" {{ url_for('student.web_development_chapter_1_quiz_1') }} " class="btn btn-primary">Start Quiz</a>
+                            <a href=" {{ url_for('student.web_development_general_quiz_1') }} " class="btn btn-primary">Start Quiz</a>
                         </div>            
                     </div>
                 </div>
                 <!-- End of chapter 1 Card -->
             </div>
             <div class="col-sm-4">
+                <!-- Fill in the blank questions -->
                 <!-- Chapter 2 Card -->
                 <div class="card-deck text-center">
                     <div class="card">
                         <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/quiz.svg')}}" alt="Quiz">
                         <div class="card-body">
-                            <h2 class="card-title">Chapter 2 Quiz</h2><hr>
+                            <h2 class="card-title">Fill In The Blank</h2><hr>
                             <p class="card-text">
-                                Gauge your understanding of Chapter 2.
+                                You will need to provide your own answers. Your teacher will assess and grade them.
                             </p>
-                            <a href=" # " class="btn btn-primary">Review Lesson</a>
-                            <a href=" # " class="btn btn-primary">Start Quiz</a>
+                            <a href=" # " class="btn btn-primary disabled">Start Quiz</a>
                         </div>            
                     </div>
                 </div>
                 <!-- End of Chapter 2 Card -->
             </div>
             <div class="col-sm-4">
-                <!-- Chapter 3 Card -->
-                <div class="card-deck text-center">
-                    <div class="card">
-                        <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/quiz.svg')}}" alt="Quiz">
-                        <div class="card-body">
-                            <h2 class="card-title">Chapter 3 Quiz</h2><hr>
-                            <p class="card-text">
-                                Gauge your understanding of Chapter 3.
-                            </p>
-                            <a href=" # " class="btn btn-primary">Review Lesson</a>
-                            <a href=" # " class="btn btn-primary">Start Quiz</a>
-                        </div>            
-                    </div>
-                </div>
-                <!-- End of Chapter 2 Card -->
+                <!-- Card 3 will go here -->
             </div>
         </div>
     </div>

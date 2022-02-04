@@ -3,14 +3,18 @@ from app.student import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app, jsonify
 from app.student.forms import CommentForm, EditProfileForm,\
-    ChapterObjectivesForm, QuizForm, Chapter1Quiz1OptionsForm,\
+    ChapterObjectivesForm, Chapter1Quiz1OptionsForm,\
     EmptyForm, Chapter1Quiz2OptionsForm, Chapter1Quiz3OptionsForm,\
     Chapter1Quiz4OptionsForm, Chapter2Quiz1OptionsForm,\
     Chapter2Quiz2OptionsForm, Chapter2Quiz3OptionsForm,\
     Chapter2Quiz4OptionsForm, Chapter2Quiz5OptionsForm,\
     Chapter1Quiz5OptionsForm, Chapter3Quiz1OptionsForm,\
     Chapter3Quiz2OptionsForm, Chapter3Quiz3OptionsForm,\
-    Chapter3Quiz4OptionsForm, Chapter3Quiz5OptionsForm
+    Chapter3Quiz4OptionsForm, Chapter3Quiz5OptionsForm,\
+    GeneralQuiz1Form, GeneralQuiz2Form, GeneralQuiz3Form,\
+    GeneralQuiz4Form, GeneralQuiz5Form, GeneralQuiz6Form,\
+    GeneralQuiz7Form, GeneralQuiz8Form, GeneralQuiz9Form,\
+    GeneralQuiz10Form
 from app.teacher.forms import PrivateMessageForm
 from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
     CommunityComment, WebDevChapter1Objectives, WebDevChapter1Quiz,\
@@ -24,7 +28,12 @@ from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
     WebDevChapter3Comment, WebDevChapter3Objectives, \
     WebDevChapter3Quiz1Options, WebDevChapter3Quiz2Options,\
     WebDevChapter3Quiz3Options, WebDevChapter3Quiz4Options,\
-    WebDevChapter3Quiz5Options
+    WebDevChapter3Quiz5Options, GeneralMultipleChoicesQuiz,\
+    GeneralMultipleChoicesAnswer1, GeneralMultipleChoicesAnswer2,\
+    GeneralMultipleChoicesAnswer3, GeneralMultipleChoicesAnswer4,\
+    GeneralMultipleChoicesAnswer5, GeneralMultipleChoicesAnswer6,\
+    GeneralMultipleChoicesAnswer7, GeneralMultipleChoicesAnswer8,\
+    GeneralMultipleChoicesAnswer9, GeneralMultipleChoicesAnswer10
 from app.student.email import send_flask_chapter_1_comment_email, \
     send_flask_chapter_2_comment_email, send_flask_chapter_3_comment_email
 from flask_login import current_user, login_required
@@ -487,6 +496,172 @@ def dashboard_analytics():
     except ZeroDivisionError:
         total_score_percentage_chapter_3 = 0
 
+    # === General multi-choice questions ===
+
+    # Calculate total score
+    multi_choice_quiz_1_score = 0
+    multi_choice_quiz_1_answers_list = []
+    multi_choice_quiz_1_answer = student.general_multi_choice_answer_1.all()
+    for answer in multi_choice_quiz_1_answer:
+        multi_choice_quiz_1_answers_list.append(answer.answer)
+    try:
+        multi_choice_student_latest_answer_quiz_1 = len(multi_choice_quiz_1_answers_list) - 1
+        if multi_choice_quiz_1_answers_list[multi_choice_student_latest_answer_quiz_1].lower() == \
+                "to collect user data":
+            multi_choice_quiz_1_score += 1
+        else:
+            multi_choice_quiz_1_score += 0
+    except IndexError:
+        multi_choice_quiz_1_score += 0
+
+    multi_choice_quiz_2_score = 0
+    multi_choice_quiz_2_answers_list = []
+    multi_choice_quiz_2_answer = student.general_multi_choice_answer_2.all()
+    for answer in multi_choice_quiz_2_answer:
+        quiz_2_answers_list.append(answer.answer)
+    try:
+        multi_choice_student_latest_answer_quiz_2 = len(multi_choice_quiz_2_answers_list) - 1
+        if multi_choice_quiz_2_answers_list[multi_choice_student_latest_answer_quiz_2].lower() == \
+                "flask-wtf":
+            multi_choice_quiz_2_score += 1
+        else:
+            multi_choice_quiz_2_score += 0
+    except IndexError:
+        multi_choice_quiz_2_score += 0
+
+    multi_choice_quiz_3_score = 0
+    multi_choice_quiz_3_answers_list = []
+    multi_choice_quiz_3_answer = student.general_multi_choice_answer_3.all()
+    for answer in multi_choice_quiz_3_answer:
+        multi_choice_quiz_3_answers_list.append(answer.answer)
+    try:
+        multi_choice_student_latest_answer_quiz_3 = len(multi_choice_quiz_3_answers_list) - 1
+        if multi_choice_quiz_3_answers_list[multi_choice_student_latest_answer_quiz_3].lower() == \
+                "validationerror":
+            multi_choice_quiz_3_score += 1
+        else:
+            multi_choice_quiz_3_score += 0
+    except IndexError:
+        multi_choice_quiz_3_score += 0
+
+    multi_choice_quiz_4_score = 0
+    multi_choice_quiz_4_answers_list = []
+    multi_choice_quiz_4_answer = student.general_multi_choice_answer_4.all()
+    for answer in multi_choice_quiz_4_answer:
+        multi_choice_quiz_4_answers_list.append(answer.answer)
+    try:
+        multi_choice_student_latest_answer_quiz_4 = len(multi_choice_quiz_4_answers_list) - 1
+        if multi_choice_quiz_4_answers_list[multi_choice_student_latest_answer_quiz_4].lower() == \
+                ".env":
+            multi_choice_quiz_4_score += 1
+        else:
+            multi_choice_quiz_4_score += 0
+    except IndexError:
+        multi_choice_quiz_4_score += 0
+
+    multi_choice_quiz_5_score = 0
+    multi_choice_quiz_5_answers_list = []
+    multi_choice_quiz_5_answer = student.general_multi_choice_answer_5.all()
+    for answer in multi_choice_quiz_5_answer:
+        multi_choice_quiz_5_answers_list.append(answer.answer)
+    try:
+        multi_choice_student_latest_answer_quiz_5 = len(multi_choice_quiz_5_answers_list) - 1
+        if multi_choice_quiz_5_answers_list[multi_choice_student_latest_answer_quiz_5].lower() == \
+                "flask bootsrap":
+            multi_choice_quiz_5_score += 1
+        else:
+            multi_choice_quiz_5_score += 0
+    except IndexError:
+        multi_choice_quiz_5_score += 0
+
+    multi_choice_quiz_6_score = 0
+    multi_choice_quiz_6_answers_list = []
+    multi_choice_quiz_6_answer = student.general_multi_choice_answer_6.all()
+    for answer in multi_choice_quiz_6_answer:
+        multi_choice_quiz_6_answers_list.append(answer.answer)
+    try:
+        multi_choice_student_latest_answer_quiz_6 = len(multi_choice_quiz_6_answers_list) - 1
+        if multi_choice_quiz_6_answers_list[multi_choice_student_latest_answer_quiz_6].lower() == \
+                "flask bootsrap":
+            multi_choice_quiz_6_score += 1
+        else:
+            multi_choice_quiz_6_score += 0
+    except IndexError:
+        multi_choice_quiz_6_score += 0
+
+    multi_choice_quiz_7_score = 0
+    multi_choice_quiz_7_answers_list = []
+    multi_choice_quiz_7_answer = student.general_multi_choice_answer_7.all()
+    for answer in multi_choice_quiz_7_answer:
+        multi_choice_quiz_7_answers_list.append(answer.answer)
+    try:
+        multi_choice_student_latest_answer_quiz_7 = len(multi_choice_quiz_7_answers_list) - 1
+        if multi_choice_quiz_7_answers_list[multi_choice_student_latest_answer_quiz_7].lower() == \
+                "flask bootsrap":
+            multi_choice_quiz_7_score += 1
+        else:
+            multi_choice_quiz_7_score += 0
+    except IndexError:
+        multi_choice_quiz_7_score += 0
+
+    multi_choice_quiz_8_score = 0
+    multi_choice_quiz_8_answers_list = []
+    multi_choice_quiz_8_answer = student.general_multi_choice_answer_8.all()
+    for answer in multi_choice_quiz_8_answer:
+        multi_choice_quiz_8_answers_list.append(answer.answer)
+    try:
+        multi_choice_student_latest_answer_quiz_8 = len(multi_choice_quiz_8_answers_list) - 1
+        if multi_choice_quiz_8_answers_list[multi_choice_student_latest_answer_quiz_8].lower() == \
+                "flask bootsrap":
+            multi_choice_quiz_8_score += 1
+        else:
+            multi_choice_quiz_8_score += 0
+    except IndexError:
+        multi_choice_quiz_8_score += 0
+
+    multi_choice_quiz_9_score = 0
+    multi_choice_quiz_9_answers_list = []
+    multi_choice_quiz_9_answer = student.general_multi_choice_answer_9.all()
+    for answer in multi_choice_quiz_9_answer:
+        multi_choice_quiz_9_answers_list.append(answer.answer)
+    try:
+        multi_choice_student_latest_answer_quiz_9 = len(multi_choice_quiz_9_answers_list) - 1
+        if multi_choice_quiz_9_answers_list[multi_choice_student_latest_answer_quiz_9].lower() == \
+                "flask bootsrap":
+            multi_choice_quiz_9_score += 1
+        else:
+            multi_choice_quiz_9_score += 0
+    except IndexError:
+        multi_choice_quiz_9_score += 0
+
+    multi_choice_quiz_10_score = 0
+    multi_choice_quiz_10_answers_list = []
+    multi_choice_quiz_10_answer = student.general_multi_choice_answer_10.all()
+    for answer in multi_choice_quiz_10_answer:
+        multi_choice_quiz_10_answers_list.append(answer.answer)
+    try:
+        multi_choice_student_latest_answer_quiz_10 = len(multi_choice_quiz_10_answers_list) - 1
+        if multi_choice_quiz_10_answers_list[multi_choice_student_latest_answer_quiz_10].lower() == \
+                "flask bootsrap":
+            multi_choice_quiz_10_score += 1
+        else:
+            multi_choice_quiz_10_score += 0
+    except IndexError:
+        multi_choice_quiz_10_score += 0
+
+    # Calculate percentage
+    multi_choice_total_score = multi_choice_quiz_1_score + multi_choice_quiz_2_score + \
+        multi_choice_quiz_3_score + multi_choice_quiz_4_score + \
+        multi_choice_quiz_5_score + multi_choice_quiz_6_score + \
+        multi_choice_quiz_7_score + multi_choice_quiz_8_score + \
+        multi_choice_quiz_9_score + multi_choice_quiz_10_score
+    try:
+        multi_choice_total_score_percentage = round((multi_choice_total_score / 10) * 100, 2)
+    except ZeroDivisionError:
+        multi_choice_total_score_percentage = 0
+
+    # === End of multi-choice questions ===
+
     return render_template(
         'student/analytics.html',
         title='Analytics',
@@ -503,7 +678,10 @@ def dashboard_analytics():
 
         # Chapter 3
         percentage_achieved_chapter_3=percentage_achieved_chapter_3,
-        total_score_percentage_chapter_3=total_score_percentage_chapter_3
+        total_score_percentage_chapter_3=total_score_percentage_chapter_3,
+
+        # Multi-choice questions
+        multi_choice_total_score_percentage=multi_choice_total_score_percentage
         )
 
 # Profile routes
@@ -1317,57 +1495,20 @@ def web_development_chapter_3():
         percentage_achieved_chapter_3=percentage_achieved_chapter_3
         )
 
-# ===================================
-# QUIZZES
-# ===================================
-
-
-@bp.route(
-    '/web-development/chapter-1/quizzes/form',
-    methods=['GET', 'POST']
-    )
-@login_required
-def web_development_chapter_1_quizzes_form():
-    student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
-    form = QuizForm()
-    if form.validate_on_submit():
-        quiz = WebDevChapter1Quiz(
-            title=form.title.data,
-            body=form.body.data
-        )
-        db.session.add(quiz)
-        db.session.commit()
-        flash('Your quiz has been added!', 'success')
-        return redirect(url_for(
-            'student.web_development_chapter_1_quizzes_form',
-            student_full_name=student.student_full_name
-        ))
-    return render_template(
-        'student/quizzes-forms/quiz_type_1.html',
-        title='Quiz Type 1',
-        student=student,
-        form=form
-        )
+# ==================================
+# ======== CHAPTER QUIZES ==========
+# ==================================
 
 # Chapter 1 quiz 1
 
 
 @bp.route(
-    '/web-development/chapter-1/quiz-1',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-1/quiz-1', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_1_quiz_1():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
-    page = request.args.get('page', 1, type=int)
-    quizzes = ChapterQuiz.query.order_by(
-        ChapterQuiz.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 1
     quiz_1_form = Chapter1Quiz1OptionsForm()
@@ -1386,7 +1527,7 @@ def web_development_chapter_1_quiz_1():
         'student/web-development-course/quizzes/chapter_1/quiz_1.html',
         title='Chapter 1: Quiz 1',
         student=student,
-        quizzes=quizzes.items,
+        quizzes=quizzes,
         quiz_1_form=quiz_1_form
         )
 
@@ -1394,19 +1535,12 @@ def web_development_chapter_1_quiz_1():
 
 
 @bp.route(
-    '/web-development/chapter-1/quiz-2',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-1/quiz-2', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_1_quiz_2():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
-    page = request.args.get('page', 1, type=int)
-    quizzes = ChapterQuiz.query.order_by(
-        ChapterQuiz.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 2
     quiz_2_form = Chapter1Quiz2OptionsForm()
@@ -1425,7 +1559,7 @@ def web_development_chapter_1_quiz_2():
         'student/web-development-course/quizzes/chapter_1/quiz_2.html',
         title='Chapter 1: Quiz 2',
         student=student,
-        quizzes=quizzes.items,
+        quizzes=quizzes,
         quiz_2_form=quiz_2_form
         )
 
@@ -1433,19 +1567,12 @@ def web_development_chapter_1_quiz_2():
 
 
 @bp.route(
-    '/web-development/chapter-1/quiz-3',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-1/quiz-3', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_1_quiz_3():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
-    page = request.args.get('page', 1, type=int)
-    quizzes = ChapterQuiz.query.order_by(
-        ChapterQuiz.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 3
     quiz_3_form = Chapter1Quiz3OptionsForm()
@@ -1464,7 +1591,7 @@ def web_development_chapter_1_quiz_3():
         'student/web-development-course/quizzes/chapter_1/quiz_3.html',
         title='Chapter 1: Quiz 3',
         student=student,
-        quizzes=quizzes.items,
+        quizzes=quizzes,
         quiz_3_form=quiz_3_form
         )
 
@@ -1472,19 +1599,12 @@ def web_development_chapter_1_quiz_3():
 
 
 @bp.route(
-    '/web-development/chapter-1/quiz-4',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-1/quiz-4', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_1_quiz_4():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
-    page = request.args.get('page', 1, type=int)
-    quizzes = ChapterQuiz.query.order_by(
-        ChapterQuiz.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 4
     quiz_4_form = Chapter1Quiz4OptionsForm()
@@ -1503,7 +1623,7 @@ def web_development_chapter_1_quiz_4():
         'student/web-development-course/quizzes/chapter_1/quiz_4.html',
         title='Chapter 1: Quiz 4',
         student=student,
-        quizzes=quizzes.items,
+        quizzes=quizzes,
         quiz_4_form=quiz_4_form
         )
 
@@ -1512,19 +1632,12 @@ def web_development_chapter_1_quiz_4():
 
 
 @bp.route(
-    '/web-development/chapter-1/quiz-5',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-1/quiz-5', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_1_quiz_5():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
-    page = request.args.get('page', 1, type=int)
-    quizzes = ChapterQuiz.query.order_by(
-        ChapterQuiz.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_QUIZ_PAGE'], False)
+        student_full_name=current_user.student_full_name).first()
+    quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 5
     quiz_5_form = Chapter1Quiz5OptionsForm()
@@ -1543,7 +1656,7 @@ def web_development_chapter_1_quiz_5():
         'student/web-development-course/quizzes/chapter_1/quiz_5.html',
         title='Chapter 1: Quiz 5',
         student=student,
-        quizzes=quizzes.items,
+        quizzes=quizzes,
         quiz_5_form=quiz_5_form
         )
 
@@ -1895,10 +2008,7 @@ def web_development_chapter_3_quiz_5():
 # Chapter 1 total score
 
 
-@bp.route(
-    '/web-development/chapter-1/total-score',
-    methods=['GET', 'POST']
-    )
+@bp.route('/web-development/chapter-1/total-score')
 @login_required
 def web_development_chapter_1_total_score():
     student = Student.query.filter_by(
@@ -2020,10 +2130,7 @@ def web_development_chapter_1_total_score():
 # Chapter 2 total score
 
 
-@bp.route(
-    '/web-development/chapter-2/total-score',
-    methods=['GET', 'POST']
-    )
+@bp.route('/web-development/chapter-2/total-score')
 @login_required
 def web_development_chapter_2_total_score():
     student = Student.query.filter_by(
@@ -2145,10 +2252,7 @@ def web_development_chapter_2_total_score():
 # Chapter 3 total score
 
 
-@bp.route(
-    '/web-development/chapter-3/total-score',
-    methods=['GET', 'POST']
-    )
+@bp.route('/web-development/chapter-3/total-score')
 @login_required
 def web_development_chapter_3_total_score():
     student = Student.query.filter_by(
@@ -2269,3 +2373,526 @@ def web_development_chapter_3_total_score():
 # ========================================
 # END OF WEB DEVELOPMENT COURSE ROUTES
 # ========================================
+
+# =========================================
+# ==== GENERAL MULTIPLE CHOICE QUIZZES ====
+# =========================================
+
+
+@bp.route(
+    '/web-development/general-multichoice-questions/quiz-1',
+    methods=['GET', 'POST'])
+@login_required
+def web_development_general_quiz_1():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+    form = GeneralQuiz1Form()
+    if form.validate_on_submit():
+        answer = GeneralMultipleChoicesAnswer1(
+            answer=form.answer.data,
+            author=student)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 1 answer have been recorded!', 'success')
+        return redirect(url_for(
+            'student.web_development_general_quiz_2',
+            student_full_name=student.student_full_name
+            ))
+    return render_template(
+        'student/web-development-course/quizzes/general/quiz_1.html',
+        title='General Quiz 1',
+        student=student,
+        form=form,
+        quizzes=quizzes
+        )
+
+
+@bp.route(
+    '/web-development/general-multichoice-questions/quiz-2',
+    methods=['GET', 'POST'])
+@login_required
+def web_development_general_quiz_2():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+    form = GeneralQuiz2Form()
+    if form.validate_on_submit():
+        answer = GeneralMultipleChoicesAnswer2(
+            answer=form.answer.data,
+            author=student)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 2 answer have been recorded!', 'success')
+        return redirect(url_for(
+            'student.web_development_general_quiz_3',
+            student_full_name=student.student_full_name
+            ))
+    return render_template(
+        'student/web-development-course/quizzes/general/quiz_2.html',
+        title='General Quiz 2',
+        student=student,
+        form=form,
+        quizzes=quizzes
+        )
+
+
+@bp.route(
+    '/web-development/general-multichoice-questions/quiz-3',
+    methods=['GET', 'POST'])
+@login_required
+def web_development_general_quiz_3():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+    form = GeneralQuiz3Form()
+    if form.validate_on_submit():
+        answer = GeneralMultipleChoicesAnswer3(
+            answer=form.answer.data,
+            author=student)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 3 answer have been recorded!', 'success')
+        return redirect(url_for(
+            'student.web_development_general_quiz_4',
+            student_full_name=student.student_full_name
+            ))
+    return render_template(
+        'student/web-development-course/quizzes/general/quiz_3.html',
+        title='General Quiz 3',
+        student=student,
+        form=form,
+        quizzes=quizzes
+        )
+
+
+@bp.route(
+    '/web-development/general-multichoice-questions/quiz-4',
+    methods=['GET', 'POST'])
+@login_required
+def web_development_general_quiz_4():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+    form = GeneralQuiz4Form()
+    if form.validate_on_submit():
+        answer = GeneralMultipleChoicesAnswer4(
+            answer=form.answer.data,
+            author=student)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 4 answer have been recorded!', 'success')
+        return redirect(url_for(
+            'student.web_development_general_quiz_5',
+            student_full_name=student.student_full_name
+            ))
+    return render_template(
+        'student/web-development-course/quizzes/general/quiz_4.html',
+        title='General Quiz 4',
+        student=student,
+        form=form,
+        quizzes=quizzes
+        )
+
+
+@bp.route(
+    '/web-development/general-multichoice-questions/quiz-5',
+    methods=['GET', 'POST'])
+@login_required
+def web_development_general_quiz_5():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+    form = GeneralQuiz5Form()
+    if form.validate_on_submit():
+        answer = GeneralMultipleChoicesAnswer5(
+            answer=form.answer.data,
+            author=student)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 5 answer have been recorded!', 'success')
+        return redirect(url_for(
+            'student.web_development_general_quiz_6',
+            student_full_name=student.student_full_name
+            ))
+    return render_template(
+        'student/web-development-course/quizzes/general/quiz_5.html',
+        title='General Quiz 5',
+        student=student,
+        form=form,
+        quizzes=quizzes
+        )
+
+
+@bp.route(
+    '/web-development/general-multichoice-questions/quiz-6',
+    methods=['GET', 'POST'])
+@login_required
+def web_development_general_quiz_6():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+    form = GeneralQuiz6Form()
+    if form.validate_on_submit():
+        answer = GeneralMultipleChoicesAnswer6(
+            answer=form.answer.data,
+            author=student)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 6 answer have been recorded!', 'success')
+        return redirect(url_for(
+            'student.web_development_general_quiz_7',
+            student_full_name=student.student_full_name
+            ))
+    return render_template(
+        'student/web-development-course/quizzes/general/quiz_6.html',
+        title='General Quiz 6',
+        student=student,
+        form=form,
+        quizzes=quizzes
+        )
+
+
+@bp.route(
+    '/web-development/general-multichoice-questions/quiz-7',
+    methods=['GET', 'POST'])
+@login_required
+def web_development_general_quiz_7():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+    form = GeneralQuiz7Form()
+    if form.validate_on_submit():
+        answer = GeneralMultipleChoicesAnswer7(
+            answer=form.answer.data,
+            author=student)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 7 answer have been recorded!', 'success')
+        return redirect(url_for(
+            'student.web_development_general_quiz_8',
+            student_full_name=student.student_full_name
+            ))
+    return render_template(
+        'student/web-development-course/quizzes/general/quiz_7.html',
+        title='General Quiz 7',
+        student=student,
+        form=form,
+        quizzes=quizzes
+        )
+
+
+@bp.route(
+    '/web-development/general-multichoice-questions/quiz-8',
+    methods=['GET', 'POST'])
+@login_required
+def web_development_general_quiz_8():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+    form = GeneralQuiz8Form()
+    if form.validate_on_submit():
+        answer = GeneralMultipleChoicesAnswer8(
+            answer=form.answer.data,
+            author=student)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 8 answer have been added!', 'success')
+        return redirect(url_for(
+            'student.web_development_general_quiz_9',
+            student_full_name=student.student_full_name
+            ))
+    return render_template(
+        'student/web-development-course/quizzes/general/quiz_8.html',
+        title='General Quiz 8',
+        student=student,
+        form=form,
+        quizzes=quizzes
+        )
+
+
+@bp.route(
+    '/web-development/general-multichoice-questions/quiz-9',
+    methods=['GET', 'POST'])
+@login_required
+def web_development_general_quiz_9():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+    form = GeneralQuiz9Form()
+    if form.validate_on_submit():
+        answer = GeneralMultipleChoicesAnswer9(
+            answer=form.answer.data,
+            author=student)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 9 answer have been added!', 'success')
+        return redirect(url_for(
+            'student.web_development_general_quiz_10',
+            student_full_name=student.student_full_name
+            ))
+    return render_template(
+        'student/web-development-course/quizzes/general/quiz_9.html',
+        title='General Quiz 9',
+        student=student,
+        form=form,
+        quizzes=quizzes
+        )
+
+
+@bp.route(
+    '/web-development/general-multichoice-questions/quiz-10',
+    methods=['GET', 'POST'])
+@login_required
+def web_development_general_quiz_10():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+    form = GeneralQuiz10Form()
+    if form.validate_on_submit():
+        answer = GeneralMultipleChoicesAnswer10(
+            answer=form.answer.data,
+            author=student)
+        db.session.add(answer)
+        db.session.commit()
+        flash('Your quiz 10 answer have been added!', 'success')
+        return redirect(url_for(
+            'student.web_development_general_quiz_total_score',
+            student_full_name=student.student_full_name
+            ))
+    return render_template(
+        'student/web-development-course/quizzes/general/quiz_10.html',
+        title='General Quiz 10',
+        student=student,
+        form=form,
+        quizzes=quizzes
+        )
+
+
+# General multiple choice total score
+
+
+@bp.route('/web-development/general-multichoice-questions/total-score')
+@login_required
+def web_development_general_quiz_total_score():
+    student = Student.query.filter_by(
+        student_full_name=current_user.student_full_name).first()
+    quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
+        allowed_status=True).all()
+
+    # Calculate total score
+    quiz_1_score = 0
+    quiz_1_answers_list = []
+    quiz_1_answer = student.general_multi_choice_answer_1.all()
+    for answer in quiz_1_answer:
+        quiz_1_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_1 = len(quiz_1_answers_list) - 1
+        if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == \
+                "to collect user data":
+            quiz_1_score += 1
+        else:
+            quiz_1_score += 0
+    except IndexError:
+        quiz_1_score += 0
+
+    quiz_2_score = 0
+    quiz_2_answers_list = []
+    quiz_2_answer = student.general_multi_choice_answer_2.all()
+    for answer in quiz_2_answer:
+        quiz_2_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_2 = len(quiz_2_answers_list) - 1
+        if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == \
+                "flask-wtf":
+            quiz_2_score += 1
+        else:
+            quiz_2_score += 0
+    except IndexError:
+        quiz_2_score += 0
+
+    quiz_3_score = 0
+    quiz_3_answers_list = []
+    quiz_3_answer = student.general_multi_choice_answer_3.all()
+    for answer in quiz_3_answer:
+        quiz_3_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_3 = len(quiz_3_answers_list) - 1
+        if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == \
+                "validationerror":
+            quiz_3_score += 1
+        else:
+            quiz_3_score += 0
+    except IndexError:
+        quiz_3_score += 0
+
+    quiz_4_score = 0
+    quiz_4_answers_list = []
+    quiz_4_answer = student.general_multi_choice_answer_4.all()
+    for answer in quiz_4_answer:
+        quiz_4_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_4 = len(quiz_4_answers_list) - 1
+        if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == \
+                ".env":
+            quiz_4_score += 1
+        else:
+            quiz_4_score += 0
+    except IndexError:
+        quiz_4_score += 0
+
+    quiz_5_score = 0
+    quiz_5_answers_list = []
+    quiz_5_answer = student.general_multi_choice_answer_5.all()
+    for answer in quiz_5_answer:
+        quiz_5_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_5 = len(quiz_5_answers_list) - 1
+        if quiz_5_answers_list[student_latest_answer_quiz_5].lower() == \
+                "flask bootsrap":
+            quiz_5_score += 1
+        else:
+            quiz_5_score += 0
+    except IndexError:
+        quiz_5_score += 0
+
+    quiz_6_score = 0
+    quiz_6_answers_list = []
+    quiz_6_answer = student.general_multi_choice_answer_6.all()
+    for answer in quiz_6_answer:
+        quiz_6_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_6 = len(quiz_6_answers_list) - 1
+        if quiz_6_answers_list[student_latest_answer_quiz_6].lower() == \
+                "flask bootsrap":
+            quiz_6_score += 1
+        else:
+            quiz_6_score += 0
+    except IndexError:
+        quiz_6_score += 0
+
+    quiz_7_score = 0
+    quiz_7_answers_list = []
+    quiz_7_answer = student.general_multi_choice_answer_7.all()
+    for answer in quiz_7_answer:
+        quiz_7_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_7 = len(quiz_7_answers_list) - 1
+        if quiz_7_answers_list[student_latest_answer_quiz_7].lower() == \
+                "flask bootsrap":
+            quiz_7_score += 1
+        else:
+            quiz_7_score += 0
+    except IndexError:
+        quiz_7_score += 0
+
+    quiz_8_score = 0
+    quiz_8_answers_list = []
+    quiz_8_answer = student.general_multi_choice_answer_8.all()
+    for answer in quiz_8_answer:
+        quiz_8_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_8 = len(quiz_8_answers_list) - 1
+        if quiz_8_answers_list[student_latest_answer_quiz_8].lower() == \
+                "flask bootsrap":
+            quiz_8_score += 1
+        else:
+            quiz_8_score += 0
+    except IndexError:
+        quiz_8_score += 0
+
+    quiz_9_score = 0
+    quiz_9_answers_list = []
+    quiz_9_answer = student.general_multi_choice_answer_9.all()
+    for answer in quiz_9_answer:
+        quiz_9_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_9 = len(quiz_9_answers_list) - 1
+        if quiz_9_answers_list[student_latest_answer_quiz_9].lower() == \
+                "flask bootsrap":
+            quiz_9_score += 1
+        else:
+            quiz_9_score += 0
+    except IndexError:
+        quiz_9_score += 0
+
+    quiz_10_score = 0
+    quiz_10_answers_list = []
+    quiz_10_answer = student.general_multi_choice_answer_10.all()
+    for answer in quiz_10_answer:
+        quiz_10_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_10 = len(quiz_10_answers_list) - 1
+        if quiz_10_answers_list[student_latest_answer_quiz_10].lower() == \
+                "flask bootsrap":
+            quiz_10_score += 1
+        else:
+            quiz_10_score += 0
+    except IndexError:
+        quiz_10_score += 0
+
+    # Calculate percentage
+    total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score + \
+        quiz_5_score + quiz_6_score + quiz_7_score + quiz_8_score + \
+        quiz_9_score + quiz_10_score
+    try:
+        total_score_percentage = round((total_score / 10) * 100, 2)
+    except ZeroDivisionError:
+        total_score_percentage = 0
+
+    return render_template(
+        'student/web-development-course/quizzes/chapter_3/total_score.html',
+        title='General Multi-choice Quiz: Total Score',
+        student=student,
+        quizzes=quizzes,
+
+        quiz_1_answers_list=quiz_1_answers_list,
+        quiz_2_answers_list=quiz_2_answers_list,
+        quiz_3_answers_list=quiz_3_answers_list,
+        quiz_4_answers_list=quiz_4_answers_list,
+        quiz_5_answers_list=quiz_5_answers_list,
+        quiz_6_answers_list=quiz_6_answers_list,
+        quiz_7_answers_list=quiz_7_answers_list,
+        quiz_8_answers_list=quiz_8_answers_list,
+        quiz_9_answers_list=quiz_9_answers_list,
+        quiz_10_answers_list=quiz_10_answers_list,
+
+        student_latest_answer_quiz_1=student_latest_answer_quiz_1,
+        student_latest_answer_quiz_2=student_latest_answer_quiz_2,
+        student_latest_answer_quiz_3=student_latest_answer_quiz_3,
+        student_latest_answer_quiz_4=student_latest_answer_quiz_4,
+        student_latest_answer_quiz_5=student_latest_answer_quiz_5,
+        student_latest_answer_quiz_6=student_latest_answer_quiz_6,
+        student_latest_answer_quiz_7=student_latest_answer_quiz_7,
+        student_latest_answer_quiz_8=student_latest_answer_quiz_8,
+        student_latest_answer_quiz_9=student_latest_answer_quiz_9,
+        student_latest_answer_quiz_10=student_latest_answer_quiz_10,
+
+        quiz_1_score=quiz_1_score,
+        quiz_2_score=quiz_2_score,
+        quiz_3_score=quiz_3_score,
+        quiz_4_score=quiz_4_score,
+        quiz_5_score=quiz_5_score,
+        quiz_6_score=quiz_6_score,
+        quiz_7_score=quiz_7_score,
+        quiz_8_score=quiz_8_score,
+        quiz_9_score=quiz_9_score,
+        quiz_10_score=quiz_10_score,
+
+        total_score=total_score,
+        total_score_percentage=total_score_percentage
+        )
+
+# ================================================
+# ==== END OF GENERAL MULTIPLE CHOICE QUIZZES ====
+# ================================================

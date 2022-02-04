@@ -11,7 +11,13 @@ from app.models import CommunityComment, WebDevChapter1Comment,\
     WebDevChapter2Quiz, WebDevChapter2Quiz1Options,\
     WebDevChapter2Quiz2Options, WebDevChapter2Quiz3Options,\
     WebDevChapter2Quiz4Options, WebDevChapter1Quiz5Options, \
-    WebDevChapter2Quiz5Options, WebDevChapter3Comment, WebDevChapter3Objectives
+    WebDevChapter2Quiz5Options, WebDevChapter3Comment,\
+    WebDevChapter3Objectives, GeneralMultipleChoicesQuiz,\
+    GeneralMultipleChoicesAnswer1, GeneralMultipleChoicesAnswer2,\
+    GeneralMultipleChoicesAnswer3, GeneralMultipleChoicesAnswer4,\
+    GeneralMultipleChoicesAnswer5, GeneralMultipleChoicesAnswer6,\
+    GeneralMultipleChoicesAnswer7, GeneralMultipleChoicesAnswer8,\
+    GeneralMultipleChoicesAnswer9, GeneralMultipleChoicesAnswer10
 
 app = create_app()
 
@@ -56,5 +62,16 @@ def make_shell_context():
         WebDevChapter1Quiz5Options=WebDevChapter1Quiz5Options,
         WebDevChapter2Quiz5Options=WebDevChapter2Quiz5Options,
         WebDevChapter3Comment=WebDevChapter3Comment,
-        WebDevChapter3Objectives=WebDevChapter3Objectives
+        WebDevChapter3Objectives=WebDevChapter3Objectives,
+        GeneralMultipleChoicesQuiz=GeneralMultipleChoicesQuiz,
+        GeneralMultipleChoicesAnswer1=GeneralMultipleChoicesAnswer1,
+        GeneralMultipleChoicesAnswer2=GeneralMultipleChoicesAnswer2,
+        GeneralMultipleChoicesAnswer3=GeneralMultipleChoicesAnswer3,
+        GeneralMultipleChoicesAnswer4=GeneralMultipleChoicesAnswer4,
+        GeneralMultipleChoicesAnswer5=GeneralMultipleChoicesAnswer5,
+        GeneralMultipleChoicesAnswer6=GeneralMultipleChoicesAnswer6,
+        GeneralMultipleChoicesAnswer7=GeneralMultipleChoicesAnswer7,
+        GeneralMultipleChoicesAnswer8=GeneralMultipleChoicesAnswer8,
+        GeneralMultipleChoicesAnswer9=GeneralMultipleChoicesAnswer9,
+        GeneralMultipleChoicesAnswer10=GeneralMultipleChoicesAnswer10
         )
