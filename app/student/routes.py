@@ -2616,7 +2616,7 @@ def web_development_general_quiz_total_score():
     try:
         student_latest_answer_quiz_1 = len(quiz_1_answers_list) - 1
         if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == \
-                "to collect user data":
+                "To protect webforms against CSRF".lower():
             quiz_1_score += 1
         else:
             quiz_1_score += 0
@@ -2631,7 +2631,7 @@ def web_development_general_quiz_total_score():
     try:
         student_latest_answer_quiz_2 = len(quiz_2_answers_list) - 1
         if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == \
-                "flask-wtf":
+                "Python-dotenv".lower():
             quiz_2_score += 1
         else:
             quiz_2_score += 0
@@ -2646,7 +2646,7 @@ def web_development_general_quiz_total_score():
     try:
         student_latest_answer_quiz_3 = len(quiz_3_answers_list) - 1
         if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == \
-                "validationerror":
+                "To store need configuration keys".lower():
             quiz_3_score += 1
         else:
             quiz_3_score += 0
@@ -2661,7 +2661,7 @@ def web_development_general_quiz_total_score():
     try:
         student_latest_answer_quiz_4 = len(quiz_4_answers_list) - 1
         if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == \
-                ".env":
+                "app = Flask(__name__)".lower():
             quiz_4_score += 1
         else:
             quiz_4_score += 0
@@ -2676,7 +2676,7 @@ def web_development_general_quiz_total_score():
     try:
         student_latest_answer_quiz_5 = len(quiz_5_answers_list) - 1
         if quiz_5_answers_list[student_latest_answer_quiz_5].lower() == \
-                "flask bootsrap":
+                "To style a web page".lower():
             quiz_5_score += 1
         else:
             quiz_5_score += 0
@@ -2691,7 +2691,7 @@ def web_development_general_quiz_total_score():
     try:
         student_latest_answer_quiz_6 = len(quiz_6_answers_list) - 1
         if quiz_6_answers_list[student_latest_answer_quiz_6].lower() == \
-                "flask bootsrap":
+                "Versions of a database".lower():
             quiz_6_score += 1
         else:
             quiz_6_score += 0
@@ -2706,7 +2706,7 @@ def web_development_general_quiz_total_score():
     try:
         student_latest_answer_quiz_7 = len(quiz_7_answers_list) - 1
         if quiz_7_answers_list[student_latest_answer_quiz_7].lower() == \
-                "flask bootsrap":
+                "Flask-migrate".lower():
             quiz_7_score += 1
         else:
             quiz_7_score += 0
@@ -2721,7 +2721,7 @@ def web_development_general_quiz_total_score():
     try:
         student_latest_answer_quiz_8 = len(quiz_8_answers_list) - 1
         if quiz_8_answers_list[student_latest_answer_quiz_8].lower() == \
-                "flask bootsrap":
+                "flask run".lower():
             quiz_8_score += 1
         else:
             quiz_8_score += 0
@@ -2736,7 +2736,7 @@ def web_development_general_quiz_total_score():
     try:
         student_latest_answer_quiz_9 = len(quiz_9_answers_list) - 1
         if quiz_9_answers_list[student_latest_answer_quiz_9].lower() == \
-                "flask bootsrap":
+                "Python".lower():
             quiz_9_score += 1
         else:
             quiz_9_score += 0
@@ -2751,7 +2751,7 @@ def web_development_general_quiz_total_score():
     try:
         student_latest_answer_quiz_10 = len(quiz_10_answers_list) - 1
         if quiz_10_answers_list[student_latest_answer_quiz_10].lower() == \
-                "flask bootsrap":
+                "An object relational mapper".lower():
             quiz_10_score += 1
         else:
             quiz_10_score += 0

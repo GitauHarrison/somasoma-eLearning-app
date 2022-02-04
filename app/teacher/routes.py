@@ -266,7 +266,6 @@ def dashboard_manage_course():
     if mulitple_choice_quiz_form.validate_on_submit():
         chapter_quiz = GeneralMultipleChoicesQuiz(
             course=mulitple_choice_quiz_form.course.data,
-            chapter=mulitple_choice_quiz_form.chapter.data,
             quiz_1=mulitple_choice_quiz_form.quiz_1.data,
             quiz_2=mulitple_choice_quiz_form.quiz_2.data,
             quiz_3=mulitple_choice_quiz_form.quiz_3.data,

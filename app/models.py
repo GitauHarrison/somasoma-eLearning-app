@@ -11,14 +11,14 @@ import bleach
 import json
 
 
-@login.user_loader
-def load_student(id):
-    return Student.query.get(int(id))
-
-
 # @login.user_loader
-# def load_teacher(id):
-#     return Teacher.query.get(int(id))
+# def load_student(id):
+#     return Student.query.get(int(id))
+
+
+@login.user_loader
+def load_teacher(id):
+    return Teacher.query.get(int(id))
 
 # @login.user_loader
 # def load_admin(id):
@@ -830,7 +830,6 @@ class GeneralMultipleChoicesQuiz(db.Model):
     __tablename__ = 'general mulitple choices quiz'
     id = db.Column(db.Integer, primary_key=True)
     course = db.Column(db.String(140))
-    chapter = db.Column(db.String(64), index=True)
     quiz_1 = db.Column(db.String(140))
     quiz_2 = db.Column(db.String(140))
     quiz_3 = db.Column(db.String(140))

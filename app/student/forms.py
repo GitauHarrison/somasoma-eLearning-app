@@ -12,8 +12,7 @@ class CommentForm(FlaskForm):
     comment = PageDownField(
         'Comment',
         validators=[DataRequired()],
-        render_kw={"placeholder": "Markdown enabled"}
-        )
+        render_kw={"placeholder": "Markdown enabled"})
     submit = SubmitField('Post')
 
 
@@ -56,7 +55,8 @@ class EditProfileForm(FlaskForm):
 
 class ChapterObjectivesForm(FlaskForm):
     objective_1 = BooleanField('You can install flask into your application',)
-    objective_2 = BooleanField('You can create a simple flask application structure',)
+    objective_2 = BooleanField(
+        'You can create a simple flask application structure',)
     objective_3 = BooleanField('You can start the flask server',)
     objective_4 = BooleanField('You can display some text on your browser',)
     objective_5 = BooleanField('You can exit your flask server',)
@@ -78,8 +78,7 @@ class Chapter1Quiz1OptionsForm(FlaskForm):
             ('pip3 install flask', 'pip3 install flask'),
             ('python3 -m flask', 'python3 -m flask'),
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -92,8 +91,7 @@ class Chapter2Quiz1OptionsForm(FlaskForm):
             ('To query a database', 'To query a database'),
             ('To style page content', 'To style page content'),
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -103,11 +101,11 @@ class Chapter3Quiz1OptionsForm(FlaskForm):
         choices=[
             ('To make a page look beautiful', 'To make a page look beautiful'),
             ('It has no purpose', 'It has no purpose'),
-            ('It makes it easier to work with flask', 'It makes it easier to work with flask'),
+            ('It makes it easier to work with flask', 
+                'It makes it easier to work with flask'),
             ('To collect user data', 'To collect user data'),
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -123,8 +121,7 @@ class Chapter1Quiz2OptionsForm(FlaskForm):
             ('Python', 'Python'),
             ('HTML', 'HTML')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -137,8 +134,7 @@ class Chapter2Quiz2OptionsForm(FlaskForm):
             ('Python', 'Python'),
             ('HTML', 'HTML')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -151,8 +147,7 @@ class Chapter3Quiz2OptionsForm(FlaskForm):
             ('SECRET_KEY', 'SECRET_KEY'),
             ('Flask-bootstrap', 'Flask-bootstrap')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -166,10 +161,10 @@ class Chapter1Quiz3OptionsForm(FlaskForm):
             ('Small capacity', 'Small in capacity'),
             ('Incapable of doing much', 'Incapable of doing much'),
             ('A living organism', 'A living organism'),
-            ('Keeping the core simple but extensible', 'Keeping the core simple but extensible')
+            ('Keeping the core simple but extensible', 
+                'Keeping the core simple but extensible')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()] )
     submit = SubmitField('Submit')
 
 
@@ -182,8 +177,7 @@ class Chapter2Quiz3OptionsForm(FlaskForm):
             ('Python', 'Python'),
             ('Jinja', 'Jinja')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -196,8 +190,7 @@ class Chapter3Quiz3OptionsForm(FlaskForm):
             ('PasswordField', 'PasswordField'),
             ('FlaskForm', 'FlaskForm')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 # Quiz 4
@@ -210,10 +203,10 @@ class Chapter1Quiz4OptionsForm(FlaskForm):
             ('By clicking the run button', 'By clicking the run button'),
             ('Using the command flask run', 'Using the command flask run'),
             ('Praying to God', 'Praying to God'),
-            ('Typing the word "python" in the terminal', 'Typing the word "python" in the terminal')
+            ('Typing the word "python" in the terminal',
+                'Typing the word "python" in the terminal')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -226,8 +219,7 @@ class Chapter2Quiz4OptionsForm(FlaskForm):
             ('Database', 'Database'),
             ('Python', 'Database')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -240,8 +232,7 @@ class Chapter3Quiz4OptionsForm(FlaskForm):
             ('.env', '.env'),
             ('forms.py', 'forms.py')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -257,8 +248,7 @@ class Chapter1Quiz5OptionsForm(FlaskForm):
             ('Database', 'Database'),
             ('Python', 'Database')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -271,8 +261,7 @@ class Chapter2Quiz5OptionsForm(FlaskForm):
             ('Python', 'Python'),
             ('CSS', 'CSS')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -285,8 +274,7 @@ class Chapter3Quiz5OptionsForm(FlaskForm):
             ('SECRET_KEY', 'SECRET_KEY'),
             ('Python-dotenv', 'Python-dotenv')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 # ========================================
@@ -302,13 +290,13 @@ class GeneralQuiz1Form(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('Flask', 'Flask'),
-            ('Click', 'Click'),
-            ('Python', 'Python'),
-            ('CSS', 'CSS')
+            ('It is important', 'It is important'),
+            ('To protect webforms against CSRF', 
+                'To protect webforms against CSRF'),
+            ('To start a flask server', 'To start a flask server'),
+            ('To render a form template', 'To render a form template')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -317,12 +305,11 @@ class GeneralQuiz2Form(FlaskForm):
         'Choose an answer',
         choices=[
             ('Flask', 'Flask'),
-            ('Click', 'Click'),
-            ('Python', 'Python'),
-            ('CSS', 'CSS')
+            ('Flask-wtf', 'Flask-wtf'),
+            ('SECRET_KEY', 'SECRET_KEY'),
+            ('Python-dotenv', 'Python-dotenv')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -330,13 +317,14 @@ class GeneralQuiz3Form(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('Flask', 'Flask'),
+            ('It acts as an entry point to the application',
+                'It acts as an entry point to the application'),
             ('Click', 'Click'),
-            ('Python', 'Python'),
-            ('CSS', 'CSS')
+            ('To store need configuration keys', 
+                'To store need configuration keys'),
+            ('To import the flask package', 'To import the flask package')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -344,13 +332,12 @@ class GeneralQuiz4Form(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('Flask', 'Flask'),
-            ('Click', 'Click'),
-            ('Python', 'Python'),
-            ('CSS', 'CSS')
+            ('app = Flask(__name__)', 'app = Flask(__name__)'),
+            ('flask = Flask(app)', 'flask = Flask(app)'),
+            ('flask.init', 'flask.init'),
+            ('from flask import Flask', 'from flask import Flask')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -358,13 +345,12 @@ class GeneralQuiz5Form(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('Flask', 'Flask'),
-            ('Click', 'Click'),
-            ('Python', 'Python'),
-            ('CSS', 'CSS')
+            ('To load environment variables', 'To load environment variables'),
+            ('To style a web page', 'To style a web page'),
+            ('To import web forms', 'To import web forms'),
+            ('To debug a web page', 'To debug a web page')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -372,13 +358,13 @@ class GeneralQuiz6Form(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('Flask', 'Flask'),
-            ('Click', 'Click'),
-            ('Python', 'Python'),
-            ('CSS', 'CSS')
+            ('Versions of a database', 'Versions of a database'),
+            ('Animals ravelling across a desert',
+                'Animals travelling across a desert'),
+            ('A flask package', 'A flask package'),
+            ('I have no idea', 'I have no idea')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -387,9 +373,9 @@ class GeneralQuiz7Form(FlaskForm):
         'Choose an answer',
         choices=[
             ('Flask', 'Flask'),
-            ('Click', 'Click'),
-            ('Python', 'Python'),
-            ('CSS', 'CSS')
+            ('routes.py', 'routes.py'),
+            ('Flask-login', 'Flask-login'),
+            ('Flask-migrate', 'Flask-migrate')
             ],
         validators=[DataRequired()]
         )
@@ -400,13 +386,12 @@ class GeneralQuiz8Form(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('Flask', 'Flask'),
-            ('Click', 'Click'),
-            ('Python', 'Python'),
-            ('CSS', 'CSS')
+            ('pip3', 'pipe3'),
+            ('flask run', 'flask run'),
+            ('python3', 'python3'),
+            ('flask shell', 'flask shell')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -414,13 +399,12 @@ class GeneralQuiz9Form(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('Flask', 'Flask'),
-            ('Click', 'Click'),
+            ('JavaScript', 'JavaScript'),
+            ('HTML', 'HTML'),
             ('Python', 'Python'),
-            ('CSS', 'CSS')
+            ('PhP', 'PhP')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -428,13 +412,12 @@ class GeneralQuiz10Form(FlaskForm):
     answer = SelectField(
         'Choose an answer',
         choices=[
-            ('Flask', 'Flask'),
-            ('Click', 'Click'),
-            ('Python', 'Python'),
-            ('CSS', 'CSS')
+            ('An object relational mapper', 'An object relational mapper'),
+            ('A database', 'A database'),
+            ('A python file', 'A python file'),
+            ('A template', 'A template')
             ],
-        validators=[DataRequired()]
-        )
+        validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 # ========================================
@@ -452,8 +435,7 @@ class GeneralOwnChoiceQuiz1Form(FlaskForm):
     body = PageDownField(
         'Description',
         validators=[DataRequired()],
-        render_kw={"placeholder": "Markdown enabled"}
-        )
+        render_kw={"placeholder": "Markdown enabled"})
     submit = SubmitField('Submit')
 
 # ========================================
