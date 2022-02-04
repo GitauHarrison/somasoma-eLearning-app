@@ -507,7 +507,7 @@ def dashboard_analytics():
     try:
         multi_choice_student_latest_answer_quiz_1 = len(multi_choice_quiz_1_answers_list) - 1
         if multi_choice_quiz_1_answers_list[multi_choice_student_latest_answer_quiz_1].lower() == \
-                "to collect user data":
+                "To protect webforms against CSRF".lower():
             multi_choice_quiz_1_score += 1
         else:
             multi_choice_quiz_1_score += 0
@@ -522,7 +522,7 @@ def dashboard_analytics():
     try:
         multi_choice_student_latest_answer_quiz_2 = len(multi_choice_quiz_2_answers_list) - 1
         if multi_choice_quiz_2_answers_list[multi_choice_student_latest_answer_quiz_2].lower() == \
-                "flask-wtf":
+                "Python-dotenv".lower():
             multi_choice_quiz_2_score += 1
         else:
             multi_choice_quiz_2_score += 0
@@ -537,7 +537,7 @@ def dashboard_analytics():
     try:
         multi_choice_student_latest_answer_quiz_3 = len(multi_choice_quiz_3_answers_list) - 1
         if multi_choice_quiz_3_answers_list[multi_choice_student_latest_answer_quiz_3].lower() == \
-                "validationerror":
+                "To store need configuration keys".lower():
             multi_choice_quiz_3_score += 1
         else:
             multi_choice_quiz_3_score += 0
@@ -552,7 +552,7 @@ def dashboard_analytics():
     try:
         multi_choice_student_latest_answer_quiz_4 = len(multi_choice_quiz_4_answers_list) - 1
         if multi_choice_quiz_4_answers_list[multi_choice_student_latest_answer_quiz_4].lower() == \
-                ".env":
+                "app = Flask(__name__)".lower():
             multi_choice_quiz_4_score += 1
         else:
             multi_choice_quiz_4_score += 0
@@ -567,7 +567,7 @@ def dashboard_analytics():
     try:
         multi_choice_student_latest_answer_quiz_5 = len(multi_choice_quiz_5_answers_list) - 1
         if multi_choice_quiz_5_answers_list[multi_choice_student_latest_answer_quiz_5].lower() == \
-                "flask bootsrap":
+                "To style a web page".lower():
             multi_choice_quiz_5_score += 1
         else:
             multi_choice_quiz_5_score += 0
@@ -582,7 +582,7 @@ def dashboard_analytics():
     try:
         multi_choice_student_latest_answer_quiz_6 = len(multi_choice_quiz_6_answers_list) - 1
         if multi_choice_quiz_6_answers_list[multi_choice_student_latest_answer_quiz_6].lower() == \
-                "flask bootsrap":
+                "Versions of a database".lower():
             multi_choice_quiz_6_score += 1
         else:
             multi_choice_quiz_6_score += 0
@@ -597,7 +597,7 @@ def dashboard_analytics():
     try:
         multi_choice_student_latest_answer_quiz_7 = len(multi_choice_quiz_7_answers_list) - 1
         if multi_choice_quiz_7_answers_list[multi_choice_student_latest_answer_quiz_7].lower() == \
-                "flask bootsrap":
+                "Flask-migrate".lower():
             multi_choice_quiz_7_score += 1
         else:
             multi_choice_quiz_7_score += 0
@@ -612,7 +612,7 @@ def dashboard_analytics():
     try:
         multi_choice_student_latest_answer_quiz_8 = len(multi_choice_quiz_8_answers_list) - 1
         if multi_choice_quiz_8_answers_list[multi_choice_student_latest_answer_quiz_8].lower() == \
-                "flask bootsrap":
+                "flask run".lower():
             multi_choice_quiz_8_score += 1
         else:
             multi_choice_quiz_8_score += 0
@@ -627,7 +627,7 @@ def dashboard_analytics():
     try:
         multi_choice_student_latest_answer_quiz_9 = len(multi_choice_quiz_9_answers_list) - 1
         if multi_choice_quiz_9_answers_list[multi_choice_student_latest_answer_quiz_9].lower() == \
-                "flask bootsrap":
+                "Python".lower():
             multi_choice_quiz_9_score += 1
         else:
             multi_choice_quiz_9_score += 0
@@ -642,7 +642,7 @@ def dashboard_analytics():
     try:
         multi_choice_student_latest_answer_quiz_10 = len(multi_choice_quiz_10_answers_list) - 1
         if multi_choice_quiz_10_answers_list[multi_choice_student_latest_answer_quiz_10].lower() == \
-                "flask bootsrap":
+                "An object relational mapper".lower():
             multi_choice_quiz_10_score += 1
         else:
             multi_choice_quiz_10_score += 0
@@ -650,11 +650,12 @@ def dashboard_analytics():
         multi_choice_quiz_10_score += 0
 
     # Calculate percentage
-    multi_choice_total_score = multi_choice_quiz_1_score + multi_choice_quiz_2_score + \
-        multi_choice_quiz_3_score + multi_choice_quiz_4_score + \
-        multi_choice_quiz_5_score + multi_choice_quiz_6_score + \
-        multi_choice_quiz_7_score + multi_choice_quiz_8_score + \
-        multi_choice_quiz_9_score + multi_choice_quiz_10_score
+    multi_choice_total_score = multi_choice_quiz_1_score + \
+        multi_choice_quiz_2_score + multi_choice_quiz_3_score + \
+        multi_choice_quiz_4_score + multi_choice_quiz_5_score + \
+        multi_choice_quiz_6_score + multi_choice_quiz_7_score + \
+        multi_choice_quiz_8_score + multi_choice_quiz_9_score + \
+        multi_choice_quiz_10_score
     try:
         multi_choice_total_score_percentage = round((multi_choice_total_score / 10) * 100, 2)
     except ZeroDivisionError:
@@ -2768,7 +2769,7 @@ def web_development_general_quiz_total_score():
         total_score_percentage = 0
 
     return render_template(
-        'student/web-development-course/quizzes/chapter_3/total_score.html',
+        'student/web-development-course/quizzes/general/total_score.html',
         title='General Multi-choice Quiz: Total Score',
         student=student,
         quizzes=quizzes,
