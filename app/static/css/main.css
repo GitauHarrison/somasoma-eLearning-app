@@ -411,4 +411,5 @@ blockquote{
 .overview-link-disabled {
   pointer-events: none;
   cursor: default;
+  opacity: 0.5;
 }
