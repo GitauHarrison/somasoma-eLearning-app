@@ -121,7 +121,7 @@ class ChapterForm(FlaskForm):
         'Comment Moderation Link',
         validators=[DataRequired()],
         render_kw={"placeholder": "flask/chapter-1/comments/review"})
-    chapter_1_quiz_link = StringField(
+    chapter_quiz_1_link = StringField(
         'Chapter Quiz 1 Link',
         validators=[DataRequired()],
         render_kw={"placeholder": "web-development/chapter-1/quiz-1"})
