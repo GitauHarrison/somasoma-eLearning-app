@@ -97,8 +97,8 @@ Comimg soon...
 
 * Learning Analytics
   - Can view their own learning analytics:
-    - [ ] Each chapter's learning objectives
-    - [ ] Each chapter's quiz results
+    - [x] Each chapter's learning objectives
+    - [x] Each chapter's quiz results
     - [ ] Overall course quiz results
   - Can see how other students have achieved:
     - [ ] Each chaper objectives
@@ -111,14 +111,12 @@ Coming soon...
 
 ## Features
 
-- Student registration and authentication
-- Parent registration and authentication
-- Teacher authentication and authorization
-- Admin authentication and authorization
+- Student/Parent/Teacher/Admin registration and authentication
+- Teacher/Admin authorization to create courses, manage students, and update application content
+- Two-factor authentication
 <br>
 
-- Two-factor authentication
-- Email notifications
+- Email notifications of new registrations and comments posted
 - Credit card payment
 - Scheduling for virtual classes
 - Comment moderation
@@ -128,6 +126,7 @@ Coming soon...
 - Profile popup on username:hover
 - Sending and receiving private messages
 - User notifications when they receive private messages
+- Restriction of access to other lesson chapters if threshold of lesson objectives achieved is not met (80%)
 
 Comming soon:
 - [ ] Video conferencing facility
@@ -143,10 +142,11 @@ Comming soon:
 - Flask for web development
 - SQLAlchemy for database management
 - Bootstrap for styling and cross-browser responsiveness
-- Flask moment for date and time formatting
+- Flask-Moment for date and time formatting
 - Flask-WTF for form management
 - Flask-Mail for email notifications
 - Flask-Login to manage user sessions
+- Flask-Migrate to manage database migrations
 - Stripe API for credit card payment (test mode)
 - Twilio Verify API for two-factor authentication
 - Ngrok for localhost testing
