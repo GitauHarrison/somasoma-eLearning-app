@@ -1,9 +1,52 @@
-{% if toc.title.lower() == student.student_course.lower() %}
+{% if toc.chapter.lower() == 'chapter 1: hello world' %}
     <ul>
         <li>
-            <a href="{{ toc.link }}">
+            <a href="{{ toc.link }}" class="disabled">
                 {{ toc.chapter }}
             </a>
         </li>
+        </li>
     </ul>
+{% endif %}
+{% if toc.chapter.lower() == 'chapter 2: flask templates' %}
+    {% if percentage_achieved < 80 %}
+        <ul>
+            <li>
+                <a href="{{ toc.link }}" class="overview-link-disabled">
+                    {{ toc.chapter }}
+                </a>
+            </li>
+            </li>
+        </ul>
+    {% else %}
+        <ul>
+            <li>
+                <a href="{{ toc.link }}">
+                    {{ toc.chapter }}
+                </a>
+            </li>
+            </li>
+        </ul>
+    {% endif %}
+{% endif %}
+{% if toc.chapter.lower() == 'chapter 3: introduction to web forms' %}
+    {% if percentage_achieved_chapter_2 < 80 %}
+        <ul>
+            <li>
+                <a href="{{ toc.link }}" class="overview-link-disabled">
+                    {{ toc.chapter }}
+                </a>
+            </li>
+            </li>
+        </ul>
+    {% else %}
+        <ul>
+            <li>
+                <a href="{{ toc.link }}">
+                    {{ toc.chapter }}
+                </a>
+            </li>
+            </li>
+        </ul>
+    {% endif %}
 {% endif %}

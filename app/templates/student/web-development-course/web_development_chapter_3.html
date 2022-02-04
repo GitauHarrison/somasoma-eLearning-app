@@ -142,7 +142,9 @@
 </code></pre>
 <p>The <code>extends</code> statement used above establishes the inheritence link between the two templates. When Jinja2 is asked to render the home page, it will know that it also needs to embed the <code>base.html</code> file.</p>
 <p>Run your Flask application and you should be able to see your home page.</p>
-<p><img src="/images/template_inheritence.png" alt="Template Inheritence In Flask"></p>
+<p>
+    <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/template_inheritence.png')}}" alt="Template Inheritence In Flask">
+</p>
 <p>With that, you can go ahead and create the other templates needed to complete our personal blog. For your reference, you will need:</p>
 <ul>
 <li>About Me template</li>
@@ -199,14 +201,25 @@
                                 </a>
                             </p>
                         </div>
-                        <div class="col-sm-6">
-                            <p>
-                                <a href=" {{ url_for('student.web_development_chapter_3_quiz_1') }}  " class="btn btn-primary">
-                                    Quiz
-                                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-                                </a>
-                            </p>
-                        </div>
+                        {% if percentage_achieved_chapter_3 < 80 %}
+                            <div class="col-sm-6">
+                                <p>
+                                    <a href=" {{ url_for('student.web_development_chapter_3_quiz_1') }}  " class="btn btn-primary disabled">
+                                        Quiz
+                                        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                    </a>
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="col-sm-6">
+                                <p>
+                                    <a href=" {{ url_for('student.web_development_chapter_3_quiz_1') }}  " class="btn btn-primary">
+                                        Quiz
+                                        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                                    </a>
+                                </p>
+                            </div>
+                        {% endif %}
                     </div>
                     <!-- End of chapter navigation -->
                     <hr>

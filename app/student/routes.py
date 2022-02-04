@@ -757,12 +757,79 @@ def web_development_overview():
             TableOfContents.timestamp.asc()
             ).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
+
+    # CHAPTER 1: Calculate the number of objectives achieved
+    all_objectives = student.webdev_chapter1_objectives.all()
+    objectives_list = []
+    num_of_true_status = 0
+    for objective in all_objectives:
+        objectives_list.append(str(objective.objective_1))
+        objectives_list.append(str(objective.objective_2))
+        objectives_list.append(str(objective.objective_3))
+        objectives_list.append(str(objective.objective_4))
+        objectives_list.append(str(objective.objective_5))
+    num_of_true_status = objectives_list[-5:].count("True")
+    try:
+        percentage_achieved = round(
+            (num_of_true_status / len(objectives_list[-5:])) * 100, 2
+        )
+    except ZeroDivisionError:
+        percentage_achieved = 0
+    # End of Calculate the number of objectives achieved
+
+    # CHAPTER 2: Calculate the number of objectives achieved
+    all_objectives_chapter_2 = student.webdev_chapter2_objectives.all()
+    objectives_list_chapter_2 = []
+    num_of_true_status_chapter_2 = 0
+    for objective in all_objectives_chapter_2:
+        objectives_list_chapter_2.append(str(objective.objective_1))
+        objectives_list_chapter_2.append(str(objective.objective_2))
+        objectives_list_chapter_2.append(str(objective.objective_3))
+        objectives_list_chapter_2.append(str(objective.objective_4))
+        objectives_list_chapter_2.append(str(objective.objective_5))
+    num_of_true_status_chapter_2 = objectives_list_chapter_2[-5:].count("True")
+    try:
+        percentage_achieved_chapter_2 = round(
+            (num_of_true_status_chapter_2 /
+                len(objectives_list_chapter_2[-5:])) * 100, 2)
+    except ZeroDivisionError:
+        percentage_achieved_chapter_2 = 0
+    # End of Calculate the number of objectives achieved
+
+    # CHAPTER 3: Calculate the number of objectives achieved
+    all_objectives_chapter_3 = student.webdev_chapter3_objectives.all()
+    objectives_list_chapter_3 = []
+    num_of_true_status_chapter_3 = 0
+    for objective in all_objectives_chapter_3:
+        objectives_list_chapter_3.append(str(objective.objective_1))
+        objectives_list_chapter_3.append(str(objective.objective_2))
+        objectives_list_chapter_3.append(str(objective.objective_3))
+        objectives_list_chapter_3.append(str(objective.objective_4))
+        objectives_list_chapter_3.append(str(objective.objective_5))
+    num_of_true_status_chapter_3 = objectives_list_chapter_3[-5:].count("True")
+    try:
+        percentage_achieved_chapter_3 = round(
+            (num_of_true_status_chapter_3 /
+                len(objectives_list_chapter_3[-5:])) * 100, 2)
+    except ZeroDivisionError:
+        percentage_achieved_chapter_3 = 0
+    # End of Calculate the number of objectives achieved
+
     return render_template(
         'student/web-development-course/web_development_overview.html',
         title='Web Development',
         student=student,
         allowed_course_overview=allowed_course_overview.items,
-        all_toc=all_toc.items
+        all_toc=all_toc.items,
+
+        # Chapter 1 objectives
+        percentage_achieved=percentage_achieved,
+
+        # Chapter 2 objectives
+        percentage_achieved_chapter_2=percentage_achieved_chapter_2,
+
+        # Chapter 3 objectives
+        percentage_achieved_chapter_3=percentage_achieved_chapter_3
         )
 
 # Chapters
@@ -850,7 +917,7 @@ def web_development_chapter_1():
             _anchor='objectives'
         ))
 
-    # Calculate the number of objectives achieved
+    # CHAPTER 1: Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.all()
     objectives_list = []
     num_of_true_status = 0
@@ -867,6 +934,44 @@ def web_development_chapter_1():
         )
     except ZeroDivisionError:
         percentage_achieved = 0
+    # End of Calculate the number of objectives achieved
+
+    # CHAPTER 2: Calculate the number of objectives achieved
+    all_objectives_chapter_2 = student.webdev_chapter2_objectives.all()
+    objectives_list_chapter_2 = []
+    num_of_true_status_chapter_2 = 0
+    for objective in all_objectives_chapter_2:
+        objectives_list_chapter_2.append(str(objective.objective_1))
+        objectives_list_chapter_2.append(str(objective.objective_2))
+        objectives_list_chapter_2.append(str(objective.objective_3))
+        objectives_list_chapter_2.append(str(objective.objective_4))
+        objectives_list_chapter_2.append(str(objective.objective_5))
+    num_of_true_status_chapter_2 = objectives_list_chapter_2[-5:].count("True")
+    try:
+        percentage_achieved_chapter_2 = round(
+            (num_of_true_status_chapter_2 /
+                len(objectives_list_chapter_2[-5:])) * 100, 2)
+    except ZeroDivisionError:
+        percentage_achieved_chapter_2 = 0
+    # End of Calculate the number of objectives achieved
+
+    # CHAPTER 3: Calculate the number of objectives achieved
+    all_objectives_chapter_3 = student.webdev_chapter3_objectives.all()
+    objectives_list_chapter_3 = []
+    num_of_true_status_chapter_3 = 0
+    for objective in all_objectives_chapter_3:
+        objectives_list_chapter_3.append(str(objective.objective_1))
+        objectives_list_chapter_3.append(str(objective.objective_2))
+        objectives_list_chapter_3.append(str(objective.objective_3))
+        objectives_list_chapter_3.append(str(objective.objective_4))
+        objectives_list_chapter_3.append(str(objective.objective_5))
+    num_of_true_status_chapter_3 = objectives_list_chapter_3[-5:].count("True")
+    try:
+        percentage_achieved_chapter_3 = round(
+            (num_of_true_status_chapter_3 /
+                len(objectives_list_chapter_3[-5:])) * 100, 2)
+    except ZeroDivisionError:
+        percentage_achieved_chapter_3 = 0
     # End of Calculate the number of objectives achieved
 
     return render_template(
@@ -888,6 +993,8 @@ def web_development_chapter_1():
 
         # Objectives achieved
         percentage_achieved=percentage_achieved,
+        percentage_achieved_chapter_2=percentage_achieved_chapter_2,
+        percentage_achieved_chapter_3=percentage_achieved_chapter_3
         )
 
 
@@ -970,8 +1077,8 @@ def web_development_chapter_2():
             _anchor='objectives'
         ))
 
-    # Calculate the number of objectives achieved
-    all_objectives = student.webdev_chapter2_objectives.all()
+    # CHAPTER 1: Calculate the number of objectives achieved
+    all_objectives = student.webdev_chapter1_objectives.all()
     objectives_list = []
     num_of_true_status = 0
     for objective in all_objectives:
@@ -988,6 +1095,45 @@ def web_development_chapter_2():
     except ZeroDivisionError:
         percentage_achieved = 0
     # End of Calculate the number of objectives achieved
+
+    # CHAPTER 2: Calculate the number of objectives achieved
+    all_objectives_chapter_2 = student.webdev_chapter2_objectives.all()
+    objectives_list_chapter_2 = []
+    num_of_true_status_chapter_2 = 0
+    for objective in all_objectives_chapter_2:
+        objectives_list_chapter_2.append(str(objective.objective_1))
+        objectives_list_chapter_2.append(str(objective.objective_2))
+        objectives_list_chapter_2.append(str(objective.objective_3))
+        objectives_list_chapter_2.append(str(objective.objective_4))
+        objectives_list_chapter_2.append(str(objective.objective_5))
+    num_of_true_status_chapter_2 = objectives_list_chapter_2[-5:].count("True")
+    try:
+        percentage_achieved_chapter_2 = round(
+            (num_of_true_status_chapter_2 /
+                len(objectives_list_chapter_2[-5:])) * 100, 2)
+    except ZeroDivisionError:
+        percentage_achieved_chapter_2 = 0
+    # End of Calculate the number of objectives achieved
+
+    # CHAPTER 3: Calculate the number of objectives achieved
+    all_objectives_chapter_3 = student.webdev_chapter3_objectives.all()
+    objectives_list_chapter_3 = []
+    num_of_true_status_chapter_3 = 0
+    for objective in all_objectives_chapter_3:
+        objectives_list_chapter_3.append(str(objective.objective_1))
+        objectives_list_chapter_3.append(str(objective.objective_2))
+        objectives_list_chapter_3.append(str(objective.objective_3))
+        objectives_list_chapter_3.append(str(objective.objective_4))
+        objectives_list_chapter_3.append(str(objective.objective_5))
+    num_of_true_status_chapter_3 = objectives_list_chapter_3[-5:].count("True")
+    try:
+        percentage_achieved_chapter_3 = round(
+            (num_of_true_status_chapter_3 /
+                len(objectives_list_chapter_3[-5:])) * 100, 2)
+    except ZeroDivisionError:
+        percentage_achieved_chapter_3 = 0
+    # End of Calculate the number of objectives achieved
+
     return render_template(
         'student/web-development-course/web_development_chapter_2.html',
         title='Chapter 2: Flask Templates',
@@ -1006,7 +1152,9 @@ def web_development_chapter_2():
         all_toc=all_toc.items,
 
         # Objectives achieved
-        percentage_achieved=percentage_achieved
+        percentage_achieved=percentage_achieved,
+        percentage_achieved_chapter_2=percentage_achieved_chapter_2,
+        percentage_achieved_chapter_3=percentage_achieved_chapter_3
         )
 
 
@@ -1089,8 +1237,8 @@ def web_development_chapter_3():
             _anchor='objectives'
         ))
 
-    # Calculate the number of objectives achieved
-    all_objectives = student.webdev_chapter3_objectives.all()
+    # CHAPTER 1: Calculate the number of objectives achieved
+    all_objectives = student.webdev_chapter1_objectives.all()
     objectives_list = []
     num_of_true_status = 0
     for objective in all_objectives:
@@ -1106,6 +1254,44 @@ def web_development_chapter_3():
         )
     except ZeroDivisionError:
         percentage_achieved = 0
+    # End of Calculate the number of objectives achieved
+
+    # CHAPTER 2: Calculate the number of objectives achieved
+    all_objectives_chapter_2 = student.webdev_chapter2_objectives.all()
+    objectives_list_chapter_2 = []
+    num_of_true_status_chapter_2 = 0
+    for objective in all_objectives_chapter_2:
+        objectives_list_chapter_2.append(str(objective.objective_1))
+        objectives_list_chapter_2.append(str(objective.objective_2))
+        objectives_list_chapter_2.append(str(objective.objective_3))
+        objectives_list_chapter_2.append(str(objective.objective_4))
+        objectives_list_chapter_2.append(str(objective.objective_5))
+    num_of_true_status_chapter_2 = objectives_list_chapter_2[-5:].count("True")
+    try:
+        percentage_achieved_chapter_2 = round(
+            (num_of_true_status_chapter_2 /
+                len(objectives_list_chapter_2[-5:])) * 100, 2)
+    except ZeroDivisionError:
+        percentage_achieved_chapter_2 = 0
+    # End of Calculate the number of objectives achieved
+
+    # CHAPTER 3: Calculate the number of objectives achieved
+    all_objectives_chapter_3 = student.webdev_chapter3_objectives.all()
+    objectives_list_chapter_3 = []
+    num_of_true_status_chapter_3 = 0
+    for objective in all_objectives_chapter_3:
+        objectives_list_chapter_3.append(str(objective.objective_1))
+        objectives_list_chapter_3.append(str(objective.objective_2))
+        objectives_list_chapter_3.append(str(objective.objective_3))
+        objectives_list_chapter_3.append(str(objective.objective_4))
+        objectives_list_chapter_3.append(str(objective.objective_5))
+    num_of_true_status_chapter_3 = objectives_list_chapter_3[-5:].count("True")
+    try:
+        percentage_achieved_chapter_3 = round(
+            (num_of_true_status_chapter_3 /
+                len(objectives_list_chapter_3[-5:])) * 100, 2)
+    except ZeroDivisionError:
+        percentage_achieved_chapter_3 = 0
     # End of Calculate the number of objectives achieved
 
     return render_template(
@@ -1126,7 +1312,9 @@ def web_development_chapter_3():
         all_toc=all_toc.items,
 
         # Objectives achieved
-        percentage_achieved=percentage_achieved
+        percentage_achieved=percentage_achieved,
+        percentage_achieved_chapter_2=percentage_achieved_chapter_2,
+        percentage_achieved_chapter_3=percentage_achieved_chapter_3
         )
 
 # ===================================

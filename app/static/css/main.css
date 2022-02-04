@@ -404,3 +404,11 @@ blockquote{
 .popover {
   max-width: 100%;
 }
+
+/* ------------------------------------------ */
+/* DISABLE TABLE OF CONTENTS LINKS */
+/* ------------------------------------------ */
+.overview-link-disabled {
+  pointer-events: none;
+  cursor: default;
+}

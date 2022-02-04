@@ -202,28 +202,39 @@
                                         </a>
                                     </p>
                                 </div>
-                                <div class="col-sm-4">
-                                    <p>
-                                        <a href=" {{ url_for('student.web_development_chapter_2_quiz_1') }} " class="btn btn-primary">
+                                {% if percentage_achieved_chapter_2 < 80 %}
+                                    <div class="col-sm-4">
+                                        <p>
+                                            <a href=" {{ url_for('student.web_development_chapter_2_quiz_1') }} " class="btn btn-primary disabled">
                                                 Quiz
-                                        </a>
-                                    </p>
-                                </div>
-                                <div class="col-sm-4">
-                                    <p>
-                                        {% if percentage_achieved < 80 %}
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>
                                             <a href=" {{ url_for('student.web_development_chapter_3', student_full_name=student.student_full_name) }} " class="btn btn-primary disabled">
                                                 Chapter 3
                                                 <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                                             </a>
-                                        {% else %}
+                                        </p>
+                                    </div>
+                                {% else %}
+                                    <div class="col-sm-4">
+                                        <p>
+                                            <a href=" {{ url_for('student.web_development_chapter_2_quiz_1') }} " class="btn btn-primary">
+                                                Quiz
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>
                                             <a href=" {{ url_for('student.web_development_chapter_3', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                                                 Chapter 3
                                                 <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                                             </a>
-                                        {% endif %}
-                                    </p>
-                                </div>
+                                        </p>
+                                    </div>
+                                {% endif %}
                             </div>
                             <!-- End of chapter navigation -->
                         </div>

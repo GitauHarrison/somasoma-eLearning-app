@@ -15,7 +15,9 @@
                     <div class="table-of-content">
                         <h2>Table of Contents</h2>
                         {% for toc in all_toc %}
-                            {% include 'student/_table_of_contents.html' %}
+                            {% if toc.title.lower() == student.student_course.lower() %}
+                                {% include 'student/_table_of_contents.html' %}
+                            {% endif %}
                         {% endfor %}
                     </div>
                     <h2>Completed Project</h2>
