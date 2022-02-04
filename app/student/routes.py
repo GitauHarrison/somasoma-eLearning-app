@@ -1249,8 +1249,7 @@ def web_development_chapter_2():
     num_of_true_status = objectives_list[-5:].count("True")
     try:
         percentage_achieved = round(
-            (num_of_true_status / len(objectives_list[-5:])) * 100, 2
-        )
+            (num_of_true_status / len(objectives_list[-5:])) * 100, 2)
     except ZeroDivisionError:
         percentage_achieved = 0
     # End of Calculate the number of objectives achieved
@@ -1349,9 +1348,7 @@ def web_development_chapter_3():
             'student.web_development_chapter_3',
             _anchor='comments',
             student=student,
-            title='Hello World',
-            )
-        )
+            title='Hello World'))
 
     # Display student comments
     comments = WebDevChapter3Comment.query.filter_by(
@@ -1380,8 +1377,7 @@ def web_development_chapter_3():
             objective_3=objectives_form.objective_3.data,
             objective_4=objectives_form.objective_4.data,
             objective_5=objectives_form.objective_5.data,
-            author=student
-        )
+            author=student)
         db.session.add(objectives)
         db.session.commit()
         flash('Your response has been saved')
@@ -1403,8 +1399,7 @@ def web_development_chapter_3():
     num_of_true_status = objectives_list[-5:].count("True")
     try:
         percentage_achieved = round(
-            (num_of_true_status / len(objectives_list[-5:])) * 100, 2
-        )
+            (num_of_true_status / len(objectives_list[-5:])) * 100, 2)
     except ZeroDivisionError:
         percentage_achieved = 0
     # End of Calculate the number of objectives achieved
