@@ -229,6 +229,7 @@ def dashboard_manage_course():
             chapter=chapter_form.chapter.data,
             chapter_link=chapter_form.chapter_link.data,
             comment_moderation_link=chapter_form.comment_moderation_link.data,
+            chapter_quiz_1_link=chapter_form.chapter_quiz_1_link.data,
             overview=chapter_form.overview.data,
             accomplish=chapter_form.accomplish.data,
             youtube_link=chapter_form.youtube_link.data,
