@@ -256,7 +256,7 @@ def dashboard_analytics():
     # CHAPTER 1: Calculate total score
     quiz_1_score = 0
     quiz_1_answers_list = []
-    quiz_1_answer = WebDevChapter1Quiz1Options.query.all()
+    quiz_1_answer = student.webdev_chapter1_quiz_1_options.all()
     for answer in quiz_1_answer:
         quiz_1_answers_list.append(answer.answer)
     try:
@@ -271,7 +271,7 @@ def dashboard_analytics():
 
     quiz_2_score = 0
     quiz_2_answers_list = []
-    quiz_2_answer = WebDevChapter1Quiz2Options.query.all()
+    quiz_2_answer = student.webdev_chapter1_quiz_2_options.all()
     for answer in quiz_2_answer:
         quiz_2_answers_list.append(answer.answer)
     try:
@@ -286,7 +286,7 @@ def dashboard_analytics():
 
     quiz_3_score = 0
     quiz_3_answers_list = []
-    quiz_3_answer = WebDevChapter1Quiz3Options.query.all()
+    quiz_3_answer = student.webdev_chapter1_quiz_3_options.all()
     for answer in quiz_3_answer:
         quiz_3_answers_list.append(answer.answer)
     try:
@@ -301,7 +301,7 @@ def dashboard_analytics():
 
     quiz_4_score = 0
     quiz_4_answers_list = []
-    quiz_4_answer = WebDevChapter1Quiz4Options.query.all()
+    quiz_4_answer = student.webdev_chapter1_quiz_4_options.all()
     for answer in quiz_4_answer:
         quiz_4_answers_list.append(answer.answer)
     try:
@@ -316,7 +316,7 @@ def dashboard_analytics():
 
     quiz_5_score = 0
     quiz_5_answers_list = []
-    quiz_5_answer = WebDevChapter1Quiz5Options.query.all()
+    quiz_5_answer = student.webdev_chapter1_quiz_5_options.all()
     for answer in quiz_5_answer:
         quiz_5_answers_list.append(answer.answer)
     try:
@@ -340,7 +340,7 @@ def dashboard_analytics():
     # CHAPTER 2: Calculate total score
     quiz_1_score_chapter_2 = 0
     quiz_1_answers_list_chapter_2 = []
-    quiz_1_answer_chapter_2 = WebDevChapter2Quiz1Options.query.all()
+    quiz_1_answer_chapter_2 = student.webdev_chapter2_quiz_1_options.all()
     for answer in quiz_1_answer_chapter_2:
         quiz_1_answers_list_chapter_2.append(answer.answer)
     try:
@@ -354,7 +354,7 @@ def dashboard_analytics():
 
     quiz_2_score_chapter_2 = 0
     quiz_2_answers_list_chapter_2 = []
-    quiz_2_answer_chapter_2 = WebDevChapter2Quiz2Options.query.all()
+    quiz_2_answer_chapter_2 = student.webdev_chapter2_quiz_2_options.all()
     for answer in quiz_2_answer_chapter_2:
         quiz_2_answers_list_chapter_2.append(answer.answer)
     try:
@@ -368,7 +368,7 @@ def dashboard_analytics():
 
     quiz_3_score_chapter_2 = 0
     quiz_3_answers_list_chapter_2 = []
-    quiz_3_answer_chapter_2 = WebDevChapter2Quiz3Options.query.all()
+    quiz_3_answer_chapter_2 = student.webdev_chapter2_quiz_3_options.all()
     for answer in quiz_3_answer_chapter_2:
         quiz_3_answers_list_chapter_2.append(answer.answer)
     try:
@@ -382,7 +382,7 @@ def dashboard_analytics():
 
     quiz_4_score_chapter_2 = 0
     quiz_4_answers_list_chapter_2 = []
-    quiz_4_answer_chapter_2 = WebDevChapter2Quiz4Options.query.all()
+    quiz_4_answer_chapter_2 = student.webdev_chapter2_quiz_4_options.all()
     for answer in quiz_4_answer_chapter_2:
         quiz_4_answers_list_chapter_2.append(answer.answer)
     try:
@@ -396,7 +396,7 @@ def dashboard_analytics():
 
     quiz_5_score_chapter_2 = 0
     quiz_5_answers_list_chapter_2 = []
-    quiz_5_answer_chapter_2 = WebDevChapter2Quiz5Options.query.all()
+    quiz_5_answer_chapter_2 = student.webdev_chapter2_quiz_5_options.all()
     for answer in quiz_5_answer_chapter_2:
         quiz_5_answers_list_chapter_2.append(answer.answer)
     try:
@@ -419,7 +419,7 @@ def dashboard_analytics():
     # CHAPTER 3: Calculate total score
     quiz_1_score_chapter_3 = 0
     quiz_1_answers_list_chapter_3 = []
-    quiz_1_answer_chapter_3 = WebDevChapter3Quiz1Options.query.all()
+    quiz_1_answer_chapter_3 = student.webdev_chapter3_quiz_1_options.all()
     for answer in quiz_1_answer_chapter_3:
         quiz_1_answers_list_chapter_3.append(answer.answer)
     try:
@@ -433,7 +433,7 @@ def dashboard_analytics():
 
     quiz_2_score_chapter_3 = 0
     quiz_2_answers_list_chapter_3 = []
-    quiz_2_answer_chapter_3 = WebDevChapter3Quiz2Options.query.all()
+    quiz_2_answer_chapter_3 = student.webdev_chapter3_quiz_2_options.all()
     for answer in quiz_2_answer_chapter_3:
         quiz_2_answers_list_chapter_3.append(answer.answer)
     try:
@@ -447,7 +447,7 @@ def dashboard_analytics():
 
     quiz_3_score_chapter_3 = 0
     quiz_3_answers_list_chapter_3 = []
-    quiz_3_answer_chapter_3 = WebDevChapter3Quiz3Options.query.all()
+    quiz_3_answer_chapter_3 = student.webdev_chapter3_quiz_3_options.all()
     for answer in quiz_3_answer_chapter_3:
         quiz_3_answers_list_chapter_3.append(answer.answer)
     try:
@@ -461,7 +461,7 @@ def dashboard_analytics():
 
     quiz_4_score_chapter_3 = 0
     quiz_4_answers_list_chapter_3 = []
-    quiz_4_answer_chapter_3 = WebDevChapter3Quiz4Options.query.all()
+    quiz_4_answer_chapter_3 = student.webdev_chapter3_quiz_4_options.all()
     for answer in quiz_4_answer_chapter_3:
         quiz_4_answers_list_chapter_3.append(answer.answer)
     try:
@@ -475,7 +475,7 @@ def dashboard_analytics():
 
     quiz_5_score_chapter_3 = 0
     quiz_5_answers_list_chapter_3 = []
-    quiz_5_answer_chapter_3 = WebDevChapter3Quiz5Options.query.all()
+    quiz_5_answer_chapter_3 = student.webdev_chapter3_quiz_5_options.all()
     for answer in quiz_5_answer_chapter_3:
         quiz_5_answers_list_chapter_3.append(answer.answer)
     try:
@@ -920,21 +920,18 @@ def unfollow_student(student_full_name):
 @login_required
 def web_development_overview():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
+        student_full_name=current_user.student_full_name).first()
     page = request.args.get('page', 1, type=int)
     allowed_course_overview = WebDevelopmentOverview.query.filter_by(
         allowed_status=True).order_by(
-            WebDevelopmentOverview.timestamp.desc()
-            ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+            WebDevelopmentOverview.timestamp.desc()).paginate(
+                page, current_app.config['POSTS_PER_PAGE'], False)
 
     # Table of contents
     all_toc = TableOfContents.query.filter_by(
         title=student.student_course).order_by(
-            TableOfContents.timestamp.asc()
-            ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+            TableOfContents.timestamp.asc()).paginate(
+                page, current_app.config['POSTS_PER_PAGE'], False)
 
     # CHAPTER 1: Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.all()
@@ -1017,8 +1014,7 @@ def web_development_overview():
 @login_required
 def web_development_chapter_1():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
+        student_full_name=current_user.student_full_name).first()
     teachers = Teacher.query.all()
     page = request.args.get('page', 1, type=int)
 
@@ -1026,10 +1022,7 @@ def web_development_chapter_1():
     all_toc = TableOfContents.query.filter_by(
         title=student.student_course).order_by(
             TableOfContents.timestamp.asc()).paginate(
-                page,
-                current_app.config['POSTS_PER_PAGE'],
-                False
-                )
+                page, current_app.config['POSTS_PER_PAGE'], False)
 
     # Dsiplaying the chapter
     course_chapters = Chapter.query.filter_by(allowed_status=True).all()
@@ -1038,9 +1031,7 @@ def web_development_chapter_1():
     form = CommentForm()
     if form.validate_on_submit():
         comment = WebDevChapter1Comment(
-            body=form.comment.data,
-            author=current_user
-        )
+            body=form.comment.data, author=student)
         db.session.add(comment)
         db.session.commit()
         for teacher in teachers:
@@ -1058,9 +1049,8 @@ def web_development_chapter_1():
     # Display student comments
     comments = WebDevChapter1Comment.query.filter_by(
         allowed_status=True).order_by(
-            WebDevChapter1Comment.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+            WebDevChapter1Comment.timestamp.desc()).paginate(
+                page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'student.web_development_chapter_1',
         _anchor="comments",
@@ -1072,8 +1062,7 @@ def web_development_chapter_1():
         page=comments.prev_num) \
         if comments.has_prev else None
     all_comments = len(WebDevChapter1Comment.query.filter_by(
-        allowed_status=True).all()
-        )
+        allowed_status=True).all())
 
     # Chapter Objectives
     objectives_form = ChapterObjectivesForm()
@@ -1092,8 +1081,7 @@ def web_development_chapter_1():
         return redirect(url_for(
             'student.web_development_chapter_1',
             student_full_name=student.student_full_name,
-            _anchor='objectives'
-        ))
+            _anchor='objectives'))
 
     # CHAPTER 1: Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.all()
@@ -1188,9 +1176,7 @@ def web_development_chapter_2():
     all_toc = TableOfContents.query.filter_by(
         title=student.student_course).order_by(
             TableOfContents.timestamp.asc()).paginate(
-                page,
-                current_app.config['POSTS_PER_PAGE'],
-                False)
+                page, current_app.config['POSTS_PER_PAGE'], False)
 
     # Dsiplaying the chapter
     course_chapters = Chapter.query.filter_by(allowed_status=True).all()
@@ -1199,8 +1185,7 @@ def web_development_chapter_2():
     form = CommentForm()
     if form.validate_on_submit():
         comment = WebDevChapter2Comment(
-            body=form.comment.data,
-            author=current_user)
+            body=form.comment.data, author=student)
         db.session.add(comment)
         db.session.commit()
         for teacher in teachers:
@@ -1218,9 +1203,8 @@ def web_development_chapter_2():
     # Display student comments
     comments = WebDevChapter2Comment.query.filter_by(
         allowed_status=True).order_by(
-            WebDevChapter2Comment.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+            WebDevChapter2Comment.timestamp.desc()).paginate(
+                page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'student.web_development_chapter_2',
         _anchor="comments",
@@ -1232,8 +1216,7 @@ def web_development_chapter_2():
         page=comments.prev_num) \
         if comments.has_prev else None
     all_comments = len(WebDevChapter2Comment.query.filter_by(
-        allowed_status=True).all()
-        )
+        allowed_status=True).all())
 
     # Chapter Objectives
     objectives_form = ChapterObjectivesForm()
@@ -1244,16 +1227,14 @@ def web_development_chapter_2():
             objective_3=objectives_form.objective_3.data,
             objective_4=objectives_form.objective_4.data,
             objective_5=objectives_form.objective_5.data,
-            author=student
-        )
+            author=student)
         db.session.add(objectives)
         db.session.commit()
         flash('Your response has been saved')
         return redirect(url_for(
             'student.web_development_chapter_2',
             student_full_name=student.student_full_name,
-            _anchor='objectives'
-        ))
+            _anchor='objectives'))
 
     # CHAPTER 1: Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.all()
@@ -1348,9 +1329,7 @@ def web_development_chapter_3():
     all_toc = TableOfContents.query.filter_by(
         title=student.student_course).order_by(
             TableOfContents.timestamp.asc()).paginate(
-                page,
-                current_app.config['POSTS_PER_PAGE'],
-                False)
+                page, current_app.config['POSTS_PER_PAGE'], False)
 
     # Dsiplaying the chapter
     course_chapters = Chapter.query.filter_by(allowed_status=True).all()
@@ -1359,8 +1338,7 @@ def web_development_chapter_3():
     form = CommentForm()
     if form.validate_on_submit():
         comment = WebDevChapter3Comment(
-            body=form.comment.data,
-            author=current_user)
+            body=form.comment.data, author=student)
         db.session.add(comment)
         db.session.commit()
         for teacher in teachers:
@@ -1378,9 +1356,8 @@ def web_development_chapter_3():
     # Display student comments
     comments = WebDevChapter3Comment.query.filter_by(
         allowed_status=True).order_by(
-            WebDevChapter3Comment.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+            WebDevChapter3Comment.timestamp.desc()).paginate(
+                page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'student.web_development_chapter_3',
         _anchor="comments",
@@ -1392,8 +1369,7 @@ def web_development_chapter_3():
         page=comments.prev_num) \
         if comments.has_prev else None
     all_comments = len(WebDevChapter3Comment.query.filter_by(
-        allowed_status=True).all()
-        )
+        allowed_status=True).all())
 
     # Chapter Objectives
     objectives_form = ChapterObjectivesForm()
@@ -1412,8 +1388,7 @@ def web_development_chapter_3():
         return redirect(url_for(
             'student.web_development_chapter_3',
             student_full_name=student.student_full_name,
-            _anchor='objectives'
-        ))
+            _anchor='objectives'))
 
     # CHAPTER 1: Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.all()
@@ -1514,15 +1489,14 @@ def web_development_chapter_1_quiz_1():
     quiz_1_form = Chapter1Quiz1OptionsForm()
     if quiz_1_form.validate_on_submit():
         answer = WebDevChapter1Quiz1Options(
-            answer=quiz_1_form.answer.data)
+            answer=quiz_1_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 1 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_1_quiz_2',
             student_full_name=student.student_full_name,
-            _anchor="quiz_1",
-        ))
+            _anchor="quiz_1"))
     return render_template(
         'student/web-development-course/quizzes/chapter_1/quiz_1.html',
         title='Chapter 1: Quiz 1',
@@ -1546,15 +1520,14 @@ def web_development_chapter_1_quiz_2():
     quiz_2_form = Chapter1Quiz2OptionsForm()
     if quiz_2_form.validate_on_submit():
         answer = WebDevChapter1Quiz2Options(
-            answer=quiz_2_form.answer.data)
+            answer=quiz_2_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 2 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_1_quiz_3',
             student_full_name=student.student_full_name,
-            _anchor="quiz_2",
-        ))
+            _anchor="quiz_2"))
     return render_template(
         'student/web-development-course/quizzes/chapter_1/quiz_2.html',
         title='Chapter 1: Quiz 2',
@@ -1578,15 +1551,14 @@ def web_development_chapter_1_quiz_3():
     quiz_3_form = Chapter1Quiz3OptionsForm()
     if quiz_3_form.validate_on_submit():
         answer = WebDevChapter1Quiz3Options(
-            answer=quiz_3_form.answer.data)
+            answer=quiz_3_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 3 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_1_quiz_4',
             student_full_name=student.student_full_name,
-            _anchor="quiz_2",
-        ))
+            _anchor="quiz_2"))
     return render_template(
         'student/web-development-course/quizzes/chapter_1/quiz_3.html',
         title='Chapter 1: Quiz 3',
@@ -1610,15 +1582,14 @@ def web_development_chapter_1_quiz_4():
     quiz_4_form = Chapter1Quiz4OptionsForm()
     if quiz_4_form.validate_on_submit():
         answer = WebDevChapter1Quiz4Options(
-            answer=quiz_4_form.answer.data)
+            answer=quiz_4_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 4 answer have been added!',
               'Congratulations! You have completed the chapter 1 quiz!')
         return redirect(url_for(
             'student.web_development_chapter_1_quiz_5',
-            student_full_name=student.student_full_name,
-        ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/chapter_1/quiz_4.html',
         title='Chapter 1: Quiz 4',
@@ -1643,15 +1614,14 @@ def web_development_chapter_1_quiz_5():
     quiz_5_form = Chapter1Quiz5OptionsForm()
     if quiz_5_form.validate_on_submit():
         answer = WebDevChapter1Quiz5Options(
-            answer=quiz_5_form.answer.data)
+            answer=quiz_5_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 4 answer have been added!',
               'Congratulations! You have completed the chapter 1 quiz!')
         return redirect(url_for(
             'student.web_development_chapter_1_total_score',
-            student_full_name=student.student_full_name,
-        ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/chapter_1/quiz_5.html',
         title='Chapter 1: Quiz 5',
@@ -1665,9 +1635,7 @@ def web_development_chapter_1_quiz_5():
 
 
 @bp.route(
-    '/web-development/chapter-2/quiz-1',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-2/quiz-1', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_2_quiz_1():
     student = Student.query.filter_by(
@@ -1678,15 +1646,14 @@ def web_development_chapter_2_quiz_1():
     quiz_1_form = Chapter2Quiz1OptionsForm()
     if quiz_1_form.validate_on_submit():
         answer = WebDevChapter2Quiz1Options(
-            answer=quiz_1_form.answer.data)
+            answer=quiz_1_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 1 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_2_quiz_2',
             student_full_name=student.student_full_name,
-            _anchor="quiz_1",
-        ))
+            _anchor="quiz_1"))
     return render_template(
         'student/web-development-course/quizzes/chapter_2/quiz_1.html',
         title='Chapter 2: Quiz 1',
@@ -1699,9 +1666,7 @@ def web_development_chapter_2_quiz_1():
 
 
 @bp.route(
-    '/web-development/chapter-2/quiz-2',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-2/quiz-2', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_2_quiz_2():
     student = Student.query.filter_by(
@@ -1712,15 +1677,14 @@ def web_development_chapter_2_quiz_2():
     quiz_2_form = Chapter2Quiz2OptionsForm()
     if quiz_2_form.validate_on_submit():
         answer = WebDevChapter2Quiz2Options(
-            answer=quiz_2_form.answer.data)
+            answer=quiz_2_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 2 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_2_quiz_3',
             student_full_name=student.student_full_name,
-            _anchor="quiz_2",
-        ))
+            _anchor="quiz_2"))
     return render_template(
         'student/web-development-course/quizzes/chapter_2/quiz_2.html',
         title='Chapter 2: Quiz 2',
@@ -1733,9 +1697,7 @@ def web_development_chapter_2_quiz_2():
 
 
 @bp.route(
-    '/web-development/chapter-2/quiz-3',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-2/quiz-3', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_2_quiz_3():
     student = Student.query.filter_by(
@@ -1746,15 +1708,14 @@ def web_development_chapter_2_quiz_3():
     quiz_3_form = Chapter2Quiz3OptionsForm()
     if quiz_3_form.validate_on_submit():
         answer = WebDevChapter2Quiz3Options(
-            answer=quiz_3_form.answer.data)
+            answer=quiz_3_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 3 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_2_quiz_4',
             student_full_name=student.student_full_name,
-            _anchor="quiz_3",
-        ))
+            _anchor="quiz_3"))
     return render_template(
         'student/web-development-course/quizzes/chapter_2/quiz_3.html',
         title='Chapter 2: Quiz 3',
@@ -1767,9 +1728,7 @@ def web_development_chapter_2_quiz_3():
 
 
 @bp.route(
-    '/web-development/chapter-2/quiz-4',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-2/quiz-4', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_2_quiz_4():
     student = Student.query.filter_by(
@@ -1780,15 +1739,14 @@ def web_development_chapter_2_quiz_4():
     quiz_4_form = Chapter2Quiz4OptionsForm()
     if quiz_4_form.validate_on_submit():
         answer = WebDevChapter2Quiz4Options(
-            answer=quiz_4_form.answer.data)
+            answer=quiz_4_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 3 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_2_quiz_5',
             student_full_name=student.student_full_name,
-            _anchor="quiz_4",
-        ))
+            _anchor="quiz_4"))
     return render_template(
         'student/web-development-course/quizzes/chapter_2/quiz_4.html',
         title='Chapter 2: Quiz 4',
@@ -1802,9 +1760,7 @@ def web_development_chapter_2_quiz_4():
 
 
 @bp.route(
-    '/web-development/chapter-2/quiz-5',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-2/quiz-5', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_2_quiz_5():
     student = Student.query.filter_by(
@@ -1815,7 +1771,7 @@ def web_development_chapter_2_quiz_5():
     quiz_5_form = Chapter2Quiz5OptionsForm()
     if quiz_5_form.validate_on_submit():
         answer = WebDevChapter2Quiz5Options(
-            answer=quiz_5_form.answer.data)
+            answer=quiz_5_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 4 answer have been added!',
@@ -1823,8 +1779,7 @@ def web_development_chapter_2_quiz_5():
         return redirect(url_for(
             'student.web_development_chapter_2_total_score',
             student_full_name=student.student_full_name,
-            _anchor="quiz_5",
-        ))
+            _anchor="quiz_5"))
     return render_template(
         'student/web-development-course/quizzes/chapter_2/quiz_5.html',
         title='Chapter 2: Quiz 5',
@@ -1838,9 +1793,7 @@ def web_development_chapter_2_quiz_5():
 
 
 @bp.route(
-    '/web-development/chapter-3/quiz-1',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-3/quiz-1', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_3_quiz_1():
     student = Student.query.filter_by(
@@ -1851,15 +1804,14 @@ def web_development_chapter_3_quiz_1():
     quiz_1_form = Chapter3Quiz1OptionsForm()
     if quiz_1_form.validate_on_submit():
         answer = WebDevChapter3Quiz1Options(
-            answer=quiz_1_form.answer.data)
+            answer=quiz_1_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 1 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_3_quiz_2',
             student_full_name=student.student_full_name,
-            _anchor="quiz_1",
-        ))
+            _anchor="quiz_1"))
     return render_template(
         'student/web-development-course/quizzes/chapter_3/quiz_1.html',
         title='Chapter 3: Quiz 1',
@@ -1872,9 +1824,7 @@ def web_development_chapter_3_quiz_1():
 
 
 @bp.route(
-    '/web-development/chapter-3/quiz-2',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-3/quiz-2', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_3_quiz_2():
     student = Student.query.filter_by(
@@ -1885,15 +1835,14 @@ def web_development_chapter_3_quiz_2():
     quiz_2_form = Chapter3Quiz2OptionsForm()
     if quiz_2_form.validate_on_submit():
         answer = WebDevChapter3Quiz2Options(
-            answer=quiz_2_form.answer.data)
+            answer=quiz_2_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 2 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_3_quiz_3',
             student_full_name=student.student_full_name,
-            _anchor="quiz_2",
-        ))
+            _anchor="quiz_2"))
     return render_template(
         'student/web-development-course/quizzes/chapter_3/quiz_2.html',
         title='Chapter 3: Quiz 2',
@@ -1906,9 +1855,7 @@ def web_development_chapter_3_quiz_2():
 
 
 @bp.route(
-    '/web-development/chapter-3/quiz-3',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-3/quiz-3', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_3_quiz_3():
     student = Student.query.filter_by(
@@ -1919,15 +1866,14 @@ def web_development_chapter_3_quiz_3():
     quiz_3_form = Chapter3Quiz3OptionsForm()
     if quiz_3_form.validate_on_submit():
         answer = WebDevChapter3Quiz3Options(
-            answer=quiz_3_form.answer.data)
+            answer=quiz_3_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 3 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_3_quiz_4',
             student_full_name=student.student_full_name,
-            _anchor="quiz_3",
-        ))
+            _anchor="quiz_3"))
     return render_template(
         'student/web-development-course/quizzes/chapter_3/quiz_3.html',
         title='Chapter 3: Quiz 3',
@@ -1940,9 +1886,7 @@ def web_development_chapter_3_quiz_3():
 
 
 @bp.route(
-    '/web-development/chapter-3/quiz-4',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-3/quiz-4', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_3_quiz_4():
     student = Student.query.filter_by(
@@ -1953,14 +1897,14 @@ def web_development_chapter_3_quiz_4():
     quiz_4_form = Chapter3Quiz4OptionsForm()
     if quiz_4_form.validate_on_submit():
         answer = WebDevChapter3Quiz4Options(
-            answer=quiz_4_form.answer.data)
+            answer=quiz_4_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 4 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_chapter_3_quiz_5',
             student_full_name=student.student_full_name,
-        ))
+            _anchor="quiz_4"))
     return render_template(
         'student/web-development-course/quizzes/chapter_3/quiz_4.html',
         title='Chapter 3: Quiz 4',
@@ -1974,9 +1918,7 @@ def web_development_chapter_3_quiz_4():
 
 
 @bp.route(
-    '/web-development/chapter-3/quiz-5',
-    methods=['GET', 'POST']
-    )
+    '/web-development/chapter-3/quiz-5', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_3_quiz_5():
     student = Student.query.filter_by(
@@ -1987,7 +1929,7 @@ def web_development_chapter_3_quiz_5():
     quiz_5_form = Chapter3Quiz5OptionsForm()
     if quiz_5_form.validate_on_submit():
         answer = WebDevChapter3Quiz5Options(
-            answer=quiz_5_form.answer.data)
+            answer=quiz_5_form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 5 answer have been added!',
@@ -1995,7 +1937,7 @@ def web_development_chapter_3_quiz_5():
         return redirect(url_for(
             'student.web_development_chapter_3_total_score',
             student_full_name=student.student_full_name,
-        ))
+            _anchor="quiz_5"))
     return render_template(
         'student/web-development-course/quizzes/chapter_3/quiz_5.html',
         title='Chapter 3: Quiz 5',
@@ -2018,7 +1960,7 @@ def web_development_chapter_1_total_score():
     # Calculate total score
     quiz_1_score = 0
     quiz_1_answers_list = []
-    quiz_1_answer = WebDevChapter1Quiz1Options.query.all()
+    quiz_1_answer = student.webdev_chapter1_quiz_1_options.all()
     for answer in quiz_1_answer:
         quiz_1_answers_list.append(answer.answer)
     try:
@@ -2033,7 +1975,7 @@ def web_development_chapter_1_total_score():
 
     quiz_2_score = 0
     quiz_2_answers_list = []
-    quiz_2_answer = WebDevChapter1Quiz2Options.query.all()
+    quiz_2_answer = student.webdev_chapter1_quiz_2_options.all()
     for answer in quiz_2_answer:
         quiz_2_answers_list.append(answer.answer)
     try:
@@ -2048,7 +1990,7 @@ def web_development_chapter_1_total_score():
 
     quiz_3_score = 0
     quiz_3_answers_list = []
-    quiz_3_answer = WebDevChapter1Quiz3Options.query.all()
+    quiz_3_answer = student.webdev_chapter1_quiz_3_options.all()
     for answer in quiz_3_answer:
         quiz_3_answers_list.append(answer.answer)
     try:
@@ -2063,7 +2005,7 @@ def web_development_chapter_1_total_score():
 
     quiz_4_score = 0
     quiz_4_answers_list = []
-    quiz_4_answer = WebDevChapter1Quiz4Options.query.all()
+    quiz_4_answer = student.webdev_chapter1_quiz_4_options.all()
     for answer in quiz_4_answer:
         quiz_4_answers_list.append(answer.answer)
     try:
@@ -2078,7 +2020,7 @@ def web_development_chapter_1_total_score():
 
     quiz_5_score = 0
     quiz_5_answers_list = []
-    quiz_5_answer = WebDevChapter1Quiz5Options.query.all()
+    quiz_5_answer = student.webdev_chapter1_quiz_5_options.all()
     for answer in quiz_5_answer:
         quiz_5_answers_list.append(answer.answer)
     try:
@@ -2140,7 +2082,7 @@ def web_development_chapter_2_total_score():
     # Calculate total score
     quiz_1_score = 0
     quiz_1_answers_list = []
-    quiz_1_answer = WebDevChapter2Quiz1Options.query.all()
+    quiz_1_answer = student.webdev_chapter2_quiz_1_options.all()
     for answer in quiz_1_answer:
         quiz_1_answers_list.append(answer.answer)
     try:
@@ -2155,7 +2097,7 @@ def web_development_chapter_2_total_score():
 
     quiz_2_score = 0
     quiz_2_answers_list = []
-    quiz_2_answer = WebDevChapter2Quiz2Options.query.all()
+    quiz_2_answer = student.webdev_chapter2_quiz_2_options.all()
     for answer in quiz_2_answer:
         quiz_2_answers_list.append(answer.answer)
     try:
@@ -2170,7 +2112,7 @@ def web_development_chapter_2_total_score():
 
     quiz_3_score = 0
     quiz_3_answers_list = []
-    quiz_3_answer = WebDevChapter2Quiz3Options.query.all()
+    quiz_3_answer = student.webdev_chapter2_quiz_3_options.all()
     for answer in quiz_3_answer:
         quiz_3_answers_list.append(answer.answer)
     try:
@@ -2185,7 +2127,7 @@ def web_development_chapter_2_total_score():
 
     quiz_4_score = 0
     quiz_4_answers_list = []
-    quiz_4_answer = WebDevChapter2Quiz4Options.query.all()
+    quiz_4_answer = student.webdev_chapter2_quiz_4_options.all()
     for answer in quiz_4_answer:
         quiz_4_answers_list.append(answer.answer)
     try:
@@ -2200,7 +2142,7 @@ def web_development_chapter_2_total_score():
 
     quiz_5_score = 0
     quiz_5_answers_list = []
-    quiz_5_answer = WebDevChapter2Quiz5Options.query.all()
+    quiz_5_answer = student.webdev_chapter2_quiz_5_options.all()
     for answer in quiz_5_answer:
         quiz_5_answers_list.append(answer.answer)
     try:
@@ -2262,7 +2204,7 @@ def web_development_chapter_3_total_score():
     # Calculate total score
     quiz_1_score = 0
     quiz_1_answers_list = []
-    quiz_1_answer = WebDevChapter3Quiz1Options.query.all()
+    quiz_1_answer = student.webdev_chapter3_quiz_1_options.all()
     for answer in quiz_1_answer:
         quiz_1_answers_list.append(answer.answer)
     try:
@@ -2277,7 +2219,7 @@ def web_development_chapter_3_total_score():
 
     quiz_2_score = 0
     quiz_2_answers_list = []
-    quiz_2_answer = WebDevChapter3Quiz2Options.query.all()
+    quiz_2_answer = student.webdev_chapter3_quiz_2_options.all()
     for answer in quiz_2_answer:
         quiz_2_answers_list.append(answer.answer)
     try:
@@ -2292,7 +2234,7 @@ def web_development_chapter_3_total_score():
 
     quiz_3_score = 0
     quiz_3_answers_list = []
-    quiz_3_answer = WebDevChapter3Quiz3Options.query.all()
+    quiz_3_answer = student.webdev_chapter3_quiz_3_options.all()
     for answer in quiz_3_answer:
         quiz_3_answers_list.append(answer.answer)
     try:
@@ -2307,7 +2249,7 @@ def web_development_chapter_3_total_score():
 
     quiz_4_score = 0
     quiz_4_answers_list = []
-    quiz_4_answer = WebDevChapter3Quiz4Options.query.all()
+    quiz_4_answer = student.webdev_chapter3_quiz_4_options.all()
     for answer in quiz_4_answer:
         quiz_4_answers_list.append(answer.answer)
     try:
@@ -2322,7 +2264,7 @@ def web_development_chapter_3_total_score():
 
     quiz_5_score = 0
     quiz_5_answers_list = []
-    quiz_5_answer = WebDevChapter3Quiz5Options.query.all()
+    quiz_5_answer = student.webdev_chapter3_quiz_5_options.all()
     for answer in quiz_5_answer:
         quiz_5_answers_list.append(answer.answer)
     try:
@@ -2391,15 +2333,13 @@ def web_development_general_quiz_1():
     form = GeneralQuiz1Form()
     if form.validate_on_submit():
         answer = GeneralMultipleChoicesAnswer1(
-            answer=form.answer.data,
-            author=student)
+            answer=form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 1 answer have been recorded!', 'success')
         return redirect(url_for(
             'student.web_development_general_quiz_2',
-            student_full_name=student.student_full_name
-            ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/general/quiz_1.html',
         title='General Quiz 1',
@@ -2421,15 +2361,13 @@ def web_development_general_quiz_2():
     form = GeneralQuiz2Form()
     if form.validate_on_submit():
         answer = GeneralMultipleChoicesAnswer2(
-            answer=form.answer.data,
-            author=student)
+            answer=form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 2 answer have been recorded!', 'success')
         return redirect(url_for(
             'student.web_development_general_quiz_3',
-            student_full_name=student.student_full_name
-            ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/general/quiz_2.html',
         title='General Quiz 2',
@@ -2451,15 +2389,13 @@ def web_development_general_quiz_3():
     form = GeneralQuiz3Form()
     if form.validate_on_submit():
         answer = GeneralMultipleChoicesAnswer3(
-            answer=form.answer.data,
-            author=student)
+            answer=form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 3 answer have been recorded!', 'success')
         return redirect(url_for(
             'student.web_development_general_quiz_4',
-            student_full_name=student.student_full_name
-            ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/general/quiz_3.html',
         title='General Quiz 3',
@@ -2481,15 +2417,13 @@ def web_development_general_quiz_4():
     form = GeneralQuiz4Form()
     if form.validate_on_submit():
         answer = GeneralMultipleChoicesAnswer4(
-            answer=form.answer.data,
-            author=student)
+            answer=form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 4 answer have been recorded!', 'success')
         return redirect(url_for(
             'student.web_development_general_quiz_5',
-            student_full_name=student.student_full_name
-            ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/general/quiz_4.html',
         title='General Quiz 4',
@@ -2511,15 +2445,13 @@ def web_development_general_quiz_5():
     form = GeneralQuiz5Form()
     if form.validate_on_submit():
         answer = GeneralMultipleChoicesAnswer5(
-            answer=form.answer.data,
-            author=student)
+            answer=form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 5 answer have been recorded!', 'success')
         return redirect(url_for(
             'student.web_development_general_quiz_6',
-            student_full_name=student.student_full_name
-            ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/general/quiz_5.html',
         title='General Quiz 5',
@@ -2541,15 +2473,13 @@ def web_development_general_quiz_6():
     form = GeneralQuiz6Form()
     if form.validate_on_submit():
         answer = GeneralMultipleChoicesAnswer6(
-            answer=form.answer.data,
-            author=student)
+            answer=form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 6 answer have been recorded!', 'success')
         return redirect(url_for(
             'student.web_development_general_quiz_7',
-            student_full_name=student.student_full_name
-            ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/general/quiz_6.html',
         title='General Quiz 6',
@@ -2571,15 +2501,13 @@ def web_development_general_quiz_7():
     form = GeneralQuiz7Form()
     if form.validate_on_submit():
         answer = GeneralMultipleChoicesAnswer7(
-            answer=form.answer.data,
-            author=student)
+            answer=form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 7 answer have been recorded!', 'success')
         return redirect(url_for(
             'student.web_development_general_quiz_8',
-            student_full_name=student.student_full_name
-            ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/general/quiz_7.html',
         title='General Quiz 7',
@@ -2601,15 +2529,13 @@ def web_development_general_quiz_8():
     form = GeneralQuiz8Form()
     if form.validate_on_submit():
         answer = GeneralMultipleChoicesAnswer8(
-            answer=form.answer.data,
-            author=student)
+            answer=form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 8 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_general_quiz_9',
-            student_full_name=student.student_full_name
-            ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/general/quiz_8.html',
         title='General Quiz 8',
@@ -2631,15 +2557,13 @@ def web_development_general_quiz_9():
     form = GeneralQuiz9Form()
     if form.validate_on_submit():
         answer = GeneralMultipleChoicesAnswer9(
-            answer=form.answer.data,
-            author=student)
+            answer=form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 9 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_general_quiz_10',
-            student_full_name=student.student_full_name
-            ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/general/quiz_9.html',
         title='General Quiz 9',
@@ -2661,15 +2585,13 @@ def web_development_general_quiz_10():
     form = GeneralQuiz10Form()
     if form.validate_on_submit():
         answer = GeneralMultipleChoicesAnswer10(
-            answer=form.answer.data,
-            author=student)
+            answer=form.answer.data, author=student)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 10 answer have been added!', 'success')
         return redirect(url_for(
             'student.web_development_general_quiz_total_score',
-            student_full_name=student.student_full_name
-            ))
+            student_full_name=student.student_full_name))
     return render_template(
         'student/web-development-course/quizzes/general/quiz_10.html',
         title='General Quiz 10',

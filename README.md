@@ -139,7 +139,6 @@ Comming soon:
 ## Tools Used
 
 - Python for programming
-- Javascript for asynchronous communication between the server and the client
 - Flask for web development
 - SQLAlchemy for database management
 - Bootstrap for styling and cross-browser responsiveness
