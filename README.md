@@ -99,7 +99,7 @@ Comimg soon...
   - Can view their own learning analytics:
     - [x] Each chapter's learning objectives
     - [x] Each chapter's quiz results
-    - [ ] Overall course quiz results
+    - [x] Overall course quiz results
   - Can see how other students have achieved:
     - [ ] Each chaper objectives
     - [ ] Each chapter quizzes
