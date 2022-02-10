@@ -181,6 +181,7 @@ Kindly note that the current application may be miles ahead of the design seen i
 
 ## Deployment
 
+- [somaSoma eLearning App on Linode](www.bolderlearner.com) (currently live)
 - [somaSoma eLearning App on Heroku]() (coming soon)
 - [somaSoma eLearning App on Docker]() (coming soon)
 
@@ -245,6 +246,25 @@ $ mkvirtualenv somasoma-elearning # I am using virtualenvwrapper
 ## Using the Application
 
 * [See video]() (as soon as project is complete)
+
+## References
+
+Big of an application, I have used several technologies to add features and put everything together. I have taken a note of some of these things and you can check them out for yourself to learn more.
+
+1. [Starting A Flask Server](https://github.com/GitauHarrison/notes/blob/master/start_flask_server.md)
+2. [Uploading files to a flask database](https://github.com/GitauHarrison/notes/blob/master/upload_files_to_database.md)
+3. [Profile popup on hover](https://github.com/GitauHarrison/notes/blob/master/flask_popover/popover.md)
+4. [Private messaging and user notifications](https://github.com/GitauHarrison/notes/blob/master/flask_popover/user_notifications.md)
+5. [Deployment on Heroku](https://github.com/GitauHarrison/notes/blob/master/deploy_to_heroku.md)
+6. [Deployment on Docker](https://github.com/GitauHarrison/notes/blob/master/deploy_to_docker.md)
+7. [Deployment on Linode](https://github.com/GitauHarrison/notes/blob/master/deploy_to_linode.md)
+8. [Comment moderation](https://github.com/GitauHarrison/notes/blob/master/comment_moderation.md)
+9. [Two-factor authentication](https://github.com/GitauHarrison/notes/blob/master/two_factor_authentication/twilio_verify_2fa.md)
+10. [Beautiful and interactive tables](https://github.com/GitauHarrison/notes/blob/master/flask_tables.md)
+11. [Localhost testing](https://github.com/GitauHarrison/notes/blob/master/localhost_testing.md)
+12. [Markdown editing in forms](https://github.com/GitauHarrison/notes/blob/master/handling_rich_text.md)
+13. [Stripe integration](https://github.com/GitauHarrison/notes/blob/master/how_to_use_stripe_for_payment.md)
+14. [Web form protection using captcha](https://github.com/GitauHarrison/notes/blob/master/recaptcha.md)
 
 <hr>
 
