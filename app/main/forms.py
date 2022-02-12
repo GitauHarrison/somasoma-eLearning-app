@@ -21,19 +21,17 @@ class CommentForm(FlaskForm):
 
 
 class AnonymousCommentForm(FlaskForm):
-    name = StringField('Name',
-                       validators=[DataRequired(), Length(min=2, max=20)]
-                       )
+    name = StringField(
+        'Name',
+        validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField(
         'Email',
         validators=[DataRequired(), Email()],
-        render_kw={"placeholder": "Valid Email Address"}
-        )
+        render_kw={"placeholder": "Valid Email Address"})
     comment = PageDownField(
         'Comment',
         validators=[DataRequired()],
-        render_kw={"placeholder": "Markdown enabled"}
-        )
+        render_kw={"placeholder": "Markdown enabled"})
     recaptcha = RecaptchaField()
     submit = SubmitField('Post')
 
@@ -49,14 +47,13 @@ class EmptyForm(FlaskForm):
 
 
 class EditProfileForm(FlaskForm):
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()],
-                        render_kw={"placeholder": "Valid Email Address"}
-                        )
+    email = StringField(
+        'Email',
+        validators=[DataRequired(), Email()],
+        render_kw={"placeholder": "Valid Email Address"})
     about_me = StringField(
         'About me',
-        validators=[Length(min=0, max=140)]
-        )
+        validators=[Length(min=0, max=140)])
     submit = SubmitField('Submit')
 
     def __init__(self, original_email, *args, **kwargs):
@@ -101,8 +98,7 @@ class QuizForm(FlaskForm):
     body = PageDownField(
         'Description',
         validators=[DataRequired()],
-        render_kw={"placeholder": "Markdown enabled"}
-        )
+        render_kw={"placeholder": "Markdown enabled"})
     submit = SubmitField('Submit')
 
 
@@ -125,32 +121,26 @@ class Chapter1QuizOptionsForm(FlaskForm):
 class StudentStoriesForm(FlaskForm):
     student_image = FileField(
         'Student Image',
-        validators=[DataRequired(), FileAllowed(['jpg', 'png'])],
-        )
+        validators=[DataRequired(), FileAllowed(['jpg', 'png'])])
     username = StringField(
         'Full Name',
-        validators=[DataRequired(), Length(min=2, max=100)]
-        )
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()],
-                        render_kw={"placeholder": "Valid Email Address"}
-                        )
+        validators=[DataRequired(), Length(min=2, max=100)])
+    email = StringField(
+        'Email',
+        validators=[DataRequired(), Email()],
+        render_kw={"placeholder": "Valid Email Address"})
     body = PageDownField(
         'Your Story',
         validators=[DataRequired()],
-        render_kw={"placeholder": "Markdown enabled"}
-        )
+        render_kw={"placeholder": "Markdown enabled"})
     recaptcha = RecaptchaField()
     submit = SubmitField('Update')
 
     def validate_email(self, email):
-        student = FlaskStudentStories.query.filter_by(
-            email=email.data
-            ).first()
+        student = FlaskStudentStories.query.filter_by(email=email.data).first()
         if student:
             raise ValidationError(
-                'Email already taken. Please choose a different one.'
-                )
+                'Email already taken. Please choose a different one.')
 
 # ========================================
 # END OF STUDENT STORIES FORM
