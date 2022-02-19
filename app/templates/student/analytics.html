@@ -94,7 +94,7 @@
                         <!-- Analytics Graph -->
                         <div class="col-sm-7 text-center">
                             <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/demo_graph.png')}}" alt="Demo Graph">
-                            <canvas id="myChart" max-width="100%" height="auto"></canvas>
+                            <canvas class="myChart" max-width="100%" height="auto"></canvas>
                         </div>
                         <!-- End of Analytics Graph -->
                     </div>
@@ -133,7 +133,7 @@
 {% endblock %}
 {% block chartjs_script %}
 <script>
-    const ctx = document.getElementById('myChart').getContext('2d');
+    const ctx = document.getElementsByClassName('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
