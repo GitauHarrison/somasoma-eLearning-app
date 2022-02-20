@@ -17,10 +17,10 @@ from app.student.forms import CommentForm, EditProfileForm,\
     GeneralQuiz10Form
 from app.teacher.forms import PrivateMessageForm
 from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
-    CommunityComment, WebDevChapter1Objectives, WebDevChapter1Quiz,\
-    WebDevChapter1Quiz1Options, Student, WebDevelopmentOverview, Chapter,\
-    Teacher, WebDevChapter1Quiz2Options,\
-    WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, StudentMessage,\
+    CommunityComment, WebDevChapter1Objectives, WebDevChapter1Quiz1Options, \
+    Student, WebDevelopmentOverview, Chapter, Teacher,\
+    WebDevChapter1Quiz2Options, WebDevChapter1Quiz3Options, \
+    WebDevChapter1Quiz4Options, StudentMessage,\
     StudentNotification, WebDevChapter2Comment, WebDevChapter2Objectives,\
     WebDevChapter2Quiz1Options, WebDevChapter2Quiz2Options,\
     WebDevChapter2Quiz3Options, WebDevChapter2Quiz4Options, \
@@ -213,7 +213,13 @@ def dashboard_analytics():
         )
     except ZeroDivisionError:
         percentage_achieved = 0
-    # End of Calculate the number of objectives achieved
+    objectives_attempts = {}
+    for k, v in enumerate(all_objectives):
+        objectives_attempts[k] = v
+    objectives_attempts_labels = objectives_attempts.keys()
+    objectives_attempts_values = objectives_attempts.values()
+    print(objectives_attempts_labels)
+    print(objectives_attempts_values)
 
     # CHAPTER 2: Calculate the number of objectives achieved
     all_objectives_chapter_2 = student.webdev_chapter2_objectives.all()
@@ -682,7 +688,13 @@ def dashboard_analytics():
         total_score_percentage_chapter_3=total_score_percentage_chapter_3,
 
         # Multi-choice questions
-        multi_choice_total_score_percentage=multi_choice_total_score_percentage
+        multi_choice_total_score_percentage=multi_choice_total_score_percentage,
+
+        # Chart
+        objectives_attempts=objectives_attempts,
+        objectives_attempts_labels=objectives_attempts_labels,
+        objectives_attempts_values=objectives_attempts_values
+
         )
 
 # Profile routes

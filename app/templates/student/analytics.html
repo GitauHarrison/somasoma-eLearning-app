@@ -20,26 +20,29 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="row analytics">
-                        <div class="col-sm-5">
+                        <div class="col-sm-12">
                             {% if chapter.chapter.lower() == "chapter 1: hello world" %}
                                 <!-- Chapter 1 Analytics -->
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-5">
                                         <h3>{{ chapter.chapter }}</h3>
                                         <ul>
                                             <li>
-                                                Achievement of Lesson Objectives: {{ percentage_achieved }}% - 
+                                                Latest Achievement of Lesson Objectives: {{ percentage_achieved }}% - 
                                                 <small>
                                                     <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_link }}#objectives">Improve</a>
                                                 </small>
                                             </li>
                                             <li>
-                                                Achievement of Lesson Quizzes: {{ total_score_percentage }}% - 
+                                                Latest Achievement of Lesson Quizzes: {{ total_score_percentage }}% - 
                                                 <small>
                                                     <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_quiz_1_link }}">Improve</a>
                                                 </small>
                                             </li>
                                         </ul>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <canvas id="{{ chapter.id }}" max-width="100%" height="auto"></canvas>
                                     </div>
                                 </div><hr> 
                                 <!-- End of chapter 1 analytics -->
@@ -47,22 +50,25 @@
                             {% if chapter.chapter.lower() == "chapter 2: flask templates" %}
                                 <!-- Chapter 1 Analytics -->
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-5">
                                         <h3>{{ chapter.chapter }}</h3>
                                         <ul>
                                             <li>
-                                                Achievement of Lesson Objectives: {{ percentage_achieved_chapter_2 }}% - 
+                                                Latest Achievement of Lesson Objectives: {{ percentage_achieved_chapter_2 }}% - 
                                                 <small>
                                                     <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_link }}#objectives">Improve</a>
                                                 </small>
                                             </li>
                                             <li>
-                                                Achievement of Lesson Quizzes: {{ total_score_percentage_chapter_2 }}% - 
+                                                Latest Achievement of Lesson Quizzes: {{ total_score_percentage_chapter_2 }}% - 
                                                 <small>
                                                     <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_quiz_1_link }}">Improve</a>
                                                 </small>
                                             </li>
                                         </ul>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <canvas id="{{ chapter.id }}" max-width="100%" height="auto"></canvas>
                                     </div>
                                 </div><hr> 
                                 <!-- End of chapter 1 analytics -->
@@ -70,33 +76,30 @@
                             {% if chapter.chapter.lower() == "chapter 3: introduction to web forms" %}
                                 <!-- Chapter 1 Analytics -->
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-5">
                                         <h3>{{ chapter.chapter }}</h3>
                                         <ul>
                                             <li>
-                                                Achievement of Lesson Objectives: {{ percentage_achieved_chapter_3 }}% - 
+                                                Latest Achievement of Lesson Objectives: {{ percentage_achieved_chapter_3 }}% - 
                                                 <small>
                                                     <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_link }}#objectives">Improve</a>
                                                 </small>
                                             </li>
                                             <li>
-                                                Achievement of Lesson Quizzes: {{ total_score_percentage_chapter_3 }}% - 
+                                                Latest Achievement of Lesson Quizzes: {{ total_score_percentage_chapter_3 }}% - 
                                                 <small>
                                                     <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_quiz_1_link }}">Improve</a>
                                                 </small>
                                             </li>
                                         </ul>
                                     </div>
+                                    <div class="col-sm-7">
+                                        <canvas id="{{ chapter.id }}" max-width="100%" height="auto"></canvas>
+                                    </div>
                                 </div><hr> 
                                 <!-- End of chapter 1 analytics -->
                             {% endif %}
                         </div>
-                        <!-- Analytics Graph -->
-                        <div class="col-sm-7 text-center">
-                            <img class="img-fluid" style="max-width: 100%; height: auto;" src="{{url_for('static', filename = 'images/demo_graph.png')}}" alt="Demo Graph">
-                            <canvas class="myChart" max-width="100%" height="auto"></canvas>
-                        </div>
-                        <!-- End of Analytics Graph -->
                     </div>
                 </div>
             </div>
@@ -109,13 +112,13 @@
                         <h3>General Quiz</h3>
                         <ul>
                             <li>
-                                Achievement of Multi-choice Questions: {{ multi_choice_total_score_percentage }}% - 
+                                Latest Achievement of Multi-choice Questions: {{ multi_choice_total_score_percentage }}% - 
                                 <small>
                                     <a href="http://127.0.0.1:5000/student/web-development/general-multichoice-questions/quiz-1">Improve</a>
                                 </small>
                             </li>
                             <li>
-                                Achievement of Blank-based Questions: % - 
+                                Latest Achievement of Blank-based Questions: % - 
                                 <small>
                                     <a href="#" class="overview-link-disabled">Improve</a>
                                 </small>
@@ -132,41 +135,122 @@
     <!-- END OF ANALYTICS TAB -->
 {% endblock %}
 {% block chartjs_script %}
-<script>
-    const ctx = document.getElementsByClassName('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    </script>
+    {% for chapter in course_chapters %}
+        {% if chapter.chapter.lower() == 'chapter 1: hello world' %}
+            <script>
+                const ctx = document.getElementById('{{ chapter.id }}').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [objectives_attempts_labels],
+                        datasets: [{
+                            label: 'Achievement of Lesson Objectives', 
+                            data: [objectives_attempts_values],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                </script>
+        {% elif chapter.chapter.lower() == 'chapter 2: flask templates' %}
+            <script>
+                const ctx = document.getElementById('{{ chapter.id }}').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Attempt 1', 'Attempt 2', 'Attempt 3', 'Green', 'Purple', 'Orange'],
+                        datasets: [{
+                            label: 'Achievement of Lesson Objectives', 
+                            data: [12, 19, 3, 5, 2, 3],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                </script>
+        {% elif chapter.chapter.lower() == 'chapter 3: introduction to web forms' %}
+            <script>
+                const ctx = document.getElementById('{{ chapter.id }}').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Attempt 1', 'Attempt 2', 'Attempt 3', 'Green', 'Purple', 'Orange'],
+                        datasets: [{
+                            label: 'Achievement of Lesson Objectives', 
+                            data: [12, 19, 3, 5, 2, 3],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                </script>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
