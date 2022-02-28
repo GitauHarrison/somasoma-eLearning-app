@@ -193,8 +193,7 @@ def dashboard_analytics():
         student_full_name=current_user.student_full_name).first()
 
     # Dsiplaying the chapter
-    course_chapters = Chapter.query.filter_by(
-        allowed_status=True).all()
+    course_chapters = Chapter.query.filter_by(allowed_status=True).all()
 
     # CHAPTER 1: Calculate the number of objectives achieved
     all_objectives = student.webdev_chapter1_objectives.all()
@@ -213,13 +212,29 @@ def dashboard_analytics():
         )
     except ZeroDivisionError:
         percentage_achieved = 0
+
+    # Chart for chapter 1
     objectives_attempts = {}
     for k, v in enumerate(all_objectives):
-        objectives_attempts[k] = v
-    objectives_attempts_labels = objectives_attempts.keys()
-    objectives_attempts_values = objectives_attempts.values()
-    print(objectives_attempts_labels)
-    print(objectives_attempts_values)
+        objectives_attempts[k+1] = v
+    print(objectives_attempts)
+    chapter1_obj_attempts_chart_labels = list(objectives_attempts.keys())
+    chapter1_obj_attempts_chart_data = []
+    for i in range(len(objectives_list)):
+        for i in range(len(objectives_list[i:1+5])):
+            all_num_true_status = objectives_list[i:i+5].count("True")
+            len_of_attempt = len(objectives_list[i:i+5])
+            print(all_num_true_status, objectives_list[i:i+5])
+            try:
+                chapter1_obj_attempts_chart_data.append(
+                    round((all_num_true_status / len_of_attempt) * 100, 2))
+            except ZeroDivisionError:
+                chapter1_obj_attempts_chart_data.append(0)
+    chapter1_obj_attempts_chart_colors = [
+                '#0099cc', '#0099cc', '#0099cc', '#0099cc', '#0099cc']
+    print('Chatper 1 Labels: ', chapter1_obj_attempts_chart_labels)
+    print('Chapter 1 Values: ', chapter1_obj_attempts_chart_data)
+    # print(chapter1_obj_attempts_chart_legend)
 
     # CHAPTER 2: Calculate the number of objectives achieved
     all_objectives_chapter_2 = student.webdev_chapter2_objectives.all()
@@ -238,6 +253,32 @@ def dashboard_analytics():
                 len(objectives_list_chapter_2[-5:])) * 100, 2)
     except ZeroDivisionError:
         percentage_achieved_chapter_2 = 0
+
+    # Chart for chapter 2
+    objectives_attempts_chapter2 = {}
+    for k, v in enumerate(all_objectives_chapter_2):
+        objectives_attempts_chapter2[k+1] = v
+    obj_attempts_chart_labels_chapter2 = list(
+        objectives_attempts_chapter2.keys())
+    obj_attempts_chart_data_chapter2 = []
+    for i in range(len(objectives_list_chapter_2)):
+        for i in range(len(objectives_list_chapter_2[i:1+5])):
+            all_num_true_status_chapter2 = \
+                objectives_list_chapter_2[i:i+5].count("True")
+            len_of_attempt_chapter2 = len(objectives_list_chapter_2[i:i+5])
+            print(
+                all_num_true_status_chapter2, objectives_list_chapter_2[i:i+5])
+            try:
+                obj_attempts_chart_data_chapter2.append(
+                    round(
+                        (all_num_true_status_chapter2 /
+                            len_of_attempt_chapter2) * 100, 2))
+            except ZeroDivisionError:
+                obj_attempts_chart_data_chapter2.append(0)
+            obj_attempts_chart_colors_chapter2 = [
+                '#0099cc', '#0099cc', '#0099cc', '#0099cc', '#0099cc']
+    print('Chapter 2 Labels: ', obj_attempts_chart_labels_chapter2)
+    print('Chapter 2 Values: ', obj_attempts_chart_data_chapter2)
     # End of Calculate the number of objectives achieved
 
     # CHAPTER 3: Calculate the number of objectives achieved
@@ -257,6 +298,32 @@ def dashboard_analytics():
                 len(objectives_list_chapter_3[-5:])) * 100, 2)
     except ZeroDivisionError:
         percentage_achieved_chapter_3 = 0
+
+    # Chart for chapter 3
+    objectives_attempts_chapter3 = {}
+    for k, v in enumerate(all_objectives_chapter_3):
+        objectives_attempts_chapter3[k+1] = v
+    obj_attempts_chart_labels_chapter3 = list(
+        objectives_attempts_chapter3.keys())
+    obj_attempts_chart_data_chapter3 = []
+    for i in range(len(objectives_list_chapter_3)):
+        for i in range(len(objectives_list_chapter_3[i:1+5])):
+            all_num_true_status_chapter3 = \
+                objectives_list_chapter_3[i:i+5].count("True")
+            len_of_attempt_chapter3 = len(objectives_list_chapter_3[i:i+5])
+            print(
+                all_num_true_status_chapter3, objectives_list_chapter_3[i:i+5])
+            try:
+                obj_attempts_chart_data_chapter3.append(
+                    round(
+                        (all_num_true_status_chapter3 /
+                            len_of_attempt_chapter3) * 100, 2))
+            except ZeroDivisionError:
+                obj_attempts_chart_data_chapter3.append(0)
+            obj_attempts_chart_colors_chapter3 = [
+                '#0099cc', '#0099cc', '#0099cc', '#0099cc', '#0099cc']
+    print('Chapter 3 Labels: ', obj_attempts_chart_labels_chapter3)
+    print('Chapter 3 Values: ', obj_attempts_chart_data_chapter3)
     # End of Calculate the number of objectives achieved
 
     # CHAPTER 1: Calculate total score
@@ -690,10 +757,21 @@ def dashboard_analytics():
         # Multi-choice questions
         multi_choice_total_score_percentage=multi_choice_total_score_percentage,
 
-        # Chart
+        # Chapter 1 chart
         objectives_attempts=objectives_attempts,
-        objectives_attempts_labels=objectives_attempts_labels,
-        objectives_attempts_values=objectives_attempts_values
+        chapter1_obj_attempts_chart_labels=chapter1_obj_attempts_chart_labels,
+        chapter1_obj_attempts_chart_data=chapter1_obj_attempts_chart_data,
+        chapter1_obj_attempts_chart_colors=chapter1_obj_attempts_chart_colors,
+
+        # Chapter 2 chart
+        obj_attempts_chart_labels_chapter2=obj_attempts_chart_labels_chapter2,
+        obj_attempts_chart_data_chapter2=obj_attempts_chart_data_chapter2,
+        obj_attempts_chart_colors_chapter2=obj_attempts_chart_colors_chapter2,
+
+        # Chapter 3 chart
+        obj_attempts_chart_labels_chapter3=obj_attempts_chart_labels_chapter3,
+        obj_attempts_chart_data_chapter3=obj_attempts_chart_data_chapter3,
+        obj_attempts_chart_colors_chapter3=obj_attempts_chart_colors_chapter3
 
         )
 
