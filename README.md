@@ -131,7 +131,7 @@ Coming soon...
 Comming soon:
 - [ ] Video conferencing facility
 - [ ] Live language translation
-- [ ] Data visualization of student performance
+- [x] Data visualization of student performance
 - [x] Markdown editing in forms
 - [x] Google reCaptcha on forms for extra security aganist spam
 - [x] Interactive tables (sorting, searching and pagination)
@@ -158,6 +158,7 @@ Comming soon:
 - Jquery and Ajax for profile popup and new message notification
 - Google reCaptcha for extra security aganist spam
 - Calendly for scheduling virtual classes
+- ChartJS for data visualization
 
 
 ## License
