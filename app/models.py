@@ -20,6 +20,7 @@ def load_student(id):
 # def load_teacher(id):
 #     return Teacher.query.get(int(id))
 
+
 # @login.user_loader
 # def load_admin(id):
 #     return Admin.query.get(int(id))
