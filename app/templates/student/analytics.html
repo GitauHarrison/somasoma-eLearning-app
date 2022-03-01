@@ -147,7 +147,7 @@
                     {% endfor %}
                 ],
                 datasets: [{
-                    label: 'Achievement of Chatper 1 Objectives,',
+                    label: 'Chapter 1 Achievements',
                     data: [
                         {% for data in chapter1_obj_attempts_chart_data %}
                             {{ data }},
@@ -185,11 +185,11 @@
             data: {
                 labels: [
                     {% for label in obj_attempts_chart_labels_chapter2 %}
-                        '{{ label }}',
+                        'Attempt {{ label }}',
                     {% endfor %}
                 ],
                 datasets: [{
-                    label: 'Achievement of Chatper 2 Objectives,',
+                    label: 'Chapter 2 Achievements',
                     data: [
                         {% for data in obj_attempts_chart_data_chapter2 %}
                             {{ data }},
@@ -224,11 +224,11 @@
             data: {
                 labels: [
                     {% for label in obj_attempts_chart_labels_chapter3 %}
-                        '{{ label }}',
+                        'Attempt {{ label }}',
                     {% endfor %}
                 ],
                 datasets: [{
-                    label: 'Achievement of Chatper 3 Objectives,',
+                    label: 'Chapter 3 Achievements',
                     data: [
                         {% for data in obj_attempts_chart_data_chapter3 %}
                             {{ data }},
