@@ -182,7 +182,7 @@ Kindly note that the current application may be miles ahead of the design seen i
 
 ## Deployment
 
-- [somaSoma eLearning App on Linode](www.bolderlearner.com) (currently live)
+- [somaSoma eLearning App on Linode]() (coming soon)
 - [somaSoma eLearning App on Heroku]() (coming soon)
 - [somaSoma eLearning App on Docker]() (coming soon)
 
