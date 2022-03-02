@@ -147,25 +147,14 @@
                     {% endfor %}
                 ],
                 datasets: [{
-                    label: 'Chapter 1 Achievements',
+                    label: 'Achievement of Chapter 1 Objectives',
                     data: [
                         {% for data in chapter1_obj_attempts_chart_data %}
                             {{ data }},
                         {% endfor %}
                     ],
-                    backgroundColor: [
-                        {% for color in chapter1_obj_attempts_chart_colors %}
-                            '{{ color }}',
-                        {% endfor %}
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
+                    backgroundColor: ['orange'],
+                    borderColor: ['orange'],
                     borderWidth: 1
                 }]
             },
@@ -189,22 +178,14 @@
                     {% endfor %}
                 ],
                 datasets: [{
-                    label: 'Chapter 2 Achievements',
+                    label: 'Achievement of Chapter 2 Objectives',
                     data: [
                         {% for data in obj_attempts_chart_data_chapter2 %}
                             {{ data }},
                         {% endfor %}
                     ],
-                    backgroundColor: [
-                        {% for color in obj_attempts_chart_colors_chapter2 %}
-                            '{{ color }}',
-                        {% endfor %}
-                    ],
-                    borderColor: [
-                        {% for color in obj_attempts_chart_colors_chapter2 %}
-                            '{{ color }}',
-                        {% endfor %}
-                    ],
+                    backgroundColor: ['purple'],
+                    borderColor: ['purple'],
                     borderWidth: 1
                 }]
             },
@@ -228,22 +209,14 @@
                     {% endfor %}
                 ],
                 datasets: [{
-                    label: 'Chapter 3 Achievements',
+                    label: 'Achievement of Chapter 3 Objectives',
                     data: [
                         {% for data in obj_attempts_chart_data_chapter3 %}
                             {{ data }},
                         {% endfor %}
                     ],
-                    backgroundColor: [
-                        {% for color in obj_attempts_chart_colors_chapter3 %}
-                            '{{ color }}',
-                        {% endfor %}
-                    ],
-                    borderColor: [
-                        {% for color in obj_attempts_chart_colors_chapter3 %}
-                            '{{ color }}',
-                        {% endfor %}
-                    ],
+                    backgroundColor: ['green'],
+                    borderColor: ['green'],
                     borderWidth: 1
                 }]
             },
