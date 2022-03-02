@@ -176,14 +176,21 @@ class Student(UserMixin, db.Model):
         'WebDevChapter3Objectives',
         backref='author',
         lazy='dynamic')
-    webdev_chapter1_quiz = db.relationship(
-        'WebDevChapter1Quiz',
+
+    # Chapter quiz total score
+    webdev_chapter1_quiz_total_scores = db.relationship(
+        'WebDevChapter1QuizTotalScore',
         backref='author',
         lazy='dynamic')
-    webdev_chapter2_quiz = db.relationship(
-        'WebDevChapter2Quiz',
+    webdev_chapter2_quiz_total_scores = db.relationship(
+        'WebDevChapter2QuizTotalScore',
         backref='author',
         lazy='dynamic')
+    webdev_chapter3_quiz_total_scores = db.relationship(
+        'WebDevChapter3QuizTotalScore',
+        backref='author',
+        lazy='dynamic')
+    # End of chapter quiz total score
 
     # --- Quiz 1 Answers: chapter 1/2/3 ---
     webdev_chapter1_quiz_1_options = db.relationship(
@@ -1192,30 +1199,42 @@ class WebDevChapter3Objectives(db.Model):
             {self.objective_3}, {self.objective_4}, {self.objective_5}\n\n'
 
 
-# Unused table
-class WebDevChapter1Quiz(db.Model):
-    __tablename__ = 'web_dev_chapter1_quiz'
+# Chapters Quiz Total Score
+
+
+class WebDevChapter1QuizTotalScore(db.Model):
+    __tablename__ = 'web_dev_chapter1_quiz_total_score'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64), index=True)
-    body = db.Column(db.String(140))
+    total_score = db.Column(db.Integer, index=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
     def __repr__(self):
-        return f'Quiz: {self.title}'
-# End of unused table
+        return f'Chapter 1 Quiz Total Score: {self.total_score}'
 
 
-class WebDevChapter2Quiz(db.Model):
-    __tablename__ = 'web_dev_chapter2_quiz'
+class WebDevChapter2QuizTotalScore(db.Model):
+    __tablename__ = 'web_dev_chapter2_quiz_total_score'
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64), index=True)
-    body = db.Column(db.String(140))
+    total_score = db.Column(db.String(64), index=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
 
     def __repr__(self):
-        return f'Quiz: {self.title}'
+        return f'Chapter 2 Quiz Total Score: {self.total_score}'
+
+
+class WebDevChapter3QuizTotalScore(db.Model):
+    __tablename__ = 'web_dev_chapter3_quiz_total_score'
+    id = db.Column(db.Integer, primary_key=True)
+    total_score = db.Column(db.String(64), index=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'))
+
+    def __repr__(self):
+        return f'Chapter 3 Quiz Total Score: {self.total_score}'
+
+# Endo of chapters Quiz Total Score
 
 
 class WebDevChapter1Quiz1Options(db.Model):

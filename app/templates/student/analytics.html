@@ -44,7 +44,7 @@
                                     <div class="col-sm-7">
                                         <canvas id="chapter1" max-width="100%" height="auto"></canvas>
                                     </div>
-                                </div><hr> 
+                                </div> 
                                 <!-- End of chapter 1 analytics -->
                             {% endif %}
                             {% if chapter.chapter.lower() == "chapter 2: flask templates" %}
@@ -70,7 +70,7 @@
                                     <div class="col-sm-7">
                                         <canvas id="chapter2" max-width="100%" height="auto"></canvas>
                                     </div>
-                                </div><hr> 
+                                </div> 
                                 <!-- End of chapter 1 analytics -->
                             {% endif %}
                             {% if chapter.chapter.lower() == "chapter 3: introduction to web forms" %}
@@ -96,7 +96,7 @@
                                     <div class="col-sm-7">
                                         <canvas id="chapter3" max-width="100%" height="auto"></canvas>
                                     </div>
-                                </div><hr> 
+                                </div> 
                                 <!-- End of chapter 1 analytics -->
                             {% endif %}
                         </div>
@@ -139,24 +139,40 @@
     <script>
         const ctx =$('#chapter1');
         const myChart = new Chart(ctx, {
-            type: 'line',
             data: {
                 labels: [
                     {% for label in chapter1_obj_attempts_chart_labels %}
                         'Attempt {{ label }}',
                     {% endfor %}
                 ],
-                datasets: [{
-                    label: 'Achievement of Chapter 1 Objectives',
-                    data: [
-                        {% for data in chapter1_obj_attempts_chart_data %}
-                            {{ data }},
-                        {% endfor %}
-                    ],
-                    backgroundColor: ['orange'],
-                    borderColor: ['orange'],
-                    borderWidth: 1
-                }]
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Achievement of Chapter 1 Objectives',
+                        data: [
+                            {% for data in chapter1_obj_attempts_chart_data %}
+                                {{ data }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: ['orange'],
+                        borderColor: ['orange'],
+                        borderWidth: 1
+                    },
+                    {
+                        type: 'line',
+                        label: 'Achievement of Chapter 1 Quiz',
+                        data: [
+                            {
+                                {% for score in chapter1_total_score_list %}
+                                    {{ score }},
+                                {% endfor %}
+                            }
+                        ],
+                        backgroundColor: ['gray'],
+                        borderColor: ['gray'],
+                        borderWidth: 1
+                    }
+                ]
             },
             options: {
                 scales: {
@@ -170,24 +186,26 @@
     <script>
         const ctx_chapter2 =$('#chapter2');
         const myChart_chapter2 = new Chart(ctx_chapter2, {
-            type: 'line',
             data: {
                 labels: [
                     {% for label in obj_attempts_chart_labels_chapter2 %}
                         'Attempt {{ label }}',
                     {% endfor %}
                 ],
-                datasets: [{
-                    label: 'Achievement of Chapter 2 Objectives',
-                    data: [
-                        {% for data in obj_attempts_chart_data_chapter2 %}
-                            {{ data }},
-                        {% endfor %}
-                    ],
-                    backgroundColor: ['purple'],
-                    borderColor: ['purple'],
-                    borderWidth: 1
-                }]
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Achievement of Chapter 2 Objectives',
+                        data: [
+                            {% for data in obj_attempts_chart_data_chapter2 %}
+                                {{ data }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: ['purple'],
+                        borderColor: ['purple'],
+                        borderWidth: 1
+                    }
+                ]
             },
             options: {
                 scales: {

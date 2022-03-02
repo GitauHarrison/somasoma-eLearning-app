@@ -33,7 +33,9 @@ from app.models import ChapterQuiz, TableOfContents, WebDevChapter1Comment,\
     GeneralMultipleChoicesAnswer3, GeneralMultipleChoicesAnswer4,\
     GeneralMultipleChoicesAnswer5, GeneralMultipleChoicesAnswer6,\
     GeneralMultipleChoicesAnswer7, GeneralMultipleChoicesAnswer8,\
-    GeneralMultipleChoicesAnswer9, GeneralMultipleChoicesAnswer10
+    GeneralMultipleChoicesAnswer9, GeneralMultipleChoicesAnswer10,\
+    WebDevChapter1QuizTotalScore, WebDevChapter2QuizTotalScore,\
+    WebDevChapter3QuizTotalScore
 from app.student.email import send_flask_chapter_1_comment_email, \
     send_flask_chapter_2_comment_email, send_flask_chapter_3_comment_email
 from flask_login import current_user, login_required
@@ -213,7 +215,7 @@ def dashboard_analytics():
     except ZeroDivisionError:
         percentage_achieved = 0
 
-    # Chart for chapter 1
+    # Chart for chapter 1 objectives
     objectives_attempts = {}
     for k, v in enumerate(all_objectives):
         objectives_attempts[k+1] = v
@@ -230,11 +232,8 @@ def dashboard_analytics():
                 round((all_num_true_status / len_of_attempt) * 100, 2))
         except ZeroDivisionError:
             chapter1_obj_attempts_chart_data.append(0)
-    chapter1_obj_attempts_chart_colors = [
-                '#0099cc', '#0099cc', '#0099cc', '#0099cc', '#0099cc']
     print('Chatper 1 Labels: ', chapter1_obj_attempts_chart_labels)
     print('Chapter 1 Values: ', chapter1_obj_attempts_chart_data, '\n\n')
-    # print(chapter1_obj_attempts_chart_legend)
 
     # CHAPTER 2: Calculate the number of objectives achieved
     all_objectives_chapter_2 = student.webdev_chapter2_objectives.all()
@@ -274,8 +273,6 @@ def dashboard_analytics():
                         len_of_attempt_chapter2) * 100, 2))
         except ZeroDivisionError:
             obj_attempts_chart_data_chapter2.append(0)
-    obj_attempts_chart_colors_chapter2 = [
-       '#0099cc', '#0099cc', '#0099cc', '#0099cc', '#0099cc']
     print('Chapter 2 Labels: ', obj_attempts_chart_labels_chapter2)
     print('Chapter 2 Values: ', obj_attempts_chart_data_chapter2, '\n\n')
     # End of Calculate the number of objectives achieved
@@ -318,8 +315,6 @@ def dashboard_analytics():
                         len_of_attempt_chapter3) * 100, 2))
         except ZeroDivisionError:
             obj_attempts_chart_data_chapter3.append(0)
-    obj_attempts_chart_colors_chapter3 = [
-        '#0099cc', '#0099cc', '#0099cc', '#0099cc', '#0099cc']
     print('Chapter 3 Labels: ', obj_attempts_chart_labels_chapter3)
     print('Chapter 3 Values: ', obj_attempts_chart_data_chapter3, '\n\n')
     # End of Calculate the number of objectives achieved
@@ -407,6 +402,26 @@ def dashboard_analytics():
         total_score_percentage = round((total_score / 5) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage = 0
+
+    # List of all quiz scores to be used as labels in ChartJS
+    chapter1_total_score = student.webdev_chapter1_quiz_total_scores.all()
+    chapter1_total_score_list = []
+    for score in chapter1_total_score:
+        chapter1_total_score_list.append(score.total_score)
+
+    chapter2_total_score = student.webdev_chapter2_quiz_total_scores.all()
+    chapter2_total_score_list = []
+    for score in chapter2_total_score:
+        chapter2_total_score_list.append(score.total_score)
+
+    chapter3_total_score = student.webdev_chapter3_quiz_total_scores.all()
+    chapter3_total_score_list = []
+    for score in chapter3_total_score:
+        chapter3_total_score_list.append(score.total_score)
+
+    print('Chapter 1 Total Score: ', chapter1_total_score_list, 'Length : ', len(chapter1_total_score_list))
+    print('Chapter 2 Total Score: ', chapter2_total_score_list, 'Length : ', len(chapter2_total_score_list))
+    print('Chapter 3 Total Score: ', chapter3_total_score_list, 'Length : ', len(chapter3_total_score_list))
 
     # CHAPTER 2: Calculate total score
     quiz_1_score_chapter_2 = 0
@@ -743,6 +758,7 @@ def dashboard_analytics():
         # Chapter 1
         percentage_achieved=percentage_achieved,
         total_score_percentage=total_score_percentage,
+        chapter1_total_score_list=chapter1_total_score_list,
 
         # Chapter 2
         percentage_achieved_chapter_2=percentage_achieved_chapter_2,
@@ -759,18 +775,14 @@ def dashboard_analytics():
         objectives_attempts=objectives_attempts,
         chapter1_obj_attempts_chart_labels=chapter1_obj_attempts_chart_labels,
         chapter1_obj_attempts_chart_data=chapter1_obj_attempts_chart_data,
-        chapter1_obj_attempts_chart_colors=chapter1_obj_attempts_chart_colors,
 
         # Chapter 2 chart
         obj_attempts_chart_labels_chapter2=obj_attempts_chart_labels_chapter2,
         obj_attempts_chart_data_chapter2=obj_attempts_chart_data_chapter2,
-        obj_attempts_chart_colors_chapter2=obj_attempts_chart_colors_chapter2,
 
         # Chapter 3 chart
         obj_attempts_chart_labels_chapter3=obj_attempts_chart_labels_chapter3,
-        obj_attempts_chart_data_chapter3=obj_attempts_chart_data_chapter3,
-        obj_attempts_chart_colors_chapter3=obj_attempts_chart_colors_chapter3
-
+        obj_attempts_chart_data_chapter3=obj_attempts_chart_data_chapter3
         )
 
 # Profile routes
@@ -1694,11 +1706,99 @@ def web_development_chapter_1_quiz_5():
         student_full_name=current_user.student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
+    # CHAPTER 1: Calculate total score
+    quiz_1_score = 0
+    quiz_1_answers_list = []
+    quiz_1_answer = student.webdev_chapter1_quiz_1_options.all()
+    for answer in quiz_1_answer:
+        quiz_1_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_1 = len(quiz_1_answers_list) - 1
+        if quiz_1_answers_list[student_latest_answer_quiz_1].lower() == \
+                "pip3 install flask":
+            quiz_1_score += 1
+        else:
+            quiz_1_score += 0
+    except IndexError:
+        quiz_1_score += 0
+
+    quiz_2_score = 0
+    quiz_2_answers_list = []
+    quiz_2_answer = student.webdev_chapter1_quiz_2_options.all()
+    for answer in quiz_2_answer:
+        quiz_2_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_2 = len(quiz_2_answers_list) - 1
+        if quiz_2_answers_list[student_latest_answer_quiz_2].lower() == \
+                "python":
+            quiz_2_score += 1
+        else:
+            quiz_2_score += 0
+    except IndexError:
+        quiz_2_score += 0
+
+    quiz_3_score = 0
+    quiz_3_answers_list = []
+    quiz_3_answer = student.webdev_chapter1_quiz_3_options.all()
+    for answer in quiz_3_answer:
+        quiz_3_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_3 = len(quiz_3_answers_list) - 1
+        if quiz_3_answers_list[student_latest_answer_quiz_3].lower() == \
+                "keeping the core simple but extensible":
+            quiz_3_score += 1
+        else:
+            quiz_3_score += 0
+    except IndexError:
+        quiz_3_score += 0
+
+    quiz_4_score = 0
+    quiz_4_answers_list = []
+    quiz_4_answer = student.webdev_chapter1_quiz_4_options.all()
+    for answer in quiz_4_answer:
+        quiz_4_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_4 = len(quiz_4_answers_list) - 1
+        if quiz_4_answers_list[student_latest_answer_quiz_4].lower() == \
+                "using the command flask run":
+            quiz_4_score += 1
+        else:
+            quiz_4_score += 0
+    except IndexError:
+        quiz_4_score += 0
+
+    quiz_5_score = 0
+    quiz_5_answers_list = []
+    quiz_5_answer = student.webdev_chapter1_quiz_5_options.all()
+    for answer in quiz_5_answer:
+        quiz_5_answers_list.append(answer.answer)
+    try:
+        student_latest_answer_quiz_5 = len(quiz_5_answers_list) - 1
+        if quiz_5_answers_list[student_latest_answer_quiz_5].lower() == \
+                "view functions":
+            quiz_5_score += 1
+        else:
+            quiz_5_score += 0
+    except IndexError:
+        quiz_5_score += 0
+
+    # CHAPTER 1: Calculate percentage
+    total_score = quiz_1_score + quiz_2_score + quiz_3_score + quiz_4_score + \
+        quiz_5_score
+    try:
+        total_score_percentage = round((total_score / 5) * 100, 2)
+    except ZeroDivisionError:
+        total_score_percentage = 0
+    print('Percentage:', total_score_percentage)
+
     # Quiz 5
     quiz_5_form = Chapter1Quiz5OptionsForm()
     if quiz_5_form.validate_on_submit():
         answer = WebDevChapter1Quiz5Options(
             answer=quiz_5_form.answer.data, author=student)
+        attempt_1_total_score = WebDevChapter1QuizTotalScore(
+            total_score=total_score_percentage, author=student)
+        db.session.add(attempt_1_total_score)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 4 answer have been added!',
@@ -1851,11 +1951,93 @@ def web_development_chapter_2_quiz_5():
         student_full_name=current_user.student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
+    # CHAPTER 2: Calculate total score
+    quiz_1_score_chapter_2 = 0
+    quiz_1_answers_list_chapter_2 = []
+    quiz_1_answer_chapter_2 = student.webdev_chapter2_quiz_1_options.all()
+    for answer in quiz_1_answer_chapter_2:
+        quiz_1_answers_list_chapter_2.append(answer.answer)
+    try:
+        student_latest_answer_quiz_1_chapter_2 = len(quiz_1_answers_list_chapter_2) - 1
+        if quiz_1_answers_list_chapter_2[student_latest_answer_quiz_1_chapter_2].lower() == "to display content":
+            quiz_1_score_chapter_2 += 1
+        else:
+            quiz_1_score_chapter_2 += 0
+    except IndexError:
+        quiz_1_score_chapter_2 += 0
+
+    quiz_2_score_chapter_2 = 0
+    quiz_2_answers_list_chapter_2 = []
+    quiz_2_answer_chapter_2 = student.webdev_chapter2_quiz_2_options.all()
+    for answer in quiz_2_answer_chapter_2:
+        quiz_2_answers_list_chapter_2.append(answer.answer)
+    try:
+        student_latest_answer_quiz_2_chapter_2 = len(quiz_2_answers_list_chapter_2) - 1
+        if quiz_2_answers_list_chapter_2[student_latest_answer_quiz_2_chapter_2].lower() == "html":
+            quiz_2_score_chapter_2 += 1
+        else:
+            quiz_2_score_chapter_2 += 0
+    except IndexError:
+        quiz_2_score_chapter_2 += 0
+
+    quiz_3_score_chapter_2 = 0
+    quiz_3_answers_list_chapter_2 = []
+    quiz_3_answer_chapter_2 = student.webdev_chapter2_quiz_3_options.all()
+    for answer in quiz_3_answer_chapter_2:
+        quiz_3_answers_list_chapter_2.append(answer.answer)
+    try:
+        student_latest_answer_quiz_3_chapter_2 = len(quiz_3_answers_list_chapter_2) - 1
+        if quiz_3_answers_list_chapter_2[student_latest_answer_quiz_3_chapter_2].lower() == "jinja":
+            quiz_3_score_chapter_2 += 1
+        else:
+            quiz_3_score_chapter_2 += 0
+    except IndexError:
+        quiz_3_score_chapter_2 += 0
+
+    quiz_4_score_chapter_2 = 0
+    quiz_4_answers_list_chapter_2 = []
+    quiz_4_answer_chapter_2 = student.webdev_chapter2_quiz_4_options.all()
+    for answer in quiz_4_answer_chapter_2:
+        quiz_4_answers_list_chapter_2.append(answer.answer)
+    try:
+        student_latest_answer_quiz_4_chapter_2 = len(quiz_4_answers_list_chapter_2) - 1
+        if quiz_4_answers_list_chapter_2[student_latest_answer_quiz_4_chapter_2].lower() == "view functions":
+            quiz_4_score_chapter_2 += 1
+        else:
+            quiz_4_score_chapter_2 += 0
+    except IndexError:
+        quiz_4_score_chapter_2 += 0
+
+    quiz_5_score_chapter_2 = 0
+    quiz_5_answers_list_chapter_2 = []
+    quiz_5_answer_chapter_2 = student.webdev_chapter2_quiz_5_options.all()
+    for answer in quiz_5_answer_chapter_2:
+        quiz_5_answers_list_chapter_2.append(answer.answer)
+    try:
+        student_latest_answer_quiz_5_chapter_2 = len(quiz_5_answers_list_chapter_2) - 1
+        if quiz_5_answers_list_chapter_2[student_latest_answer_quiz_5_chapter_2].lower() == "view functions":
+            quiz_5_score_chapter_2 += 1
+        else:
+            quiz_5_score_chapter_2 += 0
+    except IndexError:
+        quiz_5_score_chapter_2 += 0
+
+    # CHAPTER 2: Calculate percentage
+    total_score_chapter_2 = quiz_1_score_chapter_2 + quiz_2_score_chapter_2 + \
+        quiz_3_score_chapter_2 + quiz_4_score_chapter_2 + quiz_5_score_chapter_2
+    try:
+        total_score_percentage_chapter_2 = round((total_score_chapter_2 / 5) * 100, 2)
+    except ZeroDivisionError:
+        total_score_percentage_chapter_2 = 0
+
     # Quiz 4
     quiz_5_form = Chapter2Quiz5OptionsForm()
     if quiz_5_form.validate_on_submit():
         answer = WebDevChapter2Quiz5Options(
             answer=quiz_5_form.answer.data, author=student)
+        attempt_1_total_score = WebDevChapter2QuizTotalScore(
+            total_score=total_score_percentage_chapter_2, author=student)
+        db.session.add(attempt_1_total_score)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 4 answer have been added!',
@@ -2009,11 +2191,94 @@ def web_development_chapter_3_quiz_5():
         student_full_name=current_user.student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
+    # CHAPTER 3: Calculate total score
+    quiz_1_score_chapter_3 = 0
+    quiz_1_answers_list_chapter_3 = []
+    quiz_1_answer_chapter_3 = student.webdev_chapter3_quiz_1_options.all()
+    for answer in quiz_1_answer_chapter_3:
+        quiz_1_answers_list_chapter_3.append(answer.answer)
+    try:
+        student_latest_answer_quiz_1_chapter_3 = len(quiz_1_answers_list_chapter_3) - 1
+        if quiz_1_answers_list_chapter_3[student_latest_answer_quiz_1_chapter_3].lower() == "to collect user data":
+            quiz_1_score_chapter_3 += 1
+        else:
+            quiz_1_score_chapter_3 += 0
+    except IndexError:
+        quiz_1_score_chapter_3 += 0
+
+    quiz_2_score_chapter_3 = 0
+    quiz_2_answers_list_chapter_3 = []
+    quiz_2_answer_chapter_3 = student.webdev_chapter3_quiz_2_options.all()
+    for answer in quiz_2_answer_chapter_3:
+        quiz_2_answers_list_chapter_3.append(answer.answer)
+    try:
+        student_latest_answer_quiz_2_chapter_3 = len(quiz_2_answers_list_chapter_3) - 1
+        if quiz_2_answers_list_chapter_3[student_latest_answer_quiz_2_chapter_3].lower() == "flask-wtf":
+            quiz_2_score_chapter_3 += 1
+        else:
+            quiz_2_score_chapter_3 += 0
+    except IndexError:
+        quiz_2_score_chapter_3 += 0
+
+    quiz_3_score_chapter_3 = 0
+    quiz_3_answers_list_chapter_3 = []
+    quiz_3_answer_chapter_3 = student.webdev_chapter3_quiz_3_options.all()
+    for answer in quiz_3_answer_chapter_3:
+        quiz_3_answers_list_chapter_3.append(answer.answer)
+    try:
+        student_latest_answer_quiz_3_chapter_3 = len(quiz_3_answers_list_chapter_3) - 1
+        if quiz_3_answers_list_chapter_3[student_latest_answer_quiz_3_chapter_3].lower() == "validationerror":
+            quiz_3_score_chapter_3 += 1
+        else:
+            quiz_3_score_chapter_3 += 0
+    except IndexError:
+        quiz_3_score_chapter_3 += 0
+
+    quiz_4_score_chapter_3 = 0
+    quiz_4_answers_list_chapter_3 = []
+    quiz_4_answer_chapter_3 = student.webdev_chapter3_quiz_4_options.all()
+    for answer in quiz_4_answer_chapter_3:
+        quiz_4_answers_list_chapter_3.append(answer.answer)
+    try:
+        student_latest_answer_quiz_4_chapter_3 = len(quiz_4_answers_list_chapter_3) - 1
+        if quiz_4_answers_list_chapter_3[student_latest_answer_quiz_4_chapter_3].lower() == ".env":
+            quiz_4_score_chapter_3 += 1
+        else:
+            quiz_4_score_chapter_3 += 0
+    except IndexError:
+        quiz_4_score_chapter_3 += 0
+
+    quiz_5_score_chapter_3 = 0
+    quiz_5_answers_list_chapter_3 = []
+    quiz_5_answer_chapter_3 = student.webdev_chapter3_quiz_5_options.all()
+    for answer in quiz_5_answer_chapter_3:
+        quiz_5_answers_list_chapter_3.append(answer.answer)
+    try:
+        student_latest_answer_quiz_5_chapter_3 = len(quiz_5_answers_list_chapter_3) - 1
+        if quiz_5_answers_list_chapter_3[student_latest_answer_quiz_5_chapter_3].lower() == "flask bootsrap":
+            quiz_5_score_chapter_3 += 1
+        else:
+            quiz_5_score_chapter_3 += 0
+    except IndexError:
+        quiz_5_score_chapter_3 += 0
+
+    # CHAPTER 3: Calculate percentage
+    total_score_chapter_3 = quiz_1_score_chapter_3 + quiz_2_score_chapter_3 + \
+        quiz_3_score_chapter_3 + quiz_4_score_chapter_3 + \
+        quiz_5_score_chapter_3
+    try:
+        total_score_percentage_chapter_3 = round((total_score_chapter_3 / 5) * 100, 2)
+    except ZeroDivisionError:
+        total_score_percentage_chapter_3 = 0
+
     # Quiz 4
     quiz_5_form = Chapter3Quiz5OptionsForm()
     if quiz_5_form.validate_on_submit():
         answer = WebDevChapter3Quiz5Options(
             answer=quiz_5_form.answer.data, author=student)
+        attempt_1_total_score = WebDevChapter3QuizTotalScore(
+            total_score=total_score_percentage_chapter_3, author=student)
+        db.session.add(attempt_1_total_score)
         db.session.add(answer)
         db.session.commit()
         flash('Your quiz 5 answer have been added!',

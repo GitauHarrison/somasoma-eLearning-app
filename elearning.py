@@ -1,6 +1,6 @@
 from app import create_app, db
 from app.models import CommunityComment, WebDevChapter1Comment,\
-    WebDevChapter1Objectives, WebDevChapter1Quiz, Student, Parent,\
+    WebDevChapter1Objectives, WebDevChapter1QuizTotalScore, Student, Parent,\
     Teacher, AnonymousTemplateInheritanceComment,\
     User, Admin, Courses, FlaskStudentStories, WebDevelopmentOverview,\
     TableOfContents, Chapter, ChapterQuiz,\
@@ -8,7 +8,7 @@ from app.models import CommunityComment, WebDevChapter1Comment,\
     WebDevChapter1Quiz3Options, WebDevChapter1Quiz4Options, BlogArticles,\
     Events, TeacherMessage, TeacherNotifications, StudentMessage,\
     StudentNotification, WebDevChapter2Comment, WebDevChapter2Objectives,\
-    WebDevChapter2Quiz, WebDevChapter2Quiz1Options,\
+    WebDevChapter2Quiz1Options, WebDevChapter2QuizTotalScore,\
     WebDevChapter2Quiz2Options, WebDevChapter2Quiz3Options,\
     WebDevChapter2Quiz4Options, WebDevChapter1Quiz5Options, \
     WebDevChapter2Quiz5Options, WebDevChapter3Comment,\
@@ -17,7 +17,8 @@ from app.models import CommunityComment, WebDevChapter1Comment,\
     GeneralMultipleChoicesAnswer3, GeneralMultipleChoicesAnswer4,\
     GeneralMultipleChoicesAnswer5, GeneralMultipleChoicesAnswer6,\
     GeneralMultipleChoicesAnswer7, GeneralMultipleChoicesAnswer8,\
-    GeneralMultipleChoicesAnswer9, GeneralMultipleChoicesAnswer10
+    GeneralMultipleChoicesAnswer9, GeneralMultipleChoicesAnswer10,\
+    WebDevChapter3QuizTotalScore
 
 app = create_app()
 
@@ -32,7 +33,6 @@ def make_shell_context():
         CommunityComment=CommunityComment,
         WebDevChapter1Comment=WebDevChapter1Comment,
         WebDevChapter1Objectives=WebDevChapter1Objectives,
-        WebDevChapter1Quiz=WebDevChapter1Quiz,
         AnonymousTemplateInheritanceComment=AnonymousTemplateInheritanceComment,
         User=User,
         Admin=Admin,
@@ -54,7 +54,6 @@ def make_shell_context():
         StudentNotification=StudentNotification,
         WebDevChapter2Comment=WebDevChapter2Comment,
         WebDevChapter2Objectives=WebDevChapter2Objectives,
-        WebDevChapter2Quiz=WebDevChapter2Quiz,
         WebDevChapter2Quiz1Options=WebDevChapter2Quiz1Options,
         WebDevChapter2Quiz2Options=WebDevChapter2Quiz2Options,
         WebDevChapter2Quiz3Options=WebDevChapter2Quiz3Options,
@@ -73,5 +72,8 @@ def make_shell_context():
         GeneralMultipleChoicesAnswer7=GeneralMultipleChoicesAnswer7,
         GeneralMultipleChoicesAnswer8=GeneralMultipleChoicesAnswer8,
         GeneralMultipleChoicesAnswer9=GeneralMultipleChoicesAnswer9,
-        GeneralMultipleChoicesAnswer10=GeneralMultipleChoicesAnswer10
+        GeneralMultipleChoicesAnswer10=GeneralMultipleChoicesAnswer10,
+        WebDevChapter1QuizTotalScore=WebDevChapter1QuizTotalScore,
+        WebDevChapter2QuizTotalScore=WebDevChapter2QuizTotalScore,\
+        WebDevChapter3QuizTotalScore=WebDevChapter3QuizTotalScore
         )
