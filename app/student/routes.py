@@ -403,26 +403,6 @@ def dashboard_analytics():
     except ZeroDivisionError:
         total_score_percentage = 0
 
-    # List of all quiz scores to be used as labels in ChartJS
-    chapter1_total_score = student.webdev_chapter1_quiz_total_scores.all()
-    chapter1_total_score_list = []
-    for score in chapter1_total_score:
-        chapter1_total_score_list.append(score.total_score)
-
-    chapter2_total_score = student.webdev_chapter2_quiz_total_scores.all()
-    chapter2_total_score_list = []
-    for score in chapter2_total_score:
-        chapter2_total_score_list.append(score.total_score)
-
-    chapter3_total_score = student.webdev_chapter3_quiz_total_scores.all()
-    chapter3_total_score_list = []
-    for score in chapter3_total_score:
-        chapter3_total_score_list.append(score.total_score)
-
-    print('Chapter 1 Total Score: ', chapter1_total_score_list, 'Length : ', len(chapter1_total_score_list))
-    print('Chapter 2 Total Score: ', chapter2_total_score_list, 'Length : ', len(chapter2_total_score_list))
-    print('Chapter 3 Total Score: ', chapter3_total_score_list, 'Length : ', len(chapter3_total_score_list))
-
     # CHAPTER 2: Calculate total score
     quiz_1_score_chapter_2 = 0
     quiz_1_answers_list_chapter_2 = []
@@ -487,7 +467,7 @@ def dashboard_analytics():
         quiz_5_answers_list_chapter_2.append(answer.answer)
     try:
         student_latest_answer_quiz_5_chapter_2 = len(quiz_5_answers_list_chapter_2) - 1
-        if quiz_5_answers_list_chapter_2[student_latest_answer_quiz_5_chapter_2].lower() == "view functions":
+        if quiz_5_answers_list_chapter_2[student_latest_answer_quiz_5_chapter_2].lower() == "css":
             quiz_5_score_chapter_2 += 1
         else:
             quiz_5_score_chapter_2 += 0
@@ -581,6 +561,38 @@ def dashboard_analytics():
         total_score_percentage_chapter_3 = round((total_score_chapter_3 / 5) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage_chapter_3 = 0
+    
+    # List of all quiz scores to be used as labels in ChartJS
+    chapter1_total_score = student.webdev_chapter1_quiz_total_scores.all()
+    chapter1_total_score_list = []
+    int_total_score_list_chapter1 = []
+    for score in chapter1_total_score:
+        chapter1_total_score_list.append(score.total_score)
+    int_total_score_list_chapter1 = \
+        [int(float(i)) for i in chapter1_total_score_list]
+
+    chapter2_total_score = student.webdev_chapter2_quiz_total_scores.all()
+    chapter2_total_score_list = []
+    int_total_score_list_chapter2 = []
+    for score in chapter2_total_score:
+        chapter2_total_score_list.append(score.total_score)
+    int_total_score_list_chapter2 = \
+        [int(float(i)) for i in chapter2_total_score_list]
+
+    chapter3_total_score = student.webdev_chapter3_quiz_total_scores.all()
+    chapter3_total_score_list = []
+    int_total_score_list_chapter3 = []
+    for score in chapter3_total_score:
+        chapter3_total_score_list.append(score.total_score)
+    int_total_score_list_chapter3 = \
+        [int(float(i)) for i in chapter3_total_score_list]
+
+    print('Chapter 1 Total Score: ', chapter1_total_score_list, 'Length : ', len(chapter1_total_score_list))
+    print('Chapter 2 Total Score: ', chapter2_total_score_list, 'Length : ', len(chapter2_total_score_list))
+    print('Chapter 3 Total Score: ', chapter3_total_score_list, 'Length : ', len(chapter3_total_score_list))
+    print('Int List 1: ', int_total_score_list_chapter1)
+    print('Int List 2: ', int_total_score_list_chapter2)
+    print('Int List 3: ', int_total_score_list_chapter3)
 
     # === General multi-choice questions ===
 
@@ -758,7 +770,6 @@ def dashboard_analytics():
         # Chapter 1
         percentage_achieved=percentage_achieved,
         total_score_percentage=total_score_percentage,
-        chapter1_total_score_list=chapter1_total_score_list,
 
         # Chapter 2
         percentage_achieved_chapter_2=percentage_achieved_chapter_2,
@@ -775,14 +786,17 @@ def dashboard_analytics():
         objectives_attempts=objectives_attempts,
         chapter1_obj_attempts_chart_labels=chapter1_obj_attempts_chart_labels,
         chapter1_obj_attempts_chart_data=chapter1_obj_attempts_chart_data,
+        int_total_score_list_chapter1=int_total_score_list_chapter1,
 
         # Chapter 2 chart
         obj_attempts_chart_labels_chapter2=obj_attempts_chart_labels_chapter2,
         obj_attempts_chart_data_chapter2=obj_attempts_chart_data_chapter2,
+        int_total_score_list_chapter2=int_total_score_list_chapter2,
 
         # Chapter 3 chart
         obj_attempts_chart_labels_chapter3=obj_attempts_chart_labels_chapter3,
-        obj_attempts_chart_data_chapter3=obj_attempts_chart_data_chapter3
+        obj_attempts_chart_data_chapter3=obj_attempts_chart_data_chapter3,
+        int_total_score_list_chapter3=int_total_score_list_chapter3
         )
 
 # Profile routes
@@ -2015,7 +2029,7 @@ def web_development_chapter_2_quiz_5():
         quiz_5_answers_list_chapter_2.append(answer.answer)
     try:
         student_latest_answer_quiz_5_chapter_2 = len(quiz_5_answers_list_chapter_2) - 1
-        if quiz_5_answers_list_chapter_2[student_latest_answer_quiz_5_chapter_2].lower() == "view functions":
+        if quiz_5_answers_list_chapter_2[student_latest_answer_quiz_5_chapter_2].lower() == "css":
             quiz_5_score_chapter_2 += 1
         else:
             quiz_5_score_chapter_2 += 0
@@ -2271,7 +2285,7 @@ def web_development_chapter_3_quiz_5():
     except ZeroDivisionError:
         total_score_percentage_chapter_3 = 0
 
-    # Quiz 4
+    # Quiz 5
     quiz_5_form = Chapter3Quiz5OptionsForm()
     if quiz_5_form.validate_on_submit():
         answer = WebDevChapter3Quiz5Options(
