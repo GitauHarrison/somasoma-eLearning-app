@@ -47,15 +47,46 @@
         </div>
     </div>
     <hr>
-    <div class="row profile">
-        <div class="col-sm-12">
-            <h2>Achievement of Lesson Objectives</h2>
+    <div class="row">
+        {% for chapter in course_chapters %}
+        <div class="row profile">
+            <div class="col-sm-12">
+                {% if chapter.chapter.lower() == "chapter 1: hello world" %}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <canvas id="chapter1_objectives" max-width="100%" height="auto"></canvas>
+                        </div>
+                        <div class="col-sm-6">
+                            <canvas id="chapter1_quiz" max-width="100%" height="auto"></canvas>
+                        </div>
+                    </div> 
+                    <!-- End of chapter 1 analytics -->
+                {% endif %}
+                {% if chapter.chapter.lower() == "chapter 2: flask templates" %}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <canvas id="chapter2_objectives" max-width="100%" height="auto"></canvas>
+                        </div>
+                        <div class="col-sm-6">
+                            <canvas id="chapter2_quiz" max-width="100%" height="auto"></canvas>
+                        </div>
+                    </div> 
+                    <!-- End of chapter 1 analytics -->
+                {% endif %}
+                {% if chapter.chapter.lower() == "chapter 3: introduction to web forms" %}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <canvas id="chapter3_objectives" max-width="100%" height="auto"></canvas>
+                        </div>
+                        <div class="col-sm-6">
+                            <canvas id="chapter3_quiz" max-width="100%" height="auto"></canvas>
+                        </div>
+                    </div> 
+                    <!-- End of chapter 1 analytics -->
+                {% endif %}
+            </div>
         </div>
-    </div>
-    <div class="row profile">
-        <div class="col-sm-12">
-            <h2>Achievement of Chapter Quizzes</h2>
-        </div>
+        {% endfor %}
     </div>
     <hr>
     <div class="row">
@@ -91,4 +122,201 @@
             </nav>
         </div>
     </div>
+{% endblock %}
+
+{% block chartjs_script %}
+    <script>
+        const ctx =$('#chapter1_objectives');
+        const myChart = new Chart(ctx, {
+            data: {
+                labels: [
+                    {% for label in chapter1_obj_attempts_chart_labels %}
+                        'Attempt {{ label }}',
+                    {% endfor %}
+                ],
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Achievement of Chapter 1 Objectives',
+                        data: [
+                            {% for data in chapter1_obj_attempts_chart_data %}
+                                {{ data }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: ['#019267'],
+                        borderColor: ['#019267'],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        const ctx_chapter1_quiz =$('#chapter1_quiz');
+        const myChart_chapter1_quiz = new Chart(ctx_chapter1_quiz, {
+            data: {
+                labels: [
+                    {% for label in quiz_attempts_chart_labels_chapter1 %}
+                        'Attempt {{ label }}',
+                    {% endfor %}
+                ],
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Achievement of Chapter 1 Quiz',
+                        data: [
+                            {% for data in int_total_score_list_chapter1 %}
+                                {{ data }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: ['#FFD365'],
+                        borderColor: ['#FFD365'],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        const ctx_chapter2_objectives =$('#chapter2_objectives');
+        const myChart_chapter2_objectives = new Chart(ctx_chapter2_objectives, {
+            data: {
+                labels: [
+                    {% for label in obj_attempts_chart_labels_chapter2 %}
+                        'Attempt {{ label }}',
+                    {% endfor %}
+                ],
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Achievement of Chapter 2 Objectives',
+                        data: [
+                            {% for data in obj_attempts_chart_data_chapter2 %}
+                                {{ data }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: ['#EF6D6D'],
+                        borderColor: ['#EF6D6D'],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        const ctx_chapter2_quiz =$('#chapter2_quiz');
+        const myChart_chapter2_quiz = new Chart(ctx_chapter2_quiz, {
+            data: {
+                labels: [
+                    {% for label in quiz_attempts_chart_labels_chapter2 %}
+                        'Attempt {{ label }}',
+                    {% endfor %}
+                ],
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Achievement of Chapter 2 Quiz',
+                        data: [
+                            {% for data in int_total_score_list_chapter2 %}
+                                {{ data }},
+                            {% endfor %}
+                        ],
+                        backgroundColor: ['#573391'],
+                        borderColor: ['#573391'],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        const ctx_chapter3_objectives =$('#chapter3_objectives');
+        const myChart_chapter3_objectives = new Chart(ctx_chapter3_objectives, {
+            type: 'line',
+            data: {
+                labels: [
+                    {% for label in obj_attempts_chart_labels_chapter3 %}
+                        'Attempt {{ label }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Achievement of Chapter 3 Objectives',
+                    data: [
+                        {% for data in obj_attempts_chart_data_chapter3 %}
+                            {{ data }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: ['#FF8E00'],
+                    borderColor: ['#FF8E00'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        const ctx_chapter3_quiz =$('#chapter3_quiz');
+        const myChart_chapter3_quiz = new Chart(ctx_chapter3_quiz, {
+            type: 'line',
+            data: {
+                labels: [
+                    {% for label in quiz_attempts_chart_labels_chapter3 %}
+                        'Attempt {{ label }}',
+                    {% endfor %}
+                ],
+                datasets: [{
+                    label: 'Achievement of Chapter 3 Objectives',
+                    data: [
+                        {% for data in int_total_score_list_chapter3 %}
+                            {{ data }},
+                        {% endfor %}
+                    ],
+                    backgroundColor: ['#9ADCFF'],
+                    borderColor: ['#9ADCFF'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 {% endblock %}
