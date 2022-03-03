@@ -77,6 +77,16 @@ p, li, td, .btn, .btn-alt, .schedule-btn{
 .courses:hover {
   box-shadow: 5px 5px 10px 5px #c4c4c4;
 }
+.chart-profile {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  box-shadow: 5px 5px 10px 5px #ebeae9;
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+.chart-profile:hover {
+  box-shadow: 5px 5px 10px 5px #c4c4c4;
+}
 a:hover {
   text-decoration: none;
 }

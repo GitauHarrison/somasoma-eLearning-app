@@ -49,9 +49,14 @@
     <hr>
     <div class="row">
         {% for chapter in course_chapters %}
-        <div class="row profile">
+        <div class="row chart-profile">
             <div class="col-sm-12">
                 {% if chapter.chapter.lower() == "chapter 1: hello world" %}
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h3>{{ chapter.chapter }}</h3>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-6">
                             <canvas id="chapter1_objectives" max-width="100%" height="auto"></canvas>
@@ -64,6 +69,11 @@
                 {% endif %}
                 {% if chapter.chapter.lower() == "chapter 2: flask templates" %}
                     <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h3>{{ chapter.chapter }}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-sm-6">
                             <canvas id="chapter2_objectives" max-width="100%" height="auto"></canvas>
                         </div>
@@ -74,6 +84,11 @@
                     <!-- End of chapter 1 analytics -->
                 {% endif %}
                 {% if chapter.chapter.lower() == "chapter 3: introduction to web forms" %}
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h3>{{ chapter.chapter }}</h3>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-6">
                             <canvas id="chapter3_objectives" max-width="100%" height="auto"></canvas>

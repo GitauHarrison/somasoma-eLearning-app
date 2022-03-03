@@ -50,7 +50,7 @@ Comimg soon...
   - Can view individual student's profile:
     - [x] Personal registration details
     - [x] Student's individual comments in the eLearning community
-    - [ ] Student's learning analytics
+    - [x] Student's learning analytics
   - [x] Can only view what all students say in the eLearning community
 <br>
 

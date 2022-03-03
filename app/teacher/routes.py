@@ -60,8 +60,8 @@ def chapter1_objectives(student_full_name):
                 round((all_num_true_status / len_of_attempt) * 100, 2))
         except ZeroDivisionError:
             chapter1_obj_attempts_chart_data.append(0)
-    print('Chatper 1 Labels: ', chapter1_obj_attempts_chart_labels)
-    print('Chapter 1 Values: ', chapter1_obj_attempts_chart_data, '\n\n')
+    print('Chatper 1 Obj Labels: ', chapter1_obj_attempts_chart_labels)
+    print('Chapter 1 Obj Values: ', chapter1_obj_attempts_chart_data, '\n\n')
     return percentage_achieved, chapter1_obj_attempts_chart_labels, \
         chapter1_obj_attempts_chart_data
 
@@ -108,8 +108,8 @@ def chapter2_objectives(student_full_name):
                         len_of_attempt_chapter2) * 100, 2))
         except ZeroDivisionError:
             obj_attempts_chart_data_chapter2.append(0)
-    print('Chapter 2 Labels: ', obj_attempts_chart_labels_chapter2)
-    print('Chapter 2 Values: ', obj_attempts_chart_data_chapter2, '\n\n')
+    print('Chapter 2 Obj Labels: ', obj_attempts_chart_labels_chapter2)
+    print('Chapter 2 Obj Values: ', obj_attempts_chart_data_chapter2, '\n\n')
     # End of Calculate the number of objectives achieved
     return percentage_achieved_chapter_2, obj_attempts_chart_labels_chapter2, \
         obj_attempts_chart_data_chapter2
@@ -157,8 +157,8 @@ def chapter3_objectives(student_full_name):
                         len_of_attempt_chapter3) * 100, 2))
         except ZeroDivisionError:
             obj_attempts_chart_data_chapter3.append(0)
-    print('Chapter 3 Labels: ', obj_attempts_chart_labels_chapter3)
-    print('Chapter 3 Values: ', obj_attempts_chart_data_chapter3, '\n\n')
+    print('Chapter 3 Obj Labels: ', obj_attempts_chart_labels_chapter3)
+    print('Chapter 3 Obj Values: ', obj_attempts_chart_data_chapter3, '\n\n')
     # End of Calculate the number of objectives achieved
     return percentage_achieved_chapter_3, obj_attempts_chart_labels_chapter3, \
         obj_attempts_chart_data_chapter3
@@ -184,6 +184,8 @@ def chapter1_total_score(student_full_name):
         chapter1_total_score_list.append(score.total_score)
     int_total_score_list_chapter1 = \
         [int(float(i)) for i in chapter1_total_score_list]
+    print('Chapter 1 Quiz Total Score: ', chapter1_total_score_list, 'Length : ', len(chapter1_total_score_list), ' Keys: ', quiz_attempts_chart_labels_chapter1)
+    print('Int total score list: ', int_total_score_list_chapter1)
     return int_total_score_list_chapter1, quiz_attempts_chart_labels_chapter1
 
 
@@ -206,6 +208,7 @@ def chapter2_total_score(student_full_name):
         chapter2_total_score_list.append(score.total_score)
     int_total_score_list_chapter2 = \
         [int(float(i)) for i in chapter2_total_score_list]
+    print('Chapter 2 Quiz Total Score: ', chapter2_total_score_list, 'Length : ', len(chapter2_total_score_list), ' Keys: ', quiz_attempts_chart_labels_chapter2)
     return int_total_score_list_chapter2, quiz_attempts_chart_labels_chapter2
 
 
@@ -228,6 +231,7 @@ def chapter3_total_score(student_full_name):
         chapter3_total_score_list.append(score.total_score)
     int_total_score_list_chapter3 = \
         [int(float(i)) for i in chapter3_total_score_list]
+    print('Chapter 3 Quiz Total Score: ', chapter3_total_score_list, 'Length : ', len(chapter3_total_score_list), ' Keys: ', quiz_attempts_chart_labels_chapter3)
     return int_total_score_list_chapter3, quiz_attempts_chart_labels_chapter3
 
 
@@ -929,13 +933,40 @@ def profile_student(student_full_name):
     # Dsiplaying the chapter
     course_chapters = Chapter.query.filter_by(allowed_status=True).all()
 
-    chapter1_objectives(student_full_name=student_full_name)
-    chapter1_total_score(student_full_name=student_full_name)
-    chapter2_objectives(student_full_name=student_full_name)
-    chapter2_total_score(student_full_name=student_full_name)
-    chapter3_objectives(student_full_name=student_full_name)
-    chapter3_total_score(student_full_name=student_full_name)
-
+    # Objectives and Quiz charts
+    chapter1_objectives_results = list(chapter1_objectives(
+        student_full_name=student_full_name))
+    chapter2_objectives_results = list(chapter2_objectives(
+        student_full_name=student_full_name))
+    chapter3_objectives_results = list(chapter3_objectives(
+        student_full_name=student_full_name))
+    chapter1_total_score_results = list(chapter1_total_score(
+        student_full_name=student_full_name))
+    chapter1_total_score_labels = list(chapter1_total_score(
+        student_full_name=student_full_name))
+    chapter2_total_score_results = list(chapter2_total_score(
+        student_full_name=student_full_name))
+    chapter2_total_score_labels = list(chapter2_total_score(
+        student_full_name=student_full_name))
+    chapter3_total_score_results = list(chapter3_total_score(
+        student_full_name=student_full_name))
+    chapter3_total_score_labels = list(chapter3_total_score(
+        student_full_name=student_full_name))
+    print('Teacher Obj Results: ', chapter1_total_score_results)
+    chapter1_obj_attempts_chart_labels = chapter1_objectives_results[1]
+    chapter1_obj_attempts_chart_data = chapter1_objectives_results[2]
+    obj_attempts_chart_labels_chapter2 = chapter2_objectives_results[1]
+    obj_attempts_chart_data_chapter2 = chapter2_objectives_results[2]
+    obj_attempts_chart_labels_chapter3 = chapter3_objectives_results[1]
+    obj_attempts_chart_data_chapter3 = chapter3_objectives_results[2]
+    int_total_score_list_chapter1 = chapter1_total_score_results[0]
+    quiz_attempts_chart_labels_chapter1 = chapter1_total_score_labels[1]
+    int_total_score_list_chapter2 = chapter2_total_score_results[0]
+    quiz_attempts_chart_labels_chapter2 = chapter2_total_score_labels[1]
+    int_total_score_list_chapter3 = chapter3_total_score_results[0]
+    quiz_attempts_chart_labels_chapter3 = chapter3_total_score_labels[1]
+    # End of charts
+    
     page = request.args.get('page', 1, type=int)
     comments = student.comments.order_by(
         CommunityComment.timestamp.desc()
@@ -964,7 +995,18 @@ def profile_student(student_full_name):
         title='Student Profile',
         all_comments=all_comments,
         course_chapters=course_chapters,
-
+        chapter1_obj_attempts_chart_labels=chapter1_obj_attempts_chart_labels,
+        chapter1_obj_attempts_chart_data=chapter1_obj_attempts_chart_data,
+        obj_attempts_chart_labels_chapter2=obj_attempts_chart_labels_chapter2,
+        obj_attempts_chart_data_chapter2=obj_attempts_chart_data_chapter2,
+        obj_attempts_chart_labels_chapter3=obj_attempts_chart_labels_chapter3,
+        obj_attempts_chart_data_chapter3=obj_attempts_chart_data_chapter3,
+        int_total_score_list_chapter1=int_total_score_list_chapter1,
+        quiz_attempts_chart_labels_chapter1=quiz_attempts_chart_labels_chapter1,
+        int_total_score_list_chapter2=int_total_score_list_chapter2,
+        quiz_attempts_chart_labels_chapter2=quiz_attempts_chart_labels_chapter2,
+        int_total_score_list_chapter3=int_total_score_list_chapter3,
+        quiz_attempts_chart_labels_chapter3=quiz_attempts_chart_labels_chapter3
         )
 
 
