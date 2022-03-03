@@ -561,9 +561,18 @@ def dashboard_analytics():
         total_score_percentage_chapter_3 = round((total_score_chapter_3 / 5) * 100, 2)
     except ZeroDivisionError:
         total_score_percentage_chapter_3 = 0
-    
-    # List of all quiz scores to be used as labels in ChartJS
+
+    # --- List of all quiz scores to be used as labels in ChartJS ---
     chapter1_total_score = student.webdev_chapter1_quiz_total_scores.all()
+
+    # Keys as labels for chatJS
+    quiz_attempts_chapter1 = {}
+    for k, v in enumerate(chapter1_total_score):
+        quiz_attempts_chapter1[k+1] = v
+    quiz_attempts_chart_labels_chapter1 = list(
+        quiz_attempts_chapter1.keys())
+
+    # Data as values for chatJS
     chapter1_total_score_list = []
     int_total_score_list_chapter1 = []
     for score in chapter1_total_score:
@@ -572,6 +581,14 @@ def dashboard_analytics():
         [int(float(i)) for i in chapter1_total_score_list]
 
     chapter2_total_score = student.webdev_chapter2_quiz_total_scores.all()
+
+    # Keys as labels for chatJS
+    quiz_attempts_chapter2 = {}
+    for k, v in enumerate(chapter2_total_score):
+        quiz_attempts_chapter2[k+1] = v
+    quiz_attempts_chart_labels_chapter2 = list(
+        quiz_attempts_chapter2.keys())
+
     chapter2_total_score_list = []
     int_total_score_list_chapter2 = []
     for score in chapter2_total_score:
@@ -580,6 +597,14 @@ def dashboard_analytics():
         [int(float(i)) for i in chapter2_total_score_list]
 
     chapter3_total_score = student.webdev_chapter3_quiz_total_scores.all()
+
+    # Keys as labels for chatJS
+    quiz_attempts_chapter3 = {}
+    for k, v in enumerate(chapter3_total_score):
+        quiz_attempts_chapter3[k+1] = v
+    quiz_attempts_chart_labels_chapter3 = list(
+        quiz_attempts_chapter3.keys())
+
     chapter3_total_score_list = []
     int_total_score_list_chapter3 = []
     for score in chapter3_total_score:
@@ -587,9 +612,9 @@ def dashboard_analytics():
     int_total_score_list_chapter3 = \
         [int(float(i)) for i in chapter3_total_score_list]
 
-    print('Chapter 1 Total Score: ', chapter1_total_score_list, 'Length : ', len(chapter1_total_score_list))
-    print('Chapter 2 Total Score: ', chapter2_total_score_list, 'Length : ', len(chapter2_total_score_list))
-    print('Chapter 3 Total Score: ', chapter3_total_score_list, 'Length : ', len(chapter3_total_score_list))
+    print('Chapter 1 Total Score: ', chapter1_total_score_list, 'Length : ', len(chapter1_total_score_list), ' Keys: ', quiz_attempts_chart_labels_chapter1)
+    print('Chapter 2 Total Score: ', chapter2_total_score_list, 'Length : ', len(chapter2_total_score_list), ' Keys: ', quiz_attempts_chart_labels_chapter2)
+    print('Chapter 3 Total Score: ', chapter3_total_score_list, 'Length : ', len(chapter3_total_score_list), ' Keys: ', quiz_attempts_chart_labels_chapter3)
     print('Int List 1: ', int_total_score_list_chapter1)
     print('Int List 2: ', int_total_score_list_chapter2)
     print('Int List 3: ', int_total_score_list_chapter3)
@@ -787,16 +812,19 @@ def dashboard_analytics():
         chapter1_obj_attempts_chart_labels=chapter1_obj_attempts_chart_labels,
         chapter1_obj_attempts_chart_data=chapter1_obj_attempts_chart_data,
         int_total_score_list_chapter1=int_total_score_list_chapter1,
+        quiz_attempts_chart_labels_chapter1=quiz_attempts_chart_labels_chapter1,
 
         # Chapter 2 chart
         obj_attempts_chart_labels_chapter2=obj_attempts_chart_labels_chapter2,
         obj_attempts_chart_data_chapter2=obj_attempts_chart_data_chapter2,
         int_total_score_list_chapter2=int_total_score_list_chapter2,
+        quiz_attempts_chart_labels_chapter2=quiz_attempts_chart_labels_chapter2,
 
         # Chapter 3 chart
         obj_attempts_chart_labels_chapter3=obj_attempts_chart_labels_chapter3,
         obj_attempts_chart_data_chapter3=obj_attempts_chart_data_chapter3,
-        int_total_score_list_chapter3=int_total_score_list_chapter3
+        int_total_score_list_chapter3=int_total_score_list_chapter3,
+        quiz_attempts_chart_labels_chapter3=quiz_attempts_chart_labels_chapter3,
         )
 
 # Profile routes
