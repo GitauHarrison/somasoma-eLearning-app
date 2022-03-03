@@ -100,10 +100,6 @@ Comimg soon...
     - [x] Each chapter's learning objectives
     - [x] Each chapter's quiz results
     - [x] Overall course quiz results
-  - Can see how other students have achieved:
-    - [ ] Each chaper objectives
-    - [ ] Each chapter quizzes
-    - [ ] Overall course quiz
 
 ### Parent
 
