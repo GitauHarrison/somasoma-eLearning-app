@@ -8,11 +8,14 @@
         </div>
     </div>
     <!-- End of flash message -->
+    
     <div class="row">
         <div class="col-sm-12 text-center">
             <H1>{{ title }}</H1>
         </div>
     </div>
+
+    <!-- PROFILE STUDENT -->
     <div class="row">
         <div class="col-sm-3">
             <img src=" {{ student.avatar_student(128) }} " class="img-circle">
@@ -47,7 +50,7 @@
         </div>
     </div>
     <hr>
-    <div class="row">
+    <div class="row" style="padding-right: 20px;">
         {% for chapter in course_chapters %}
         <div class="row chart-profile">
             <div class="col-sm-12">
@@ -137,9 +140,10 @@
             </nav>
         </div>
     </div>
+    <!-- END OF PROFILE STUDENT -->
 {% endblock %}
 
-{% block chartjs_script %}
+{% block  chartjs_script %}
     <script>
         const ctx =$('#chapter1_objectives');
         const myChart = new Chart(ctx, {

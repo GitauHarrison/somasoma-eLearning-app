@@ -178,9 +178,7 @@
                         {% endblock %}
                     </div>
                 </div>
-            {% endif %}
-
-            {% if student %}
+            {% elif student %}
                 <div class="row">
                     <!-- Start of sidebar -->
                     <div class="col-sm-2 sidebar">
@@ -230,13 +228,9 @@
                         {% endblock %}
                     </div>
                 </div>
-            {% endif %}
-
-            {% if parent %}
+            {% elif parent %}
                 <!-- Parent Sidebar -->
-            {% endif %}
-
-            {% if admin %}
+            {% elif admin %}
                 <div class="row">
                     <!-- Start of sidebar -->
                     <div class="col-sm-2 sidebar">

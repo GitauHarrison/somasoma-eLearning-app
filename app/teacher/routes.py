@@ -713,11 +713,9 @@ def teacher_notifications():
 @login_required
 def profile_student(student_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=current_user.teacher_full_name).first()
     student = Student.query.filter_by(
-        student_full_name=student_full_name
-        ).first()
+        student_full_name=student_full_name).first()
 
     # Dsiplaying the chapter
     course_chapters = Chapter.query.filter_by(allowed_status=True).all()
