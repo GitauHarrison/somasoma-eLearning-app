@@ -62,9 +62,8 @@
                                 
                             </a>
                         {% else %}
-                            <a class="navbar-brand" href=" {{ url_for('main.home') }} ">
+                            <a class="navbar-brand" href=" {{ url_for('main.anonymous_user') }} ">
                                 <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                                
                             </a>
                         {% endif %}
                 </div>
@@ -272,6 +271,13 @@
                         {% endblock %}
                     </div>
                 </div>
+            {% else %}
+             <!-- Page content will go here -->
+             <div class="col-sm-10 scrollable-content">
+                {% block unknown_user_content %}
+
+                {% endblock %}
+            </div>
             {% endif %}
         </div>
     {% else %}

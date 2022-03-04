@@ -20,9 +20,7 @@
                 <div class="col-sm-6">
                     <h2>Course Offerings</h2>
                     {% for course in courses %}
-                        <li>
-                            <a href="{{ course.link }}" target="_blank">{{course.id}}. {{course.title}}</a>
-                        </li>
+                        <p>{{course.id}}. {{course.title}}</p>
                     {% endfor %}
                     <div class="row">
                         <div  class="col-sm-12">

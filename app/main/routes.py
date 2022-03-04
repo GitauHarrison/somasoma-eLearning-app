@@ -357,3 +357,14 @@ def dashboard_parent():
         )
 
 # End of dashboard routes
+
+# =============================
+# ANONYMOUS CONTENT
+# =============================
+
+
+@bp.route('/unknown-user')
+def anonymous_user():
+    return render_template(
+        'main/anonymous-content/unknown_user.html',
+        title='Who Are You?')

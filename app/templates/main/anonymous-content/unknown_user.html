@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block unknown_user_content %}
+    <!-- Flash message -->
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '_flash_message.html' %}
+        </div>
+    </div>
+    <!-- End of flash message -->
+    <div class="row text-center">
+        <div class="col-sm-12 admin-content-title">
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-sm-3">
+            <!-- Parent Login Card -->
+            <div class="card-deck">
+                <div class="card">
+                    <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/parent.svg')}}" alt="Parent">
+                    <div class="card-body">
+                        <h4 class="card-title">Parent Dashboard</h4><hr>
+                        <a href=" {{ url_for('main.dashboard_parent') }} " class="btn btn-primary">Access</a>
+                    </div>            
+                </div>
+            </div>
+            <!-- End of Parent Login Card -->
+        </div>
+        <div class="col-sm-3">
+           <!-- Student Login Card -->
+            <div class="card-deck">
+                <div class="card">
+                    <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/student.svg')}}" alt="Student">
+                    <div class="card-body">
+                        <h4 class="card-title">Student Dashboard</h4><hr>
+                        <a href=" {{ url_for('student.dashboard_account') }} " class="btn btn-primary">Access</a>
+                    </div>            
+                </div>
+            </div>
+            <!-- End of Student Login Card -->
+        </div>
+        <div class="col-sm-3">
+            <!-- Teacher Login Card -->
+            <div class="card-deck">
+                <div class="card">
+                    <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Teacher">
+                    <div class="card-body">
+                        <h4 class="card-title">Teacher Dashboard</h4><hr>
+                        <a href=" {{ url_for('teacher.dashboard_account') }} " class="btn btn-primary">Access</a>
+                    </div>            
+                </div>
+            </div>
+            <!-- End of Teacher Login Card -->
+        </div>
+        <div class="col-sm-3">
+            <!-- Admin Login Card -->
+            <div class="card-deck">
+                <div class="card">
+                    <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/admin.svg')}}" alt="Admin">
+                    <div class="card-body">
+                        <h4 class="card-title">Admin Dashboard</h4><hr>
+                        <a href=" {{ url_for('admin.dashboard_account') }} " class="btn btn-primary">Access</a>
+                    </div>            
+                </div>
+            </div>
+            <!-- End of Admin Login Card -->
+        </div>
+    </div>
+{% endblock %}
