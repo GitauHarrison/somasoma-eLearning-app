@@ -2,10 +2,10 @@ from app import db
 from app.admin import bp
 from flask import render_template, redirect, url_for, flash, request,\
     current_app
-from app.admin.forms import EditProfileForm, CoursesForm, BlogArticlesForm
+from app.admin.forms import EditProfileForm, CoursesForm
 from app.auth.forms import TeacherRegistrationForm
 from app.models import BlogArticles, CommunityComment, Admin, Student,\
-    Teacher, Parent, User, Courses, BlogArticles, FlaskStudentStories
+    Teacher, Parent, Courses, FlaskStudentStories
 from flask_login import current_user, login_required
 from datetime import datetime
 from app.admin.email import send_registration_details_teacher,\
@@ -183,8 +183,7 @@ def dashboard_courses_offered():
         all_courses=all_courses,
         course_form=course_form,
         next_url=next_url,
-        prev_url=prev_url
-        )
+        prev_url=prev_url)
 
 
 @bp.route('/dashboard/student-stories')
@@ -197,12 +196,8 @@ def dashboard_student_stories():
     # ----------------
     page = request.args.get('page', 1, type=int)
     courses = Courses.query.order_by(
-        Courses.timestamp.desc()
-        ).paginate(
-            page,
-            current_app.config['POSTS_PER_PAGE'],
-            False
-            )
+        Courses.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'admin.dashboard_student_stories',
         page=courses.next_num,
@@ -219,8 +214,7 @@ def dashboard_student_stories():
         courses=courses.items,
         admin=admin,
         next_url=next_url,
-        prev_url=prev_url
-        )
+        prev_url=prev_url)
 
 
 # Profile routes
@@ -230,12 +224,10 @@ def dashboard_student_stories():
 @login_required
 def profile_admin(admin_full_name):
     admin = Admin.query.filter_by(
-        admin_full_name=admin_full_name
-        ).first_or_404()
+        admin_full_name=admin_full_name).first_or_404()
     page = request.args.get('page', 1, type=int)
     comments = admin.comments.order_by(
-        CommunityComment.timestamp.desc()
-        ).paginate(
+        CommunityComment.timestamp.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'admin.profile_admin', admin_full_name=admin_full_name,
@@ -251,8 +243,7 @@ def profile_admin(admin_full_name):
         admin=admin,
         comments=comments.items,
         next_url=next_url,
-        prev_url=prev_url
-    )
+        prev_url=prev_url)
 
 # Edit profile routes
 
@@ -261,8 +252,7 @@ def profile_admin(admin_full_name):
 @login_required
 def edit_profile_admin():
     admin = Admin.query.filter_by(
-        admin_full_name=current_user.admin_full_name
-        ).first()
+        admin_full_name=current_user.admin_full_name).first()
     form = EditProfileForm(current_user.admin_email)
     if form.validate_on_submit():
         current_user.admin_email = form.email.data
@@ -277,8 +267,7 @@ def edit_profile_admin():
         'admin/edit_profile_admin.html',
         title='Edit Profile',
         form=form,
-        admin=admin
-    )
+        admin=admin)
 
 # ==========================================
 # DELETE USERS ACCOUNT
@@ -287,9 +276,7 @@ def edit_profile_admin():
 
 @bp.route('/student/<student_id>/delete-account')
 def delete_account_student(student_id):
-    student = Student.query.filter_by(
-        id=student_id
-        ).first()
+    student = Student.query.filter_by(id=student_id).first()
     db.session.delete(student)
     db.session.commit()
     flash(f'Student {student_id} account has been deleted!')
@@ -298,9 +285,7 @@ def delete_account_student(student_id):
 
 @bp.route('/teacher/<teacher_id>/delete-account')
 def delete_account_teacher(teacher_id):
-    teacher = Teacher.query.filter_by(
-        id=teacher_id
-        ).first()
+    teacher = Teacher.query.filter_by(id=teacher_id).first()
     db.session.delete(teacher)
     db.session.commit()
     flash(f'Teacher {teacher_id} account has been deleted!')
@@ -309,9 +294,7 @@ def delete_account_teacher(teacher_id):
 
 @bp.route('/parent/<parent_id>/delete-account')
 def delete_account_parent(parent_id):
-    parent = Parent.query.filter_by(
-        id=parent_id
-        ).first()
+    parent = Parent.query.filter_by(id=parent_id).first()
     db.session.delete(parent)
     db.session.commit()
     flash(f'Parent {parent_id} account has been deleted!')
@@ -342,16 +325,12 @@ def delete_course(course_id):
 
 @bp.route('/courses/<course_id>/allow', methods=['GET', 'POST'])
 def allow_course(course_id):
-    course = Courses.query.filter_by(
-        id=course_id
-        ).first()
+    course = Courses.query.filter_by(id=course_id).first()
     course.allowed_status = True
     db.session.commit()
     flash(f'Course {course_id} has been authorized!')
     return redirect(url_for(
-        'admin.dashboard_courses_offered',
-        _anchor="courses")
-        )
+        'admin.dashboard_courses_offered', _anchor="courses"))
 
 
 # ==========================================
@@ -366,16 +345,11 @@ def allow_course(course_id):
 @login_required
 def review_blog_articles():
     admin = Admin.query.filter_by(
-        admin_full_name=current_user.admin_full_name
-        ).first()
+        admin_full_name=current_user.admin_full_name).first()
     page = request.args.get('page', 1, type=int)
     blogs = BlogArticles.query.order_by(
-        BlogArticles.timestamp.desc()
-        ).paginate(
-            page,
-            current_app.config['POSTS_PER_PAGE'],
-            False
-            )
+        BlogArticles.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'admin.review_blog_articles',
         page=blogs.next_num,
@@ -394,15 +368,12 @@ def review_blog_articles():
         next_url=next_url,
         prev_url=prev_url,
         all_blogs=all_blogs,
-        admin=admin
-    )
+        admin=admin)
 
 
 @bp.route('blog/articles/<blog_article_id>/delete')
 def delete_blog_article(blog_article_id):
-    blog_article = BlogArticles.query.filter_by(
-        id=blog_article_id
-    ).first()
+    blog_article = BlogArticles.query.filter_by(id=blog_article_id).first()
     db.session.delete(blog_article)
     db.session.commit()
     flash(f'Blog article {blog_article_id} has been deleted')
@@ -411,9 +382,7 @@ def delete_blog_article(blog_article_id):
 
 @bp.route('/blog/articles/<blog_article_id>/allow')
 def allow_blog_article(blog_article_id):
-    blog_article = BlogArticles.query.filter_by(
-        id=blog_article_id
-    ).first()
+    blog_article = BlogArticles.query.filter_by(id=blog_article_id).first()
     blog_article.allowed_status = True
     db.session.commit()
     flash(f'Blog article {blog_article_id} has been authorized')
@@ -435,16 +404,11 @@ def allow_blog_article(blog_article_id):
 @login_required
 def review_flask_stories():
     admin = Admin.query.filter_by(
-        admin_full_name=current_user.admin_full_name
-        ).first()
+        admin_full_name=current_user.admin_full_name).first()
     page = request.args.get('page', 1, type=int)
     flask_students = FlaskStudentStories.query.order_by(
-        FlaskStudentStories.timestamp.desc()
-        ).paginate(
-            page,
-            current_app.config['POSTS_PER_PAGE'],
-            False
-            )
+        FlaskStudentStories.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'admin.review_flask_stories',
         page=flask_students.next_num,
@@ -463,8 +427,7 @@ def review_flask_stories():
         next_url=next_url,
         prev_url=prev_url,
         all_flask_students=all_flask_students,
-        admin=admin
-        )
+        admin=admin)
 
 
 @bp.route('/student-stories/flask/<int:id>/delete')
@@ -474,10 +437,7 @@ def delete_flask_stories(id):
     db.session.commit()
     flash(f'Flask story {id} has been deleted.')
     return redirect(url_for(
-        'admin.review_flask_stories',
-        _anchor="student-stories"
-        )
-    )
+        'admin.review_flask_stories', _anchor="student-stories"))
 
 
 @bp.route('/student-stories/flask/<int:id>/allow')
@@ -489,10 +449,8 @@ def allow_flask_stories(id):
     send_flask_stories_email(student)
     flash(f'Flask story {id} has been approved.')
     return redirect(url_for(
-        'admin.review_flask_stories',
-        _anchor="student-stories"
-        )
-    )
+        'admin.review_flask_stories', _anchor="student-stories"))
+
 # ==========================================
 # MANAGE STUDENT STORIES
 # ==========================================

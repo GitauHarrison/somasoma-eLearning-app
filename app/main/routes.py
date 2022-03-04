@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, flash, request,\
 from app.main.forms import AnonymousCommentForm, StudentStoriesForm
 from app.models import BlogArticles, Parent, User, Admin,\
     AnonymousTemplateInheritanceComment, Courses, FlaskStudentStories,\
-    Events
+    Events, Student
 from app.main.email import send_flask_stories_email
 from flask_login import current_user, login_required
 from datetime import datetime
@@ -326,18 +326,50 @@ def flask_student_stories_form():
 
         db.session.add(student)
         db.session.commit()
-        admins = Admin.query.all()
-        for admin in admins:
-            send_flask_stories_email(admin)
         flash(
             'Your student story has been saved. '
             'You wil receive an email when it is published')
+
+        # -----------------
+        # Story moderation
+        # -----------------
+
+        # List all emails in Flask Student stories
+        flask_student_emails = FlaskStudentStories.query.all()
+        flask_student_emails_list = []
+        for email in flask_student_emails:
+            flask_student_emails_list.append(email.email)
+        print('Flask Student Emails: ', flask_student_emails_list)
+        all_student_emails = Student.query.all()
+        student_emails_list = []
+        for email in all_student_emails:
+            student_emails_list.append(email.student_email)
+        print('All Student Emails: ', student_emails_list)
+
+        # Find if flask student email is in all students email list
+        for email in flask_student_emails_list:
+            if email not in student_emails_list:
+                print('Email not in student list: ', email)
+                # Delete email from flask student stories
+                student_email = FlaskStudentStories.query.filter_by(
+                    email=email).first()
+                db.session.delete(student_email)
+                db.session.commit()
+                print('Email deleted from flask student stories')
+                # else send email notification to admin
+            elif email in student_emails_list:
+                print('Email in student list: ', email)
+                # Send email notification to admin
+                admins = Admin.query.all()
+                for admin in admins:
+                    send_flask_stories_email(admin)
+                print('Email sent to admin')
+
         return redirect(url_for('main.flask_student_stories_form'))
     return render_template(
         'main/anonymous-content/blog_flask_stories_form.html',
         title='Flask Stories',
-        form=form
-        )
+        form=form)
 
 # =============================
 # END OF STUDENT STORIES

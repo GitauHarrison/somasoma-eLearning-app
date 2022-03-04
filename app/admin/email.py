@@ -10,14 +10,11 @@ def send_registration_details_teacher(teacher):
                text_body=render_template(
                    'admin/email/teacher_registration_email.txt',
                    teacher=teacher,
-                   token=token
-                   ),
+                   token=token),
                html_body=render_template(
                    'admin/email/teacher_registration_email.html',
                    teacher=teacher,
-                   token=token
-                   )
-               )
+                   token=token))
 
 
 def send_flask_stories_email(student):
@@ -28,11 +25,8 @@ def send_flask_stories_email(student):
                text_body=render_template(
                    'admin/email/flask_story_email.txt',
                    student=student,
-                   token=token
-                   ),
+                   token=token),
                html_body=render_template(
                    'admin/email/flask_story_email.html',
                    student=student,
-                   token=token
-                   )
-               )
+                   token=token))
