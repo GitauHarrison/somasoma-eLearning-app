@@ -59,15 +59,9 @@ class Admin(UserMixin, db.Model):
     admin_password_hash = db.Column(db.String(128))
 
     courses = db.relationship(
-        'Courses',
-        backref='author',
-        lazy='dynamic'
-        )
+        'Courses', backref='author', lazy='dynamic')
     flask_student_stories = db.relationship(
-        'FlaskStudentStories',
-        backref='author',
-        lazy='dynamic'
-        )
+        'FlaskStudentStories', backref='author', lazy='dynamic')
 
     def __repr__(self):
         return f'Admin: {self.admin_full_name}'
@@ -85,9 +79,7 @@ class Admin(UserMixin, db.Model):
 
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
-            {
-                'reset_password': self.id,
-                'exp': time() + expires_in},
+            {'reset_password': self.id, 'exp': time() + expires_in},
             current_app.config['SECRET_KEY'],
             algorithm='HS256'
         )
@@ -100,8 +92,10 @@ class Admin(UserMixin, db.Model):
     @staticmethod
     def verify_reset_password_token(token):
         try:
-            id = jwt.decode(token, current_app.config['SECRET_KEY'],
-                            algorithms=['HS256'])['reset_password']
+            id = jwt.decode(
+                token,
+                current_app.config['SECRET_KEY'],
+                algorithms=['HS256'])['reset_password']
         except:
             return
         return Admin.query.get(id)
@@ -133,49 +127,32 @@ class Student(UserMixin, db.Model):
         'StudentMessage',
         foreign_keys='StudentMessage.sender_id',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     messages_received = db.relationship(
         'StudentMessage',
         foreign_keys='StudentMessage.recipient_id',
         backref='recipient',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     last_message_read_time = db.Column(db.DateTime)
     notifications = db.relationship(
         'StudentNotification',
         backref='student',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
 
     comments = db.relationship(
-        'CommunityComment',
-        backref='author',
-        lazy='dynamic')
+        'CommunityComment', backref='author', lazy='dynamic')
     webdev_chapter1_comments = db.relationship(
-        'WebDevChapter1Comment',
-        backref='author',
-        lazy='dynamic')
+        'WebDevChapter1Comment', backref='author', lazy='dynamic')
     webdev_chapter2_comments = db.relationship(
-        'WebDevChapter2Comment',
-        backref='author',
-        lazy='dynamic')
+        'WebDevChapter2Comment', backref='author', lazy='dynamic')
     webdev_chapter3_comments = db.relationship(
-        'WebDevChapter3Comment',
-        backref='author',
-        lazy='dynamic')
+        'WebDevChapter3Comment', backref='author', lazy='dynamic')
     webdev_chapter1_objectives = db.relationship(
-        'WebDevChapter1Objectives',
-        backref='author',
-        lazy='dynamic')
+        'WebDevChapter1Objectives', backref='author', lazy='dynamic')
     webdev_chapter2_objectives = db.relationship(
-        'WebDevChapter2Objectives',
-        backref='author',
-        lazy='dynamic')
+        'WebDevChapter2Objectives', backref='author', lazy='dynamic')
     webdev_chapter3_objectives = db.relationship(
-        'WebDevChapter3Objectives',
-        backref='author',
-        lazy='dynamic')
+        'WebDevChapter3Objectives', backref='author', lazy='dynamic')
 
     # Chapter quiz total score
     webdev_chapter1_quiz_total_scores = db.relationship(
