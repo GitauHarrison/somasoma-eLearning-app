@@ -6,6 +6,21 @@ This is a sample eLearning application used to demonstrate how interactive virtu
 
 ![Student Dashboard](app/static/images/student_dashboard.png)
 
+## Background
+
+In a setting where there are learners and there are teachers (this can be in a formal school setting, home schooling, and even at the workplace) proper management of the learning process plays a big role to get the best outcome. Having been on both ends of the process, I have developed some basic understanding of what makes learning effective.
+
+- Repetitive tasks need to be automated to free the providers so that they can work on something else more productive
+- Quality control is a big challenge, and finding or creating a system that automates quality control is critical to the success of an enterprise. This includes:
+  - Standardized learning resources
+  - Customized learning reasources
+  - Automated and organic performance reporting
+  - Assessments
+- A learning platform needs to be as engaging as it can possibly get. It should be alive with new interesting content, hearty converstations, community, peer reviews et cetera
+- Having all the necessary features that make learning possible is a big deal. Rather than get out of the platform to access, say a video conferencing facility, integrating one into the platform makes the learning process feel like a unit
+
+## Overview
+
 The application is built into two broad categories:
  - Website
    - [x] General information about course offerings
