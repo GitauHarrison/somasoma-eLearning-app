@@ -7,23 +7,24 @@ This is a sample eLearning application used to demonstrate how interactive virtu
 ![Student Dashboard](app/static/images/student_dashboard.png)
 
 ## Table of Contents
-[1. Background](#background)
-[2. Overview](#overview)
-[3. Users](#users)
+- [Background](#background)
+- [Overview](#overview)
+- [Users](#users)
+
   - [Admin](#admin)
   - [Teacher](#teacher)
   - [Student](#student)
   - [Parent](#parent)
 
-[4. Features](#features)
-[5. Tools Used](#tools-used)
-[6. Licence](#license)
-[7. Application Design](#application-design)
-[8. Deployment](#deployment)
-[9. Contributors](#contributors)
-[10. Testing The App Locally](#testing-the-application-locally)
-[11. Using The Application](#using-the-application)
-[12. References](#references)
+- [Features](#features)
+- [Tools Used](#tools-used)
+- [Licence](#license)
+- [Application Design](#application-design)
+- [Deployment](#deployment)
+- [Contributors](#contributors)
+- [Testing The App Locally](#testing-the-application-locally)
+- [Using The Application](#using-the-application)
+- [References](#references)
 
 ## Background
 
