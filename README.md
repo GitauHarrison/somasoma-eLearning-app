@@ -6,6 +6,25 @@ This is a sample eLearning application used to demonstrate how interactive virtu
 
 ![Student Dashboard](app/static/images/student_dashboard.png)
 
+## Table of Contents
+[1. Background](#background)
+[2. Overview](#overview)
+[3. Users](#users)
+  - [Admin](#admin)
+  - [Teacher](#teacher)
+  - [Student](#student)
+  - [Parent](#parent)
+
+[4. Features](#features)
+[5. Tools Used](#tools-used)
+[6. Licence](#license)
+[7. Application Design](#application-design)
+[8. Deployment](#deployment)
+[9. Contributors](#contributors)
+[10. Testing The App Locally](#testing-the-application-locally)
+[11. Using The Application](#using-the-application)
+[12. References](#references)
+
 ## Background
 
 In a setting where there are learners and there are teachers (this can be in a formal school setting, home schooling, and even at the workplace) proper management of the learning process plays a big role to get the best outcome. Having been on both ends of the process, I have developed some basic understanding of what makes learning effective.
@@ -187,40 +206,41 @@ This application is currently on its **second** iteration. Over the months, I ha
 Kindly note that the current application may be miles ahead of the design seen in the latest version. During development, I may have added or discarded some things as the idea of the final application grows.
 
 
+## Deployment
+
+- [somaSoma eLearning App on Heroku]() (coming soon)
+- [somaSoma eLearning App on Docker]() (coming soon)
+
+
 ## Contributors
 
 [![GitHub Contributors](https://img.shields.io/github/contributors/GitauHarrison/somasoma-eLearning-app)](https://github.com/GitauHarrison/somasoma-eLearning-app/graphs/contributors)
 
-## Deployment
-
-- [somaSoma eLearning App on Linode]() (coming soon)
-- [somaSoma eLearning App on Heroku]() (coming soon)
-- [somaSoma eLearning App on Docker]() (coming soon)
 
 ## Testing the Application Locally
 
 * Clone this repo:
-```python
-$ git clone git@github.com:GitauHarrison/somasoma-eLearning-app.git
-```
+  ```python
+  $ git clone git@github.com:GitauHarrison/somasoma-eLearning-app.git
+  ```
 
 * Move into the cloned directory:
 
-```python
-$ cd somasoma-eLearning-app
-```
+  ```python
+  $ cd somasoma-eLearning-app
+  ```
 
 * Create and activate your virtual environment:
 
-```python
-$ mkvirtualenv somasoma-elearning # I am using virtualenvwrapper
-```
+  ```python
+  $ mkvirtualenv somasoma-elearning # I am using virtualenvwrapper
+  ```
 
 * Install project dependencies within your active virtual environment:
 
-```python
-(somasoma-elearning)$ pip3 install -r requirements.txt
-```
+  ```python
+  (somasoma-elearning)$ pip3 install -r requirements.txt
+  ```
 
 * Environment variables:
     * Create a file called `.env` in the root directory of the project
@@ -249,9 +269,9 @@ $ mkvirtualenv somasoma-elearning # I am using virtualenvwrapper
       - [Stripe API](https://github.com/GitauHarrison/notes/blob/master/two_factor_authentication/twilio_verify_2fa.md)
 * Start the flask server:
 
-```python
-(somasoma-elearning)$ flask run
-```
+  ```python
+  (somasoma-elearning)$ flask run
+  ```
 
 * Access the application on http://127.0.0.1:5000/
 
