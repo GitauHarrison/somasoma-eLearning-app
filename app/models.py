@@ -11,24 +11,22 @@ import bleach
 import json
 
 
-# @login.user_loader
-# def load_student(id):
-#     return Student.query.get(int(id))
-
-
-# @login.user_loader
-# def load_teacher(id):
-#     return Teacher.query.get(int(id))
-
-
 @login.user_loader
-def load_admin(id):
-    return Admin.query.get(int(id))
-
-
-# @login.user_loader
-# def load_parent(id):
-#     return Parent.query.get(int(id))
+def load_user(id):
+    admin = Admin.query.get(int(id))
+    teacher = Teacher.query.get(int(id))
+    student = Student.query.get(int(id))
+    parent = Parent.query.get(int(id))
+    if admin:
+        return admin
+    elif teacher:
+        return teacher
+    elif student:
+        return student
+    elif parent:
+        return parent
+    else:
+        return None
 
 
 followers = db.Table(

@@ -34,23 +34,18 @@ def before_request():
 # Dashboard routes
 
 
-@bp.route('/dashboard/account')
+@bp.route('/dashboard/<username>/account')
 @login_required
-def dashboard_account():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name).first()
+def dashboard_account(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
     return render_template(
-        'teacher/account.html',
-        title='Account',
-        teacher=teacher
-        )
+        'teacher/account.html', title='Account', teacher=teacher)
 
 
-@bp.route('/dashboard/all-students')
+@bp.route('/dashboard/<username>/all-students')
 @login_required
-def dashboard_your_students():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name).first()
+def dashboard_your_students(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
     students = Student.query.filter_by(
         student_course=teacher.teacher_course).order_by(
         Student.student_last_seen.desc()).all()
@@ -60,39 +55,32 @@ def dashboard_your_students():
         title='All Students',
         teacher=teacher,
         students=students,
-        all_students=all_students
-        )
+        all_students=all_students)
 
 
-@bp.route('/dashboard/explore-teachers', methods=['GET', 'POST'])
+@bp.route('/dashboard/<username>/explore-teachers', methods=['GET', 'POST'])
 @login_required
-def dashboard_explore_teachers():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name).first()
+def dashboard_explore_teachers(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         comment = TeacherCommunityComment(
             body=comment_form.comment.data,
-            author=current_user
-        )
+            author=current_user)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been posted!', 'success')
         return redirect(url_for('teacher.dashboard_explore_teachers'))
     comments = TeacherCommunityComment.query.order_by(
-        TeacherCommunityComment.timestamp.desc()
-        ).paginate(
-            page,
-            current_app.config['POSTS_PER_PAGE'],
-            False
-            )
+        TeacherCommunityComment.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-        'teacher.dashboard_explore_teachers',
+        'teacher.dashboard_explore_teachers', username=teacher.username,
         page=comments.next_num) \
         if comments.has_next else None
     prev_url = url_for(
-        'teacher.dashboard_explore_teachers',
+        'teacher.dashboard_explore_teachers', username=teacher.username,
         page=comments.prev_num) \
         if comments.has_prev else None
     return render_template(
@@ -102,31 +90,25 @@ def dashboard_explore_teachers():
         next_url=next_url,
         prev_url=prev_url,
         comments=comments.items,
-        comment_form=comment_form
-        )
+        comment_form=comment_form)
 
 
-@bp.route('/dashboard/my-teacher-community')
+@bp.route('/dashboard/<username>/my-teacher-community')
 @login_required
-def dashboard_my_teacher_community():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name).first()
+def dashboard_my_teacher_community(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     comments = TeacherCommunityComment.query.order_by(
-        TeacherCommunityComment.timestamp.desc()
-        ).paginate(
-            page,
-            current_app.config['POSTS_PER_PAGE'],
-            False
-            )
+        TeacherCommunityComment.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     my_comments = current_user.followed_comments().paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     my_next_url = url_for(
-        'teacher.dashboard_my_teacher_community',
+        'teacher.dashboard_my_teacher_community', username=teacher.username,
         page=comments.next_num) \
         if comments.has_next else None
     my_prev_url = url_for(
-        'teacher.dashboard_my_teacher_community',
+        'teacher.dashboard_my_teacher_community', username=teacher.username,
         page=comments.prev_num) \
         if comments.has_prev else None
     return render_template(
@@ -136,34 +118,27 @@ def dashboard_my_teacher_community():
         comments=comments.items,
         my_comments=my_comments.items,
         my_next_url=my_next_url,
-        my_prev_url=my_prev_url
-        )
+        my_prev_url=my_prev_url)
 
 
-@bp.route('/dashboard/student-community')
+@bp.route('/dashboard/<username>/student-community')
 @login_required
-def dashboard_student_community():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name).first()
+def dashboard_student_community(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     comments = CommunityComment.query.order_by(
-        CommunityComment.timestamp.desc()
-        ).paginate(
-            page,
-            current_app.config['POSTS_PER_PAGE'],
-            False
-            )
+        CommunityComment.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     # Students community comments
     student_comments = CommunityComment.query.order_by(
-        CommunityComment.timestamp.desc()
-        ).paginate(
+        CommunityComment.timestamp.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     student_next_url = url_for(
-        'teacher.dashboard_student_community',
+        'teacher.dashboard_student_community', username=teacher.username,
         page=comments.next_num) \
         if comments.has_next else None
     student_prev_url = url_for(
-        'teacher.dashboard_student_community',
+        'teacher.dashboard_student_community', username=teacher.username,
         page=comments.prev_num) \
         if comments.has_prev else None
     return render_template(
@@ -173,30 +148,26 @@ def dashboard_student_community():
         comments=comments.items,
         student_comments=student_comments.items,
         student_next_url=student_next_url,
-        student_prev_url=student_prev_url
-        )
+        student_prev_url=student_prev_url)
 
 
-@bp.route('/dashboard/comment-moderation-links')
+@bp.route('/dashboard/<username>/comment-moderation-links')
 @login_required
-def dashboard_comment_moderation():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name).first()
+def dashboard_comment_moderation(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
     course_chapters = Chapter.query.filter_by(
         course=teacher.teacher_course).all()
     return render_template(
         'teacher/comment_moderation.html',
         title='Comment Moderation',
         teacher=teacher,
-        course_chapters=course_chapters
-        )
+        course_chapters=course_chapters)
 
 
-@bp.route('/dashboard/manage-course', methods=['GET', 'POST'])
+@bp.route('/dashboard/<username>/manage-course', methods=['GET', 'POST'])
 @login_required
-def dashboard_manage_course():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name).first()
+def dashboard_manage_course(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
 
     # Manage Course Overview
     course_overview_form = WebDevelopmentOverviewForm()
@@ -204,12 +175,12 @@ def dashboard_manage_course():
         course_overview = WebDevelopmentOverview(
             title=course_overview_form.title.data,
             overview=course_overview_form.body.data,
-            youtube_link=course_overview_form.youtube_link.data,
-        )
+            youtube_link=course_overview_form.youtube_link.data)
         db.session.add(course_overview)
         db.session.commit()
         flash('Your course overview has been posted!', 'success')
-        return redirect(url_for('teacher.review_course_overview'))
+        return redirect(url_for(
+            'teacher.review_course_overview', username=teacher.username))
 
     # Manage Course Table of Contents
     table_of_contents_form = TableOfContentsForm()
@@ -217,12 +188,12 @@ def dashboard_manage_course():
         table_of_contents = TableOfContents(
             title=table_of_contents_form.title.data,
             chapter=table_of_contents_form.chapter.data,
-            link=table_of_contents_form.link.data,
-        )
+            link=table_of_contents_form.link.data)
         db.session.add(table_of_contents)
         db.session.commit()
         flash('Your table of contents has been updated!', 'success')
-        return redirect(url_for('teacher.review_table_of_contents'))
+        return redirect(url_for(
+            'teacher.review_table_of_contents', username=teacher.username))
 
     # Chapters
     chapter_form = ChapterForm()
@@ -241,12 +212,12 @@ def dashboard_manage_course():
             objective_2=chapter_form.objective_2.data,
             objective_3=chapter_form.objective_3.data,
             objective_4=chapter_form.objective_4.data,
-            objective_5=chapter_form.objective_5.data,
-        )
+            objective_5=chapter_form.objective_5.data)
         db.session.add(chapter)
         db.session.commit()
         flash(f'{chapter} has been added!', 'success')
-        return redirect(url_for('teacher.review_chapters'))
+        return redirect(url_for(
+            'teacher.review_chapters', username=teacher.username))
 
     # Chapter Quiz
     chapter_quiz_form = ChapterQuizForm()
@@ -258,12 +229,12 @@ def dashboard_manage_course():
             quiz_2=chapter_quiz_form.quiz_2.data,
             quiz_3=chapter_quiz_form.quiz_3.data,
             quiz_4=chapter_quiz_form.quiz_4.data,
-            quiz_5=chapter_quiz_form.quiz_5.data
-        )
+            quiz_5=chapter_quiz_form.quiz_5.data)
         db.session.add(chapter_quiz)
         db.session.commit()
         flash('Chapter quiz has been added!', 'success')
-        return redirect(url_for('teacher.review_chapter_quiz'))
+        return redirect(url_for(
+            'teacher.review_chapter_quiz', username=teacher.username))
 
     # General mulitple choices quiz
     mulitple_choice_quiz_form = GeneralOwnChoiceQuizForm()
@@ -279,13 +250,13 @@ def dashboard_manage_course():
             quiz_7=mulitple_choice_quiz_form.quiz_7.data,
             quiz_8=mulitple_choice_quiz_form.quiz_8.data,
             quiz_9=mulitple_choice_quiz_form.quiz_9.data,
-            quiz_10=mulitple_choice_quiz_form.quiz_10.data
-        )
+            quiz_10=mulitple_choice_quiz_form.quiz_10.data)
         db.session.add(chapter_quiz)
         db.session.commit()
         flash('Chapter quiz has been added!', 'success')
         return redirect(url_for(
-            'teacher.review_general_mulitiple_choices_quiz'))
+            'teacher.review_general_mulitiple_choices_quiz',
+            username=teacher.username))
 
     all_quizzes = ChapterQuiz.query.filter_by(
         course=teacher.teacher_course).all()
@@ -327,19 +298,18 @@ def dashboard_manage_course():
         # Multiple Choice Quiz
         mulitple_choice_quiz_form=mulitple_choice_quiz_form,
         all_multiple_quizzes=all_multiple_quizzes,
-        all_general_multiple_choice_quizzes=all_general_multiple_choice_quizzes
-        )
+        all_general_multiple_choice_quizzes=all_general_multiple_choice_quizzes)
 
 # ==========================================
 # MANAGE BLOG POSTS
 # ==========================================
 
 
-@bp.route('/dashboard/manage-blog', methods=['GET', 'POST'])
+@bp.route('/dashboard/<username>/manage-blog', methods=['GET', 'POST'])
 @login_required
-def dashboard_manage_blog():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name).first()
+def dashboard_manage_blog(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
+
     # ----------------
     # Blogs: anonymous user
     # ----------------
@@ -350,8 +320,7 @@ def dashboard_manage_blog():
             article_image=blog_articles_form.article_image.data,
             article_name=blog_articles_form.article_name.data,
             body=blog_articles_form.body.data,
-            link=blog_articles_form.link.data
-        )
+            link=blog_articles_form.link.data)
 
         # Handling file upload
         uploaded_file = blog_articles_form.article_image.data
@@ -359,59 +328,42 @@ def dashboard_manage_blog():
         if not os.path.exists(current_app.config['UPLOAD_PATH']):
             os.makedirs(current_app.config['UPLOAD_PATH'])
         blog_image_path = os.path.join(
-            current_app.config['UPLOAD_PATH'],
-            filename
-            )
-        print('Img path:', blog_image_path)
+            current_app.config['UPLOAD_PATH'], filename)
         uploaded_file.save(blog_image_path)
         blog_articles.article_image = blog_image_path
-        print('Db path: ', blog_articles.article_image)
 
         blog_image_path_list = blog_articles.article_image.split('/')[1:]
-        print('Img path list: ', blog_image_path_list)
         new_blog_image_path = '/'.join(blog_image_path_list)
-        print('New img path: ', new_blog_image_path)
         blog_articles.article_image = new_blog_image_path
-        print(blog_articles.article_image)
 
         db.session.add(blog_articles)
         db.session.commit()
         flash('You have addeded a new blog article')
-        return redirect(url_for('teacher.dashboard_manage_blog'))
+        return redirect(url_for(
+            'teacher.dashboard_manage_blog', username=teacher.username))
     all_blog_articles = len(BlogArticles.query.all())
     return render_template(
         'teacher/manage_blog.html',
         title='Manage Blog',
         teacher=teacher,
         all_blog_articles=all_blog_articles,
-        blog_articles_form=blog_articles_form,
-        )
+        blog_articles_form=blog_articles_form)
 
 
-@bp.route('/blog/articles/review')
+@bp.route('/blog/<username>/articles/review')
 @login_required
-def review_blog_articles():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+def review_blog_articles(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     blogs = BlogArticles.query.order_by(
-        BlogArticles.timestamp.desc()
-        ).paginate(
-            page,
-            current_app.config['POSTS_PER_PAGE'],
-            False
-            )
+        BlogArticles.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-        'teacher.review_blog_articles',
-        page=blogs.next_num,
-        _anchor="blog") \
-        if blogs.has_next else None
+        'teacher.review_blog_articles', username=teacher.username,
+        page=blogs.next_num, _anchor="blog") if blogs.has_next else None
     prev_url = url_for(
-        'teacher.review_blog_articles',
-        page=blogs.prev_num,
-        _anchor="blog") \
-        if blogs.has_prev else None
+        'teacher.review_blog_articles', username=teacher.username,
+        page=blogs.prev_num, _anchor="blog") if blogs.has_prev else None
     all_blogs = len(BlogArticles.query.all())
     return render_template(
         'teacher/review_blog_article.html',
@@ -420,30 +372,29 @@ def review_blog_articles():
         next_url=next_url,
         prev_url=prev_url,
         all_blogs=all_blogs,
-        teacher=teacher
-    )
+        teacher=teacher)
 
 
-@bp.route('/blog/articles/<blog_article_id>/allow')
-def allow_blog_article(blog_article_id):
+@bp.route('/blog/<username>/articles/<blog_article_id>/allow')
+def allow_blog_article(username, blog_article_id):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
     blog_article = BlogArticles.query.filter_by(
-        id=blog_article_id
-    ).first()
+        id=blog_article_id).first()
     blog_article.allowed_status = True
     db.session.commit()
     flash(f'Blog article {blog_article_id} has been authorized')
-    return redirect(url_for('teacher.review_blog_articles'))
+    return redirect(url_for(
+        'teacher.review_blog_articles', username=teacher.username))
 
 # ==========================================
 # END OF MANAGE BLOG POSTS
 # ==========================================
 
 
-@bp.route('/dashboard/manage-events', methods=['GET', 'POST'])
+@bp.route('/dashboard/<username>/manage-events', methods=['GET', 'POST'])
 @login_required
-def dashboard_manage_events():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name).first()
+def dashboard_manage_events(username):
+    teacher = Teacher.query.filter_by(username=username).first_or_404()
     event_form = EventsForm()
     if event_form.validate_on_submit():
         event = Events(
@@ -452,8 +403,7 @@ def dashboard_manage_events():
             date=event_form.event_date.data,
             time=event_form.event_time.data,
             location=event_form.event_location.data,
-            link=event_form.event_link.data
-            )
+            link=event_form.event_link.data)
 
         # Handling file upload
         uploaded_file = event_form.event_image.data
@@ -461,43 +411,31 @@ def dashboard_manage_events():
         if not os.path.exists(current_app.config['UPLOAD_PATH']):
             os.makedirs(current_app.config['UPLOAD_PATH'])
         event_image_path = os.path.join(
-            current_app.config['UPLOAD_PATH'],
-            filename
-            )
-        print('Img path:', event_image_path)
+            current_app.config['UPLOAD_PATH'], filename)
         uploaded_file.save(event_image_path)
         event.event_image = event_image_path
-        print('Db path: ', event.event_image)
 
         event_image_path_list = event.event_image.split('/')[1:]
-        print('Img path list: ', event_image_path_list)
         new_event_image_path = '/'.join(event_image_path_list)
-        print('New img path: ', new_event_image_path)
         event.event_image = new_event_image_path
-        print(event.event_image)
 
         db.session.add(event)
         db.session.commit()
         flash('Your event has been updated. Take action now!')
         return redirect(url_for(
-            'teacher.dashboard_manage_events',
-            _anchor='events')
-            )
+            'teacher.dashboard_manage_events', username=teacher.username,
+            _anchor='events'))
     page = request.args.get('page', 1, type=int)
     events = Events.query.order_by(
-        Events.timestamp.desc()
-        ).paginate(
-            page,
-            current_app.config['POSTS_PER_PAGE'],
-            False
-            )
+        Events.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-        'admin.dashboard_manage_events',
+        'teacher.dashboard_manage_events', username=teacher.username,
         page=events.next_num,
         _anchor="events") \
         if events.has_next else None
     prev_url = url_for(
-        'admin.dashboard_manage_events',
+        'teacher.dashboard_manage_events', username=teacher.username,
         page=events.prev_num,
         _anchor="events") \
         if events.has_prev else None
@@ -511,8 +449,7 @@ def dashboard_manage_events():
         next_url=next_url,
         prev_url=prev_url,
         all_events=all_events,
-        event_form=event_form
-        )
+        event_form=event_form)
 
 
 @bp.route('/events/<event_id>/delete')
@@ -545,12 +482,10 @@ def allow_event(event_id):
 # Profile route
 
 
-@bp.route('/edit-profile', methods=['GET', 'POST'])
+@bp.route('/<username>/edit-profile', methods=['GET', 'POST'])
 @login_required
-def edit_profile():
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+def edit_profile(username):
+    teacher = Teacher.query.filter_by(username=username).first()
     form = EditProfileForm(current_user.teacher_email)
     if form.validate_on_submit():
         current_user.teacher_email = form.email.data
@@ -558,9 +493,7 @@ def edit_profile():
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for(
-            'teacher.dashboard_account'
-            )
-        )
+            'teacher.dashboard_account', username=teacher.username))
     elif request.method == 'GET':
         form.email.data = current_user.teacher_email
         form.about_me.data = current_user.teacher_about_me
@@ -568,8 +501,7 @@ def edit_profile():
         'teacher/edit_profile_teacher.html',
         teacher=teacher,
         form=form,
-        title='Edit Profile Teacher'
-        )
+        title='Edit Profile Teacher')
 
 
 @bp.route('/profile/<teacher_full_name>')
