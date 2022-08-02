@@ -46,23 +46,23 @@ def login_parent():
 @bp.route('/login/teacher', methods=['GET', 'POST'])
 def login_teacher():
     if current_user.is_authenticated:
-        return redirect(url_for('teacher.dashboard_account'))
+        return redirect(url_for('teacher.dashboard_account',
+        teacher_full_name=current_user.teacher_full_name))
     form = LoginForm()
     if form.validate_on_submit():
         teacher = Teacher.query.filter_by(
-            teacher_email=form.email.data
-            ).first()
+            teacher_email=form.email.data).first()
         if teacher is None or not teacher.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('auth.login_teacher'))
         login_user(teacher, remember=form.remember_me.data)
         flash(f'Welcome {teacher.teacher_full_name}!')
-        return redirect(url_for('teacher.dashboard_account'))
+        return redirect(url_for('teacher.dashboard_account',
+        teacher_full_name=teacher.teacher_full_name))
     return render_template(
         'auth/login_teacher.html',
         title='Teacher Login',
-        form=form
-        )
+        form=form)
 
 
 @bp.route('/login/student', methods=['GET', 'POST'])
@@ -72,8 +72,7 @@ def login_student():
     form = LoginForm()
     if form.validate_on_submit():
         student = Student.query.filter_by(
-            student_email=form.email.data
-            ).first()
+            student_email=form.email.data).first()
         if student is None or not student.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('auth.login_student'))
@@ -87,17 +86,14 @@ def login_student():
             return redirect(url_for(
                 'auth.verify_2fa_student',
                 next=next_page,
-                remember='1' if form.remember_me.data else '0'
-                )
-            )
+                remember='1' if form.remember_me.data else '0'))
         login_user(student, remember=form.remember_me.data)
         flash(f'Welcome {student.student_full_name}!')
         return redirect(next_page)
     return render_template(
         'auth/login_student.html',
         title='Student Login',
-        form=form
-        )
+        form=form)
 
 
 @bp.route('/login/admin', methods=['GET', 'POST'])
@@ -537,12 +533,11 @@ def disable_2fa_admin():
 # Teacher
 
 
-@bp.route('/teacher/enable-2fa', methods=['GET', 'POST'])
+@bp.route('/<teacher_full_name>/teacher/enable-2fa', methods=['GET', 'POST'])
 @login_required
-def enable_2fa_teacher():
+def enable_2fa_teacher(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first_or_404()
+        teacher_full_name=teacher_full_name).first_or_404()
     form = Enable2faForm()
     if form.validate_on_submit():
         session['phone'] = form.verification_phone.data
@@ -552,8 +547,7 @@ def enable_2fa_teacher():
         'auth/two-factor-auth/teacher/enable_2fa_teacher.html',
         form=form,
         title='Enable 2fa for Teacher',
-        teacher=teacher
-        )
+        teacher=teacher)
 
 
 @bp.route('/teacher/verify-2fa', methods=['GET', 'POST'])

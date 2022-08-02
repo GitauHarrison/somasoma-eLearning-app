@@ -32,7 +32,7 @@
                                 {% for student in students %}
                                     <tr>
                                         <td>
-                                            <a href="{{ url_for('teacher.profile_student', student_full_name=student.student_full_name) }}">
+                                            <a href="{{ url_for('teacher.profile_student', teacher_full_name=teacher.teacher_full_name, student_full_name=student.student_full_name) }}">
                                                 {{ student.student_full_name }}
                                             </a>
                                         </td>

@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-sm-5 text-center vertical-line">
                             <h2>Review Blog Articles ({{ all_blog_articles }})</h2>
-                            <a href="{{ url_for('teacher.review_blog_articles') }}" class="btn btn-primary" target="_blank">
+                            <a href="{{ url_for('teacher.review_blog_articles', teacher_full_name=teacher.teacher_full_name) }}" class="btn btn-primary" target="_blank">
                                 Review Blog Articles
                                 <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                             </a>

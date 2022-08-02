@@ -37,11 +37,11 @@
                     <div class="row">
                         <div class="col-sm-12">
                             {% if not overview.allowed_status == 1 %}
-                                <a href="{{ url_for('teacher.allow_course_overview', course_title=overview.title) }}" class="label label-warning">Allow</a>
+                                <a href="{{ url_for('teacher.allow_course_overview', teacher_full_name=teacher.teacher_full_name, course_title=overview.title) }}" class="btn label label-warning">Allow</a>
                             {% else %}
-                                <a href="#" class="label label-success">Allowed</a>
+                                <a href="#" class="label label-success btn disabled">Allowed</a>
                             {% endif %}
-                            | <a href="{{ url_for('teacher.delete_course_overview', course_title=overview.title) }}" class="label label-danger">Delete</a>
+                            | <a href="{{ url_for('teacher.delete_course_overview', teacher_full_name=teacher.teacher_full_name, course_title=overview.title) }}" class="btn label label-danger">Delete</a>
                         </div>
                     </div>
             </div>
@@ -71,7 +71,7 @@
     <div class="row text-center">
         <div class="col-sm-6">
             <p>
-                <a href=" {{ url_for('teacher.dashboard_manage_course', _anchor='overview') }} " class="btn btn-primary">
+                <a href=" {{ url_for('teacher.dashboard_manage_course', teacher_full_name=teacher.teacher_full_name, _anchor='overview') }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                         Back to Course Management
                 </a>

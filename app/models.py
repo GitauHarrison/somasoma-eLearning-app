@@ -495,61 +495,50 @@ class Teacher(UserMixin, db.Model):
     comments = db.relationship(
         'TeacherCommunityComment',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     course_overview = db.relationship(
         'WebDevelopmentOverview',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     table_of_contentes = db.relationship(
         'TableOfContents',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     chapter = db.relationship(
         'Chapter',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     chapter_quizzes = db.relationship(
         'ChapterQuiz',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     general_multiple_choices_quiz = db.relationship(
         'GeneralMultipleChoicesQuiz',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     blog_articles = db.relationship(
         'BlogArticles',
         backref='author',
-        lazy='dynamic'
-    )
+        lazy='dynamic')
     events = db.relationship(
         'Events',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     messages_sent = db.relationship(
         'TeacherMessage',
         foreign_keys='TeacherMessage.sender_id',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     messages_received = db.relationship(
         'TeacherMessage',
         foreign_keys='TeacherMessage.recipient_id',
         backref='recipient',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
     last_message_read_time = db.Column(db.DateTime)
     notifications = db.relationship(
         'TeacherNotifications',
         backref='teacher',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
 
     def new_messages(self):
         last_read_time = self.last_message_read_time or datetime(1900, 1, 1)

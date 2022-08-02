@@ -79,11 +79,11 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 {% if not event.allowed_status == 1 %}
-                                    <a href=" {{ url_for('teacher.allow_event', event_id=event.id) }} " class="label label-warning">Allow</a>
+                                    <a href=" {{ url_for('teacher.allow_event', teacher_full_name=teacher.teacher_full_name, event_id=event.id) }} " class="label label-warning">Allow</a>
                                 {% else %}
                                     <a href="#" class="label label-success">Allowed</a></a>
                                 {% endif %}
-                                | <a href=" {{ url_for('teacher.delete_event', event_id=event.id) }} " class="label label-danger">Delete</a>
+                                | <a href=" {{ url_for('teacher.delete_event', teacher_full_name=teacher.teacher_full_name, event_id=event.id) }} " class="label label-danger">Delete</a>
                             </div>
                         </div>
                     </div>

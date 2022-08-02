@@ -21,19 +21,19 @@
                     <div class="col-sm-12">
                         <h2>General</h2>
                         <p>
-                            Full Name: <span style="font-weight: 600;">{{ current_user.teacher_full_name }}</span> 
+                            Full Name: <span style="font-weight: 600;">{{ teacher.teacher_full_name }}</span> 
                         </p>
                         <p>
-                            Email: <span style="font-weight: 600;">{{ current_user.teacher_email }}</span> 
+                            Email: <span style="font-weight: 600;">{{ teacher.teacher_email }}</span> 
                         </p>
                         <p>
-                            Phone: <span style="font-weight: 600;">{{ current_user.teacher_phone }}</span> 
+                            Phone: <span style="font-weight: 600;">{{ teacher.teacher_phone }}</span> 
                         </p>
                         <p>
-                            Residence: <span style="font-weight: 600;">{{ current_user.teacher_residence }}</span> 
+                            Residence: <span style="font-weight: 600;">{{ teacher.teacher_residence }}</span> 
                         </p>
                         <p>
-                            Teaching Course: <span style="font-weight: 600; color: orange;">{{ current_user.teacher_course }}</span> 
+                            Teaching Course: <span style="font-weight: 600; color: orange;">{{ teacher.teacher_course }}</span> 
                         </p>
                     </div>
                 </div> 
@@ -44,7 +44,7 @@
                     <div class="col-sm-12">
                         <h2>Update Profile</h2>
                         <p>
-                            <a href="{{ url_for('teacher.edit_profile') }}" class="btn btn-primary">Update Profile</a>
+                            <a href="{{ url_for('teacher.edit_profile', teacher_full_name=teacher.teacher_full_name) }}" class="btn btn-primary">Update Profile</a>
                         </p>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                         <p>
                             Add an extra layer of security to your account by enabling two-factor authentication.
                         </p>
-                        {% if not current_user.two_factor_teacher_enabled() %}
+                        {% if not teacher.two_factor_teacher_enabled() %}
                             <p>
                                 <a href=" {{ url_for('auth.enable_2fa_teacher', teacher_full_name=teacher.teacher_full_name) }} " class="btn btn-primary">
                                     Enable 2FA

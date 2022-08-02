@@ -16,7 +16,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <table id="data" class="table table-striped">
+            <table id="data" class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>Chapter</th>
@@ -33,13 +33,13 @@
                                 <td>{{ toc.title }}</td>
                                 <td>
                                     {% if not toc.allowed_status == 1 %}
-                                        <a href="{{ url_for('teacher.allow_table_of_contents', chapter=toc.chapter) }}" class="label label-warning">Allow</a>
+                                        <a href="{{ url_for('teacher.allow_table_of_contents', teacher_full_name=teacher.teacher_full_name, chapter=toc.chapter) }}" class="btn label label-warning">Allow</a>
                                     {% else %}
-                                        <a href="#" class="label label-success">Allowed</a>
+                                        <a href="#" class="btn disabled label label-success">Allowed</a>
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <a href="{{ url_for('teacher.delete_table_of_contents', chapter=toc.chapter) }}" class="label label-danger">Delete</a>
+                                    <a href="{{ url_for('teacher.delete_table_of_contents', teacher_full_name=teacher.teacher_full_name, chapter=toc.chapter) }}" class="btn label label-danger">Delete</a>
                                 </td>
                             </tr>
                         {% endif %}
@@ -52,7 +52,7 @@
     <div class="row text-center">
         <div class="col-sm-12">
             <p>
-                <a href=" {{ url_for('teacher.dashboard_manage_course', _anchor='toc') }} " class="btn btn-primary">
+                <a href=" {{ url_for('teacher.dashboard_manage_course', teacher_full_name=teacher.teacher_full_name, _anchor='toc') }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                         Back to Course Management
                 </a>

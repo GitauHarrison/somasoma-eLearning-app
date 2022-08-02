@@ -52,7 +52,7 @@
                                 
                             </a>
                         {% elif teacher %}
-                            <a class="navbar-brand" href=" {{ url_for('teacher.dashboard_account', username=teacher.username) }} ">
+                            <a class="navbar-brand" href=" {{ url_for('teacher.dashboard_account', teacher_full_name=teacher.teacher_full_name) }} ">
                                 <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                                 
                             </a>
@@ -131,39 +131,39 @@
                             <span class="icon-bar"></span>
                         </div>
                         <div class="list-group">
-                            <a href="{{  url_for('teacher.dashboard_account')}}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
+                            <a href="{{  url_for('teacher.dashboard_account', teacher_full_name=teacher.teacher_full_name)}}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
                                 Account
                             </a>
-                            <a href="{{ url_for('teacher.view_messages') }}" class="list-group-item tablinks" onclick="openCity(event, 'private_messages')">
+                            <a href="{{ url_for('teacher.view_messages', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'private_messages')">
                                 Private Messages
-                                {% set new_messages = current_user.new_messages() %}
+                                {% set new_messages = teacher.new_messages() %}
                                 <!-- Make the badge visible if the message count is non-zero; else hide it -->
                                 <span id="message_count" class="badge" style="visibility: {% if new_messages %} visible {% else %} hidden {% endif %};">
                                     {{ new_messages }}
                                 </span>
                             </a>
-                            <a href="{{ url_for('teacher.dashboard_your_students') }}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
+                            <a href="{{ url_for('teacher.dashboard_your_students', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
                                 Your Students
                             </a>
-                            <a href="{{ url_for('teacher.dashboard_student_community') }}" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">
+                            <a href="{{ url_for('teacher.dashboard_student_community', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">
                                 Student Community
                             </a>
-                            <a href="{{ url_for('teacher.dashboard_explore_teachers') }}" class="list-group-item tablinks" onclick="openCity(event, 'explore-teacher-community')">
+                            <a href="{{ url_for('teacher.dashboard_explore_teachers', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'explore-teacher-community')">
                                 Explore Teacher Community
                             </a>
-                            <a href="{{ url_for('teacher.dashboard_my_teacher_community') }}" class="list-group-item tablinks" onclick="openCity(event, 'your-community')">
+                            <a href="{{ url_for('teacher.dashboard_my_teacher_community', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'your-community')">
                                 Your Community
                             </a>
-                            <a href="{{ url_for('teacher.dashboard_comment_moderation') }}" class="list-group-item tablinks" onclick="openCity(event, 'comment-moderation')">
+                            <a href="{{ url_for('teacher.dashboard_comment_moderation', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'comment-moderation')">
                                 Comment Moderation
                             </a>
-                            <a href="{{ url_for('teacher.dashboard_manage_course') }}" class="list-group-item tablinks" onclick="openCity(event, 'update')">
+                            <a href="{{ url_for('teacher.dashboard_manage_course', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'update')">
                                 Manage Course
                             </a>
-                            <a href="{{ url_for('teacher.dashboard_manage_blog') }}" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
+                            <a href="{{ url_for('teacher.dashboard_manage_blog', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
                                 Manage Blog
                             </a>
-                            <a href="{{ url_for('teacher.dashboard_manage_events') }}" class="list-group-item tablinks" onclick="openCity(event, 'event')">
+                            <a href="{{ url_for('teacher.dashboard_manage_events', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'event')">
                                 Manage Events
                             </a>
                         </div>   
@@ -568,7 +568,7 @@
                 $(function() {
                     var since = 0;
                     setInterval(function() {
-                        $.ajax('{{ url_for('teacher.teacher_notifications') }}?since=' + since).done(
+                        $.ajax('{{ url_for('teacher.teacher_notifications', teacher_full_name=teacher.teacher_full_name) }}?since=' + since).done(
                             function(notifications) {
                                 for (var i = 0; i < notifications.length; i++) {
                                     if (notifications[i].teacher_full_name == 'unread_message_count')

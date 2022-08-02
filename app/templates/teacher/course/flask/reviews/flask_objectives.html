@@ -26,11 +26,11 @@
                 <div class="row">
                     <div class="col-sm-12">
                         {% if not objective.allowed_status == 1 %}
-                            <a href=" {{ url_for('teacher.allow_flask_objectives', id=objective.id) }} " class="label label-warning">Allow</a>
+                            <a href=" {{ url_for('teacher.allow_flask_objectives', teacher_full_name=teacher.teacher_full_name, id=objective.id) }} " class="btn label label-warning">Allow</a>
                         {% else %}
-                            <a href=" # " class="label label-success">Allowed</a>
+                            <a href=" # " class="btn disabled label label-success">Allowed</a>
                         {% endif %}
-                         | <a href=" {{ url_for('teacher.delete_flask_objectives', id=objective.id) }} " class="label label-danger">Delete</a>
+                         | <a href=" {{ url_for('teacher.delete_flask_objectives', teacher_full_name=teacher.teacher_full_name, id=objective.id) }} " class="btn label label-danger">Delete</a>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
     <div class="row text-center">
         <div class="col-sm-12">
             <p>
-                <a href=" {{ url_for('teacher.dashboard_manage_course', _anchor='objectives') }} " class="btn btn-primary">
+                <a href=" {{ url_for('teacher.dashboard_manage_course', teacher_full_name=teacher.teacher_full_name, _anchor='objectives') }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                         Back to Course Management
                 </a>

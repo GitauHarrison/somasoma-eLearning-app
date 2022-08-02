@@ -32,12 +32,12 @@
                 </p>
             {% endif %}
             {% if not current_user.is_following(teacher) %}
-                <form action="{{ url_for('teacher.follow_teacher', teacher_full_name=teacher.teacher_full_name) }}" method="post">
+                <form action="{{ url_for('teacher.follow_teacher', teacher_full_name=teacher.teacher_full_name, teacher=another_teacher) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Follow', class_='btn btn-primary') }}
                 </form>
             {% else %}
-                <form action="{{ url_for('teacher.unfollow_teacher', teacher_full_name=teacher.teacher_full_name) }}" method="post">
+                <form action="{{ url_for('teacher.unfollow_teacher', teacher_full_name=teacher.teacher_full_name, teacher=another_teacher) }}" method="post">
                         {{ form.hidden_tag() }}
                         {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
                 </form>

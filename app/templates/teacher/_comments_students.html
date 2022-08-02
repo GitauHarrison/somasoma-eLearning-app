@@ -1,14 +1,14 @@
 <table class="table table-striped">
     <tr valign='top'>
         <td width="30px">
-            <a href=" {{ url_for('teacher.profile_student', student_full_name=comment.author.student_full_name) }} ">
+            <a href=" {{ url_for('teacher.profile_student', teacher_full_name=teacher.teacher_full_name, student_full_name=comment.author.student_full_name) }} ">
                 <img src=" {{ comment.author.avatar_student(30) }}  ">
             </a>
         </td>
         <td>
             <span class="comment-id label label-default"># {{ comment.id }} </span>
             <span class="teacher_dashboard_student_popup">
-                <a href="{{ url_for('teacher.profile_student', student_full_name=comment.author.student_full_name) }}">
+                <a href="{{ url_for('teacher.profile_student', teacher_full_name=teacher.teacher_full_name, student_full_name=comment.author.student_full_name) }}">
                     <span class="label label-success"> {{ comment.author.student_full_name }} </span>  
                 </a>
             </span>

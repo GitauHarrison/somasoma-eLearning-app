@@ -20,14 +20,14 @@
             <!-- Empty column -->
         </div>
     </div>
-    {% if current_user.is_authenticated %}
+    {% if teacher.is_authenticated %}
         <div class="row text-center">
             <div class="col-sm-4">
                 <!-- Empty columns -->
             </div>
             <div class="col-sm-4">
                 <p>
-                    <a href=" {{ url_for('teacher.dashboard_teacher') }} " class="btn btn-primary">
+                    <a href=" {{ url_for('teacher.dashboard_account', teacher_full_name=teacher.teacher_full_name) }} " class="btn btn-primary">
                         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                             Back to Dashboard
                     </a>

@@ -25,7 +25,7 @@
                         </td>
                         <td>
                             <span class="comment-id label label-default"># {{ comment.id }} </span>
-                            <a href="{{ url_for('student.profile_student', student_full_name=comment.author.student_full_name) }}">
+                            <a href="{{ url_for('student.profile_student', teacher_full_name=teacher.teacher_full_name, student_full_name=comment.author.student_full_name) }}">
                                 <span class="label label-success"> {{ comment.author.student_full_name }} </span>  
                             </a>
                             said {{ moment(comment.timestamp).fromNow() }}:
@@ -35,11 +35,11 @@
                             </div>
                             <br>
                             {% if not comment.allowed_status == 1 %}
-                                <a href=" {{ url_for('teacher.allow_flask_chapter_2_comments', id=comment.id) }} " class="label label-warning">Allow</a>
+                                <a href=" {{ url_for('teacher.allow_flask_chapter_2_comments', teacher_full_name=teacher.teacher_full_name, id=comment.id) }} " class="btn label label-warning">Allow</a>
                             {% else %}
-                                <a href=" # " class="label label-success">Allowed</a>
+                                <a href=" # " class="btn disabled label label-success">Allowed</a>
                             {% endif %}
-                            | <a href=" {{ url_for('teacher.delete_flask_chapter_2_comments', id=comment.id) }} " class="label label-danger">Delete</a>
+                            | <a href=" {{ url_for('teacher.delete_flask_chapter_2_comments', teacher_full_name=teacher.teacher_full_name, id=comment.id) }} " class="btn label label-danger">Delete</a>
                         </td>
                     </tr>    
                 </table>
@@ -70,7 +70,7 @@
     <div class="row text-center">
         <div class="col-sm-12">
             <p>
-                <a href=" {{ url_for('teacher.dashboard_manage_course', _anchor='comments') }} " class="btn btn-primary">
+                <a href=" {{ url_for('teacher.dashboard_manage_course', teacher_full_name=teacher.teacher_full_name, _anchor='comments') }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                         Back to Course Management
                 </a>

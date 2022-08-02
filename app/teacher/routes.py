@@ -34,18 +34,20 @@ def before_request():
 # Dashboard routes
 
 
-@bp.route('/dashboard/<username>/account')
+@bp.route('/dashboard/<teacher_full_name>/account')
 @login_required
-def dashboard_account(username):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+def dashboard_account(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     return render_template(
         'teacher/account.html', title='Account', teacher=teacher)
 
 
-@bp.route('/dashboard/<username>/all-students')
+@bp.route('/dashboard/<teacher_full_name>/all-students')
 @login_required
-def dashboard_your_students(username):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+def dashboard_your_students(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     students = Student.query.filter_by(
         student_course=teacher.teacher_course).order_by(
         Student.student_last_seen.desc()).all()
@@ -58,10 +60,11 @@ def dashboard_your_students(username):
         all_students=all_students)
 
 
-@bp.route('/dashboard/<username>/explore-teachers', methods=['GET', 'POST'])
+@bp.route('/dashboard/<teacher_full_name>/explore-teachers', methods=['GET', 'POST'])
 @login_required
-def dashboard_explore_teachers(username):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+def dashboard_explore_teachers(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     page = request.args.get('page', 1, type=int)
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
@@ -71,16 +74,20 @@ def dashboard_explore_teachers(username):
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been posted!', 'success')
-        return redirect(url_for('teacher.dashboard_explore_teachers'))
+        return redirect(url_for(
+            'teacher.dashboard_explore_teachers',
+            teacher_full_name=teacher.teacher_full_name))
     comments = TeacherCommunityComment.query.order_by(
         TeacherCommunityComment.timestamp.desc()).paginate(
             page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-        'teacher.dashboard_explore_teachers', username=teacher.username,
+        'teacher.dashboard_explore_teachers',
+        teacher_full_name=teacher.teacher_full_name,
         page=comments.next_num) \
         if comments.has_next else None
     prev_url = url_for(
-        'teacher.dashboard_explore_teachers', username=teacher.username,
+        'teacher.dashboard_explore_teachers',
+        teacher_full_name=teacher.teacher_full_name,
         page=comments.prev_num) \
         if comments.has_prev else None
     return render_template(
@@ -93,22 +100,25 @@ def dashboard_explore_teachers(username):
         comment_form=comment_form)
 
 
-@bp.route('/dashboard/<username>/my-teacher-community')
+@bp.route('/dashboard/<teacher_full_name>/my-teacher-community')
 @login_required
-def dashboard_my_teacher_community(username):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+def dashboard_my_teacher_community(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     page = request.args.get('page', 1, type=int)
     comments = TeacherCommunityComment.query.order_by(
         TeacherCommunityComment.timestamp.desc()).paginate(
             page, current_app.config['POSTS_PER_PAGE'], False)
-    my_comments = current_user.followed_comments().paginate(
+    my_comments = teacher.followed_comments().paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     my_next_url = url_for(
-        'teacher.dashboard_my_teacher_community', username=teacher.username,
+        'teacher.dashboard_my_teacher_community',
+        teacher_full_name=teacher.teacher_full_name,
         page=comments.next_num) \
         if comments.has_next else None
     my_prev_url = url_for(
-        'teacher.dashboard_my_teacher_community', username=teacher.username,
+        'teacher.dashboard_my_teacher_community',
+        teacher_full_name=teacher.teacher_full_name,
         page=comments.prev_num) \
         if comments.has_prev else None
     return render_template(
@@ -121,10 +131,11 @@ def dashboard_my_teacher_community(username):
         my_prev_url=my_prev_url)
 
 
-@bp.route('/dashboard/<username>/student-community')
+@bp.route('/dashboard/<teacher_full_name>/student-community')
 @login_required
-def dashboard_student_community(username):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+def dashboard_student_community(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     page = request.args.get('page', 1, type=int)
     comments = CommunityComment.query.order_by(
         CommunityComment.timestamp.desc()).paginate(
@@ -134,11 +145,13 @@ def dashboard_student_community(username):
         CommunityComment.timestamp.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     student_next_url = url_for(
-        'teacher.dashboard_student_community', username=teacher.username,
+        'teacher.dashboard_student_community',
+        teacher_full_name=teacher.teacher_full_name,
         page=comments.next_num) \
         if comments.has_next else None
     student_prev_url = url_for(
-        'teacher.dashboard_student_community', username=teacher.username,
+        'teacher.dashboard_student_community',
+        teacher_full_name=teacher.teacher_full_name,
         page=comments.prev_num) \
         if comments.has_prev else None
     return render_template(
@@ -151,10 +164,11 @@ def dashboard_student_community(username):
         student_prev_url=student_prev_url)
 
 
-@bp.route('/dashboard/<username>/comment-moderation-links')
+@bp.route('/dashboard/<teacher_full_name>/comment-moderation-links')
 @login_required
-def dashboard_comment_moderation(username):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+def dashboard_comment_moderation(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     course_chapters = Chapter.query.filter_by(
         course=teacher.teacher_course).all()
     return render_template(
@@ -164,10 +178,11 @@ def dashboard_comment_moderation(username):
         course_chapters=course_chapters)
 
 
-@bp.route('/dashboard/<username>/manage-course', methods=['GET', 'POST'])
+@bp.route('/dashboard/<teacher_full_name>/manage-course', methods=['GET', 'POST'])
 @login_required
-def dashboard_manage_course(username):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+def dashboard_manage_course(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
 
     # Manage Course Overview
     course_overview_form = WebDevelopmentOverviewForm()
@@ -175,12 +190,14 @@ def dashboard_manage_course(username):
         course_overview = WebDevelopmentOverview(
             title=course_overview_form.title.data,
             overview=course_overview_form.body.data,
-            youtube_link=course_overview_form.youtube_link.data)
+            youtube_link=course_overview_form.youtube_link.data,
+            author=teacher)
         db.session.add(course_overview)
         db.session.commit()
         flash('Your course overview has been posted!', 'success')
         return redirect(url_for(
-            'teacher.review_course_overview', username=teacher.username))
+            'teacher.review_course_overview',
+            teacher_full_name=teacher.teacher_full_name))
 
     # Manage Course Table of Contents
     table_of_contents_form = TableOfContentsForm()
@@ -188,12 +205,14 @@ def dashboard_manage_course(username):
         table_of_contents = TableOfContents(
             title=table_of_contents_form.title.data,
             chapter=table_of_contents_form.chapter.data,
-            link=table_of_contents_form.link.data)
+            link=table_of_contents_form.link.data,
+            author=teacher)
         db.session.add(table_of_contents)
         db.session.commit()
         flash('Your table of contents has been updated!', 'success')
         return redirect(url_for(
-            'teacher.review_table_of_contents', username=teacher.username))
+            'teacher.review_table_of_contents',
+            teacher_full_name=teacher.teacher_full_name))
 
     # Chapters
     chapter_form = ChapterForm()
@@ -212,12 +231,14 @@ def dashboard_manage_course(username):
             objective_2=chapter_form.objective_2.data,
             objective_3=chapter_form.objective_3.data,
             objective_4=chapter_form.objective_4.data,
-            objective_5=chapter_form.objective_5.data)
+            objective_5=chapter_form.objective_5.data,
+            author=teacher)
         db.session.add(chapter)
         db.session.commit()
         flash(f'{chapter} has been added!', 'success')
         return redirect(url_for(
-            'teacher.review_chapters', username=teacher.username))
+            'teacher.review_chapters',
+            teacher_full_name=teacher.teacher_full_name))
 
     # Chapter Quiz
     chapter_quiz_form = ChapterQuizForm()
@@ -229,12 +250,14 @@ def dashboard_manage_course(username):
             quiz_2=chapter_quiz_form.quiz_2.data,
             quiz_3=chapter_quiz_form.quiz_3.data,
             quiz_4=chapter_quiz_form.quiz_4.data,
-            quiz_5=chapter_quiz_form.quiz_5.data)
+            quiz_5=chapter_quiz_form.quiz_5.data,
+            author=teacher)
         db.session.add(chapter_quiz)
         db.session.commit()
         flash('Chapter quiz has been added!', 'success')
         return redirect(url_for(
-            'teacher.review_chapter_quiz', username=teacher.username))
+            'teacher.review_chapter_quiz',
+            teacher_full_name=teacher.teacher_full_name))
 
     # General mulitple choices quiz
     mulitple_choice_quiz_form = GeneralOwnChoiceQuizForm()
@@ -250,13 +273,14 @@ def dashboard_manage_course(username):
             quiz_7=mulitple_choice_quiz_form.quiz_7.data,
             quiz_8=mulitple_choice_quiz_form.quiz_8.data,
             quiz_9=mulitple_choice_quiz_form.quiz_9.data,
-            quiz_10=mulitple_choice_quiz_form.quiz_10.data)
+            quiz_10=mulitple_choice_quiz_form.quiz_10.data,
+            author=teacher)
         db.session.add(chapter_quiz)
         db.session.commit()
         flash('Chapter quiz has been added!', 'success')
         return redirect(url_for(
             'teacher.review_general_mulitiple_choices_quiz',
-            username=teacher.username))
+            teacher_full_name=teacher.teacher_full_name))
 
     all_quizzes = ChapterQuiz.query.filter_by(
         course=teacher.teacher_course).all()
@@ -305,10 +329,11 @@ def dashboard_manage_course(username):
 # ==========================================
 
 
-@bp.route('/dashboard/<username>/manage-blog', methods=['GET', 'POST'])
+@bp.route('/dashboard/<teacher_full_name>/manage-blog', methods=['GET', 'POST'])
 @login_required
-def dashboard_manage_blog(username):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+def dashboard_manage_blog(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
 
     # ----------------
     # Blogs: anonymous user
@@ -320,7 +345,8 @@ def dashboard_manage_blog(username):
             article_image=blog_articles_form.article_image.data,
             article_name=blog_articles_form.article_name.data,
             body=blog_articles_form.body.data,
-            link=blog_articles_form.link.data)
+            link=blog_articles_form.link.data,
+            author=teacher)
 
         # Handling file upload
         uploaded_file = blog_articles_form.article_image.data
@@ -340,7 +366,8 @@ def dashboard_manage_blog(username):
         db.session.commit()
         flash('You have addeded a new blog article')
         return redirect(url_for(
-            'teacher.dashboard_manage_blog', username=teacher.username))
+            'teacher.dashboard_manage_blog',
+            teacher_full_name=teacher.teacher_full_name))
     all_blog_articles = len(BlogArticles.query.all())
     return render_template(
         'teacher/manage_blog.html',
@@ -350,19 +377,22 @@ def dashboard_manage_blog(username):
         blog_articles_form=blog_articles_form)
 
 
-@bp.route('/blog/<username>/articles/review')
+@bp.route('/blog/<teacher_full_name>/articles/review')
 @login_required
-def review_blog_articles(username):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+def review_blog_articles(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     page = request.args.get('page', 1, type=int)
     blogs = BlogArticles.query.order_by(
         BlogArticles.timestamp.desc()).paginate(
             page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-        'teacher.review_blog_articles', username=teacher.username,
+        'teacher.review_blog_articles',
+        teacher_full_name=teacher.teacher_full_name,
         page=blogs.next_num, _anchor="blog") if blogs.has_next else None
     prev_url = url_for(
-        'teacher.review_blog_articles', username=teacher.username,
+        'teacher.review_blog_articles',
+        teacher_full_name=teacher.teacher_full_name,
         page=blogs.prev_num, _anchor="blog") if blogs.has_prev else None
     all_blogs = len(BlogArticles.query.all())
     return render_template(
@@ -375,26 +405,29 @@ def review_blog_articles(username):
         teacher=teacher)
 
 
-@bp.route('/blog/<username>/articles/<blog_article_id>/allow')
-def allow_blog_article(username, blog_article_id):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+@bp.route('/blog/<teacher_full_name>/articles/<blog_article_id>/allow')
+def allow_blog_article(teacher_full_name, blog_article_id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     blog_article = BlogArticles.query.filter_by(
         id=blog_article_id).first()
     blog_article.allowed_status = True
     db.session.commit()
     flash(f'Blog article {blog_article_id} has been authorized')
     return redirect(url_for(
-        'teacher.review_blog_articles', username=teacher.username))
+        'teacher.review_blog_articles',
+        teacher_full_name=teacher.teacher_full_name))
 
 # ==========================================
 # END OF MANAGE BLOG POSTS
 # ==========================================
 
 
-@bp.route('/dashboard/<username>/manage-events', methods=['GET', 'POST'])
+@bp.route('/dashboard/<teacher_full_name>/manage-events', methods=['GET', 'POST'])
 @login_required
-def dashboard_manage_events(username):
-    teacher = Teacher.query.filter_by(username=username).first_or_404()
+def dashboard_manage_events(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     event_form = EventsForm()
     if event_form.validate_on_submit():
         event = Events(
@@ -403,7 +436,8 @@ def dashboard_manage_events(username):
             date=event_form.event_date.data,
             time=event_form.event_time.data,
             location=event_form.event_location.data,
-            link=event_form.event_link.data)
+            link=event_form.event_link.data,
+            author=teacher)
 
         # Handling file upload
         uploaded_file = event_form.event_image.data
@@ -423,24 +457,24 @@ def dashboard_manage_events(username):
         db.session.commit()
         flash('Your event has been updated. Take action now!')
         return redirect(url_for(
-            'teacher.dashboard_manage_events', username=teacher.username,
+            'teacher.dashboard_manage_events',
+            teacher_full_name=teacher.teacher_full_name,
             _anchor='events'))
     page = request.args.get('page', 1, type=int)
     events = Events.query.order_by(
         Events.timestamp.desc()).paginate(
             page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-        'teacher.dashboard_manage_events', username=teacher.username,
+        'teacher.dashboard_manage_events',
+        teacher_full_name=teacher.teacher_full_name,
         page=events.next_num,
-        _anchor="events") \
-        if events.has_next else None
+        _anchor="events") if events.has_next else None
     prev_url = url_for(
-        'teacher.dashboard_manage_events', username=teacher.username,
+        'teacher.dashboard_manage_events',
+        teacher_full_name=teacher.teacher_full_name,
         page=events.prev_num,
-        _anchor="events") \
-        if events.has_prev else None
+        _anchor="events")if events.has_prev else None
     all_events = len(Events.query.all())
-
     return render_template(
         'teacher/manage_events.html',
         title='Manage Events',
@@ -452,51 +486,53 @@ def dashboard_manage_events(username):
         event_form=event_form)
 
 
-@bp.route('/events/<event_id>/delete')
-def delete_event(event_id):
-    event = Events.query.filter_by(
-        id=event_id
-        ).first()
+@bp.route('/events/<teacher_full_name>/<event_id>/delete')
+def delete_event(teacher_full_name, event_id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    event = Events.query.filter_by(id=event_id).first()
     db.session.delete(event)
     db.session.commit()
     flash(f'Event {event_id} has been deleted!')
     return redirect(url_for(
         'admin.dashboard_manage_events',
-        _anchor='events')
-        )
+        teacher_full_name=teacher.teacher_full_name,
+        _anchor='events'))
 
 
-@bp.route('/event/<event_id>/allow', methods=['GET', 'POST'])
-def allow_event(event_id):
-    event = Events.query.filter_by(
-        id=event_id
-        ).first()
+@bp.route('/event/<teacher_full_name>/<event_id>/allow', methods=['GET', 'POST'])
+def allow_event(teacher_full_name, event_id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    event = Events.query.filter_by(id=event_id).first()
     event.allowed_status = True
     db.session.commit()
     flash(f'Event {event_id} has been authorized!')
     return redirect(url_for(
         'teacher.dashboard_manage_events',
-        _anchor="events")
-        )
+        teacher_full_name=teacher.teacher_full_name,
+        _anchor="events"))
 
 # Profile route
 
 
-@bp.route('/<username>/edit-profile', methods=['GET', 'POST'])
+@bp.route('/<teacher_full_name>/edit-profile', methods=['GET', 'POST'])
 @login_required
-def edit_profile(username):
-    teacher = Teacher.query.filter_by(username=username).first()
-    form = EditProfileForm(current_user.teacher_email)
+def edit_profile(teacher_full_name):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first()
+    form = EditProfileForm(teacher.teacher_email)
     if form.validate_on_submit():
-        current_user.teacher_email = form.email.data
-        current_user.teacher_about_me = form.about_me.data
+        teacher.teacher_email = form.email.data
+        teacher.teacher_about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for(
-            'teacher.dashboard_account', username=teacher.username))
+            'teacher.dashboard_account',
+            teacher_full_name=teacher.teacher_full_name))
     elif request.method == 'GET':
-        form.email.data = current_user.teacher_email
-        form.about_me.data = current_user.teacher_about_me
+        form.email.data = teacher.teacher_email
+        form.about_me.data = teacher.teacher_about_me
     return render_template(
         'teacher/edit_profile_teacher.html',
         teacher=teacher,
@@ -507,14 +543,11 @@ def edit_profile(username):
 @bp.route('/profile/<teacher_full_name>')
 @login_required
 def profile_teacher(teacher_full_name):
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=teacher_full_name
-        ).first()
+    teacher = Teacher.query.filter_by(teacher_full_name=teacher_full_name).first()
     page = request.args.get('page', 1, type=int)
     comments = teacher.comments.order_by(
-        TeacherCommunityComment.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        TeacherCommunityComment.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'teacher.profile_teacher', teacher_full_name=teacher_full_name,
         _anchor="teacher-comments",
@@ -533,8 +566,7 @@ def profile_teacher(teacher_full_name):
         next_url=next_url,
         prev_url=prev_url,
         form=form,
-        title='Teacher Profile'
-        )
+        title='Teacher Profile')
 
 # Profile Popup
 
@@ -543,15 +575,13 @@ def profile_teacher(teacher_full_name):
 @login_required
 def teacher_profile_popup(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=teacher_full_name
-        ).first_or_404()
+        teacher_full_name=teacher_full_name).first_or_404()
     form = EmptyForm()
     return render_template(
         'teacher/profile_teacher_popup.html',
         teacher=teacher,
         title='Teacher Profile',
-        form=form
-        )
+        form=form)
 
 
 # Send private messages route
@@ -560,76 +590,68 @@ def teacher_profile_popup(teacher_full_name):
 @login_required
 def send_messages(recipient):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=recipient
-        ).first()
+        teacher_full_name=recipient).first()
     form = PrivateMessageForm()
     if form.validate_on_submit():
         private_message = TeacherMessage(
-            author=current_user,
+            author=teacher,
             recipient=teacher,
-            body=form.message.data
-            )
+            body=form.message.data)
         db.session.add(private_message)
         teacher.add_notification(
-            'unread_message_count', teacher.new_messages()
-            )
+            'unread_message_count', teacher.new_messages())
         db.session.commit()
         flash('Your message has been sent!')
         return redirect(url_for(
             'teacher.send_messages',
-            recipient=recipient)
-            )
+            recipient=recipient))
     return render_template(
         'teacher/private_messages/send_private_messages.html',
         teacher=teacher,
         title='Send Private Messages',
-        form=form
-        )
+        form=form)
 
 # View private messages route
 
 
-@bp.route('/messages')
+@bp.route('/messages/<teacher_full_name>')
 @login_required
-def view_messages():
+def view_messages(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
-    current_user.last_message_read_time = datetime.utcnow()
-    current_user.add_notification('unread_message_count', 0)
+        teacher_full_name=teacher_full_name).first_or_404()
+    teacher.last_message_read_time = datetime.utcnow()
+    teacher.add_notification('unread_message_count', 0)
     db.session.commit()
     page = request.args.get('page', 1, type=int)
-    messages = current_user.messages_received.order_by(
+    messages = teacher.messages_received.order_by(
             TeacherMessage.timestamp.desc()).paginate(
                 page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'teacher.view_messages',
+        teacher_full_name=teacher.teacher_full_name,
         page=messages.next_num,
-        _anchor="messages") \
-        if messages.has_next else None
+        _anchor="messages") if messages.has_next else None
     prev_url = url_for(
         'teacher.view_messages',
+        teacher_full_name=teacher.teacher_full_name,
         page=messages.prev_num,
-        _anchor="messages") \
-        if messages.has_prev else None
+        _anchor="messages") if messages.has_prev else None
     return render_template(
         'teacher/private_messages/view_private_messages.html',
         messages=messages.items,
         title='View Private Messages',
         next_url=next_url,
         prev_url=prev_url,
-        teacher=teacher
-        )
+        teacher=teacher)
 
 # Teacher notificatons route
 
 
-@bp.route('/notifications')
+@bp.route('/notifications/<teacher_full_name>')
 @login_required
-def teacher_notifications():
+def teacher_notifications(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first_or_404()
     since = request.args.get('since', 0.0, type=float)
     notifications = teacher.notifications.filter(
         TeacherNotifications.timestamp > since).order_by(
@@ -641,11 +663,11 @@ def teacher_notifications():
         } for n in notifications])
 
 
-@bp.route('/profile/student/<student_full_name>')
+@bp.route('/<teacher_full_name>/profile/student/<student_full_name>')
 @login_required
-def profile_student(student_full_name):
+def profile_student(teacher_full_name, student_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name).first()
+        teacher_full_name=teacher_full_name).first()
     student = Student.query.filter_by(
         student_full_name=student_full_name).first()
 
@@ -671,7 +693,6 @@ def profile_student(student_full_name):
         student_full_name=student_full_name))
     chapter3_total_score_labels = list(chapter3_total_score(
         student_full_name=student_full_name))
-    print('Teacher Obj Results: ', chapter1_total_score_results)
     chapter1_obj_attempts_chart_labels = chapter1_objectives_results[1]
     chapter1_obj_attempts_chart_data = chapter1_objectives_results[2]
     obj_attempts_chart_labels_chapter2 = chapter2_objectives_results[1]
@@ -688,19 +709,20 @@ def profile_student(student_full_name):
 
     page = request.args.get('page', 1, type=int)
     comments = student.comments.order_by(
-        CommunityComment.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        CommunityComment.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-        'teacher.profile_student', student_full_name=student_full_name,
+        'teacher.profile_student',
+        teacher_full_name=teacher.teacher_full_name,
+        student_full_name=student_full_name,
         _anchor="student-comments",
-        page=comments.next_num) \
-        if comments.has_next else None
+        page=comments.next_num) if comments.has_next else None
     prev_url = url_for(
-        'teacher.profile_student', student_full_name=student_full_name,
+        'teacher.profile_student',
+        teacher_full_name=teacher.teacher_full_name,
+        student_full_name=student_full_name,
         _anchor="student-comments",
-        page=comments.prev_num) \
-        if comments.has_prev else None
+        page=comments.prev_num) if comments.has_prev else None
     form = EmptyForm()
     all_comments = len(student.comments.all())
     return render_template(
@@ -725,95 +747,86 @@ def profile_student(student_full_name):
         int_total_score_list_chapter2=int_total_score_list_chapter2,
         quiz_attempts_chart_labels_chapter2=quiz_attempts_chart_labels_chapter2,
         int_total_score_list_chapter3=int_total_score_list_chapter3,
-        quiz_attempts_chart_labels_chapter3=quiz_attempts_chart_labels_chapter3
-        )
+        quiz_attempts_chart_labels_chapter3=quiz_attempts_chart_labels_chapter3)
 
 
-@bp.route('/profile/student/<student_full_name>/popup/')
+@bp.route('/<teacher_full_name>/profile/student/<student_full_name>/popup/')
 @login_required
-def student_profile_popup(student_full_name):
+def student_profile_popup(teacher_full_name, student_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first()
     student = Student.query.filter_by(
-        student_full_name=student_full_name
-        ).first()
+        student_full_name=student_full_name).first()
     return render_template(
         'teacher/profile_student_popup.html',
         student=student,
         teacher=teacher,
-        title='Student Profile'
-        )
+        title='Student Profile')
 
 # End of profile route
 
 # Followership routes
 
 
-@bp.route('/follow/<teacher_full_name>', methods=['POST'])
+@bp.route('/<teacher_full_name>/follow/<teacher>', methods=['POST'])
 @login_required
-def follow_teacher(teacher_full_name):
+def follow_teacher(teacher_full_name, teacher):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first()
     form = EmptyForm()
     if form.validate_on_submit():
-        teacher = Teacher.query.filter_by(
-            teacher_full_name=teacher_full_name
-            ).first()
-        if teacher is None:
-            flash(f'User {teacher_full_name} not found')
-            return redirect(url_for('teacher.dashboard_explore_teachers'))
-        if teacher == current_user:
+        another_teacher = Teacher.query.filter_by(teacher_full_name=teacher).first()
+        if another_teacher is None:
+            flash(f'User {teacher} not found')
+            return redirect(url_for(
+                'teacher.dashboard_explore_teachers',
+                teacher_full_name=teacher.teacher_full_name))
+        if another_teacher == teacher:
             flash('You cannot follow yourself!')
             return redirect(url_for(
                 'teacher.profile_teacher',
-                teacher_full_name=teacher_full_name
-                )
-            )
-        current_user.follow(teacher)
+                teacher_full_name=teacher.teacher_full_name))
+        teacher.follow(another_teacher)
         db.session.commit()
-        flash(f'You are following {teacher.teacher_full_name}!')
+        flash(f'You are following {another_teacher}!')
         return redirect(url_for(
             'teacher.profile_teacher',
-            teacher_full_name=teacher_full_name
-            )
-        )
+            teacher_full_name=teacher.teacher_full_name))
     else:
-        return redirect(url_for('teacher.dashboard_explore_teachers'))
+        return redirect(url_for(
+            'teacher.dashboard_explore_teachers',
+            teacher_full_name=teacher.teacher_full_name))
 
 
-@bp.route('/unfollow/<teacher_full_name>', methods=['POST'])
+@bp.route('/<teacher_full_name>/unfollow/<teacher>', methods=['POST'])
 @login_required
-def unfollow_teacher(teacher_full_name):
+def unfollow_teacher(teacher_full_name, teacher):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first()
     form = EmptyForm()
     if form.validate_on_submit():
-        teacher = Teacher.query.filter_by(
-            teacher_full_name=teacher_full_name
-            ).first()
-        if teacher is None:
-            flash(f'User {teacher_full_name} not found')
-            return redirect(url_for('teacher.dashboard_explore_teachers'))
-        if teacher == current_user:
+        another_teacher = Teacher.query.filter_by(
+            teacher_full_name=teacher).first()
+        if another_teacher is None:
+            flash(f'User {another_teacher} not found')
+            return redirect(url_for(
+                'teacher.dashboard_explore_teachers',
+                teacher_full_name=teacher.teacher_full_name))
+        if another_teacher == teacher:
             flash('You cannot unfollow yourself!')
             return redirect(url_for(
                 'teacher.profile_teacher',
-                teacher_full_name=teacher_full_name
-                )
-            )
-        current_user.unfollow(teacher)
+                teacher_full_name=teacher.teacher_full_name))
+        teacher.unfollow(teacher)
         db.session.commit()
-        flash(f'You are not following {teacher.teacher_full_name}!')
+        flash(f'You are not following {another_teacher}!')
         return redirect(url_for(
             'teacher.profile_teacher',
-            teacher_full_name=teacher_full_name
-            )
-        )
+            teacher_full_name=teacher.teacher_full_name))
     else:
-        return redirect(url_for('teacher.dashboard_explore_teachers'))
+        return redirect(url_for(
+            'teacher.dashboard_explore_teachers',
+            teacher_full_name=teacher.teacher_full_name))
 
 # End of followership routes
 
@@ -824,35 +837,30 @@ def unfollow_teacher(teacher_full_name):
 # Overview route
 
 
-@bp.route('/course/overview/review')
+@bp.route('/<teacher_full_name>/course/overview/review')
 @login_required
-def review_course_overview():
+def review_course_overview(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first_or_404()
     page = request.args.get('page', 1, type=int)
     course_overview = WebDevelopmentOverview.query.filter_by(
-        title=teacher.teacher_course
-    ).order_by(
-        WebDevelopmentOverview.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        title=teacher.teacher_course).order_by(
+            WebDevelopmentOverview.timestamp.desc()).paginate(
+                page, current_app.config['POSTS_PER_PAGE'], False)
     course_overview_next_url = url_for(
         'teacher.review_course_overview',
-        page=course_overview.next_num) \
-        if course_overview.has_next else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=course_overview.next_num) if course_overview.has_next else None
     course_overview_prev_url = url_for(
         'teacher.review_course_overview',
-        page=course_overview.prev_num) \
-        if course_overview.has_prev else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=course_overview.prev_num) if course_overview.has_prev else None
 
     # Table of contents
     course_toc = TableOfContents.query.filter_by(
-        title=teacher.teacher_course).order_by(
-        TableOfContents.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
-
+            title=teacher.teacher_course).order_by(
+                TableOfContents.timestamp.asc()).paginate(
+                    page, current_app.config['POSTS_PER_PAGE'], False)
     return render_template(
         'teacher/course/flask/reviews/flask_overview.html',
         teacher=teacher,
@@ -860,62 +868,56 @@ def review_course_overview():
         course_overview=course_overview.items,
         course_overview_next_url=course_overview_next_url,
         course_overview_prev_url=course_overview_prev_url,
-        course_toc=course_toc.items
-        )
+        course_toc=course_toc.items)
 
 
-@bp.route('/course/overview/<course_title>/allow')
-def allow_course_overview(course_title):
-    course = WebDevelopmentOverview.query.filter_by(
-        title=course_title
-        ).first()
+@bp.route('/<teacher_full_name>/course/overview/<course_title>/allow')
+def allow_course_overview(teacher_full_name, course_title):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    course = WebDevelopmentOverview.query.filter_by(title=course_title).first()
     course.allowed_status = True
     db.session.commit()
     flash('Course overview has been allowed.')
     return redirect(url_for(
-        'teacher.review_course_overview'
-        )
-    )
+        'teacher.review_course_overview',
+        teacher_full_name=teacher.teacher_full_name))
 
 
-@bp.route('/course/overview/<course_title>/delete')
-def delete_course_overview(course_title):
-    course = WebDevelopmentOverview.query.filter_by(
-        title=course_title
-        ).first()
+@bp.route('/<teacher_full_name>/course/overview/<course_title>/delete')
+def delete_course_overview(teacher_full_name, course_title):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    course = WebDevelopmentOverview.query.filter_by(title=course_title).first()
     db.session.delete(course)
     db.session.commit()
     flash('Course overview has been deleted.')
     return redirect(url_for(
-        'teacher.review_course_overview'
-        )
-    )
+        'teacher.review_course_overview',
+        teacher_full_name=teacher.teacher_full_name))
 
 
 # Table of contents route
 
 
-@bp.route('/course/toc/review')
+@bp.route('/<teacher_full_name>/course/toc/review')
 @login_required
-def review_table_of_contents():
+def review_table_of_contents(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first()
     page = request.args.get('page', 1, type=int)
     course_toc = TableOfContents.query.filter_by(
-        title=teacher.teacher_course
-    ).order_by(
-        TableOfContents.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+            title=teacher.teacher_course).order_by(
+                TableOfContents.timestamp.asc()).paginate(
+                    page, current_app.config['POSTS_PER_PAGE'], False)
     course_toc_next_url = url_for(
                     'teacher.review_table_of_contents',
-                    page=course_toc.next_num) \
-        if course_toc.has_next else None
+                    teacher_full_name=teacher.teacher_full_name,
+                    page=course_toc.next_num) if course_toc.has_next else None
     course_toc_prev_url = url_for(
         'teacher.review_table_of_contents',
-        page=course_toc.prev_num) \
-        if course_toc.has_prev else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=course_toc.prev_num) if course_toc.has_prev else None
     all_toc = len(TableOfContents.query.all())
     return render_template(
         'teacher/course/flask/reviews/flask_toc.html',
@@ -924,65 +926,61 @@ def review_table_of_contents():
         course_toc=course_toc.items,
         course_toc_next_url=course_toc_next_url,
         course_toc_prev_url=course_toc_prev_url,
-        all_toc=all_toc
-        )
+        all_toc=all_toc)
 
 
-@bp.route('/course/toc/<chapter>/allow')
-def allow_table_of_contents(chapter):
-    toc = TableOfContents.query.filter_by(
-        chapter=chapter
-        ).first()
+@bp.route('/<teacher_full_name>/course/toc/<chapter>/allow')
+def allow_table_of_contents(teacher_full_name, chapter):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    toc = TableOfContents.query.filter_by(chapter=chapter).first()
     toc.allowed_status = True
     db.session.commit()
     flash(f'{chapter} in table of contents has been allowed.')
     return redirect(url_for(
-        'teacher.review_table_of_contents'
-        )
-    )
+        'teacher.review_table_of_contents',
+        teacher_full_name=teacher.teacher_full_name))
 
 
-@bp.route('/course/toc/<chapter>/delete')
-def delete_table_of_contents(chapter):
-    toc = TableOfContents.query.filter_by(
-        chapter=chapter
-        ).first()
+@bp.route('/<teacher_full_name>/course/toc/<chapter>/delete')
+def delete_table_of_contents(teacher_full_name, chapter):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    toc = TableOfContents.query.filter_by(chapter=chapter).first()
     db.session.delete(toc)
     db.session.commit()
     flash(f'{chapter} in table of contents has been deleted.')
     return redirect(url_for(
-        'teacher.review_table_of_contents'
-        )
-    )
+        'teacher.review_table_of_contents',
+        teacher_full_name=teacher.teacher_full_name))
 
 # Chapters
 
 
-@bp.route('/course/chapters/review')
+@bp.route('/<teacher_full_name>/course/chapters/review')
 @login_required
-def review_chapters():
+def review_chapters(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first()
     page = request.args.get('page', 1, type=int)
 
     # Chapters
     course_chapters = Chapter.query.filter_by(
-        course=teacher.teacher_course
-    ).order_by(
-        Chapter.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+            course=teacher.teacher_course).order_by(
+                Chapter.timestamp.asc()).paginate(
+                    page, current_app.config['POSTS_PER_PAGE'], False)
     course_chapters_next_url = url_for(
         'teacher.review_chapters',
-        page=course_chapters.next_num) \
-        if course_chapters.has_next else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=course_chapters.next_num) if course_chapters.has_next else None
     course_chapters_prev_url = url_for(
         'teacher.review_chapters',
-        page=course_chapters.prev_num) \
-        if course_chapters.has_prev else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=course_chapters.prev_num) if course_chapters.has_prev else None
     all_chapters = len(Chapter.query.all())
+
     # Table of contents
+
     toc_chapters = TableOfContents.query.filter_by(
         title=teacher.teacher_course).order_by(
             TableOfContents.timestamp.asc()).paginate(
@@ -1000,36 +998,33 @@ def review_chapters():
         course_chapters_prev_url=course_chapters_prev_url,
 
         # Table of contents
-        toc_chapters=toc_chapters.items
-        )
+        toc_chapters=toc_chapters.items)
 
 
-@bp.route('/course/chapters/<chapter>/allow')
-def allow_chapters(chapter):
-    chapter = Chapter.query.filter_by(
-        chapter=chapter
-        ).first()
+@bp.route('/<teacher_full_name>/course/chapters/<chapter>/allow')
+def allow_chapters(teacher_full_name, chapter):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    chapter = Chapter.query.filter_by(chapter=chapter).first()
     chapter.allowed_status = True
     db.session.commit()
     flash('Chapter has been allowed.')
     return redirect(url_for(
-        'teacher.review_chapters'
-        )
-    )
+        'teacher.review_chapters',
+        teacher_full_name=teacher.teacher_full_name))
 
 
-@bp.route('/course/chapters/<chapter>/delete')
-def delete_chapters(chapter):
-    chapter = Chapter.query.filter_by(
-        chapter=chapter
-        ).first()
+@bp.route('/<teacher_full_name>/course/chapters/<chapter>/delete')
+def delete_chapters(teacher_full_name, chapter):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    chapter = Chapter.query.filter_by(chapter=chapter).first()
     db.session.delete(chapter)
     db.session.commit()
     flash('Chapter has been deleted.')
     return redirect(url_for(
-        'teacher.review_chapters'
-        )
-    )
+        'teacher.review_chapters',
+        teacher_full_name=teacher.teacher_full_name))
 
 # ========================================
 # END OF COURSE MANAGEMENT ROUTES
@@ -1042,25 +1037,25 @@ def delete_chapters(chapter):
 
 # Flask Chapter 1
 
-@bp.route('/flask/chapter-1/comments/review')
+@bp.route('/<teacher_full_name>flask/chapter-1/comments/review')
 @login_required
-def review_flask_chapter_1_comments():
+def review_flask_chapter_1_comments(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first()
     page = request.args.get('page', 1, type=int)
     flask_chapter_1_comments = WebDevChapter1Comment.query.order_by(
-        WebDevChapter1Comment.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        WebDevChapter1Comment.timestamp.asc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     flask_chapter_1_comments_next_url = url_for(
         'teacher.review_flask_chapter_1_comments',
+        teacher_full_name=teacher.teacher_full_name,
         page=flask_chapter_1_comments.next_num) \
-        if flask_chapter_1_comments.has_next else None
+            if flask_chapter_1_comments.has_next else None
     flask_chapter_1_comments_prev_url = url_for(
         'teacher.review_flask_chapter_1_comments',
+        teacher_full_name=teacher.teacher_full_name,
         page=flask_chapter_1_comments.prev_num) \
-        if flask_chapter_1_comments.has_prev else None
+            if flask_chapter_1_comments.has_prev else None
     all_flask_chapter_1_comments = len(WebDevChapter1Comment.query.all())
     return render_template(
         'teacher/course/flask/reviews/flask_chapter_1_comments.html',
@@ -1069,58 +1064,56 @@ def review_flask_chapter_1_comments():
         flask_chapter_1_comments=flask_chapter_1_comments.items,
         flask_chapter_1_comments_next_url=flask_chapter_1_comments_next_url,
         flask_chapter_1_comments_prev_url=flask_chapter_1_comments_prev_url,
-        all_flask_chapter_1_comments=all_flask_chapter_1_comments
-        )
+        all_flask_chapter_1_comments=all_flask_chapter_1_comments)
 
 
-@bp.route('/flask/chapter-1/comments/<int:id>/allow')
-def allow_flask_chapter_1_comments(id):
-    student = Student.query.filter_by(
-        id=id).first()
+@bp.route('/<teacher_full_name>/flask/chapter-1/comments/<int:id>/allow')
+def allow_flask_chapter_1_comments(teacher_full_name, id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    student = Student.query.filter_by(id=id).first()
     comment = WebDevChapter1Comment.query.get_or_404(id)
     comment.allowed_status = True
     db.session.commit()
     send_live_flask_chapter_1_comment_email(student)
     flash(f'Flask chapter 1 comment {id} has been allowed.')
     return redirect(url_for(
-        'teacher.review_flask_chapter_1_comments'
-        )
-    )
+        'teacher.review_flask_chapter_1_comments',
+        teacher_full_name=teacher.teacher_full_name))
 
 
-@bp.route('/flask/chapter-1/comments/<int:id>/delete')
-def delete_flask_chapter_1_comments(id):
+@bp.route('/<teacher_full_name>/flask/chapter-1/comments/<int:id>/delete')
+def delete_flask_chapter_1_comments(teacher_full_name, id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     comment = WebDevChapter1Comment.query.get_or_404(id)
     db.session.delete(comment)
     db.session.commit()
     flash(f'Flask chapter 1 comment {id} has been deleted.')
     return redirect(url_for(
-        'teacher.review_flask_chapter_1_comments'
-        )
-    )
+        'teacher.review_flask_chapter_1_comments',
+        teacher_full_name=teacher.teacher_full_name))
 
 
 # Flask Chapter 2
 
-@bp.route('/flask/chapter-2/comments/review')
+@bp.route('/<teacher_full_name>/flask/chapter-2/comments/review')
 @login_required
-def review_flask_chapter_2_comments():
+def review_flask_chapter_2_comments(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first()
     page = request.args.get('page', 1, type=int)
     comments = WebDevChapter2Comment.query.order_by(
-        WebDevChapter2Comment.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        WebDevChapter2Comment.timestamp.asc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'teacher.review_flask_chapter_2_comments',
-        page=comments.next_num) \
-        if comments.has_next else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=comments.next_num) if comments.has_next else None
     prev_url = url_for(
         'teacher.review_flask_chapter_2_comments',
-        page=comments.prev_num) \
-        if comments.has_prev else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=comments.prev_num) if comments.has_prev else None
     all_comments = len(WebDevChapter2Comment.query.all())
     return render_template(
         'teacher/course/flask/reviews/flask_chapter_2_comments.html',
@@ -1129,58 +1122,56 @@ def review_flask_chapter_2_comments():
         comments=comments.items,
         next_url=next_url,
         prev_url=prev_url,
-        all_comments=all_comments
-        )
+        all_comments=all_comments)
 
 
-@bp.route('/flask/chapter-2/comments/<int:id>/allow')
-def allow_flask_chapter_2_comments(id):
-    student = Student.query.filter_by(
-        id=id).first()
+@bp.route('/<teacher_full_name>/flask/chapter-2/comments/<int:id>/allow')
+def allow_flask_chapter_2_comments(teacher_full_name, id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    student = Student.query.filter_by(id=id).first()
     comment = WebDevChapter2Comment.query.get_or_404(id)
     comment.allowed_status = True
     db.session.commit()
     send_live_flask_chapter_2_comment_email(student)
     flash(f'Flask chapter 2 comment {id} has been allowed.')
     return redirect(url_for(
-        'teacher.review_flask_chapter_2_comments'
-        )
-    )
+        'teacher.review_flask_chapter_2_comments',
+        teacher_full_name=teacher.teacher_full_name))
 
 
-@bp.route('/flask/chapter-2/comments/<int:id>/delete')
-def delete_flask_chapter_2_comments(id):
+@bp.route('/<teacher_full_name>/flask/chapter-2/comments/<int:id>/delete')
+def delete_flask_chapter_2_comments(teacher_full_name, id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     comment = WebDevChapter2Comment.query.get_or_404(id)
     db.session.delete(comment)
     db.session.commit()
     flash(f'Flask chapter 3 comment {id} has been deleted.')
     return redirect(url_for(
-        'teacher.review_flask_chapter_2_comments'
-        )
-    )
+        'teacher.review_flask_chapter_2_comments',
+        teacher_full_name=teacher.teacher_full_name))
 
 
 # Flask Chapter 3
 
-@bp.route('/flask/chapter-3/comments/review')
+@bp.route('/<teacher_full_name>/flask/chapter-3/comments/review')
 @login_required
-def review_flask_chapter_3_comments():
+def review_flask_chapter_3_comments(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first()
     page = request.args.get('page', 1, type=int)
     comments = WebDevChapter3Comment.query.order_by(
-        WebDevChapter3Comment.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        WebDevChapter3Comment.timestamp.asc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'teacher.review_flask_chapter_3_comments',
-        page=comments.next_num) \
-        if comments.has_next else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=comments.next_num) if comments.has_next else None
     prev_url = url_for(
         'teacher.review_flask_chapter_3_comments',
-        page=comments.prev_num) \
-        if comments.has_prev else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=comments.prev_num) if comments.has_prev else None
     all_comments = len(WebDevChapter3Comment.query.all())
     return render_template(
         'teacher/course/flask/reviews/flask_chapter_3_comments.html',
@@ -1189,59 +1180,57 @@ def review_flask_chapter_3_comments():
         comments=comments.items,
         next_url=next_url,
         prev_url=prev_url,
-        all_comments=all_comments
-        )
+        all_comments=all_comments)
 
 
-@bp.route('/flask/chapter-3/comments/<int:id>/allow')
-def allow_flask_chapter_3_comments(id):
-    student = Student.query.filter_by(
-        id=id).first()
+@bp.route('/<teacher_full_name>/flask/chapter-3/comments/<int:id>/allow')
+def allow_flask_chapter_3_comments(teacher_full_name, id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
+    student = Student.query.filter_by(id=id).first()
     comment = WebDevChapter3Comment.query.get_or_404(id)
     comment.allowed_status = True
     db.session.commit()
     send_live_flask_chapter_3_comment_email(student)
     flash(f'Flask chapter 3 comment {id} has been allowed.')
     return redirect(url_for(
-        'teacher.review_flask_chapter_3_comments'
-        )
-    )
+        'teacher.review_flask_chapter_3_comments',
+        teacher_full_name=teacher.teacher_full_name))
 
 
-@bp.route('/flask/chapter-3/comments/<int:id>/delete')
-def delete_flask_chapter_3_comments(id):
+@bp.route('/<teacher_full_name>/flask/chapter-3/comments/<int:id>/delete')
+def delete_flask_chapter_3_comments(teacher_full_name, id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     comment = WebDevChapter3Comment.query.get_or_404(id)
     db.session.delete(comment)
     db.session.commit()
     flash(f'Flask chapter 3 comment {id} has been deleted.')
     return redirect(url_for(
-        'teacher.review_flask_chapter_3_comments'
-        )
-    )
+        'teacher.review_flask_chapter_3_comments',
+        teacher_full_name=teacher.teacher_full_name))
 
 
 # Flask chapter quiz
 
 
-@bp.route('/flask/quiz/review')
+@bp.route('/<teacher_full_name>/flask/quiz/review')
 @login_required
-def review_chapter_quiz():
+def review_chapter_quiz(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first()
     page = request.args.get('page', 1, type=int)
     flask_quiz = ChapterQuiz.query.order_by(
-        ChapterQuiz.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        ChapterQuiz.timestamp.asc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     flask_quiz_next_url = url_for(
         'teacher.review_chapter_quiz',
-        page=flask_quiz.next_num) \
-        if flask_quiz.has_next else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=flask_quiz.next_num) if flask_quiz.has_next else None
     flask_quiz_prev_url = url_for(
         'teacher.review_chapter_quiz',
-        page=flask_quiz.prev_num) \
-        if flask_quiz.has_prev else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=flask_quiz.prev_num) if flask_quiz.has_prev else None
     all_flask_quiz = len(ChapterQuiz.query.all())
     return render_template(
         'teacher/course/flask/reviews/flask_quiz.html',
@@ -1250,32 +1239,33 @@ def review_chapter_quiz():
         flask_quiz=flask_quiz.items,
         flask_quiz_next_url=flask_quiz_next_url,
         flask_quiz_prev_url=flask_quiz_prev_url,
-        all_flask_quiz=all_flask_quiz
-        )
+        all_flask_quiz=all_flask_quiz)
 
 
-@bp.route('/flask/quiz/<int:id>/allow')
-def allow_flask_quiz(id):
+@bp.route('/<teacher_full_name>/flask/quiz/<int:id>/allow')
+def allow_flask_quiz(teacher_full_name, id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     quiz = ChapterQuiz.query.get_or_404(id)
     quiz.allowed_status = True
     db.session.commit()
     flash(f'Flask quiz {id} has been allowed.')
     return redirect(url_for(
-        'teacher.review_chapter_quiz'
-        )
-    )
+        'teacher.review_chapter_quiz',
+        teacher_full_name=teacher.teacher_full_name))
 
 
-@bp.route('/flask/quiz/<int:id>/delete')
-def delete_flask_quiz(id):
+@bp.route('/<teacher_full_name>/flask/quiz/<int:id>/delete')
+def delete_flask_quiz(teacher_full_name, id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     quiz = ChapterQuiz.query.get_or_404(id)
     db.session.delete(quiz)
     db.session.commit()
     flash(f'Flask quiz {id} has been deleted.')
     return redirect(url_for(
-        'teacher.review_chapter_quiz'
-        )
-    )
+        'teacher.review_chapter_quiz',
+        teacher_full_name=teacher.teacher_full_name))
 
 # ========================================
 # END OF COMMENTS MANAGEMENT ROUTES
@@ -1286,25 +1276,23 @@ def delete_flask_quiz(id):
 # ========================================
 
 
-@bp.route('/flask/general-mulitple-choices-quiz/review')
+@bp.route('/<teacher_full_name>/flask/general-mulitple-choices-quiz/review')
 @login_required
-def review_general_mulitiple_choices_quiz():
+def review_general_mulitiple_choices_quiz(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first()
+        teacher_full_name=teacher_full_name).first()
     page = request.args.get('page', 1, type=int)
     flask_quiz = GeneralMultipleChoicesQuiz.query.order_by(
-        GeneralMultipleChoicesQuiz.timestamp.asc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        GeneralMultipleChoicesQuiz.timestamp.asc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'teacher.review_general_mulitiple_choices_quiz',
-        page=flask_quiz.next_num) \
-        if flask_quiz.has_next else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=flask_quiz.next_num) if flask_quiz.has_next else None
     prev_url = url_for(
         'teacher.review_general_mulitiple_choices_quiz',
-        page=flask_quiz.prev_num) \
-        if flask_quiz.has_prev else None
+        teacher_full_name=teacher.teacher_full_name,
+        page=flask_quiz.prev_num) if flask_quiz.has_prev else None
     all_flask_quiz = len(GeneralMultipleChoicesQuiz.query.all())
     return render_template(
         'teacher/course/flask/reviews/general_multiple_choices_quiz.html',
@@ -1313,32 +1301,33 @@ def review_general_mulitiple_choices_quiz():
         flask_quiz=flask_quiz.items,
         next_url=next_url,
         prev_url=prev_url,
-        all_flask_quiz=all_flask_quiz
-        )
+        all_flask_quiz=all_flask_quiz)
 
 
-@bp.route('/flask/general-mulitple-choices-quiz/<int:id>/allow')
-def allow_review_general_mulitiple_choices_quiz(id):
+@bp.route('/<teacher_full_name>/flask/general-mulitple-choices-quiz/<int:id>/allow')
+def allow_review_general_mulitiple_choices_quiz(teacher_full_name, id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     quiz = GeneralMultipleChoicesQuiz.query.get_or_404(id)
     quiz.allowed_status = True
     db.session.commit()
     flash(f'General flask quiz {id} has been allowed.')
     return redirect(url_for(
-        'teacher.review_general_mulitiple_choices_quiz'
-        )
-    )
+        'teacher.review_general_mulitiple_choices_quiz',
+        teacher_full_name=teacher.teacher_full_name))
 
 
-@bp.route('/flask/general-mulitple-choices-quiz/<int:id>/delete')
-def delete_review_general_mulitiple_choices_quiz(id):
+@bp.route('/<teacher_full_name>/flask/general-mulitple-choices-quiz/<int:id>/delete')
+def delete_review_general_mulitiple_choices_quiz(teacher_full_name, id):
+    teacher = Teacher.query.filter_by(
+        teacher_full_name=teacher_full_name).first_or_404()
     quiz = GeneralMultipleChoicesQuiz.query.get_or_404(id)
     db.session.delete(quiz)
     db.session.commit()
     flash(f'General flask quiz {id} has been deleted.')
     return redirect(url_for(
-        'teacher.review_general_mulitiple_choices_quiz'
-        )
-    )
+        'teacher.review_general_mulitiple_choices_quiz',
+        teacher_full_name=teacher.teacher_full_name))
 
 # ===============================================
 # END OF REVIEW GENERAL MULTIPLE CHOICE QUESTIONS

@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-sm-5 text-center vertical-line">
                             <h2>Review Course Overview ({{ all_course_overview }})</h2>
-                            <a href="{{ url_for('teacher.review_course_overview') }}" class="btn btn-primary">
+                            <a href="{{ url_for('teacher.review_course_overview', teacher_full_name=teacher.teacher_full_name) }}" class="btn btn-primary">
                                 Review Course Overview
                             </a>
                         </div>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-sm-5 text-center vertical-line">
                             <h2>Review Table of Contents ({{ all_toc }})</h2>
-                            <a href="{{ url_for('teacher.review_table_of_contents') }}" class="btn btn-primary">
+                            <a href="{{ url_for('teacher.review_table_of_contents', teacher_full_name=teacher.teacher_full_name) }}" class="btn btn-primary">
                                 Review ToC
                             </a>
                         </div>
@@ -67,7 +67,7 @@
                             {% for chapter in course_chapters %}
                                 <h3>{{ chapter.chapter }}</h3>
                             {% endfor %}
-                            <a href="http://127.0.0.1:5000/teacher/course/chapters/review" class="btn btn-primary">
+                            <a href="{{ url_for('teacher.review_chapters', teacher_full_name=teacher.teacher_full_name) }}" class="btn btn-primary">
                                 Review Course Chapter
                             </a>
                         </div>
@@ -87,7 +87,7 @@
                             {% for quiz in all_quizzes %}
                                 <h3>{{ quiz.chapter }}</h3>
                             {% endfor %}
-                            <a href="http://127.0.0.1:5000/teacher/flask/quiz/review" class="btn btn-primary">
+                            <a href="{{ url_for('teacher.review_chapter_quiz', teacher_full_name=teacher.teacher_full_name) }}" class="btn btn-primary">
                                 Review Chapter Quizzes
                             </a>
                         </div>
@@ -107,8 +107,8 @@
                             {% for quiz in all_multiple_quizzes %}
                                 <h3>{{ quiz.chapter }}</h3>
                             {% endfor %}
-                            <a href="http://127.0.0.1:5000/teacher/flask/general-mulitple-choices-quiz/review" class="btn btn-primary">
-                                Review General Multiple Choices Quizzes
+                            <a href="{{ url_for('teacher.review_general_mulitiple_choices_quiz', teacher_full_name=teacher.teacher_full_name) }}" class="btn btn-primary">
+                                Review General <br>Multiple Choices Quizzes
                             </a>
                         </div>
                     </div>   
