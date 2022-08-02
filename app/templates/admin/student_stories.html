@@ -46,7 +46,7 @@
                 <!-- Review Flask Stories -->
                 <div class="col-sm-5 text-center vertical-line">
                     <h2>Review Student Stories</h2>
-                    <a href="{{ url_for('admin.review_flask_stories') }}" class="btn btn-primary" target="_blank">
+                    <a href="{{ url_for('admin.review_flask_stories', admin_full_name=admin.admin_full_name) }}" class="btn btn-primary" target="_blank">
                         Flask Stories
                         <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                     </a>

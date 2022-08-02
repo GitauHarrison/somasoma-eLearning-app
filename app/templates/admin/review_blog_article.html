@@ -45,12 +45,12 @@
             <div class="row">
                 <div class="col-sm-12">
                     {% if not blog.allowed_status == 1 %}
-                        <a href=" {{ url_for('teacher.allow_blog_article', blog_article_id=blog.id) }} " class="label label-warning">Allow</a>
+                        <a href=" {{ url_for('teacher.allow_blog_article', admin_full_name=admin.admin_full_name, blog_article_id=blog.id) }} " class="btn label label-warning">Allow</a>
                     {% else %}
-                        <a href="#" class="label label-success">Allowed</a></a>
+                        <a href="#" class="btn disabled label label-success">Allowed</a></a>
                     {% endif %}
                     {% if current_user == admin %}
-                    | <a href=" {{ url_for('admin.delete_blog_article', blog_article_id=blog.id) }} " class="label label-danger">Delete</a>
+                    | <a href=" {{ url_for('admin.delete_blog_article', admin_full_name=admin.admin_full_name, blog_article_id=blog.id) }} " class="btn label label-danger">Delete</a>
                     {% endif %}
                 </div>
             </div>
@@ -84,7 +84,7 @@
             <!-- Empty column -->
         </div>
         <div class="col-sm-4 text-center">
-            <p><a href=" {{ url_for('admin.review_blog_articles') }} " class="btn btn-primary" >
+            <p><a href=" {{ url_for('admin.review_blog_articles', admin_full_name=admin.admin_full_name) }} " class="btn btn-primary" >
                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                 Back to All Blogs
             </a>

@@ -45,11 +45,11 @@
                 <div class="row">
                     <div class="col-sm-12">
                         {% if not student.allowed_status == 1 %}
-                            <a href=" {{ url_for('admin.allow_flask_stories', id=student.id) }} " class="label label-warning">Allow</a>
+                            <a href=" {{ url_for('admin.allow_flask_stories', admin_full_name=admin.admin_full_name, id=student.id) }} " class="label label-warning">Allow</a>
                         {% else %}
                             <a href="#" class="label label-success">Allowed</a></a>
                         {% endif %}
-                         | <a href=" {{ url_for('admin.delete_flask_stories', id=student.id) }} " class="label label-danger">Delete</a>
+                         | <a href=" {{ url_for('admin.delete_flask_stories', admin_full_name=admin.admin_full_name, id=student.id) }} " class="label label-danger">Delete</a>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
             <!-- Empty column -->
         </div>
         <div class="col-sm-4 text-center">
-            <p><a href=" {{ url_for('admin.dashboard_student_stories') }} " class="btn btn-primary" >
+            <p><a href=" {{ url_for('admin.dashboard_student_stories', admin_full_name=admin.admin_full_name) }} " class="btn btn-primary" >
                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                 Back to Student Stories
             </a>

@@ -18,7 +18,7 @@
     <div id="parents" class="tabcontent">
         <div class="row">
             <div class="col-sm-12">
-                <table id="data" class="table table-hover">
+                <table id="data" class="table table-hover table-bordered">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -42,8 +42,8 @@
                                 <td>{{ parent.parent_residence }}</td>
                                 <td>{{ moment(parent.parent_last_seen).format('LLL') }}</td>
                                 <td>
-                                    <span class="label label-danger">
-                                        <a href="{{ url_for('admin.delete_account_parent', parent_id=parent.id) }}">Delete</a>
+                                    <span class="btn label label-danger">
+                                        <a href="{{ url_for('admin.delete_account_parent', admin_full_name=admin.admin_full_name, parent_id=parent.id) }}">Delete</a>
                                     </span>
                                 </td>
                             </tr>

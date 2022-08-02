@@ -55,7 +55,7 @@
                             Update your admin bio information <br>                            
                         </p>
                         <p>
-                            <a href=" {{ url_for('admin.edit_profile_admin') }} " class="btn btn-primary">Update Bio</a>
+                            <a href=" {{ url_for('admin.edit_profile_admin', admin_full_name=admin.admin_full_name) }} " class="btn btn-primary">Update Bio</a>
                         </p>
                     </div>
                 </div>

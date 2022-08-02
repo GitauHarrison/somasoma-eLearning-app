@@ -20,7 +20,7 @@
             <!-- List all teachers -->
             <div class="row">
                 <div class="col-sm-12">
-                    <table id="data" class="table table-hover">
+                    <table id="data" class="table table-hover table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -44,8 +44,8 @@
                                     <td>{{ teacher.teacher_course }}</td>
                                     <td>{{ moment(teacher.teacher_last_seen).format('LLL') }}</td>
                                     <td>
-                                        <span class="label label-danger">
-                                            <a href="{{ url_for('admin.delete_account_teacher', teacher_id=teacher.id) }}">Delete</a>
+                                        <span class="btn label label-danger">
+                                            <a href="{{ url_for('admin.delete_account_teacher', admin_full_name=admin.admin_full_name, teacher_id=teacher.id) }}">Delete</a>
                                         </span>
                                     </td>
                                 </tr>
