@@ -52,72 +52,69 @@ def before_request():
 # Dashboard routes
 
 
-@bp.route('/dashboard/enrolled-courses')
+@bp.route('/dashboard/<student_full_name>/enrolled-courses')
 @login_required
-def dashboard_enrolled_courses():
+def dashboard_enrolled_courses(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     return render_template(
         'student/enrolled_courses.html',
         title='Enrolled Courses',
-        student=student
-        )
+        student=student)
 
 
-@bp.route('/dashboard/live-class')
+@bp.route('/dashboard/<student_full_name>/live-class')
 @login_required
-def dashboard_live_class():
+def dashboard_live_class(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     return render_template(
         'student/live_class.html',
         title='Live Class',
-        student=student
-        )
+        student=student)
 
 
-@bp.route('/dashboard/quizzes')
+@bp.route('/dashboard/<student_full_name>/quizzes')
 @login_required
-def dashboard_quizzes():
+def dashboard_quizzes(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     return render_template(
         'student/quizzes.html',
         title='General Course Quizzes',
-        student=student
-        )
+        student=student)
 
 
-@bp.route('/dashboard/explore-student-community')
+@bp.route('/dashboard/<student_full_name>/explore-student-community')
 @login_required
-def dashboard_explore_student_community():
+def dashboard_explore_student_community(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     # Explore student community comments form
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         comment = CommunityComment(
             body=comment_form.comment.data,
-            author=current_user
-        )
+            author=student)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been posted!', 'success')
-        return redirect(url_for('student.dashboard_student'))
+        return redirect(url_for(
+            'student.dashboard_account',
+            student_full_name=student.student_full_name))
     # Explore student community comments
     page = request.args.get('page', 1, type=int)
     comments = CommunityComment.query.order_by(
-        CommunityComment.timestamp.desc()
-        ).paginate(
+        CommunityComment.timestamp.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-                    'student.dashboard_explore_student_community',
-                    page=comments.next_num) \
-        if comments.has_next else None
+        'student.dashboard_explore_student_community',
+        student_full_name=student.student_full_name,
+        page=comments.next_num) if comments.has_next else None
     prev_url = url_for(
         'student.dashboard_explore_student_community',
-        page=comments.prev_num) \
-        if comments.has_prev else None
+        student_full_name=student.student_full_name,
+        page=comments.prev_num) if comments.has_prev else None
     return render_template(
         'student/explore_student_community.html',
         title='Explore Student Community',
@@ -125,45 +122,42 @@ def dashboard_explore_student_community():
         comment_form=comment_form,
         comments=comments.items,
         next_url=next_url,
-        prev_url=prev_url
-        )
+        prev_url=prev_url)
 
 
-@bp.route('/dashboard/my-community')
+@bp.route('/dashboard/<student_full_name>/my-community')
 @login_required
-def dashboard_my_community():
+def dashboard_my_community(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     # My community comments form
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         comment = CommunityComment(
             body=comment_form.comment.data,
-            author=current_user
-        )
+            author=student)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been posted!', 'success')
-        return redirect(url_for('student.dashboard_student'))
+        return redirect(url_for(
+            'student.dashboard_account',
+            student_full_name=student.student_full_name))
     # My community comments
     page = request.args.get('page', 1, type=int)
     comments = CommunityComment.query.filter_by(
-        author=current_user
-        ).order_by(
-        CommunityComment.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        author=student).order_by(CommunityComment.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     # My community comments
-    my_comments = current_user.followed_comments().paginate(
+    my_comments = student.followed_comments().paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
-                    'student.dashboard_student',
-                    page=comments.next_num) \
-        if comments.has_next else None
+        'student.dashboard_account',
+        student_full_name=student.student_full_name,
+        page=comments.next_num) if comments.has_next else None
     prev_url = url_for(
-        'student.dashboard_student',
-        page=comments.prev_num) \
-        if comments.has_prev else None
+        'student.dashboard_account',
+        student_full_name=student.student_full_name,
+        page=comments.prev_num) if comments.has_prev else None
     return render_template(
         'student/my_community.html',
         title='My Community',
@@ -172,27 +166,25 @@ def dashboard_my_community():
         comments=comments.items,
         next_url=next_url,
         prev_url=prev_url,
-        my_comments=my_comments.items
-        )
+        my_comments=my_comments.items)
 
 
-@bp.route('/dashboard/account')
+@bp.route('/dashboard/<student_full_name>/account')
 @login_required
-def dashboard_account():
+def dashboard_account(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     return render_template(
         'student/account.html',
         title='Account',
-        student=student
-        )
+        student=student)
 
 
-@bp.route('/dashboard/analytics')
+@bp.route('/dashboard/<student_full_name>/analytics')
 @login_required
-def dashboard_analytics():
+def dashboard_analytics(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
 
     # Dsiplaying the chapter
     course_chapters = Chapter.query.filter_by(allowed_status=True).all()
@@ -210,8 +202,7 @@ def dashboard_analytics():
     num_of_true_status = objectives_list[-5:].count("True")
     try:
         percentage_achieved = round(
-            (num_of_true_status / len(objectives_list[-5:])) * 100, 2
-        )
+            (num_of_true_status / len(objectives_list[-5:])) * 100, 2)
     except ZeroDivisionError:
         percentage_achieved = 0
 
@@ -219,21 +210,16 @@ def dashboard_analytics():
     objectives_attempts = {}
     for k, v in enumerate(all_objectives):
         objectives_attempts[k+1] = v
-    print(objectives_attempts)
-    print(len(objectives_list))
     chapter1_obj_attempts_chart_labels = list(objectives_attempts.keys())
     chapter1_obj_attempts_chart_data = []
     for i in range(0, len(objectives_list), 5):
         all_num_true_status = objectives_list[i:i+5].count("True")
         len_of_attempt = len(objectives_list[i:i+5])
-        print(all_num_true_status, objectives_list[i:i+5])
         try:
             chapter1_obj_attempts_chart_data.append(
                 round((all_num_true_status / len_of_attempt) * 100, 2))
         except ZeroDivisionError:
             chapter1_obj_attempts_chart_data.append(0)
-    print('Chatper 1 Labels: ', chapter1_obj_attempts_chart_labels)
-    print('Chapter 1 Values: ', chapter1_obj_attempts_chart_data, '\n\n')
 
     # CHAPTER 2: Calculate the number of objectives achieved
     all_objectives_chapter_2 = student.webdev_chapter2_objectives.all()
@@ -264,17 +250,12 @@ def dashboard_analytics():
         all_num_true_status_chapter2 = \
             objectives_list_chapter_2[i:i+5].count("True")
         len_of_attempt_chapter2 = len(objectives_list_chapter_2[i:i+5])
-        print(
-            all_num_true_status_chapter2, objectives_list_chapter_2[i:i+5])
         try:
             obj_attempts_chart_data_chapter2.append(
-                round(
-                    (all_num_true_status_chapter2 /
+                round((all_num_true_status_chapter2 / 
                         len_of_attempt_chapter2) * 100, 2))
         except ZeroDivisionError:
             obj_attempts_chart_data_chapter2.append(0)
-    print('Chapter 2 Labels: ', obj_attempts_chart_labels_chapter2)
-    print('Chapter 2 Values: ', obj_attempts_chart_data_chapter2, '\n\n')
     # End of Calculate the number of objectives achieved
 
     # CHAPTER 3: Calculate the number of objectives achieved
@@ -306,8 +287,6 @@ def dashboard_analytics():
         all_num_true_status_chapter3 = \
             objectives_list_chapter_3[i:i+5].count("True")
         len_of_attempt_chapter3 = len(objectives_list_chapter_3[i:i+5])
-        print(
-            all_num_true_status_chapter3, objectives_list_chapter_3[i:i+5])
         try:
             obj_attempts_chart_data_chapter3.append(
                 round(
@@ -315,8 +294,6 @@ def dashboard_analytics():
                         len_of_attempt_chapter3) * 100, 2))
         except ZeroDivisionError:
             obj_attempts_chart_data_chapter3.append(0)
-    print('Chapter 3 Labels: ', obj_attempts_chart_labels_chapter3)
-    print('Chapter 3 Values: ', obj_attempts_chart_data_chapter3, '\n\n')
     # End of Calculate the number of objectives achieved
 
     # CHAPTER 1: Calculate total score
@@ -612,13 +589,6 @@ def dashboard_analytics():
     int_total_score_list_chapter3 = \
         [int(float(i)) for i in chapter3_total_score_list]
 
-    print('Chapter 1 Total Score: ', chapter1_total_score_list, 'Length : ', len(chapter1_total_score_list), ' Keys: ', quiz_attempts_chart_labels_chapter1)
-    print('Chapter 2 Total Score: ', chapter2_total_score_list, 'Length : ', len(chapter2_total_score_list), ' Keys: ', quiz_attempts_chart_labels_chapter2)
-    print('Chapter 3 Total Score: ', chapter3_total_score_list, 'Length : ', len(chapter3_total_score_list), ' Keys: ', quiz_attempts_chart_labels_chapter3)
-    print('Int List 1: ', int_total_score_list_chapter1)
-    print('Int List 2: ', int_total_score_list_chapter2)
-    print('Int List 3: ', int_total_score_list_chapter3)
-
     # === General multi-choice questions ===
 
     # Calculate total score
@@ -824,8 +794,7 @@ def dashboard_analytics():
         obj_attempts_chart_labels_chapter3=obj_attempts_chart_labels_chapter3,
         obj_attempts_chart_data_chapter3=obj_attempts_chart_data_chapter3,
         int_total_score_list_chapter3=int_total_score_list_chapter3,
-        quiz_attempts_chart_labels_chapter3=quiz_attempts_chart_labels_chapter3,
-        )
+        quiz_attempts_chart_labels_chapter3=quiz_attempts_chart_labels_chapter3)
 
 # Profile routes
 
@@ -834,13 +803,11 @@ def dashboard_analytics():
 @login_required
 def profile_student(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=student_full_name
-        ).first_or_404()
+        student_full_name=student_full_name).first_or_404()
     page = request.args.get('page', 1, type=int)
     comments = student.comments.order_by(
-        CommunityComment.timestamp.desc()
-        ).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False)
+        CommunityComment.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'student.dashboard_explore_student_community',
         student_full_name=student_full_name,
@@ -859,47 +826,44 @@ def profile_student(student_full_name):
         comments=comments.items,
         next_url=next_url,
         prev_url=prev_url,
-        form=form
-    )
+        form=form)
 
 
 @bp.route('/profile/<student_full_name>/popup/')
 @login_required
 def student_profile_popup(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=student_full_name
-        ).first()
+        student_full_name=student_full_name).first()
     form = EmptyForm()
     return render_template(
         'student/profile_popup.html',
         student=student,
         title='Student Profile',
-        form=form
-        )
+        form=form)
 
 
-@bp.route('/edit-profile', methods=['GET', 'POST'])
+@bp.route('/<student_full_name>/edit-profile', methods=['GET', 'POST'])
 @login_required
-def edit_profile_student():
+def edit_profile_student(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first()
-    form = EditProfileForm(current_user.student_email)
+        student_full_name=student_full_name).first()
+    form = EditProfileForm(student.student_email)
     if form.validate_on_submit():
-        current_user.student_email = form.email.data
-        current_user.student_about_me = form.about_me.data
+        student.student_email = form.email.data
+        student.student_about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('student.dashboard_student'))
+        return redirect(url_for(
+            'student.dashboard_account',
+            student_full_name=student.student_full_name))
     elif request.method == 'GET':
-        form.email.data = current_user.student_email
-        form.about_me.data = current_user.student_about_me
+        form.email.data = student.student_email
+        form.about_me.data = student.student_about_me
     return render_template(
         'student/edit_profile_student.html',
         title='Edit Student Profile',
         form=form,
-        student=student
-    )
+        student=student)
 
 
 @bp.route('/send-message/<recipient>', methods=['GET', 'POST'])
@@ -912,8 +876,7 @@ def send_message(recipient):
         msg = StudentMessage(
             author=current_user,
             recipient=student,
-            body=form.message.data
-        )
+            body=form.message.data)
         db.session.add(msg)
         student.add_notification(
             'unread_message_count', student.new_messages())
@@ -921,35 +884,31 @@ def send_message(recipient):
         flash('Your message has been sent.')
         return redirect(url_for(
             'student.send_message',
-            recipient=recipient)
-        )
+            recipient=recipient))
     return render_template(
         'student/private_messages/send_messages.html',
         title='Send Private Message',
         form=form,
         student=student,
-        recipient=recipient
-    )
+        recipient=recipient)
 
 
-@bp.route('/view-messages')
+@bp.route('/<student_full_name>/view-messages')
 @login_required
-def view_messages():
+def view_messages(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first_or_404()
-    current_user.last_message_read_time = datetime.utcnow()
-    current_user.add_notification('unread_message_count', 0)
+        student_full_name=student_full_name).first_or_404()
+    student.last_message_read_time = datetime.utcnow()
+    student.add_notification('unread_message_count', 0)
     db.session.commit()
     page = request.args.get('page', 1, type=int)
-    messages = current_user.messages_received.order_by(
-        StudentMessage.timestamp.desc()
-        ).paginate(
+    messages = student.messages_received.order_by(
+        StudentMessage.timestamp.desc()).paginate(
             page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'student.view_messages',
-        page=messages.next_num) \
-        if messages.has_next else None
+        student_full_name=student.student_full_name,
+        page=messages.next_num) if messages.has_next else None
     prev_url = url_for(
         'student.view_messages',
         page=messages.prev_num) \
@@ -962,16 +921,14 @@ def view_messages():
         next_url=next_url,
         prev_url=prev_url,
         form=form,
-        student=student
-    )
+        student=student)
 
 
-@bp.route('/student-notications')
+@bp.route('/<student_full_name>/student-notications')
 @login_required
-def student_notifications():
+def student_notifications(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first_or_404()
+        student_full_name=student_full_name).first_or_404()
     since = request.args.get('since', 0.0, type=float)
     notifications = student.notifications.filter(
         StudentNotification.timestamp > since).order_by(
@@ -985,70 +942,68 @@ def student_notifications():
 # Followership routes
 
 
-@bp.route('/follow/<student_full_name>', methods=['POST'])
+@bp.route('/<student_full_name>/follow/<another_student_full_name>', methods=['POST'])
 @login_required
-def follow_student(student_full_name):
+def follow_student(student_full_name, another_student_full_name):
     student = Student.query.filter_by(
-        student_full_name=student_full_name
-        ).first()
+        student_full_name=student_full_name).first()
+    another_student = Student.query.filter_by(
+        student_full_name=another_student_full_name).first()
     form = EmptyForm()
     if form.validate_on_submit():
-        student = Student.query.filter_by(
-            student_full_name=student_full_name
-            ).first()
-        if student is None:
-            flash(f'User {student_full_name} not found')
-            return redirect(url_for('student.dashboard_student'))
-        if student == current_user:
+        another_student = Student.query.filter_by(
+            student_full_name=another_student_full_name).first()
+        if another_student is None:
+            flash(f'User {another_student_full_name} not found')
+            return redirect(url_for('student.dashboard_account'))
+        if another_student == student:
             flash('You cannot follow yourself!')
             return redirect(url_for(
                 'student.profile_student',
-                student_full_name=student_full_name
-                )
-            )
-        current_user.follow(student)
+                student_full_name=student_full_name))
+        student.follow(another_student)
         db.session.commit()
-        flash(f'You are following {student.student_full_name}!')
+        flash(f'You are following {another_student.student_full_name}!')
         return redirect(url_for(
             'student.profile_student',
-            student_full_name=student_full_name
-            )
-        )
+            student_full_name=student_full_name))
     else:
-        return redirect(url_for('student.dashboard_student'))
+        return redirect(url_for(
+            'student.dashboard_account',
+            student_full_name=student.student_full_name))
 
 
-@bp.route('/unfollow/<student_full_name>', methods=['POST'])
+@bp.route('/<student_full_name>/unfollow/<another_student_full_name>', methods=['POST'])
 @login_required
-def unfollow_student(student_full_name):
+def unfollow_student(student_full_name, another_student_full_name):
     student = Student.query.filter_by(
-        student_full_name=student_full_name
-        ).first()
+        student_full_name=student_full_name).first()
+    another_student = Student.query.filter_by(
+        student_full_name=another_student_full_name).first()
     form = EmptyForm()
     if form.validate_on_submit():
-        student = Student.query.filter_by(
-            student_full_name=student_full_name
-            ).first()
-        if student is None:
-            flash(f'User {student_full_name} not found')
-            return redirect(url_for('student.dashboard_student'))
-        if student == current_user:
+        another_student = Student.query.filter_by(
+            student_full_name=another_student_full_name).first()
+        if another_student is None:
+            flash(f'User {another_student_full_name} not found')
+            return redirect(url_for(
+                'student.dashboard_account',
+                student_full_name=student.student_full_name))
+        if another_student == student:
             flash('You cannot unfollow yourself!')
             return redirect(url_for(
                 'student.profile_student',
-                student_full_name=student_full_name
-                )
-            )
-        current_user.unfollow(student)
+                student_full_name=student_full_name))
+        student.unfollow(another_student)
         db.session.commit()
-        flash(f'You are not following {student.student_full_name}!')
+        flash(f'You are not following {another_student.student_full_name}!')
         return redirect(url_for(
             'student.profile_student',
-            student_full_name=student_full_name
-            )
-        )
+            student_full_name=student_full_name))
     else:
-        return redirect(url_for('student.dashboard_student'))
+        return redirect(url_for(
+            'student.dashboard_account',
+            student_full_name=student.student_full_name))
 
 # End of followership routes
 
@@ -1059,11 +1014,11 @@ def unfollow_student(student_full_name):
 # Overview
 
 
-@bp.route('/web-development-overview')
+@bp.route('/<student_full_name>/web-development-overview')
 @login_required
-def web_development_overview():
+def web_development_overview(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     page = request.args.get('page', 1, type=int)
     allowed_course_overview = WebDevelopmentOverview.query.filter_by(
         allowed_status=True).order_by(
@@ -1089,8 +1044,7 @@ def web_development_overview():
     num_of_true_status = objectives_list[-5:].count("True")
     try:
         percentage_achieved = round(
-            (num_of_true_status / len(objectives_list[-5:])) * 100, 2
-        )
+            (num_of_true_status / len(objectives_list[-5:])) * 100, 2)
     except ZeroDivisionError:
         percentage_achieved = 0
     # End of Calculate the number of objectives achieved
@@ -1147,17 +1101,16 @@ def web_development_overview():
         percentage_achieved_chapter_2=percentage_achieved_chapter_2,
 
         # Chapter 3 objectives
-        percentage_achieved_chapter_3=percentage_achieved_chapter_3
-        )
+        percentage_achieved_chapter_3=percentage_achieved_chapter_3)
 
 # Chapters
 
 
-@bp.route('/web-development/chapter-1', methods=['GET', 'POST'])
+@bp.route('/<student_full_name>/web-development/chapter-1', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_1():
+def web_development_chapter_1(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     teachers = Teacher.query.all()
     page = request.args.get('page', 1, type=int)
 
@@ -1183,11 +1136,10 @@ def web_development_chapter_1():
         flash('You will receive an email when your comment is approved.')
         return redirect(url_for(
             'student.web_development_chapter_1',
+            student_full_name=student.student_full_name,
             _anchor='comments',
             student=student,
-            title='Hello World',
-            )
-        )
+            title='Hello World'))
 
     # Display student comments
     comments = WebDevChapter1Comment.query.filter_by(
@@ -1196,14 +1148,14 @@ def web_development_chapter_1():
                 page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'student.web_development_chapter_1',
+        student_full_name=student.student_full_name,
         _anchor="comments",
-        page=comments.next_num) \
-        if comments.has_next else None
+        page=comments.next_num) if comments.has_next else None
     prev_url = url_for(
         'student.web_development_chapter_1',
+        student_full_name=student.student_full_name,
         _anchor='comments',
-        page=comments.prev_num) \
-        if comments.has_prev else None
+        page=comments.prev_num) if comments.has_prev else None
     all_comments = len(WebDevChapter1Comment.query.filter_by(
         allowed_status=True).all())
 
@@ -1216,8 +1168,7 @@ def web_development_chapter_1():
             objective_3=objectives_form.objective_3.data,
             objective_4=objectives_form.objective_4.data,
             objective_5=objectives_form.objective_5.data,
-            author=student
-        )
+            author=student)
         db.session.add(objectives)
         db.session.commit()
         flash('Your response has been saved')
@@ -1239,8 +1190,7 @@ def web_development_chapter_1():
     num_of_true_status = objectives_list[-5:].count("True")
     try:
         percentage_achieved = round(
-            (num_of_true_status / len(objectives_list[-5:])) * 100, 2
-        )
+            (num_of_true_status / len(objectives_list[-5:])) * 100, 2)
     except ZeroDivisionError:
         percentage_achieved = 0
     # End of Calculate the number of objectives achieved
@@ -1303,15 +1253,14 @@ def web_development_chapter_1():
         # Objectives achieved
         percentage_achieved=percentage_achieved,
         percentage_achieved_chapter_2=percentage_achieved_chapter_2,
-        percentage_achieved_chapter_3=percentage_achieved_chapter_3
-        )
+        percentage_achieved_chapter_3=percentage_achieved_chapter_3)
 
 
-@bp.route('/web-development/chapter-2', methods=['GET', 'POST'])
+@bp.route('/<student_full_name>/web-development/chapter-2', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_2():
+def web_development_chapter_2(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     teachers = Teacher.query.all()
     page = request.args.get('page', 1, type=int)
 
@@ -1337,11 +1286,10 @@ def web_development_chapter_2():
         flash('You will receive an email when your comment is approved.')
         return redirect(url_for(
             'student.web_development_chapter_2',
+            student_full_name=student.student_full_name,
             _anchor='comments',
             student=student,
-            title='Hello World',
-            )
-        )
+            title='Hello World'))
 
     # Display student comments
     comments = WebDevChapter2Comment.query.filter_by(
@@ -1350,14 +1298,13 @@ def web_development_chapter_2():
                 page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'student.web_development_chapter_2',
+        student_full_name=student.student_full_name,
         _anchor="comments",
-        page=comments.next_num) \
-        if comments.has_next else None
+        page=comments.next_num) if comments.has_next else None
     prev_url = url_for(
         'student.web_development_chapter_2',
         _anchor='comments',
-        page=comments.prev_num) \
-        if comments.has_prev else None
+        page=comments.prev_num) if comments.has_prev else None
     all_comments = len(WebDevChapter2Comment.query.filter_by(
         allowed_status=True).all())
 
@@ -1455,15 +1402,14 @@ def web_development_chapter_2():
         # Objectives achieved
         percentage_achieved=percentage_achieved,
         percentage_achieved_chapter_2=percentage_achieved_chapter_2,
-        percentage_achieved_chapter_3=percentage_achieved_chapter_3
-        )
+        percentage_achieved_chapter_3=percentage_achieved_chapter_3)
 
 
-@bp.route('/web-development/chapter-3', methods=['GET', 'POST'])
+@bp.route('/<student_full_name>/web-development/chapter-3', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_3():
+def web_development_chapter_3(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     teachers = Teacher.query.all()
     page = request.args.get('page', 1, type=int)
 
@@ -1489,6 +1435,7 @@ def web_development_chapter_3():
         flash('You will receive an email when your comment is approved.')
         return redirect(url_for(
             'student.web_development_chapter_3',
+            student_full_name=student.student_full_name,
             _anchor='comments',
             student=student,
             title='Hello World'))
@@ -1500,14 +1447,14 @@ def web_development_chapter_3():
                 page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for(
         'student.web_development_chapter_3',
+        student_full_name=student.student_full_name,
         _anchor="comments",
-        page=comments.next_num) \
-        if comments.has_next else None
+        page=comments.next_num) if comments.has_next else None
     prev_url = url_for(
         'student.web_development_chapter_3',
+        student_full_name=student.student_full_name,
         _anchor='comments',
-        page=comments.prev_num) \
-        if comments.has_prev else None
+        page=comments.prev_num) if comments.has_prev else None
     all_comments = len(WebDevChapter3Comment.query.filter_by(
         allowed_status=True).all())
 
@@ -1605,8 +1552,7 @@ def web_development_chapter_3():
         # Objectives achieved
         percentage_achieved=percentage_achieved,
         percentage_achieved_chapter_2=percentage_achieved_chapter_2,
-        percentage_achieved_chapter_3=percentage_achieved_chapter_3
-        )
+        percentage_achieved_chapter_3=percentage_achieved_chapter_3)
 
 # ==================================
 # ======== CHAPTER QUIZES ==========
@@ -1616,11 +1562,11 @@ def web_development_chapter_3():
 
 
 @bp.route(
-    '/web-development/chapter-1/quiz-1', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-1/quiz-1', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_1_quiz_1():
+def web_development_chapter_1_quiz_1(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 1
@@ -1640,16 +1586,15 @@ def web_development_chapter_1_quiz_1():
         title='Chapter 1: Quiz 1',
         student=student,
         quizzes=quizzes,
-        quiz_1_form=quiz_1_form
-        )
+        quiz_1_form=quiz_1_form)
 
 # Chhapter 1 quiz 2
 
 
 @bp.route(
-    '/web-development/chapter-1/quiz-2', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-1/quiz-2', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_1_quiz_2():
+def web_development_chapter_1_quiz_2(student_full_name):
     student = Student.query.filter_by(
         student_full_name=current_user.student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
@@ -1671,18 +1616,17 @@ def web_development_chapter_1_quiz_2():
         title='Chapter 1: Quiz 2',
         student=student,
         quizzes=quizzes,
-        quiz_2_form=quiz_2_form
-        )
+        quiz_2_form=quiz_2_form)
 
 # Chhapter 1 quiz 3
 
 
 @bp.route(
-    '/web-development/chapter-1/quiz-3', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-1/quiz-3', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_1_quiz_3():
+def web_development_chapter_1_quiz_3(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 3
@@ -1702,18 +1646,17 @@ def web_development_chapter_1_quiz_3():
         title='Chapter 1: Quiz 3',
         student=student,
         quizzes=quizzes,
-        quiz_3_form=quiz_3_form
-        )
+        quiz_3_form=quiz_3_form)
 
 # Chhapter 1 quiz 4
 
 
 @bp.route(
-    '/web-development/chapter-1/quiz-4', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-1/quiz-4', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_1_quiz_4():
+def web_development_chapter_1_quiz_4(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 4
@@ -1733,19 +1676,18 @@ def web_development_chapter_1_quiz_4():
         title='Chapter 1: Quiz 4',
         student=student,
         quizzes=quizzes,
-        quiz_4_form=quiz_4_form
-        )
+        quiz_4_form=quiz_4_form)
 
 
 # Chhapter 1 quiz 5
 
 
 @bp.route(
-    '/web-development/chapter-1/quiz-5', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-1/quiz-5', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_1_quiz_5():
+def web_development_chapter_1_quiz_5(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # CHAPTER 1: Calculate total score
@@ -1853,19 +1795,18 @@ def web_development_chapter_1_quiz_5():
         title='Chapter 1: Quiz 5',
         student=student,
         quizzes=quizzes,
-        quiz_5_form=quiz_5_form
-        )
+        quiz_5_form=quiz_5_form)
 
 
 # Chapter 2 quiz 1
 
 
 @bp.route(
-    '/web-development/chapter-2/quiz-1', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-2/quiz-1', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_2_quiz_1():
+def web_development_chapter_2_quiz_1(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 1
@@ -1885,18 +1826,17 @@ def web_development_chapter_2_quiz_1():
         title='Chapter 2: Quiz 1',
         student=student,
         quizzes=quizzes,
-        quiz_1_form=quiz_1_form
-        )
+        quiz_1_form=quiz_1_form)
 
 # Chapter 2 quiz 2
 
 
 @bp.route(
-    '/web-development/chapter-2/quiz-2', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-2/quiz-2', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_2_quiz_2():
+def web_development_chapter_2_quiz_2(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 2
@@ -1916,18 +1856,17 @@ def web_development_chapter_2_quiz_2():
         title='Chapter 2: Quiz 2',
         student=student,
         quizzes=quizzes,
-        quiz_2_form=quiz_2_form
-        )
+        quiz_2_form=quiz_2_form)
 
 # Chapter 2 quiz 3
 
 
 @bp.route(
-    '/web-development/chapter-2/quiz-3', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-2/quiz-3', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_2_quiz_3():
+def web_development_chapter_2_quiz_3(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 3
@@ -1947,18 +1886,17 @@ def web_development_chapter_2_quiz_3():
         title='Chapter 2: Quiz 3',
         student=student,
         quizzes=quizzes,
-        quiz_3_form=quiz_3_form
-        )
+        quiz_3_form=quiz_3_form)
 
 # Chapter 2 quiz 4
 
 
 @bp.route(
-    '/web-development/chapter-2/quiz-4', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-2/quiz-4', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_2_quiz_4():
+def web_development_chapter_2_quiz_4(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 4
@@ -1978,19 +1916,18 @@ def web_development_chapter_2_quiz_4():
         title='Chapter 2: Quiz 4',
         student=student,
         quizzes=quizzes,
-        quiz_4_form=quiz_4_form
-        )
+        quiz_4_form=quiz_4_form)
 
 
 # Chapter 2 quiz 5
 
 
 @bp.route(
-    '/web-development/chapter-2/quiz-5', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-2/quiz-5', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_2_quiz_5():
+def web_development_chapter_2_quiz_5(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # CHAPTER 2: Calculate total score
@@ -2093,19 +2030,18 @@ def web_development_chapter_2_quiz_5():
         title='Chapter 2: Quiz 5',
         student=student,
         quizzes=quizzes,
-        quiz_5_form=quiz_5_form
-        )
+        quiz_5_form=quiz_5_form)
 
 
 # Chapter 3 quiz 1
 
 
 @bp.route(
-    '/web-development/chapter-3/quiz-1', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-3/quiz-1', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_3_quiz_1():
+def web_development_chapter_3_quiz_1(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 1
@@ -2125,18 +2061,17 @@ def web_development_chapter_3_quiz_1():
         title='Chapter 3: Quiz 1',
         student=student,
         quizzes=quizzes,
-        quiz_1_form=quiz_1_form
-        )
+        quiz_1_form=quiz_1_form)
 
 # Chapter 3 quiz 2
 
 
 @bp.route(
-    '/web-development/chapter-3/quiz-2', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-3/quiz-2', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_3_quiz_2():
+def web_development_chapter_3_quiz_2(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 2
@@ -2156,18 +2091,17 @@ def web_development_chapter_3_quiz_2():
         title='Chapter 3: Quiz 2',
         student=student,
         quizzes=quizzes,
-        quiz_2_form=quiz_2_form
-        )
+        quiz_2_form=quiz_2_form)
 
 # Chapter 3 quiz 3
 
 
 @bp.route(
-    '/web-development/chapter-3/quiz-3', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-3/quiz-3', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_3_quiz_3():
+def web_development_chapter_3_quiz_3(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 3
@@ -2187,18 +2121,17 @@ def web_development_chapter_3_quiz_3():
         title='Chapter 3: Quiz 3',
         student=student,
         quizzes=quizzes,
-        quiz_3_form=quiz_3_form
-        )
+        quiz_3_form=quiz_3_form)
 
 # Chapter 3 quiz 4
 
 
 @bp.route(
-    '/web-development/chapter-3/quiz-4', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-3/quiz-4', methods=['GET', 'POST'])
 @login_required
 def web_development_chapter_3_quiz_4():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 4
@@ -2218,19 +2151,18 @@ def web_development_chapter_3_quiz_4():
         title='Chapter 3: Quiz 4',
         student=student,
         quizzes=quizzes,
-        quiz_4_form=quiz_4_form
-        )
+        quiz_4_form=quiz_4_form)
 
 
 # Chapter 3 quiz 5
 
 
 @bp.route(
-    '/web-development/chapter-3/quiz-5', methods=['GET', 'POST'])
+    '/<student_full_name>/web-development/chapter-3/quiz-5', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_3_quiz_5():
+def web_development_chapter_3_quiz_5(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # CHAPTER 3: Calculate total score
@@ -2334,18 +2266,17 @@ def web_development_chapter_3_quiz_5():
         title='Chapter 3: Quiz 5',
         student=student,
         quizzes=quizzes,
-        quiz_5_form=quiz_5_form
-        )
+        quiz_5_form=quiz_5_form)
 
 
 # Chapter 1 total score
 
 
-@bp.route('/web-development/chapter-1/total-score')
+@bp.route('/<student_full_name>/web-development/chapter-1/total-score')
 @login_required
-def web_development_chapter_1_total_score():
+def web_development_chapter_1_total_score(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Calculate total score
@@ -2456,18 +2387,17 @@ def web_development_chapter_1_total_score():
         quiz_4_score=quiz_4_score,
         quiz_5_score=quiz_5_score,
         total_score=total_score,
-        total_score_percentage=total_score_percentage
-        )
+        total_score_percentage=total_score_percentage)
 
 
 # Chapter 2 total score
 
 
-@bp.route('/web-development/chapter-2/total-score')
+@bp.route('/<student_full_name>/web-development/chapter-2/total-score')
 @login_required
-def web_development_chapter_2_total_score():
+def web_development_chapter_2_total_score(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Calculate total score
@@ -2578,18 +2508,17 @@ def web_development_chapter_2_total_score():
         quiz_4_score=quiz_4_score,
         quiz_5_score=quiz_5_score,
         total_score=total_score,
-        total_score_percentage=total_score_percentage
-        )
+        total_score_percentage=total_score_percentage)
 
 
 # Chapter 3 total score
 
 
-@bp.route('/web-development/chapter-3/total-score')
+@bp.route('/<student_full_name>/web-development/chapter-3/total-score')
 @login_required
-def web_development_chapter_3_total_score():
+def web_development_chapter_3_total_score(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Calculate total score
@@ -2700,8 +2629,7 @@ def web_development_chapter_3_total_score():
         quiz_4_score=quiz_4_score,
         quiz_5_score=quiz_5_score,
         total_score=total_score,
-        total_score_percentage=total_score_percentage
-        )
+        total_score_percentage=total_score_percentage)
 
 # ========================================
 # END OF WEB DEVELOPMENT COURSE ROUTES
@@ -2713,12 +2641,12 @@ def web_development_chapter_3_total_score():
 
 
 @bp.route(
-    '/web-development/general-multichoice-questions/quiz-1',
+    '/<student_full_name>/web-development/general-multichoice-questions/quiz-1',
     methods=['GET', 'POST'])
 @login_required
-def web_development_general_quiz_1():
+def web_development_general_quiz_1(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
     form = GeneralQuiz1Form()
@@ -2736,17 +2664,16 @@ def web_development_general_quiz_1():
         title='General Quiz 1',
         student=student,
         form=form,
-        quizzes=quizzes
-        )
+        quizzes=quizzes)
 
 
 @bp.route(
-    '/web-development/general-multichoice-questions/quiz-2',
+    '/<student_full_name>/web-development/general-multichoice-questions/quiz-2',
     methods=['GET', 'POST'])
 @login_required
-def web_development_general_quiz_2():
+def web_development_general_quiz_2(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
     form = GeneralQuiz2Form()
@@ -2764,17 +2691,16 @@ def web_development_general_quiz_2():
         title='General Quiz 2',
         student=student,
         form=form,
-        quizzes=quizzes
-        )
+        quizzes=quizzes)
 
 
 @bp.route(
-    '/web-development/general-multichoice-questions/quiz-3',
+    '/<student_full_name>/web-development/general-multichoice-questions/quiz-3',
     methods=['GET', 'POST'])
 @login_required
-def web_development_general_quiz_3():
+def web_development_general_quiz_3(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
     form = GeneralQuiz3Form()
@@ -2792,17 +2718,16 @@ def web_development_general_quiz_3():
         title='General Quiz 3',
         student=student,
         form=form,
-        quizzes=quizzes
-        )
+        quizzes=quizzes)
 
 
 @bp.route(
-    '/web-development/general-multichoice-questions/quiz-4',
+    '/<student_full_name>/web-development/general-multichoice-questions/quiz-4',
     methods=['GET', 'POST'])
 @login_required
-def web_development_general_quiz_4():
+def web_development_general_quiz_4(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
     form = GeneralQuiz4Form()
@@ -2820,17 +2745,16 @@ def web_development_general_quiz_4():
         title='General Quiz 4',
         student=student,
         form=form,
-        quizzes=quizzes
-        )
+        quizzes=quizzes)
 
 
 @bp.route(
-    '/web-development/general-multichoice-questions/quiz-5',
+    '<student_full_name>//web-development/general-multichoice-questions/quiz-5',
     methods=['GET', 'POST'])
 @login_required
-def web_development_general_quiz_5():
+def web_development_general_quiz_5(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
     form = GeneralQuiz5Form()
@@ -2848,17 +2772,16 @@ def web_development_general_quiz_5():
         title='General Quiz 5',
         student=student,
         form=form,
-        quizzes=quizzes
-        )
+        quizzes=quizzes)
 
 
 @bp.route(
-    '/web-development/general-multichoice-questions/quiz-6',
+    '/<student_full_name>/web-development/general-multichoice-questions/quiz-6',
     methods=['GET', 'POST'])
 @login_required
-def web_development_general_quiz_6():
+def web_development_general_quiz_6(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
     form = GeneralQuiz6Form()
@@ -2876,17 +2799,16 @@ def web_development_general_quiz_6():
         title='General Quiz 6',
         student=student,
         form=form,
-        quizzes=quizzes
-        )
+        quizzes=quizzes)
 
 
 @bp.route(
-    '/web-development/general-multichoice-questions/quiz-7',
+    '/<student_full_name>/web-development/general-multichoice-questions/quiz-7',
     methods=['GET', 'POST'])
 @login_required
 def web_development_general_quiz_7():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
     form = GeneralQuiz7Form()
@@ -2904,17 +2826,16 @@ def web_development_general_quiz_7():
         title='General Quiz 7',
         student=student,
         form=form,
-        quizzes=quizzes
-        )
+        quizzes=quizzes)
 
 
 @bp.route(
-    '/web-development/general-multichoice-questions/quiz-8',
+    '/<student_full_name>/web-development/general-multichoice-questions/quiz-8',
     methods=['GET', 'POST'])
 @login_required
-def web_development_general_quiz_8():
+def web_development_general_quiz_8(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
     form = GeneralQuiz8Form()
@@ -2932,17 +2853,16 @@ def web_development_general_quiz_8():
         title='General Quiz 8',
         student=student,
         form=form,
-        quizzes=quizzes
-        )
+        quizzes=quizzes)
 
 
 @bp.route(
-    '/web-development/general-multichoice-questions/quiz-9',
+    '/<student_full_name>/web-development/general-multichoice-questions/quiz-9',
     methods=['GET', 'POST'])
 @login_required
-def web_development_general_quiz_9():
+def web_development_general_quiz_9(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
     form = GeneralQuiz9Form()
@@ -2960,17 +2880,16 @@ def web_development_general_quiz_9():
         title='General Quiz 9',
         student=student,
         form=form,
-        quizzes=quizzes
-        )
+        quizzes=quizzes)
 
 
 @bp.route(
-    '/web-development/general-multichoice-questions/quiz-10',
+    '/<student_full_name>/web-development/general-multichoice-questions/quiz-10',
     methods=['GET', 'POST'])
 @login_required
-def web_development_general_quiz_10():
+def web_development_general_quiz_10(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
     form = GeneralQuiz10Form()
@@ -2988,18 +2907,17 @@ def web_development_general_quiz_10():
         title='General Quiz 10',
         student=student,
         form=form,
-        quizzes=quizzes
-        )
+        quizzes=quizzes)
 
 
 # General multiple choice total score
 
 
-@bp.route('/web-development/general-multichoice-questions/total-score')
+@bp.route('/<student_full_name>/web-development/general-multichoice-questions/total-score')
 @login_required
-def web_development_general_quiz_total_score():
+def web_development_general_quiz_total_score(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
         allowed_status=True).all()
 
@@ -3203,8 +3121,7 @@ def web_development_general_quiz_total_score():
         quiz_10_score=quiz_10_score,
 
         total_score=total_score,
-        total_score_percentage=total_score_percentage
-        )
+        total_score_percentage=total_score_percentage)
 
 # ================================================
 # ==== END OF GENERAL MULTIPLE CHOICE QUIZZES ====

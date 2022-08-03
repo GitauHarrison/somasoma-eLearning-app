@@ -32,7 +32,7 @@
     <div class="row text-center">
         <div class="col-sm-6">
             <p>
-                <a href=" {{ url_for('student.dashboard_enrolled_courses') }} " class="btn btn-primary">
+                <a href=" {{ url_for('student.dashboard_enrolled_courses', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                         Back to Course Page
                 </a>
@@ -40,7 +40,7 @@
         </div>
         <div class="col-sm-6">
             <p>
-                <a href=" {{ url_for('student.web_development_chapter_1') }} " class="btn btn-primary">
+                <a href=" {{ url_for('student.web_development_chapter_1', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                     Chapter 1
                     <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                 </a>

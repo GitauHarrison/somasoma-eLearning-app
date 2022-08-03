@@ -71,14 +71,15 @@ def login_student():
         return redirect(url_for('student.dashboard_enrolled_courses'))
     form = LoginForm()
     if form.validate_on_submit():
-        student = Student.query.filter_by(
-            student_email=form.email.data).first()
+        student = Student.query.filter_by(student_email=form.email.data).first()
         if student is None or not student.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('auth.login_student'))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('student.dashboard_enrolled_courses')
+            next_page = url_for(
+                'student.dashboard_enrolled_courses',
+                student_full_name=student.student_full_name)
         if student.two_factor_student_enabled():
             request_verification_token(student.student_phone)
             session['student_email'] = student.student_email
@@ -102,15 +103,14 @@ def login_admin():
         return redirect(url_for('admin.dashboard_account'))
     form = LoginForm()
     if form.validate_on_submit():
-        admin = Admin.query.filter_by(
-            admin_email=form.email.data
-            ).first()
+        admin = Admin.query.filter_by(admin_email=form.email.data).first()
         if admin is None or not admin.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('auth.login_admin'))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('admin.dashboard_account')
+            next_page = url_for(
+                'admin.dashboard_account', admin_full_name=admin.admin_full_name)
         if admin.two_factor_admin_enabled():
             request_verification_token(admin.admin_phone)
             session['admin_email'] = admin.admin_email
@@ -118,17 +118,14 @@ def login_admin():
             return redirect(url_for(
                 'auth.verify_2fa_admin',
                 next=next_page,
-                remember='1' if form.remember_me.data else '0'
-                )
-            )
+                remember='1' if form.remember_me.data else '0'))
         login_user(admin, remember=form.remember_me.data)
         flash(f'Welcome {admin.admin_full_name}!')
         return redirect(next_page)
     return render_template(
         'auth/login_admin.html',
         title='Admin Login',
-        form=form
-        )
+        form=form)
 
 
 @bp.route('/student/logout')
@@ -167,22 +164,19 @@ def register_student():
             student_phone=form.student_phone.data,
             student_school=form.student_school.data,
             student_age=form.student_age.data,
-            student_course=form.student_course.data
-        )
+            student_course=form.student_course.data)
         student.set_password(form.student_password.data)
         db.session.add(student)
         db.session.commit()
         send_registration_details_student(student)
         flash(
             'Student successfully registered. Check your email for '
-            'further instructions!'
-            )
+            'further instructions!')
         return redirect(url_for('main.home'))
     return render_template(
         'auth/register_user.html',
         title='Student Registration',
-        form=form
-        )
+        form=form)
 
 
 @bp.route('/register/parent', methods=['GET', 'POST'])
@@ -196,21 +190,18 @@ def register_parent():
             parent_email=form.parent_email.data,
             parent_phone=form.parent_phone.data,
             parent_occupation=form.parent_occupation.data,
-            parent_residence=form.parent_residence.data
-        )
+            parent_residence=form.parent_residence.data)
         parent.set_password(form.parent_password.data)
         db.session.add(parent)
         db.session.commit()
         send_registration_details_parent(parent)
         flash(
-            'Parent successfully registered. You can now register your child!'
-            )
+            'Parent successfully registered. You can now register your child!')
         return redirect(url_for('auth.register_student'))
     return render_template(
         'auth/register_user.html',
         title='Parent Registration',
-        form=form
-        )
+        form=form)
 
 
 @bp.route('/register/admin', methods=['GET', 'POST'])
@@ -222,8 +213,7 @@ def register_admin():
         admin = Admin(
             admin_full_name=form.admin_full_name.data,
             admin_email=form.admin_email.data,
-            admin_phone=form.admin_phone.data
-        )
+            admin_phone=form.admin_phone.data)
         admin.set_password(form.admin_password.data)
         db.session.add(admin)
         db.session.commit()
@@ -232,8 +222,7 @@ def register_admin():
     return render_template(
         'auth/register_user.html',
         title='Admin Registration',
-        form=form
-        )
+        form=form)
 
 
 # =================================================
@@ -249,8 +238,7 @@ def request_password_reset():
     form = RequestPasswordResetForm()
     if form.validate_on_submit():
         student = Student.query.filter_by(
-            student_email=form.email.data
-            ).first()
+            student_email=form.email.data).first()
         if student:
             send_password_reset_email_student(student)
         flash('Check your email for the instructions to reset your password')
@@ -258,8 +246,7 @@ def request_password_reset():
     return render_template(
         'auth/password-reset/request_password_reset.html',
         title='Request Password Reset',
-        form=form
-        )
+        form=form)
 
 
 @bp.route('/reset-password/<token>', methods=['GET', 'POST'])
@@ -278,8 +265,7 @@ def reset_password(token):
     return render_template(
         'auth/password-reset/reset_password.html',
         title='Reset Password',
-        form=form
-        )
+        form=form)
 
 # Admin
 
@@ -291,8 +277,7 @@ def request_password_reset_admin():
     form = RequestPasswordResetForm()
     if form.validate_on_submit():
         admin = Admin.query.filter_by(
-            admin_email=form.email.data
-            ).first()
+            admin_email=form.email.data).first()
         if admin:
             send_password_reset_email_admin(admin)
         flash('Check your email for the instructions to reset your password')
@@ -300,8 +285,7 @@ def request_password_reset_admin():
     return render_template(
         'auth/password-reset/request_password_reset_admin.html',
         title='Request Password Reset for Admin',
-        form=form
-        )
+        form=form)
 
 
 @bp.route('/admin/reset-password/<token>', methods=['GET', 'POST'])
@@ -320,8 +304,7 @@ def reset_password_admin(token):
     return render_template(
         'auth/password-reset/reset_password_admin.html',
         title='Reset Password for Admin',
-        form=form
-        )
+        form=form)
 
 
 # Teacher
@@ -334,8 +317,7 @@ def request_password_reset_teacher():
     form = RequestPasswordResetForm()
     if form.validate_on_submit():
         teacher = Teacher.query.filter_by(
-            teacher_email=form.email.data
-            ).first()
+            teacher_email=form.email.data).first()
         if teacher:
             send_password_reset_email_teacher(teacher)
         flash('Check your email for the instructions to reset your password')
@@ -343,8 +325,7 @@ def request_password_reset_teacher():
     return render_template(
         'auth/password-reset/request_password_reset_teacher.html',
         title='Request Password Reset for Teacher',
-        form=form
-        )
+        form=form)
 
 
 @bp.route('/teacher/reset-password/<token>', methods=['GET', 'POST'])
@@ -363,8 +344,7 @@ def reset_password_teacher(token):
     return render_template(
         'auth/password-reset/reset_password_teacher.html',
         title='Reset Password for Teacher',
-        form=form
-        )
+        form=form)
 
 # =================================================
 # END OF PASSWORD RESET
@@ -377,11 +357,11 @@ def reset_password_teacher(token):
 # Student
 
 
-@bp.route('/student/enable-2fa', methods=['GET', 'POST'])
+@bp.route('/student/<student_full_name>/enable-2fa', methods=['GET', 'POST'])
 @login_required
-def enable_2fa_student():
+def enable_2fa_student(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
+        student_full_name=student_full_name
         ).first_or_404()
     form = Enable2faForm()
     if form.validate_on_submit():
@@ -392,34 +372,31 @@ def enable_2fa_student():
         'auth/two-factor-auth/student/enable_2fa.html',
         form=form,
         title='Enable 2fa',
-        student=student
-        )
+        student=student)
 
 
 @bp.route('/student/verify-2fa', methods=['GET', 'POST'])
 def verify_2fa_student():
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first_or_404()
+        student_full_name=current_user.student_full_name).first_or_404()
     form = Confirm2faForm()
     if form.validate_on_submit():
         phone = session['phone']
         if check_verification_token(phone, form.token.data):
             del session['phone']
-            if current_user.is_authenticated:
-                current_user.student_phone = phone
+            if student.is_authenticated:
+                student.student_phone = phone
                 db.session.commit()
                 flash('You have enabled two-factor authentication')
                 return redirect(url_for(
                     'student.dashboard_account',
-                    _anchor='account')
-                    )
+                    student_full_name=student.student_full_name,
+                    _anchor='account'))
             else:
                 student_email = session['student_email']
                 del session['student_email']
                 student = Student.query.filter_by(
-                    student_email=student_email
-                    ).first()
+                    student_email=student_email).first()
                 next_page = request.args.get('next')
                 remember = request.args.get('remember', '0') == '1'
                 login_user(student, remember=remember)
@@ -429,16 +406,14 @@ def verify_2fa_student():
         'auth/two-factor-auth/student/verify_2fa.html',
         form=form,
         title='Verify Token',
-        student=student
-        )
+        student=student)
 
 
-@bp.route('/student/disable-2fa', methods=['GET', 'POST'])
+@bp.route('/student/<student_full_name>/disable-2fa', methods=['GET', 'POST'])
 @login_required
-def disable_2fa_student():
+def disable_2fa_student(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name
-        ).first_or_404()
+        student_full_name=student_full_name).first_or_404()
     form = Disable2faForm()
     if form.validate_on_submit():
         current_user.student_phone = None
@@ -446,25 +421,22 @@ def disable_2fa_student():
         flash('You have disabled two-factor authentication')
         return redirect(url_for(
             'student.dashboard_account',
-            _anchor='account'
-            )
-        )
+            student_full_name=student.student_full_name,
+            _anchor='account'))
     return render_template(
         'auth/two-factor-auth/student/disable_2fa.html',
         form=form,
         title='Disable 2fa',
-        student=student
-        )
+        student=student)
 
 # Admin
 
 
-@bp.route('/admin/enable-2fa', methods=['GET', 'POST'])
+@bp.route('/admin/<admin_full_name>/enable-2fa', methods=['GET', 'POST'])
 @login_required
-def enable_2fa_admin():
+def enable_2fa_admin(admin_full_name):
     admin = Admin.query.filter_by(
-        admin_full_name=current_user.admin_full_name
-        ).first_or_404()
+        admin_full_name=admin_full_name).first_or_404()
     form = Enable2faForm()
     if form.validate_on_submit():
         session['phone'] = form.verification_phone.data
@@ -474,8 +446,7 @@ def enable_2fa_admin():
         'auth/two-factor-auth/admin/enable_2fa_admin.html',
         form=form,
         title='Enable 2fa for Admin',
-        admin=admin
-        )
+        admin=admin)
 
 
 @bp.route('/admin/verify-2fa', methods=['GET', 'POST'])
@@ -491,14 +462,13 @@ def verify_2fa_admin():
                 flash('You have enabled two-factor authentication')
                 return redirect(url_for(
                     'admin.dashboard_account',
-                    _anchor='account')
-                    )
+                    admin_full_name=current_user.admin_full_name,
+                    _anchor='account'))
             else:
                 admin_email = session['admin_email']
                 del session['admin_email']
                 admin = Admin.query.filter_by(
-                    admin_email=admin_email
-                    ).first()
+                    admin_email=admin_email).first()
                 next_page = request.args.get('next')
                 remember = request.args.get('remember', '0') == '1'
                 login_user(admin, remember=remember)
@@ -507,28 +477,28 @@ def verify_2fa_admin():
     return render_template(
         'auth/two-factor-auth/admin/verify_2fa_admin.html',
         form=form,
-        title='Verify Token for Admin'
-        )
+        title='Verify Token for Admin')
 
 
-@bp.route('/admin/disable-2fa', methods=['GET', 'POST'])
+@bp.route('/admin/<admin_full_name>/disable-2fa', methods=['GET', 'POST'])
 @login_required
-def disable_2fa_admin():
+def disable_2fa_admin(admin_full_name):
     admin = Admin.query.filter_by(
-        admin_full_name=current_user.admin_full_name
-        ).first_or_404()
+        admin_full_name=admin_full_name).first_or_404()
     form = Disable2faForm()
     if form.validate_on_submit():
         current_user.admin_phone = None
         db.session.commit()
         flash('You have disabled two-factor authentication')
-        return redirect(url_for('admin.dashboard_account', _anchor='account'))
+        return redirect(url_for(
+            'admin.dashboard_account',
+            admin_full_name=admin.admin_full_name,
+            _anchor='account'))
     return render_template(
         'auth/two-factor-auth/admin/disable_2fa_admin.html',
         form=form,
         title='Disable 2fa for Admin',
-        admin=admin
-        )
+        admin=admin)
 
 # Teacher
 
@@ -563,14 +533,12 @@ def verify_2fa_teacher():
                 flash('You have enabled two-factor authentication')
                 return redirect(url_for(
                     'teacher.dashboard_account',
-                    _anchor='account')
-                    )
+                    _anchor='account'))
             else:
                 teacher_email = session['teacher_email']
                 del session['teacher_email']
                 teacher = Teacher.query.filter_by(
-                    teacher_email=teacher_email
-                    ).first()
+                    teacher_email=teacher_email).first()
                 next_page = request.args.get('next')
                 remember = request.args.get('remember', '0') == '1'
                 login_user(teacher, remember=remember)
@@ -579,32 +547,28 @@ def verify_2fa_teacher():
     return render_template(
         'auth/two-factor-auth/teacher/verify_2fa_teacher.html',
         form=form,
-        title='Verify Token for Teacher'
-        )
+        title='Verify Token for Teacher')
 
 
-@bp.route('/teacher/disable-2fa', methods=['GET', 'POST'])
+@bp.route('/teacher/<teacher_full_name>/disable-2fa', methods=['GET', 'POST'])
 @login_required
-def disable_2fa_teacher():
+def disable_2fa_teacher(teacher_full_name):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=current_user.teacher_full_name
-        ).first_or_404()
+        teacher_full_name=teacher_full_name).first_or_404()
     form = Disable2faForm()
     if form.validate_on_submit():
-        current_user.teacher_phone = None
+        teacher.teacher_phone = None
         db.session.commit()
         flash('You have disabled two-factor authentication')
         return redirect(url_for(
             'teacher.dashboard_account',
-            _anchor='account'
-            )
-        )
+            teacher_full_name=teacher.teacher_full_name,
+            _anchor='account'))
     return render_template(
         'auth/two-factor-auth/teacher/disable_2fa_teacher.html',
         form=form,
         title='Disable 2fa for Teacher',
-        teacher=teacher
-        )
+        teacher=teacher)
 
 # =================================================
 # TWO-FACTOR AUTHENTICATION

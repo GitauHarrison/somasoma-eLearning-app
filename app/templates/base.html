@@ -42,7 +42,7 @@
                         <span class="icon-bar"></span>
                     </button>
                         {% if student %}
-                            <a class="navbar-brand" href=" {{ url_for('student.dashboard_enrolled_courses') }} ">
+                            <a class="navbar-brand" href=" {{ url_for('student.dashboard_enrolled_courses', student_full_name=student.student_full_name) }} ">
                                 <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                                 
                             </a>
@@ -57,7 +57,7 @@
                                 
                             </a>
                         {% elif admin %}
-                            <a class="navbar-brand" href=" {{ url_for('admin.dashboard_account') }} ">
+                            <a class="navbar-brand" href=" {{ url_for('admin.dashboard_account', admin_full_name=admin.admin_full_name) }} ">
                                 <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
                                 
                             </a>
@@ -187,33 +187,33 @@
                             <span class="icon-bar"></span>
                         </div>
                         <div class="list-group">
-                            <a href="{{ url_for('student.dashboard_enrolled_courses') }}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
+                            <a href="{{ url_for('student.dashboard_enrolled_courses', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
                                 Enrolled Courses
                             </a>
-                            <a href="{{ url_for('student.dashboard_quizzes') }}" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
+                            <a href="{{ url_for('student.dashboard_quizzes', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
                                 Course Quizzes
                             </a>
-                            <a href="{{url_for('student.dashboard_live_class')}}" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
+                            <a href="{{url_for('student.dashboard_live_class', student_full_name=student.student_full_name)}}" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
                                 Live Class
                             </a>
-                            <a href="{{url_for('student.dashboard_explore_student_community')}}" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">
+                            <a href="{{url_for('student.dashboard_explore_student_community', student_full_name=student.student_full_name)}}" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">
                                 Explore Student Community
                             </a>
-                            <a href="{{ url_for('student.dashboard_my_community') }}" class="list-group-item tablinks" onclick="openCity(event, 'my-community')">
+                            <a href="{{ url_for('student.dashboard_my_community', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'my-community')">
                                 Your Community
                             </a>
-                            <a href="{{ url_for('student.dashboard_account') }}" class="list-group-item tablinks" onclick="openCity(event, 'account')">
+                            <a href="{{ url_for('student.dashboard_account', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'account')">
                                 Account
                             </a>
-                            <a href="{{ url_for('student.view_messages') }}" class="list-group-item tablinks" onclick="openCity(event, 'private_messages')">
+                            <a href="{{ url_for('student.view_messages', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'private_messages')">
                                 Private Messages
-                                {% set new_messages = current_user.new_messages() %}
+                                {% set new_messages = student.new_messages() %}
                                 <!-- Make the badge visible if the message count is non-zero; else hide it -->
                                 <span id="message_count" class="badge" style="visibility: {% if new_messages %} visible {% else %} hidden {% endif %};">
                                     {{ new_messages }}
                                 </span>
                             </a>
-                            <a href="{{ url_for('student.dashboard_analytics') }}" class="list-group-item tablinks" onclick="openCity(event, 'analytics')">
+                            <a href="{{ url_for('student.dashboard_analytics', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'analytics')">
                                 Analytics
                             </a>
                         </div>   
@@ -239,25 +239,25 @@
                             <span class="icon-bar"></span>
                         </div>
                         <div class="list-group">
-                            <a href="{{ url_for('admin.dashboard_account') }}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
+                            <a href="{{ url_for('admin.dashboard_account', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
                                 Admin Account
                             </a>
-                            <a href="{{ url_for('admin.dashboard_all_students') }}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
+                            <a href="{{ url_for('admin.dashboard_all_students', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
                                 All Students
                             </a>
-                            <a href="{{ url_for('admin.dashboard_all_teachers') }}" class="list-group-item tablinks" onclick="openCity(event, 'teachers')">
+                            <a href="{{ url_for('admin.dashboard_all_teachers', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'teachers')">
                                 All Teachers
                             </a>
-                            <a href="{{ url_for('admin.dashboard_all_parents') }}" class="list-group-item tablinks" onclick="openCity(event, 'parents')">
+                            <a href="{{ url_for('admin.dashboard_all_parents', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'parents')">
                                 All Parents
                             </a>
-                            <a href="{{ url_for('admin.dashboard_courses_offered') }}" class="list-group-item tablinks" onclick="openCity(event, 'courses')">
+                            <a href="{{ url_for('admin.dashboard_courses_offered', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'courses')">
                                 Courses
                             </a>
-                            <a href="{{ url_for('admin.review_blog_articles') }}" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
+                            <a href="{{ url_for('admin.review_blog_articles', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
                                 Blogs
                             </a>
-                            <a href="{{ url_for('admin.dashboard_student_stories') }}" class="list-group-item tablinks" onclick="openCity(event, 'stories')">
+                            <a href="{{ url_for('admin.dashboard_student_stories', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'stories')">
                                 Student Stories
                             </a>
                         </div>   
@@ -586,7 +586,7 @@
                 $(function() {
                     var since = 0;
                     setInterval(function() {
-                        $.ajax('{{ url_for('student.student_notifications') }}?since=' + since).done(
+                        $.ajax('{{ url_for('student.student_notifications', student_full_name=student.student_full_name) }}?since=' + since).done(
                             function(notifications) {
                                 for (var i = 0; i < notifications.length; i++) {
                                     if (notifications[i].student_full_name == 'unread_message_count')

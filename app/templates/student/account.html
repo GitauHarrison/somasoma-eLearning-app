@@ -22,40 +22,40 @@
                     <h2>Profile</h2>
                     <div class="row">
                         <div class="col-sm-3">
-                            <img src=" {{ current_user.avatar_student(128) }} ">
+                            <img src=" {{ student.avatar_student(128) }} ">
                         </div>
                         <div class="col-sm-9">
                             <p>
-                                Full Name: <span style="font-weight: 600;">{{ current_user.student_full_name }}</span> 
+                                Full Name: <span style="font-weight: 600;">{{ student.student_full_name }}</span> 
                             </p>
                             <p>
-                                Email: <span style="font-weight: 600;">{{ current_user.student_email }}</span> 
+                                Email: <span style="font-weight: 600;">{{ student.student_email }}</span> 
                             </p>
                             <p>
-                                Phone: <span style="font-weight: 600;">{{ current_user.student_phone }}</span> 
+                                Phone: <span style="font-weight: 600;">{{ student.student_phone }}</span> 
                             </p>
                             <p>
-                                Age: <span style="font-weight: 600;">{{ current_user.student_age }}</span> 
+                                Age: <span style="font-weight: 600;">{{ student.student_age }}</span> 
                             </p>
                             <p>
-                                School: <span style="font-weight: 600;">{{ current_user.student_school }}</span> 
+                                School: <span style="font-weight: 600;">{{ student.student_school }}</span> 
                             </p>
                             <p>
-                                Course: <span style="font-weight: 600;">{{ current_user.student_course }}</span> 
+                                Course: <span style="font-weight: 600;">{{ student.student_course }}</span> 
                             </p>
-                            {% if current_user.student_about_me %}
+                            {% if student.student_about_me %}
                                 <p>
-                                    About me: <span style="font-weight: 600;">{{ current_user.student_about_me }}</span>
+                                    About me: <span style="font-weight: 600;">{{ student.student_about_me }}</span>
                                 </p>
                             {% endif %}
-                            {% if current_user.student_last_seen %}
+                            {% if student.student_last_seen %}
                                 <p>
-                                    Last seen on: <span style="font-weight: 600;">{{ moment(current_user.student_last_seen).format('LLL') }}</span>
+                                    Last seen on: <span style="font-weight: 600;">{{ moment(student.student_last_seen).format('LLL') }}</span>
                                 </p>
                             {% endif %}
                             <p>
-                                <span style="font-weight: 600;">{{ current_user.followers.count() }}</span> Followers,
-                                <span style="font-weight: 600;">{{ current_user.followed.count() }}</span> Following
+                                <span style="font-weight: 600;">{{ student.followers.count() }}</span> Followers,
+                                <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
                             </p>                            
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                     <p>
                         Add an extra layer of security to your account by enabling two-factor authentication.
                     </p>
-                    {% if not current_user.two_factor_student_enabled() %}
+                    {% if not student.two_factor_student_enabled() %}
                         <p>
                             <a href=" {{ url_for('auth.enable_2fa_student', student_full_name=student.student_full_name) }} " class="btn btn-primary">Enable Two-Factor Authentication</a>
                         </p>

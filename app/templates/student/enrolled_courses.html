@@ -29,7 +29,7 @@
                                     Learn best practices for building responsive websites.
                                 </p>
                                 <a href=" {{ url_for('student.web_development_overview', student_full_name=student.student_full_name) }} " class="btn btn-primary">Start Lesson</a>
-                                <a href=" {{ url_for('student.dashboard_quizzes') }} " class="btn btn-primary">Quizzes</a>
+                                <a href=" {{ url_for('student.dashboard_quizzes', student_full_name=student.student_full_name) }} " class="btn btn-primary">Quizzes</a>
                             </div>            
                         </div>
                     </div>

@@ -232,7 +232,7 @@
                                 {% if percentage_achieved_chapter_2 < 80 %}
                                     <div class="col-sm-4">
                                         <p>
-                                            <a href=" {{ url_for('student.web_development_chapter_2_quiz_1') }} " class="btn btn-primary disabled">
+                                            <a href=" {{ url_for('student.web_development_chapter_2_quiz_1', student_full_name=student.student_full_name) }} " class="btn btn-primary disabled">
                                                 Quiz
                                             </a>
                                         </p>
@@ -248,7 +248,7 @@
                                 {% else %}
                                     <div class="col-sm-4">
                                         <p>
-                                            <a href=" {{ url_for('student.web_development_chapter_2_quiz_1') }} " class="btn btn-primary">
+                                            <a href=" {{ url_for('student.web_development_chapter_2_quiz_1', student_full_name=student.student_full_name) }} " class="btn btn-primary">
                                                 Quiz
                                             </a>
                                         </p>
