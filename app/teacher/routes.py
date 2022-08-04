@@ -586,28 +586,32 @@ def teacher_profile_popup(teacher_full_name):
 
 # Send private messages route
 
-@bp.route('/send-messages/<recipient>', methods=['GET', 'POST'])
+@bp.route('/<teacher_full_name>/send-messages/<recipient>', methods=['GET', 'POST'])
 @login_required
-def send_messages(recipient):
+def send_messages(teacher_full_name, recipient):
     teacher = Teacher.query.filter_by(
-        teacher_full_name=recipient).first()
+        teacher_full_name=teacher_full_name).first_or_404()
+    another_teacher = Teacher.query.filter_by(teacher_full_name=recipient).first()
+    print(recipient)
     form = PrivateMessageForm()
     if form.validate_on_submit():
         private_message = TeacherMessage(
             author=teacher,
-            recipient=teacher,
+            recipient=another_teacher,
             body=form.message.data)
         db.session.add(private_message)
-        teacher.add_notification(
-            'unread_message_count', teacher.new_messages())
+        another_teacher.add_notification(
+            'unread_message_count', another_teacher.new_messages())
         db.session.commit()
         flash('Your message has been sent!')
         return redirect(url_for(
             'teacher.send_messages',
-            recipient=recipient))
+            teacher_full_name=teacher.teacher_full_name,
+            recipient=another_teacher))
     return render_template(
         'teacher/private_messages/send_private_messages.html',
         teacher=teacher,
+        another_teacher=another_teacher,
         title='Send Private Messages',
         form=form)
 
@@ -750,17 +754,14 @@ def profile_student(teacher_full_name, student_full_name):
         quiz_attempts_chart_labels_chapter3=quiz_attempts_chart_labels_chapter3)
 
 
-@bp.route('/<teacher_full_name>/profile/student/<student_full_name>/popup/')
+@bp.route('/profile/student/<student_full_name>/popup/')
 @login_required
-def student_profile_popup(teacher_full_name, student_full_name):
-    teacher = Teacher.query.filter_by(
-        teacher_full_name=teacher_full_name).first()
+def student_profile_popup(student_full_name):
     student = Student.query.filter_by(
         student_full_name=student_full_name).first()
     return render_template(
         'teacher/profile_student_popup.html',
         student=student,
-        teacher=teacher,
         title='Student Profile')
 
 # End of profile route
@@ -768,16 +769,16 @@ def student_profile_popup(teacher_full_name, student_full_name):
 # Followership routes
 
 
-@bp.route('/<teacher_full_name>/follow/<teacher>', methods=['POST'])
+@bp.route('/<teacher_full_name>/follow/<another_teacher>', methods=['POST'])
 @login_required
-def follow_teacher(teacher_full_name, teacher):
+def follow_teacher(teacher_full_name, another_teacher):
     teacher = Teacher.query.filter_by(
         teacher_full_name=teacher_full_name).first()
     form = EmptyForm()
     if form.validate_on_submit():
-        another_teacher = Teacher.query.filter_by(teacher_full_name=teacher).first()
+        another_teacher = Teacher.query.filter_by(teacher_full_name=another_teacher).first()
         if another_teacher is None:
-            flash(f'User {teacher} not found')
+            flash(f'User {another_teacher} not found')
             return redirect(url_for(
                 'teacher.dashboard_explore_teachers',
                 teacher_full_name=teacher.teacher_full_name))
@@ -791,7 +792,7 @@ def follow_teacher(teacher_full_name, teacher):
         flash(f'You are following {another_teacher}!')
         return redirect(url_for(
             'teacher.profile_teacher',
-            teacher_full_name=teacher.teacher_full_name))
+            teacher_full_name=another_teacher))
     else:
         return redirect(url_for(
             'teacher.dashboard_explore_teachers',

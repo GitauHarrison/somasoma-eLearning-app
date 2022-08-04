@@ -32,14 +32,12 @@ def load_user(id):
 followers = db.Table(
     'followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('student.id')),
-    db.Column('followed_id', db.Integer, db.ForeignKey('student.id'))
-)
+    db.Column('followed_id', db.Integer, db.ForeignKey('student.id')))
 
 teacher_followers = db.Table(
     'teacher_followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('teacher.id')),
-    db.Column('followed_id', db.Integer, db.ForeignKey('teacher.id'))
-)
+    db.Column('followed_id', db.Integer, db.ForeignKey('teacher.id')))
 
 # ========================================
 # ADMIN MODELS
@@ -79,8 +77,7 @@ class Admin(UserMixin, db.Model):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
             current_app.config['SECRET_KEY'],
-            algorithm='HS256'
-        )
+            algorithm='HS256')
 
     # Two-factor authentication
 
@@ -565,8 +562,7 @@ class Teacher(UserMixin, db.Model):
     def check_password(self, teacher_password):
         return check_password_hash(
             self.teacher_password_hash,
-            teacher_password
-            )
+            teacher_password)
 
     # Two-factor authentication
     def two_factor_teacher_enabled(self):
@@ -583,8 +579,7 @@ class Teacher(UserMixin, db.Model):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
             current_app.config['SECRET_KEY'],
-            algorithm='HS256'
-        )
+            algorithm='HS256')
 
     @staticmethod
     def verify_reset_password_token(token):
@@ -600,10 +595,7 @@ class Teacher(UserMixin, db.Model):
         secondary=teacher_followers,
         primaryjoin=(teacher_followers.c.follower_id == id),
         secondaryjoin=(teacher_followers.c.followed_id == id),
-        backref=db.backref(
-            'teacher_followers',
-            lazy='dynamic'
-            ), lazy='dynamic')
+        backref=db.backref('teacher_followers', lazy='dynamic'), lazy='dynamic')
 
     def follow(self, teacher):
         if not self.is_following(teacher):
@@ -620,12 +612,11 @@ class Teacher(UserMixin, db.Model):
     def followed_comments(self):
         teacher_followed = TeacherCommunityComment.query.join(
             teacher_followers,
-            (teacher_followers.c.followed_id == TeacherCommunityComment.teacher_id)
-            ).filter(teacher_followers.c.follower_id == self.id)
+            (teacher_followers.c.followed_id == TeacherCommunityComment.teacher_id)).filter(
+                teacher_followers.c.follower_id == self.id)
         own = TeacherCommunityComment.query.filter_by(teacher_id=self.id)
         return teacher_followed.union(own).order_by(
-            TeacherCommunityComment.timestamp.desc()
-            )
+            TeacherCommunityComment.timestamp.desc())
 
 
 class TeacherMessage(db.Model):
@@ -653,8 +644,7 @@ class TeacherMessage(db.Model):
 db.event.listen(
     TeacherMessage.body,
     'set',
-    TeacherMessage.on_changed_body
-    )
+    TeacherMessage.on_changed_body)
 
 
 class TeacherNotifications(db.Model):
@@ -693,8 +683,7 @@ class TeacherCommunityComment(db.Model):
 db.event.listen(
     TeacherCommunityComment.body,
     'set',
-    TeacherCommunityComment.on_changed_body
-    )
+    TeacherCommunityComment.on_changed_body)
 
 
 class WebDevelopmentOverview(db.Model):
@@ -724,8 +713,7 @@ class WebDevelopmentOverview(db.Model):
 db.event.listen(
     WebDevelopmentOverview.overview,
     'set',
-    WebDevelopmentOverview.on_changed_body
-    )
+    WebDevelopmentOverview.on_changed_body)
 
 
 class TableOfContents(db.Model):
@@ -872,8 +860,7 @@ class User(db.Model):
     comments = db.relationship(
         'AnonymousTemplateInheritanceComment',
         backref='author',
-        lazy='dynamic'
-        )
+        lazy='dynamic')
 
     def __repr__(self):
         return f'User {self.name}'
@@ -978,10 +965,10 @@ class FlaskStudentStories(db.Model):
             tags=allowed_tags, strip=True))
 
 
-db.event.listen(FlaskStudentStories.body,
-                'set',
-                FlaskStudentStories.on_changed_body
-                )
+db.event.listen(
+    FlaskStudentStories.body,
+    'set',
+    FlaskStudentStories.on_changed_body)
 
 
 class AnonymousTemplateInheritanceComment(db.Model):
@@ -1005,10 +992,10 @@ class AnonymousTemplateInheritanceComment(db.Model):
             tags=allowed_tags, strip=True))
 
 
-db.event.listen(AnonymousTemplateInheritanceComment.body,
-                'set',
-                AnonymousTemplateInheritanceComment.on_changed_body
-                )
+db.event.listen(
+    AnonymousTemplateInheritanceComment.body,
+    'set',
+    AnonymousTemplateInheritanceComment.on_changed_body)
 
 # ========================================
 # ANONYMOUS MODELS

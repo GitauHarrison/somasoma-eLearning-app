@@ -40,19 +40,21 @@
             </div>
             <!-- End of Student Login Card -->
         </div>
-        <div class="col-sm-3">
-            <!-- Teacher Login Card -->
-            <div class="card-deck">
-                <div class="card">
-                    <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Teacher">
-                    <div class="card-body">
-                        <h4 class="card-title">Teacher Dashboard</h4><hr>
-                        <a href=" {{ url_for('teacher.dashboard_account') }} " class="btn btn-primary">Access</a>
-                    </div>            
+        {% if teacher %}
+            <div class="col-sm-3">
+                <!-- Teacher Login Card -->
+                <div class="card-deck">
+                    <div class="card">
+                        <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Teacher">
+                        <div class="card-body">
+                            <h4 class="card-title">Teacher Dashboard</h4><hr>
+                            <a href=" {{ url_for('teacher.dashboard_account', teacher_full_name=teacher.teacher_full_name) }} " class="btn btn-primary">Access</a>
+                        </div>            
+                    </div>
                 </div>
+                <!-- End of Teacher Login Card -->
             </div>
-            <!-- End of Teacher Login Card -->
-        </div>
+        {% endif %}
         <div class="col-sm-3">
             <!-- Admin Login Card -->
             <div class="card-deck">

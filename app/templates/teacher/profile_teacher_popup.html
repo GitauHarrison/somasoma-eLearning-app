@@ -24,15 +24,15 @@
                     <span style="font-weight: 600;">{{ teacher.teacher_followers.count() }}</span> Followers,
                     <span style="font-weight: 600;">{{ teacher.teacher_followed.count() }}</span> Following
                 </p>
-            {% if teacher != current_user %}
+            {% if not teacher != current_user %}
                 <p>
-                    <a href="{{ url_for('teacher.send_messages', recipient=teacher.teacher_full_name) }}">
+                    <a href="{{ url_for('teacher.send_messages', teacher_full_name=teacher.teacher_full_name, recipient=teacher.teacher_full_name) }}">
                         Send private message
                     </a>
                 </p>
             {% endif %}
-            {% if not current_user.is_following(teacher) %}
-                <form action="{{ url_for('teacher.follow_teacher', teacher_full_name=teacher.teacher_full_name, teacher=another_teacher) }}" method="post">
+            {% if not teacher.is_following(teacher) %}
+                <form action="{{ url_for('teacher.follow_teacher', teacher_full_name=teacher.teacher_full_name, another_teacher=another_teacher) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Follow', class_='btn btn-primary') }}
                 </form>

@@ -17,7 +17,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="data" class="table table-striped">
+                        <table id="data" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>Course</th>
@@ -33,9 +33,16 @@
                                         <td>{{ chapter.chapter }}</td>
                                         <td>{{ moment(chapter.timestamp).format('LLL') }}</td>
                                         <td>
-                                            <a href="http://127.0.0.1:5000/teacher/{{ chapter.comment_moderation_link }}">
+                                            <!-- <a href="http://127.0.0.1:5000/teacher/{{ chapter.comment_moderation_link }}">
                                                 Moderate
-                                            </a>
+                                            </a> -->
+                                            {% if chapter.chapter == 'Chapter 1: Hello World' %}
+                                                <a href="{{ url_for('teacher.review_flask_chapter_1_comments', teacher_full_name=teacher.teacher_full_name) }}">Moderate</a>
+                                            {% elif chapter.chapter == 'Chapter 2: Flask Templates' %}
+                                                <a href="{{ url_for('teacher.review_flask_chapter_2_comments', teacher_full_name=teacher.teacher_full_name) }}">Moderate</a>
+                                                {% elif chapter.chapter == 'Chapter 3: Introduction to Web Forms' %}
+                                                <a href="{{ url_for('teacher.review_flask_chapter_3_comments', teacher_full_name=teacher.teacher_full_name) }}">Moderate</a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}
