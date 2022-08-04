@@ -829,15 +829,18 @@ def profile_student(student_full_name):
         form=form)
 
 
-@bp.route('/profile/<student_full_name>/popup/')
+@bp.route('/<student_full_name>/profile/<another_student_full_name>/popup/')
 @login_required
-def student_profile_popup(student_full_name):
+def student_profile_popup(student_full_name, another_student_full_name):
     student = Student.query.filter_by(
         student_full_name=student_full_name).first()
+    another_student = Student.query.filter_by(
+        student_full_name=another_student_full_name).first()
     form = EmptyForm()
     return render_template(
         'student/profile_popup.html',
         student=student,
+        another_student=another_student,
         title='Student Profile',
         form=form)
 
@@ -955,18 +958,20 @@ def follow_student(student_full_name, another_student_full_name):
             student_full_name=another_student_full_name).first()
         if another_student is None:
             flash(f'User {another_student_full_name} not found')
-            return redirect(url_for('student.dashboard_account'))
+            return redirect(url_for(
+                'student.dashboard_account',
+                student_full_name=student.student_full_name))
         if another_student == student:
             flash('You cannot follow yourself!')
             return redirect(url_for(
                 'student.profile_student',
-                student_full_name=student_full_name))
+                student_full_name=student.student_full_name))
         student.follow(another_student)
         db.session.commit()
         flash(f'You are following {another_student.student_full_name}!')
         return redirect(url_for(
             'student.profile_student',
-            student_full_name=student_full_name))
+            student_full_name=student.student_full_name))
     else:
         return redirect(url_for(
             'student.dashboard_account',
@@ -1596,7 +1601,7 @@ def web_development_chapter_1_quiz_1(student_full_name):
 @login_required
 def web_development_chapter_1_quiz_2(student_full_name):
     student = Student.query.filter_by(
-        student_full_name=current_user.student_full_name).first()
+        student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
 
     # Quiz 2
@@ -2129,7 +2134,7 @@ def web_development_chapter_3_quiz_3(student_full_name):
 @bp.route(
     '/<student_full_name>/web-development/chapter-3/quiz-4', methods=['GET', 'POST'])
 @login_required
-def web_development_chapter_3_quiz_4():
+def web_development_chapter_3_quiz_4(student_full_name):
     student = Student.query.filter_by(
         student_full_name=student_full_name).first()
     quizzes = ChapterQuiz.query.filter_by(allowed_status=True).all()
@@ -2806,7 +2811,7 @@ def web_development_general_quiz_6(student_full_name):
     '/<student_full_name>/web-development/general-multichoice-questions/quiz-7',
     methods=['GET', 'POST'])
 @login_required
-def web_development_general_quiz_7():
+def web_development_general_quiz_7(student_full_name):
     student = Student.query.filter_by(
         student_full_name=student_full_name).first()
     quizzes = GeneralMultipleChoicesQuiz.query.filter_by(
