@@ -30,13 +30,13 @@
                                             <li>
                                                 Latest Achievement of Lesson Objectives: {{ percentage_achieved }}% - 
                                                 <small>
-                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_link }}#objectives">Improve</a>
+                                                    <a href="{{ url_for('student.web_development_chapter_1', student_full_name=student.student_full_name) }}#objectives">Improve</a>
                                                 </small>
                                             </li>
                                             <li>
                                                 Latest Achievement of Lesson Quizzes: {{ total_score_percentage }}% - 
                                                 <small>
-                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_quiz_1_link }}">Improve</a>
+                                                    <a href="{{ url_for('student.web_development_chapter_1_quiz_1', student_full_name=student.student_full_name) }}">Improve</a>
                                                 </small>
                                             </li>
                                         </ul>
@@ -61,13 +61,13 @@
                                             <li>
                                                 Latest Achievement of Lesson Objectives: {{ percentage_achieved_chapter_2 }}% - 
                                                 <small>
-                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_link }}#objectives">Improve</a>
+                                                    <a href="{{ url_for('student.web_development_chapter_2', student_full_name=student.student_full_name) }}#objectives">Improve</a>
                                                 </small>
                                             </li>
                                             <li>
                                                 Latest Achievement of Lesson Quizzes: {{ total_score_percentage_chapter_2 }}% - 
                                                 <small>
-                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_quiz_1_link }}">Improve</a>
+                                                    <a href="{{ url_for('student.web_development_chapter_2_quiz_1', student_full_name=student.student_full_name) }}">Improve</a>
                                                 </small>
                                             </li>
                                         </ul>
@@ -92,13 +92,13 @@
                                             <li>
                                                 Latest Achievement of Lesson Objectives: {{ percentage_achieved_chapter_3 }}% - 
                                                 <small>
-                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_link }}#objectives">Improve</a>
+                                                    <a href="{{ url_for('student.web_development_chapter_3', student_full_name=student.student_full_name) }}#objectives">Improve</a>
                                                 </small>
                                             </li>
                                             <li>
                                                 Latest Achievement of Lesson Quizzes: {{ total_score_percentage_chapter_3 }}% - 
                                                 <small>
-                                                    <a href="http://127.0.0.1:5000/student/{{ chapter.chapter_quiz_1_link }}">Improve</a>
+                                                    <a href="{{ url_for('student.web_development_chapter_3_quiz_1', student_full_name=student.student_full_name) }}">Improve</a>
                                                 </small>
                                             </li>
                                         </ul>
@@ -129,7 +129,7 @@
                             <li>
                                 Latest Achievement of Multi-choice Questions: {{ multi_choice_total_score_percentage }}% - 
                                 <small>
-                                    <a href="http://127.0.0.1:5000/student/web-development/general-multichoice-questions/quiz-1">Improve</a>
+                                    <a href="{{ url_for('student.web_development_general_quiz_1', student_full_name=student.student_full_name) }}">Improve</a>
                                 </small>
                             </li>
                             <li>

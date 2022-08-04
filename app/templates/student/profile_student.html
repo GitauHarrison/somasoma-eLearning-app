@@ -60,8 +60,8 @@
                     </a>
                 </p>
             {% endif %}
-            {% if not student.is_following(another_student) %}
-                <form action="{{ url_for('student.follow_student', student_full_name=student.student_full_name) }}" method="post">
+            {% if not student.is_following(student) %}
+                <form action="{{ url_for('student.follow_student', student_full_name=student.student_full_name, another_student_full_name=another_student.another_student_full_name) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Follow', class_='btn btn-primary') }}
                 </form>
