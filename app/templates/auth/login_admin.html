@@ -4,35 +4,35 @@
 {% block anonymous_app_content %}
 <!-- Flash message -->
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-md-12">
         {% include '_flash_message.html' %}
     </div>
 </div>
 <!-- End of flash message -->
 <div class="row">
-    <div class="col-sm-12 text-center">
+    <div class="col-md-12 text-center">
         <h1>{{ title }}</h1>
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-md-4">
         <!-- Empty column -->
     </div>
-    <div class="col-sm-4 my-form">
+    <div class="col-md-4 my-form">
         {{ wtf.quick_form(form) }}
         <p>
             Forgot password? <a href=" {{ url_for('auth.request_password_reset_admin') }} ">Reset it here</a>!
         </p>
     </div>
-    <div class="col-sm-4">
+    <div class="col-md-4">
         <!-- Empty column -->
     </div>
 </div>
 <div class="row text-center">
-    <div class="col-sm-4">
+    <div class="col-md-4">
        <!-- Empty column -->
     </div>
-    <div class="col-sm-4">
+    <div class="col-md-4">
         <p>
             <a href=" {{ url_for('auth.login') }} " class="btn btn-primary">
                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
@@ -40,7 +40,7 @@
             </a>
         </p>
     </div>
-    <div class="col-sm-4">
+    <div class="col-md-4">
         <!-- Empty column -->
     </div>
 </div>
