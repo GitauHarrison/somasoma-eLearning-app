@@ -290,8 +290,7 @@ class Student(UserMixin, db.Model):
         n = StudentNotification(
             student_full_name=student_full_name,
             payload_json=json.dumps(data),
-            student=self
-            )
+            student=self)
         db.session.add(n)
         return n
 
@@ -300,9 +299,7 @@ class Student(UserMixin, db.Model):
 
     def check_password(self, student_password):
         return check_password_hash(
-            self.student_password_hash,
-            student_password
-            )
+            self.student_password_hash, student_password)
 
     # Two-factor authentication
     def two_factor_student_enabled(self):
@@ -337,8 +334,8 @@ class Student(UserMixin, db.Model):
     def followed_comments(self):
         followed = CommunityComment.query.join(
             followers,
-            (followers.c.followed_id == CommunityComment.student_id)
-            ).filter(followers.c.follower_id == self.id)
+            (followers.c.followed_id == CommunityComment.student_id)).filter(
+                followers.c.follower_id == self.id)
         own = CommunityComment.query.filter_by(student_id=self.id)
         return followed.union(own).order_by(CommunityComment.timestamp.desc())
 
@@ -347,9 +344,7 @@ class Student(UserMixin, db.Model):
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
-            current_app.config['SECRET_KEY'],
-            algorithm='HS256'
-        )
+            current_app.config['SECRET_KEY'], algorithm='HS256')
 
     @staticmethod
     def verify_reset_password_token(token):
@@ -397,18 +392,15 @@ class CommunityComment(db.Model):
     def on_changed_body(target, value, oldvalue, initiator):
         allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
                         'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
-                        'h1', 'h2', 'h3', 'p', 'br', 'li'
-                        ]
+                        'h1', 'h2', 'h3', 'p', 'br', 'li']
         target.body_html = bleach.linkify(bleach.clean(
-            markdown(value, output_format='html'),
-            tags=allowed_tags, strip=True))
+            markdown(value, output_format='html'), tags=allowed_tags, strip=True))
 
 
 db.event.listen(
     CommunityComment.body,
     'set',
-    CommunityComment.on_changed_body
-    )
+    CommunityComment.on_changed_body)
 
 
 # ========================================
@@ -455,15 +447,14 @@ class Parent(UserMixin, db.Model):
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
             {'reset_password': self.id, 'exp': time() + expires_in},
-            current_app.config['SECRET_KEY'],
-            algorithm='HS256'
-        )
+            current_app.config['SECRET_KEY'], algorithm='HS256')
 
     @staticmethod
     def verify_reset_password_token(token):
         try:
-            id = jwt.decode(token, current_app.config['SECRET_KEY'],
-                            algorithms=['HS256'])['reset_password']
+            id = jwt.decode(
+                token, current_app.config['SECRET_KEY'],
+                algorithms=['HS256'])['reset_password']
         except:
             return
         return Parent.query.get(id)
