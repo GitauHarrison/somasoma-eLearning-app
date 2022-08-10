@@ -53,7 +53,7 @@
                 <span style="font-weight: 600;">{{ student.followers.count() }}</span> Followers,
                 <span style="font-weight: 600;">{{ student.followed.count() }}</span> Following
             </p>
-            {% if another_student != student %}
+            {% if student != another_student %}
                 <p>
                     <a href="{{ url_for('student.send_message', recipient=student.student_full_name) }}">
                         Send private message
@@ -61,12 +61,12 @@
                 </p>
             {% endif %}
             {% if not student.is_following(student) %}
-                <form action="{{ url_for('student.follow_student', student_full_name=student.student_full_name, another_student_full_name=another_student.another_student_full_name) }}" method="post">
+            <form action="{{ url_for('student.follow_student', student_full_name=student.student_full_name) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Follow', class_='btn btn-primary') }}
                 </form>
             {% else %}
-                <form action="{{ url_for('student.unfollow_student', student_full_name=student.student_full_name) }}" method="post">
+            <form action="{{ url_for('student.unfollow_student', student_full_name=student.student_full_name) }}" method="post">
                     {{ form.hidden_tag() }}
                     {{ form.submit(value='Unfollow', class_='btn btn-primary') }}
                 </form>

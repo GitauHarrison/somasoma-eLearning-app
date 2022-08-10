@@ -45,6 +45,7 @@ from datetime import datetime
 @bp.before_request
 def before_request():
     if current_user.is_authenticated:
+        print(current_user)
         current_user.student_last_seen = datetime.utcnow()
         db.session.commit()
 
@@ -799,7 +800,7 @@ def dashboard_analytics(student_full_name):
 # Profile routes
 
 
-@bp.route('/profile/<student_full_name>')
+@bp.route('/<student_full_name>/profile')
 @login_required
 def profile_student(student_full_name):
     student = Student.query.filter_by(
@@ -829,18 +830,15 @@ def profile_student(student_full_name):
         form=form)
 
 
-@bp.route('/<student_full_name>/profile/<another_student_full_name>/popup/')
+@bp.route('/profile/<student_full_name>/popup/')
 @login_required
-def student_profile_popup(student_full_name, another_student_full_name):
+def student_profile_popup(student_full_name):
     student = Student.query.filter_by(
         student_full_name=student_full_name).first()
-    another_student = Student.query.filter_by(
-        student_full_name=another_student_full_name).first()
     form = EmptyForm()
     return render_template(
         'student/profile_popup.html',
         student=student,
-        another_student=another_student,
         title='Student Profile',
         form=form)
 
@@ -945,32 +943,31 @@ def student_notifications(student_full_name):
 # Followership routes
 
 
-@bp.route('/<student_full_name>/follow/<another_student_full_name>', methods=['POST'])
+@bp.route('/follow/<student_full_name>', methods=['POST'])
 @login_required
-def follow_student(student_full_name, another_student_full_name):
+def follow_student(student_full_name):
     student = Student.query.filter_by(
         student_full_name=student_full_name).first()
-    another_student = Student.query.filter_by(
-        student_full_name=another_student_full_name).first()
+    print('Student: ', student)
     form = EmptyForm()
     if form.validate_on_submit():
-        another_student = Student.query.filter_by(
-            student_full_name=another_student_full_name).first()
-        if another_student is None:
-            flash(f'User {another_student_full_name} not found')
+        student = Student.query.filter_by(
+            student_full_name=student_full_name).first()
+        if student is None:
+            flash(f'User {student.student_full_name} not found')
             return redirect(url_for(
                 'student.dashboard_account',
                 student_full_name=student.student_full_name))
-        if another_student == student:
+        if student == student:
             flash('You cannot follow yourself!')
             return redirect(url_for(
                 'student.profile_student',
                 student_full_name=student.student_full_name))
-        student.follow(another_student)
+        student.follow(student)
         db.session.commit()
-        flash(f'You are following {another_student.student_full_name}!')
+        flash(f'You are following {student.student_full_name}!')
         return redirect(url_for(
-            'student.profile_student',
+            'another_student.profile_student',
             student_full_name=student.student_full_name))
     else:
         return redirect(url_for(
@@ -978,33 +975,31 @@ def follow_student(student_full_name, another_student_full_name):
             student_full_name=student.student_full_name))
 
 
-@bp.route('/<student_full_name>/unfollow/<another_student_full_name>', methods=['POST'])
+@bp.route('/unfollow/<student_full_name>', methods=['POST'])
 @login_required
-def unfollow_student(student_full_name, another_student_full_name):
+def unfollow_student(student_full_name):
     student = Student.query.filter_by(
         student_full_name=student_full_name).first()
-    another_student = Student.query.filter_by(
-        student_full_name=another_student_full_name).first()
     form = EmptyForm()
     if form.validate_on_submit():
-        another_student = Student.query.filter_by(
-            student_full_name=another_student_full_name).first()
-        if another_student is None:
-            flash(f'User {another_student_full_name} not found')
+        student = Student.query.filter_by(
+            student_full_name=student_full_name).first()
+        if student is None:
+            flash(f'User {student.student_full_name} not found')
             return redirect(url_for(
                 'student.dashboard_account',
                 student_full_name=student.student_full_name))
-        if another_student == student:
+        if student == student:
             flash('You cannot unfollow yourself!')
             return redirect(url_for(
                 'student.profile_student',
-                student_full_name=student_full_name))
-        student.unfollow(another_student)
+                student_full_name=student.student_full_name))
+        student.unfollow(student)
         db.session.commit()
-        flash(f'You are not following {another_student.student_full_name}!')
+        flash(f'You are not following {student.student_full_name}!')
         return redirect(url_for(
             'student.profile_student',
-            student_full_name=student_full_name))
+            student_full_name=student.student_full_name))
     else:
         return redirect(url_for(
             'student.dashboard_account',
