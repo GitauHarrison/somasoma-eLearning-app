@@ -776,7 +776,8 @@ def follow_teacher(teacher_full_name, another_teacher):
         teacher_full_name=teacher_full_name).first()
     form = EmptyForm()
     if form.validate_on_submit():
-        another_teacher = Teacher.query.filter_by(teacher_full_name=another_teacher).first()
+        another_teacher = Teacher.query.filter_by(
+            teacher_full_name=another_teacher).first()
         if another_teacher is None:
             flash(f'User {another_teacher} not found')
             return redirect(url_for(

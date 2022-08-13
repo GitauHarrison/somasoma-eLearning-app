@@ -14,59 +14,67 @@
         </div>
     </div>
     <div class="row text-center">
-        <div class="col-sm-3">
-            <!-- Parent Login Card -->
-            <div class="card-deck">
-                <div class="card">
-                    <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/parent.svg')}}" alt="Parent">
-                    <div class="card-body">
-                        <h4 class="card-title">Parent Dashboard</h4><hr>
-                        <a href=" {{ url_for('main.dashboard_parent') }} " class="btn btn-primary">Access</a>
-                    </div>            
+        {% if current_user.is_authenticated %}
+            {% if parent %}
+                <div class="col-sm-3">
+                    <!-- Parent Login Card -->
+                    <div class="card-deck">
+                        <div class="card">
+                            <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/parent.svg')}}" alt="Parent">
+                            <div class="card-body">
+                                <h4 class="card-title">Parent Dashboard</h4><hr>
+                                <a href=" {{ url_for('main.dashboard_parent') }} " class="btn btn-primary">Access</a>
+                            </div>            
+                        </div>
+                    </div>
+                    <!-- End of Parent Login Card -->
                 </div>
-            </div>
-            <!-- End of Parent Login Card -->
-        </div>
-        <div class="col-sm-3">
-           <!-- Student Login Card -->
-            <div class="card-deck">
-                <div class="card">
-                    <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/student.svg')}}" alt="Student">
-                    <div class="card-body">
-                        <h4 class="card-title">Student Dashboard</h4><hr>
-                        <a href=" {{ url_for('student.dashboard_account') }} " class="btn btn-primary">Access</a>
-                    </div>            
-                </div>
-            </div>
-            <!-- End of Student Login Card -->
-        </div>
-        {% if teacher %}
+            {% endif %}
+            {% if student %}
             <div class="col-sm-3">
-                <!-- Teacher Login Card -->
+            <!-- Student Login Card -->
                 <div class="card-deck">
                     <div class="card">
-                        <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Teacher">
+                        <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/student.svg')}}" alt="Student">
                         <div class="card-body">
-                            <h4 class="card-title">Teacher Dashboard</h4><hr>
-                            <a href=" {{ url_for('teacher.dashboard_account', teacher_full_name=teacher.teacher_full_name) }} " class="btn btn-primary">Access</a>
+                            <h4 class="card-title">Student Dashboard</h4><hr>
+                            <a href=" {{ url_for('student.dashboard_account', student_full_name=student.student_full_name) }} " class="btn btn-primary">Access</a>
                         </div>            
                     </div>
                 </div>
-                <!-- End of Teacher Login Card -->
+                <!-- End of Student Login Card -->
             </div>
-        {% endif %}
-        <div class="col-sm-3">
-            <!-- Admin Login Card -->
-            <div class="card-deck">
-                <div class="card">
-                    <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/admin.svg')}}" alt="Admin">
-                    <div class="card-body">
-                        <h4 class="card-title">Admin Dashboard</h4><hr>
-                        <a href=" {{ url_for('admin.dashboard_account') }} " class="btn btn-primary">Access</a>
-                    </div>            
+            {% endif %}
+            {% if teacher %}
+                <div class="col-sm-3">
+                    <!-- Teacher Login Card -->
+                    <div class="card-deck">
+                        <div class="card">
+                            <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Teacher">
+                            <div class="card-body">
+                                <h4 class="card-title">Teacher Dashboard</h4><hr>
+                                <a href=" {{ url_for('teacher.dashboard_account', teacher_full_name=teacher.teacher_full_name) }} " class="btn btn-primary">Access</a>
+                            </div>            
+                        </div>
+                    </div>
+                    <!-- End of Teacher Login Card -->
                 </div>
+            {% endif %}
+            {% if admin %}
+            <div class="col-sm-3">
+                <!-- Admin Login Card -->
+                <div class="card-deck">
+                    <div class="card">
+                        <img class="img-fluid" style="max-width: 50%; height: auto;" src="{{url_for('static', filename = 'images/admin.svg')}}" alt="Admin">
+                        <div class="card-body">
+                            <h4 class="card-title">Admin Dashboard</h4><hr>
+                            <a href=" {{ url_for('admin.dashboard_account') }} " class="btn btn-primary">Access</a>
+                        </div>            
+                    </div>
+                </div>
+                <!-- End of Admin Login Card -->
             </div>
-            <!-- End of Admin Login Card -->
-        </div>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock %}
