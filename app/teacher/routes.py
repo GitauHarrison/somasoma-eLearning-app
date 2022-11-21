@@ -769,31 +769,29 @@ def student_profile_popup(student_full_name):
 # Followership routes
 
 
-@bp.route('/<teacher_full_name>/follow/<another_teacher>', methods=['POST'])
+@bp.route('/follow/<teacher_full_name>', methods=['POST'])
 @login_required
-def follow_teacher(teacher_full_name, another_teacher):
+def follow_teacher(teacher_full_name):
     teacher = Teacher.query.filter_by(
         teacher_full_name=teacher_full_name).first()
     form = EmptyForm()
     if form.validate_on_submit():
-        another_teacher = Teacher.query.filter_by(
-            teacher_full_name=another_teacher).first()
-        if another_teacher is None:
-            flash(f'User {another_teacher} not found')
-            return redirect(url_for(
-                'teacher.dashboard_explore_teachers',
-                teacher_full_name=teacher.teacher_full_name))
-        if another_teacher == teacher:
+        teacher = Teacher.query.filter_by(
+            teacher_full_name=teacher_full_name).first()
+        if teacher is None:
+            flash(f'User {teacher_full_name} not found')
+            return redirect(url_for('teacher.dashboard_explore_teachers'))
+        if teacher == current_user:
             flash('You cannot follow yourself!')
             return redirect(url_for(
                 'teacher.profile_teacher',
-                teacher_full_name=teacher.teacher_full_name))
-        teacher.follow(another_teacher)
+                teacher_full_name=teacher_full_name))
+        current_user.follow(teacher)
         db.session.commit()
-        flash(f'You are following {another_teacher}!')
+        flash(f'You are following {teacher.teacher_full_name}!')
         return redirect(url_for(
             'teacher.profile_teacher',
-            teacher_full_name=another_teacher))
+            teacher_full_name=teacher_full_name))
     else:
         return redirect(url_for(
             'teacher.dashboard_explore_teachers',

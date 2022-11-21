@@ -17,16 +17,7 @@ def load_user(id):
     teacher = Teacher.query.get(int(id))
     student = Student.query.get(int(id))
     parent = Parent.query.get(int(id))
-    if admin:
-        return admin
-    elif teacher:
-        return teacher
-    elif student:
-        return student
-    elif parent:
-        return parent
-    else:
-        return None
+    return admin or teacher or student or parent
 
 
 followers = db.Table(
