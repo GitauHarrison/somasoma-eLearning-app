@@ -6,6 +6,9 @@ This is a sample eLearning application used to demonstrate how interactive virtu
 
 ![Student Dashboard](app/static/images/student_dashboard.png)
 
+
+*During this iteration, I came across an intially insummountable challenge of authenticating multiple users of the application. Everything else works as I had envinsioned, except the proper authentication of users. Later on, I learnt about [Joined Table Inheritance](https://github.com/GitauHarrison/notes/blob/master/databases/99_joined_table_inheritance.md). This solved my problem. However, given how far I had gone with this app, I found it too cumbersome to fix the database issues. Instead, I opted to create a new one ([Link to new somaSOMA Repo](https://github.com/GitauHarrison/sample-elearning-app-flask) | [Live App](https://somasoma.onrender.com/)).*
+
 ## Table of Contents
 - [Background](#background)
 - [Overview](#overview)
