@@ -25,10 +25,7 @@ bootstrap = Bootstrap()
 db = SQLAlchemy(metadata=metadata)
 migrate = Migrate()
 login = LoginManager()
-login.login_view = 'auth.login_student'
-login.login_view = 'auth.login_parent'
-login.login_view = 'auth.login_teacher'
-login.login_view = 'auth.login_admin'
+login.login_view = 'auth.login'
 moment = Moment()
 mail = Mail()
 pagedown = PageDown()
@@ -93,13 +90,15 @@ def create_app(config_class=Config):
     from app.teacher import bp as teacher_bp
     app.register_blueprint(teacher_bp, url_prefix='/teacher')
 
+    from app.materials import bp as materials_bp
+    app.register_blueprint(materials_bp, url_prefix='/materials')
+
     if not app.debug and not app.testing:
-        if app.config['MAIL_SERVER']:
-            auth = None
-        if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
+        auth = None
+        if app.config.get('MAIL_USERNAME') and app.config.get('MAIL_PASSWORD'):
             auth = (app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD'])
         secure = None
-        if app.config['MAIL_USE_TLS']:
+        if app.config.get('MAIL_USE_TLS'):
             secure = ()
         mail_handler = SMTPHandler(
             mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),

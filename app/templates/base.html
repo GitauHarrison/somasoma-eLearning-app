@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@100;300&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
-
 {% endblock %}
 
 <!-- Title Section -->
@@ -26,584 +25,71 @@
     {{ super() }}
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename = 'css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/css/intlTelInput.css">
-
 {% endblock %}
 
 <!-- Navbar Section -->
 {% block navbar %}
-    {% if current_user.is_authenticated %}
-        <nav class="navbar-default">
-            <div>
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                        {% if student %}
-                            <a class="navbar-brand" href=" {{ url_for('student.dashboard_enrolled_courses', student_full_name=student.student_full_name) }} ">
-                                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                                
-                            </a>
-                        {% elif parent %}
-                            <a class="navbar-brand" href=" {{ url_for('main.dashboard_parent') }} ">
-                                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                                
-                            </a>
-                        {% elif teacher %}
-                            <a class="navbar-brand" href=" {{ url_for('teacher.dashboard_account', teacher_full_name=teacher.teacher_full_name) }} ">
-                                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                                
-                            </a>
-                        {% elif admin %}
-                            <a class="navbar-brand" href=" {{ url_for('admin.dashboard_account', admin_full_name=admin.admin_full_name) }} ">
-                                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                                
-                            </a>
-                        {% else %}
-                            <a class="navbar-brand" href=" {{ url_for('main.anonymous_user') }} ">
-                                <img alt="Brand" src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="30" height="30">
-                            </a>
-                        {% endif %}
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">            
-                    <ul class="nav navbar-nav navbar-right">
-                            {% if student %}
-                                <li><a href=" {{ url_for('auth.logout_student') }} ">Logout</a></li> 
-                            {% elif parent %}
-                                <li><a href=" {{ url_for('auth.logout_parent') }} ">Logout</a></li>
-                            {% elif teacher %}
-                                <li><a href=" {{ url_for('auth.logout_teacher') }} ">Logout</a></li> 
-                            {% elif admin %}
-                                <li><a href=" {{ url_for('auth.logout_admin') }} ">Logout</a></li>
-                            {% endif %}
-                    </ul>                       
-                </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="{{ url_for('main.home') }}">
+      <img src="{{ url_for('static', filename = 'images/eLearning.png') }}" width="32" height="32" class="d-inline-block align-top mr-2" alt="Logo">
+      <span class="font-weight-bold ml-2">somaSoma</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.home') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.events') }}">Events</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.blog') }}">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('materials.materials') }}">Materials</a>
+        </li>
+        {% if current_user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ current_user.username or 'Account' }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+              <a class="dropdown-item" href="{{ url_for('auth.logout_' + current_user.role) }}">Logout</a>
             </div>
-        </nav>
-    {% else %}
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{ url_for('main.home') }}">somaSoma</a>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">         
-                    <ul class="nav navbar-nav navbar-right">  
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Courses
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href=" {{ url_for('main.flask_web_deveopment_course') }} ">Web Development</a><br>
-                                <!-- <a class="dropdown-item" href=" # ">Python DSA</a><br>
-                                <hr>
-                                <a class="dropdown-item disabled" href="#">Data Science</a><br>
-                                <a class="dropdown-item disabled" href="#">Machine Learning</a> -->
-                            </div>
-                        </li>
-                        <li><a href=" {{ url_for('main.events') }} ">Events</a></li> 
-                        <li><a href=" {{ url_for('main.blog') }} ">Blog</a></li> 
-                    </ul>                       
-                </div>
-            </div>
-        </nav>
-    {% endif %}
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link btn btn-outline-primary px-3 ml-2" href="{{ url_for('auth.login') }}">Login</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
 {% endblock %}
 
-<!-- Blog Content Goes Here -->
+<!-- Main Content Block -->
 {% block content %}
-    {% if current_user.is_authenticated %}
-        <div class="tab-content">   
-            {% if teacher %}
-                <div class="row">
-                    <!-- Start of sidebar -->
-                    <div class="col-sm-2 sidebar">
-                        <div class="mini-submenu">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </div>
-                        <div class="list-group">
-                            <a href="{{  url_for('teacher.dashboard_account', teacher_full_name=teacher.teacher_full_name)}}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
-                                Account
-                            </a>
-                            <a href="{{ url_for('teacher.view_messages', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'private_messages')">
-                                Private Messages
-                                {% set new_messages = teacher.new_messages() %}
-                                <!-- Make the badge visible if the message count is non-zero; else hide it -->
-                                <span id="message_count" class="badge" style="visibility: {% if new_messages %} visible {% else %} hidden {% endif %};">
-                                    {{ new_messages }}
-                                </span>
-                            </a>
-                            <a href="{{ url_for('teacher.dashboard_your_students', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
-                                Your Students
-                            </a>
-                            <a href="{{ url_for('teacher.dashboard_student_community', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">
-                                Student Community
-                            </a>
-                            <a href="{{ url_for('teacher.dashboard_explore_teachers', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'explore-teacher-community')">
-                                Explore Teacher Community
-                            </a>
-                            <a href="{{ url_for('teacher.dashboard_my_teacher_community', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'your-community')">
-                                Your Community
-                            </a>
-                            <a href="{{ url_for('teacher.dashboard_comment_moderation', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'comment-moderation')">
-                                Comment Moderation
-                            </a>
-                            <a href="{{ url_for('teacher.dashboard_manage_course', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'update')">
-                                Manage Course
-                            </a>
-                            <a href="{{ url_for('teacher.dashboard_manage_blog', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
-                                Manage Blog
-                            </a>
-                            <a href="{{ url_for('teacher.dashboard_manage_events', teacher_full_name=teacher.teacher_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'event')">
-                                Manage Events
-                            </a>
-                        </div>   
-                    </div>
-                    <!-- End of sidebar -->
-
-                    <!-- Page content will go here -->
-                    <div class="col-sm-10 scrollable-content">
-                        {% block app_content %}
-
-                        {% endblock %}
-                    </div>
-                </div>
-            {% elif student %}
-                <div class="row">
-                    <!-- Start of sidebar -->
-                    <div class="col-sm-2 sidebar">
-                        <div class="mini-submenu">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </div>
-                        <div class="list-group">
-                            <a href="{{ url_for('student.dashboard_enrolled_courses', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
-                                Enrolled Courses
-                            </a>
-                            <a href="{{ url_for('student.dashboard_quizzes', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
-                                Course Quizzes
-                            </a>
-                            <a href="{{url_for('student.dashboard_live_class', student_full_name=student.student_full_name)}}" class="list-group-item tablinks" onclick="openCity(event, 'live-class')">
-                                Live Class
-                            </a>
-                            <a href="{{url_for('student.dashboard_explore_student_community', student_full_name=student.student_full_name)}}" class="list-group-item tablinks" onclick="openCity(event, 'student-community')">
-                                Explore Student Community
-                            </a>
-                            <a href="{{ url_for('student.dashboard_my_community', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'my-community')">
-                                Your Community
-                            </a>
-                            <a href="{{ url_for('student.dashboard_account', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'account')">
-                                Account
-                            </a>
-                            <a href="{{ url_for('student.view_messages', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'private_messages')">
-                                Private Messages
-                                {% set new_messages = student.new_messages() %}
-                                <!-- Make the badge visible if the message count is non-zero; else hide it -->
-                                <span id="message_count" class="badge" style="visibility: {% if new_messages %} visible {% else %} hidden {% endif %};">
-                                    {{ new_messages }}
-                                </span>
-                            </a>
-                            <a href="{{ url_for('student.dashboard_analytics', student_full_name=student.student_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'analytics')">
-                                Analytics
-                            </a>
-                        </div>   
-                    </div>
-                    <!-- End of sidebar -->
-
-                    <!-- Page content will go here -->
-                    <div class="col-sm-10 scrollable-content">
-                        {% block student_app_content %}
-
-                        {% endblock %}
-                    </div>
-                </div>
-            {% elif parent %}
-                <!-- Parent Sidebar -->
-            {% elif admin %}
-                <div class="row">
-                    <!-- Start of sidebar -->
-                    <div class="col-sm-2 sidebar">
-                        <div class="mini-submenu">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </div>
-                        <div class="list-group">
-                            <a href="{{ url_for('admin.dashboard_account', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'account')" id="defaultOpen">
-                                Admin Account
-                            </a>
-                            <a href="{{ url_for('admin.dashboard_all_students', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'students')">
-                                All Students
-                            </a>
-                            <a href="{{ url_for('admin.dashboard_all_teachers', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'teachers')">
-                                All Teachers
-                            </a>
-                            <a href="{{ url_for('admin.dashboard_all_parents', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'parents')">
-                                All Parents
-                            </a>
-                            <a href="{{ url_for('admin.dashboard_courses_offered', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'courses')">
-                                Courses
-                            </a>
-                            <a href="{{ url_for('admin.review_blog_articles', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'blog')">
-                                Blogs
-                            </a>
-                            <a href="{{ url_for('admin.dashboard_student_stories', admin_full_name=admin.admin_full_name) }}" class="list-group-item tablinks" onclick="openCity(event, 'stories')">
-                                Student Stories
-                            </a>
-                        </div>   
-                    </div>
-                    <!-- End of sidebar -->
-
-                    <!-- Page content will go here -->
-                    <div class="col-sm-10 scrollable-content">
-                        {% block admin_app_content %}
-
-                        {% endblock %}
-                    </div>
-                </div>
-            {% else %}
-             <!-- Page content will go here -->
-             <div class="col-sm-10 scrollable-content">
-                {% block unknown_user_content %}
-
-                {% endblock %}
-            </div>
-            {% endif %}
-        </div>
-    {% else %}
-        <div class="container">
-            <div class="col-sm-12">
-                {% block anonymous_app_content %}
-
-                {% endblock %}
-            </div>
-        </div>
-    {% endif %}
-
-
-
-    <!-- Footer will go here -->
-    
+    {% block app_content %}{% endblock %}
+    {% block student_app_content %}{% endblock %}
+    {% block admin_app_content %}{% endblock %}
+    {% block unknown_user_content %}{% endblock %}
+    {% block anonymous_app_content %}{% endblock %}
 {% endblock %}
 
 <!-- Scripts will go here -->
 {% block scripts %}
-        {{ super() }}
-        {{ moment.include_moment() }}
-
-        <!-- Interactive tables -->
-        <!-- <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
-        {% block datatable_scripts %}
-
-        {% endblock %}
-        <!-- End of interactive tables -->
-
-        <!-- Tabs -->
-        <script>
-            function openCity(evt, cityName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-            }
-
-            // Get the element with id="defaultOpen" and click on it
-            // document.getElementById("defaultOpen").click();
-        </script>
-
-        <script>
-            $(function(){
-
-                $('#defaultOpen').on('click',function() {			        
-                    $(this).closest('.list-group').fadeOut('slide',function(){
-                        $('.mini-submenu').fadeIn();	
-                    });
-                    
-                });
-
-                $('.mini-submenu').on('click',function(){		
-                    $(this).next('.list-group').toggle('slide');
-                    $('.mini-submenu').hide();
-                })
-                });
-        </script>
-        <!-- End of tab -->
-
-        <!-- Beautiful phone number fields -->
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput-jquery.min.js"></script>
-        <!-- 2fa phone number field -->
-        <script>
-            $("#verification_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
-            $("#verification_phone").parent().append('<div><input type="tel" id="_verification_phone"></div>');
-            $("#_verification_phone").intlTelInput({
-                separateDialCode: true,
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
-            });
-            $("#_verification_phone").intlTelInput("setNumber", $('#verification_phone').val());
-            $('#_verification_phone').blur(function() {
-                $('#verification_phone').val($('#_verification_phone').intlTelInput("getNumber"));
-            });
-        </script>
-        <!-- parent phone number -->
-        <script>
-            $("#parent_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
-            $("#parent_phone").parent().append('<div><input type="tel" id="_parent_verification_phone"></div>');
-            $("#_parent_verification_phone").intlTelInput({
-                separateDialCode: true,
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
-            });
-            $("#_parent_verification_phone").intlTelInput("setNumber", $('#parent_phone').val());
-            $('#_parent_verification_phone').blur(function() {
-                $('#parent_phone').val($('#_parent_verification_phone').intlTelInput("getNumber"));
-            });
-        </script>
-         <!-- student phone number -->
-         <script>
-            $("#student_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
-            $("#student_phone").parent().append('<div><input type="tel" id="_student_verification_phone"></div>');
-            $("#_student_verification_phone").intlTelInput({
-                separateDialCode: true,
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
-            });
-            $("#_student_verification_phone").intlTelInput("setNumber", $('#student_phone').val());
-            $('#_student_verification_phone').blur(function() {
-                $('#student_phone').val($('#_student_verification_phone').intlTelInput("getNumber"));
-            });
-        </script>
-        <!-- teacher phone number -->
-        <script>
-            $("#teacher_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
-            $("#teacher_phone").parent().append('<div><input type="tel" id="_teacher_verification_phone"></div>');
-            $("#_teacher_verification_phone").intlTelInput({
-                separateDialCode: true,
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
-            });
-            $("#_teacher_verification_phone").intlTelInput("setNumber", $('#teacher_phone').val());
-            $('#_teacher_verification_phone').blur(function() {
-                $('#teacher_phone').val($('#_teacher_verification_phone').intlTelInput("getNumber"));
-            });
-        </script>
-        <!-- admin phone number -->
-        <script>
-            $("#admin_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
-            $("#admin_phone").parent().append('<div><input type="tel" id="_admin_verification_phone"></div>');
-            $("#_admin_verification_phone").intlTelInput({
-                separateDialCode: true,
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/utils.js",
-            });
-            $("#_admin_verification_phone").intlTelInput("setNumber", $('#admin_phone').val());
-            $('#_admin_verification_phone').blur(function() {
-                $('#admin_phone').val($('#_admin_verification_phone').intlTelInput("getNumber"));
-            });
-        </script>
-
-    <!-- End of beautiful phone number fields -->
-
-    <!-- Calendly -->
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    <!-- End of Calendly -->
-
-    <!-- Popup effect -->
-    <script>
-        $(function () {
-            var timer = null;
-            var xhr = null;
-
-            // Teacher popup in teacher dashboard
-            $('.teacher_popup').hover(
-                function(event) {
-                    // mouse in event handler
-                    var elem = $(event.currentTarget);
-                    timer = setTimeout(function() {
-                        timer = null;
-                        xhr = $.ajax(
-                            '/teacher/profile/' + elem.first().text().trim() + '/popup').done(
-                                function(data) {
-                                    xhr = null;
-                                    elem.popover({
-                                        trigger: 'manual',
-                                        html: true,
-                                        animation: false,
-                                        container: elem,
-                                        content: data
-                                    }).popover('show');
-                                    flask_moment_render_all();
-                                }
-                            );
-                    }, 500);
-                },
-                function(event) {
-                    // mouse out event handler
-                    var elem = $(event.currentTarget);
-                    if (timer) {
-                        clearTimeout(timer);
-                        timer = null;
-                    }
-                    else if (xhr) {
-                        xhr.abort();
-                        xhr = null;
-                    }
-                    else {
-                        elem.popover('destroy');
-                    }
-                }
-            );
-
-            // Student popup in teacher dashboard
-            $('.teacher_dashboard_student_popup').hover(
-                function(event) {
-                    // mouse in event handler
-                    var elem = $(event.currentTarget);
-                    timer = setTimeout(function() {
-                        timer = null;
-                        xhr = $.ajax(
-                            '/teacher/profile/student/' + elem.first().text().trim() + '/popup/').done(
-                                function(data) {
-                                    xhr = null;
-                                    elem.popover({
-                                        trigger: 'manual',
-                                        html: true,
-                                        animation: false,
-                                        container: elem,
-                                        content: data
-                                    }).popover('show');
-                                    flask_moment_render_all();
-                                }
-                            );
-                    }, 500);
-                },
-                function(event) {
-                    // mouse out event handler
-                    var elem = $(event.currentTarget);
-                    if (timer) {
-                        clearTimeout(timer);
-                        timer = null;
-                    }
-                    else if (xhr) {
-                        xhr.abort();
-                        xhr = null;
-                    }
-                    else {
-                        elem.popover('destroy');
-                    }
-                }
-            );
-
-            // Student popup in student dashboard
-            $('.student_popup').hover(
-                function(event) {
-                    // mouse in event handler
-                    var elem = $(event.currentTarget);
-                    timer = setTimeout(function() {
-                        timer = null;
-                        xhr = $.ajax(
-                            '/student/profile/' + elem.first().text().trim() + '/popup').done(
-                                function(data) {
-                                    xhr = null;
-                                    elem.popover({
-                                        trigger: 'manual',
-                                        html: true,
-                                        animation: false,
-                                        container: elem,
-                                        content: data
-                                    }).popover('show');
-                                    flask_moment_render_all();
-                                }
-                            );
-                    }, 500);
-                },
-                function(event) {
-                    // mouse out event handler
-                    var elem = $(event.currentTarget);
-                    if (timer) {
-                        clearTimeout(timer);
-                        timer = null;
-                    }
-                    else if (xhr) {
-                        xhr.abort();
-                        xhr = null;
-                    }
-                    else {
-                        elem.popover('destroy');
-                    }
-                }
-            );
-        });
-    </script>
-    <!-- End popup effect -->
-    
-    <!-- Recaptcha -->
-    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
-    <!-- End of Recaptcha -->
-
-    <!-- Static message count badge in sidebar -->
-    <script>
-        function set_message_count(n) {
-            $('#message_count').text(n);
-            $('#message_count').css('visibility', n ? 'visible' : 'hidden');
-        }
-        {% if current_user.is_authenticated %}
-            // Poll teacher for new messages
-            {% if teacher %}
-                $(function() {
-                    var since = 0;
-                    setInterval(function() {
-                        $.ajax('{{ url_for('teacher.teacher_notifications', teacher_full_name=teacher.teacher_full_name) }}?since=' + since).done(
-                            function(notifications) {
-                                for (var i = 0; i < notifications.length; i++) {
-                                    if (notifications[i].teacher_full_name == 'unread_message_count')
-                                        set_message_count(notifications[i].data);
-                                    since = notifications[i].timestamp;
-                                }
-                            }
-                        );
-                    }, 500);
-                });
-            // End polling teacher for new messages
-
-            // Poll student for new messages
-            {% elif student %}
-                $(function() {
-                    var since = 0;
-                    setInterval(function() {
-                        $.ajax('{{ url_for('student.student_notifications', student_full_name=student.student_full_name) }}?since=' + since).done(
-                            function(notifications) {
-                                for (var i = 0; i < notifications.length; i++) {
-                                    if (notifications[i].student_full_name == 'unread_message_count')
-                                        set_message_count(notifications[i].data);
-                                    since = notifications[i].timestamp;
-                                }
-                            }
-                        );
-                    }, 500);
-                });
-            {% endif %}
-        {% endif %}
-    </script>
-    <!-- End of static message count badge in sidebar -->
-
-    <!-- ChartJS -->
+    {{ super() }}
+    {{ moment.include_moment() }}
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+    {% block datatable_scripts %}{% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput-jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     {% block chartjs_script %}{% endblock %}
-        
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 {% endblock %}
