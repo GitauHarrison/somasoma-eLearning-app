@@ -519,3 +519,53 @@ footer {
     min-height: 260px;
   }
 }
+
+/* Add spacing between buttons and elements for a neater UI */
+.btn,
+.btn-block,
+.btn-lg,
+.btn-sm {
+  margin-bottom: 1rem;
+  margin-right: 0.5rem;
+}
+
+.card .btn {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-body > *:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.hero-text .btn {
+  margin-top: 1.5rem;
+}
+
+.pagination {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.row.g-4 > [class^='col-'],
+.row > [class^='col-'] {
+  margin-bottom: 2rem;
+}
+
+/* Add more vertical space between sections */
+section, .section {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Responsive fix for stacked buttons on mobile */
+@media (max-width: 576px) {
+  .btn,
+  .btn-block,
+  .btn-lg,
+  .btn-sm {
+    margin-bottom: 1rem;
+    margin-right: 0;
+    width: 100%;
+  }
+}
