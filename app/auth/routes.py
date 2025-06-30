@@ -1,7 +1,7 @@
 from app import db
 from app.auth import bp
-from flask import render_template, redirect, url_for, flash, session,\
-    request
+from flask import render_template, redirect, url_for, flash, session, request
+# ...rest of imports...
 from app.auth.forms import LoginForm, StudentRegistrationForm,\
     RequestPasswordResetForm, ResetPasswordForm, Enable2faForm,\
     Disable2faForm, Confirm2faForm, ParentRegistrationForm, \
@@ -13,7 +13,7 @@ from app.auth.email import send_password_reset_email_student,\
     send_password_reset_email_admin, send_registration_details_parent,\
     send_registration_details_student, send_password_reset_email_teacher
 from flask_login import current_user, login_user, logout_user, login_required
-from werkzeug.urls import url_parse
+from urllib.parse import urlparse
 
 
 @bp.route('/login')
@@ -76,7 +76,7 @@ def login_student():
             flash('Invalid username or password')
             return redirect(url_for('auth.login_student'))
         next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
+        if not next_page or urlparse(next_page).netloc != '':
             next_page = url_for(
                 'student.dashboard_enrolled_courses',
                 student_full_name=student.student_full_name)
@@ -108,7 +108,7 @@ def login_admin():
             flash('Invalid username or password')
             return redirect(url_for('auth.login_admin'))
         next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
+        if not next_page or urlparse(next_page).netloc != '':
             next_page = url_for(
                 'admin.dashboard_account', admin_full_name=admin.admin_full_name)
         if admin.two_factor_admin_enabled():

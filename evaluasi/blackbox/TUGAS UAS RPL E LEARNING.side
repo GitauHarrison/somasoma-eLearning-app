@@ -1,0 +1,315 @@
+{
+  "id": "a22ec22f-5a86-454d-b549-a27cedc54e66",
+  "version": "2.0",
+  "name": "TUGAS UAS RPL E LEARNING",
+  "url": "https://reimagined-space-spork-q7q57wr7w46j397rg-5000.app.github.dev",
+  "tests": [{
+    "id": "709a7631-a2b2-4fe8-801f-0790f9b3439a",
+    "name": "Untitled",
+    "commands": [{
+      "id": "1fbb0a06-600c-4e4a-9864-cf14ff453ff1",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "db038373-4a09-443f-a65e-0a17dcf06c55",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "893x1008",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c6b2c6cd-08fe-4e39-818c-0d80fcdddf57",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Home",
+      "targets": [
+        ["linkText=Home", "linkText"],
+        ["css=.nav-item:nth-child(1) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Home')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li/a", "xpath:idRelative"],
+        ["xpath=(//a[contains(@href, '/home')])[2]", "xpath:href"],
+        ["xpath=//li/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Home')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8fa9718a-eac8-4e6f-ae6d-b92332aa2c9e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Events",
+      "targets": [
+        ["linkText=Events", "linkText"],
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Events')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/events')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Events')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c80d1182-caac-43fd-b594-025cf08225a5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(4)",
+      "targets": [
+        ["css=.btn:nth-child(4)", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Learn More')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ca4225a0-f589-47bc-85c3-fc42ea49aec5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-default",
+      "targets": [
+        ["css=.btn-default", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='1']/div/div/div[3]/button", "xpath:idRelative"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Close')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "205d2bc2-5c17-4b72-b955-2fd088ead92f",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Blog",
+      "targets": [
+        ["linkText=Blog", "linkText"],
+        ["css=.nav-item:nth-child(3) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Blog')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/blog')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Blog')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "691b91c6-ded3-4153-8dc2-54bcc102573e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.row:nth-child(3) > .col-sm-12",
+      "targets": [
+        ["css=.row:nth-child(3) > .col-sm-12", "css:finder"],
+        ["xpath=//div[3]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "711ac270-34e0-46b4-bef5-393e5475a6e3",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Materials",
+      "targets": [
+        ["linkText=Materials", "linkText"],
+        ["css=.nav-item:nth-child(4) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Materials')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/materials/materials')]", "xpath:href"],
+        ["xpath=//li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Materials')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a91771a1-57d0-4a3a-b4f7-36d32dc81019",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=View Material",
+      "targets": [
+        ["linkText=View Material", "linkText"],
+        ["css=.btn-outline-primary:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'View Material')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '#')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'View Material')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c399fcaf-c3ec-402b-8e15-80fe8fb07943",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-outline-success",
+      "targets": [
+        ["css=.btn-outline-success", "css:finder"],
+        ["xpath=(//a[contains(text(),'View Material')])[2]", "xpath:link"],
+        ["xpath=(//a[contains(@href, '#')])[2]", "xpath:href"],
+        ["xpath=//div[2]/div/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b9a0ebb5-e4dc-4848-968f-7b545128c945",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-outline-info",
+      "targets": [
+        ["css=.btn-outline-info", "css:finder"],
+        ["xpath=(//a[contains(text(),'View Material')])[3]", "xpath:link"],
+        ["xpath=(//a[contains(@href, '#')])[3]", "xpath:href"],
+        ["xpath=//div[3]/div/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "93bf2c66-c6c8-4841-9a2a-20f008936c11",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-outline-dark",
+      "targets": [
+        ["css=.btn-outline-dark", "css:finder"],
+        ["xpath=(//a[contains(text(),'View Material')])[5]", "xpath:link"],
+        ["xpath=(//a[contains(@href, '#')])[5]", "xpath:href"],
+        ["xpath=//div[2]/div[2]/div/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "56c9dbd2-ed90-49c9-8d07-04fe640d5610",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-outline-warning",
+      "targets": [
+        ["css=.btn-outline-warning", "css:finder"],
+        ["xpath=(//a[contains(text(),'View Material')])[6]", "xpath:link"],
+        ["xpath=(//a[contains(@href, '#')])[6]", "xpath:href"],
+        ["xpath=//div[2]/div[3]/div/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4c48d21a-17e8-452d-9c2a-b366d425ea7e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.px-3", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li[5]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/auth/login')]", "xpath:href"],
+        ["xpath=//li[5]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "431d7679-a8ea-4d84-b371-39fd124e61ba",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login as Parent",
+      "targets": [
+        ["linkText=Login as Parent", "linkText"],
+        ["css=.btn-outline-primary:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Login as Parent')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/auth/login/parent')]", "xpath:href"],
+        ["xpath=//div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login as Parent')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0a24da21-dc32-4bfe-bb86-f3a7643accd0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login as Another User",
+      "targets": [
+        ["linkText=Login as Another User", "linkText"],
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//a[contains(@href, ' /auth/login ')]", "xpath:href"],
+        ["xpath=//div[4]/div[2]/p/a", "xpath:position"],
+        ["xpath=//a[contains(.,' Login as Another User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "48b6b68d-e9c6-424b-bc89-fd55fd5dc809",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login as Student",
+      "targets": [
+        ["linkText=Login as Student", "linkText"],
+        ["css=.btn-outline-success", "css:finder"],
+        ["xpath=//a[contains(text(),'Login as Student')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/auth/login/student')]", "xpath:href"],
+        ["xpath=//div[2]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login as Student')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "684b141c-2307-4a93-97eb-b09109434188",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login as Another User",
+      "targets": [
+        ["linkText=Login as Another User", "linkText"],
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//a[contains(@href, ' /auth/login ')]", "xpath:href"],
+        ["xpath=//div[4]/div[2]/p/a", "xpath:position"],
+        ["xpath=//a[contains(.,' Login as Another User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f3ab2624-81ba-491d-a92a-d899de21e086",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login as Teacher",
+      "targets": [
+        ["linkText=Login as Teacher", "linkText"],
+        ["css=.btn-outline-info", "css:finder"],
+        ["xpath=//a[contains(text(),'Login as Teacher')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/auth/login/teacher')]", "xpath:href"],
+        ["xpath=//div[3]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login as Teacher')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bfae4b69-5d17-419f-8188-9471072b933c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login as Another User",
+      "targets": [
+        ["linkText=Login as Another User", "linkText"],
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//a[contains(@href, ' /auth/login ')]", "xpath:href"],
+        ["xpath=//div[4]/div[2]/p/a", "xpath:position"],
+        ["xpath=//a[contains(.,' Login as Another User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "db58ab3a-cfb0-4dfd-9eca-13307bf5d35b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login as Admin",
+      "targets": [
+        ["linkText=Login as Admin", "linkText"],
+        ["css=.btn-outline-danger", "css:finder"],
+        ["xpath=//a[contains(text(),'Login as Admin')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/auth/login/admin')]", "xpath:href"],
+        ["xpath=//div[4]/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login as Admin')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1c8557fe-9dc8-4afa-a7ba-610ffec6c77b",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login as Another User",
+      "targets": [
+        ["linkText=Login as Another User", "linkText"],
+        ["css=.btn-primary", "css:finder"],
+        ["xpath=//a[contains(@href, ' /auth/login ')]", "xpath:href"],
+        ["xpath=//div[4]/div[2]/p/a", "xpath:position"],
+        ["xpath=//a[contains(.,' Login as Another User')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "2a0cc6d0-2c32-4ee5-a991-2ba4f8281e56",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["709a7631-a2b2-4fe8-801f-0790f9b3439a"]
+  }],
+  "urls": ["https://reimagined-space-spork-q7q57wr7w46j397rg-5000.app.github.dev/"],
+  "plugins": []
+}

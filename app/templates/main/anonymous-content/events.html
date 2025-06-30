@@ -1,88 +1,69 @@
 {% extends 'base.html' %}
 
 {% block anonymous_app_content %}
-    <div class="row">
-        <div class="col-sm-12 text-center">
-            <h1>{{ title }}</h1>
+    <div class="container py-4">
+        <div class="row justify-content-center mb-4">
+            <div class="col-12 col-md-10 col-lg-8 text-center">
+                <h1 class="display-4 font-weight-bold mb-4">{{ title }}</h1>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        {% for event in events %}
-            <div class="col-sm-4">
-                <div class="card-deck text-center">
-                    <div class="card">
-                        <img class="img-fluid" style="max-width: 100%; height: auto;" src="/{{ event.event_image }}" alt="Flask Class">
-                        <div class="card-body">
-                            <div class="text-center">
-                                <h2 class="card-title">{{ event.title }}</h2>
-                                <hr>
-                                <p class="card-text">
-                                    {% if event.body_html %}
-                                        {{ event.body_html | safe }}
-                                    {% else %}
-                                        {{ event.body }}
-                                    {% endif %}
-                                </p>
-                                <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ event.id }}">
-                                        Learn More
-                                    </button>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="{{ event.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close btn-primary" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <h2 class="modal-title text-center" id="{{ event.id }}">{{ event.title }}</h2>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="text-center">
-                                                <img class="img-fluid" style="max-width: 100%; height: auto;" src="/{{event.event_image}}" alt="{{ event.title }}">
-                                            </div>
-                                            <p>
-                                                Date: <strong>{{ event.date }}</strong><br>
-                                                Time: <strong>{{ event.time }}</strong><br>
-                                                Location: <strong>{{ event.location }}</strong>
-                                            </p>
-                                            <p>
-                                                Click the link below to join the conversation:<br>
-                                                <a href="{{ event.link }}">Meeting Link</a>
-                                            </p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End of Modal -->
-                        </div>            
+        <div class="row">
+            {% for event in events %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img class="card-img-top" src="/{{ event.event_image }}" alt="{{ event.title }}">
+                        <div class="card-body text-center">
+                            <h2 class="h5 card-title mb-2">{{ event.title }}</h2>
+                            <p class="card-text mb-2">
+                                {% if event.body_html %}
+                                    {{ event.body_html | safe }}
+                                {% else %}
+                                    {{ event.body }}
+                                {% endif %}
+                            </p>
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#{{ event.id }}">
+                                Learn More
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-        <div class="row">
-            <div  class="col-sm-12">
-                <!-- Pagination of comments -->
+                <!-- Modal -->
+                <div class="modal fade" id="{{ event.id }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel{{ event.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel{{ event.id }}">{{ event.title }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img class="img-fluid mb-3" src="/{{ event.event_image }}" alt="{{ event.title }}">
+                                <p>Date: <strong>{{ event.date }}</strong></p>
+                                <p>Time: <strong>{{ event.time }}</strong></p>
+                                <p>Location: <strong>{{ event.location }}</strong></p>
+                                <p>Join: <a href="{{ event.link }}">Meeting Link</a></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
                 <nav aria-label="...">
-                    <ul class="pager">
-                        <li class="previous{% if not prev_url %} disabled{% endif %}">
-                            <a href="{{ prev_url or '#' }}">
-                                <span aria-hidden="true">&#60;</span> Less
-                            </a>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item{% if not prev_url %} disabled{% endif %}">
+                            <a class="page-link" href="{{ prev_url or '#' }}">&lt; Less</a>
                         </li>
-                        <li class="next{% if not next_url %} disabled{% endif %}">
-                            <a href="{{ next_url or '#' }}">
-                                More <span aria-hidden="true">&#62;</span>
-                            </a>
+                        <li class="page-item{% if not next_url %} disabled{% endif %}">
+                            <a class="page-link" href="{{ next_url or '#' }}">More &gt;</a>
                         </li>
                     </ul>
                 </nav>
-                <!-- End of pagination of comments -->
             </div>
         </div>
     </div>

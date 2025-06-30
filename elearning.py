@@ -74,6 +74,7 @@ def make_shell_context():
         GeneralMultipleChoicesAnswer9=GeneralMultipleChoicesAnswer9,
         GeneralMultipleChoicesAnswer10=GeneralMultipleChoicesAnswer10,
         WebDevChapter1QuizTotalScore=WebDevChapter1QuizTotalScore,
-        WebDevChapter2QuizTotalScore=WebDevChapter2QuizTotalScore,\
-        WebDevChapter3QuizTotalScore=WebDevChapter3QuizTotalScore
-        )
+        WebDevChapter2QuizTotalScore=WebDevChapter2QuizTotalScore,
+        WebDevChapter3QuizTotalScore=WebDevChapter3QuizTotalScore    )
+if __name__ == "__main__":
+    app.run()

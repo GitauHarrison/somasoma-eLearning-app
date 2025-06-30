@@ -1,60 +1,46 @@
 {% extends 'base.html' %}
 
 {% block anonymous_app_content %}
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <h1>{{ title }}</h1>
+    <div class="container py-4">
+        <div class="row justify-content-center mb-4">
+            <div class="col-12 col-md-10 col-lg-8 text-center">
+                <h1 class="display-4 font-weight-bold mb-4">{{ title }}</h1>
             </div>
         </div>
         {% for blog in allowed_blogs %}
-            <!-- Blog artilce -->
-            <div class="row blog">
-                <div class="col-sm-4">
-                    <img class="img-fluid" style="max-width: 100%; height: auto;" src="/{{ blog.article_image }}" alt="{{ blog.article_name }}">
-                </div>
-                <div class="col-sm-8">
-                    <!-- Title -->
-                    <div class="row">
-                        <div class="col-sm-7">
-                            <h2>{{ blog.article_name }}</h2>
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-10 col-lg-8">
+                    <div class="card shadow-sm mb-4">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-md-4">
+                                <img class="img-fluid rounded-left" src="/{{ blog.article_image }}" alt="{{ blog.article_name }}">
+                            </div>
+                            <div class="col-md-8 p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h2 class="h4 mb-0">{{ blog.article_name }}</h2>
+                                    <span class="text-muted small">{{ moment(blog.timestamp).format('LL') }}</span>
+                                </div>
+                                <p class="mb-3">{{ blog.body }}</p>
+                                <a href="http://127.0.0.1:5000/{{ blog.link }}" class="btn btn-outline-primary btn-sm">Learn More</a>
+                            </div>
                         </div>
-                        <div class="col-sm-5 text-right" style="color: #d1d1d1;">
-                            <h2>{{ moment(blog.timestamp).format('LL') }}</h2>
-                        </div>
-                    </div>
-                    <!-- Body -->
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <p>{{ blog.body }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <a href="http://127.0.0.1:5000/{{ blog.link }}" class="btn btn-primary">Learn More</a>
                     </div>
                 </div>
             </div>
-            <!-- End of blog article -->
         {% endfor %}
-        <div class="row">
-            <div class="col-sm-12">
-                <!-- Pagination -->
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
                 <nav aria-label="...">
-                    <ul class="pager">
-                        <li class="previous{% if not prev_url %} disabled{% endif %}">
-                            <a href="{{ prev_url or '#' }}">
-                                <span aria-hidden="true">&#60;</span> Newer posts
-                            </a>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item{% if not prev_url %} disabled{% endif %}">
+                            <a class="page-link" href="{{ prev_url or '#' }}">&lt; Newer posts</a>
                         </li>
-                        <li class="next{% if not next_url %} disabled{% endif %}">
-                            <a href="{{ next_url or '#' }}">
-                                Older posts <span aria-hidden="true">&#62;</span>
-                            </a>
+                        <li class="page-item{% if not next_url %} disabled{% endif %}">
+                            <a class="page-link" href="{{ next_url or '#' }}">Older posts &gt;</a>
                         </li>
                     </ul>
                 </nav>
-                <!-- End of pagination -->
             </div>
         </div>
+    </div>
 {% endblock %}
