@@ -10,8 +10,8 @@
   </div>
   <div class="row justify-content-center">
     <div class="col-md-10">
-      <div class="row g-4">
-        <div class="col-md-3">
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-3 mb-4">
           <div class="card shadow-sm h-100 border-0">
             <img class="card-img-top mx-auto d-block mt-4" style="max-width: 80px;" src="{{url_for('static', filename = 'images/parent.svg')}}" alt="Parent">
             <div class="card-body text-center">
@@ -21,17 +21,17 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 mb-4">
           <div class="card shadow-sm h-100 border-0">
             <img class="card-img-top mx-auto d-block mt-4" style="max-width: 80px;" src="{{url_for('static', filename = 'images/student.svg')}}" alt="Student">
             <div class="card-body text-center">
-              <h4 class="card-title">login siswa</h4>
+              <h4 class="card-title">Student Login</h4>
               <p class="card-text">Login to access your <strong>student account</strong>.</p>
               <a href="{{ url_for('auth.login_student') }}" class="btn btn-outline-success btn-block mt-2">Login as Student</a>
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 mb-4">
           <div class="card shadow-sm h-100 border-0">
             <img class="card-img-top mx-auto d-block mt-4" style="max-width: 80px;" src="{{url_for('static', filename = 'images/teacher2.svg')}}" alt="Teacher">
             <div class="card-body text-center">
@@ -41,7 +41,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 mb-4">
           <div class="card shadow-sm h-100 border-0">
             <img class="card-img-top mx-auto d-block mt-4" style="max-width: 80px;" src="{{url_for('static', filename = 'images/admin.svg')}}" alt="Admin">
             <div class="card-body text-center">
