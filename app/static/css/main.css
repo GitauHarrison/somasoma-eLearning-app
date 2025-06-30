@@ -423,3 +423,99 @@ blockquote{
   cursor: default;
   opacity: 0.5;
 }
+
+/* Modern, clean, and responsive UI improvements */
+body {
+  background: #f8f9fa;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  color: #222;
+}
+
+.navbar {
+  border-radius: 0;
+  margin-bottom: 30px;
+}
+
+.card {
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  transition: box-shadow 0.2s;
+}
+.card:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+}
+
+.btn {
+  border-radius: 2rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+/* Responsive grid for cards */
+.row.g-4 > [class^='col-'] {
+  margin-bottom: 2rem;
+}
+
+/* Sidebar improvements */
+.sidebar {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 1.5rem 1rem;
+  margin-bottom: 2rem;
+}
+.list-group-item {
+  border: none;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: background 0.2s;
+}
+.list-group-item:hover {
+  background: #f0f4f8;
+}
+
+/* Flash messages */
+.alert {
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* Footer */
+footer {
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: 2rem 0 1rem 0;
+  text-align: center;
+  color: #888;
+  margin-top: 3rem;
+}
+
+/* Remove default card border */
+.card {
+  border: none;
+}
+
+/* Make login cards same height */
+.card.h-100 {
+  min-height: 340px;
+}
+
+/* Fix for mobile */
+@media (max-width: 767px) {
+  .navbar .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .card.h-100 {
+    min-height: 260px;
+  }
+}
